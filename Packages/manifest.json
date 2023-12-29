@@ -17,6 +17,7 @@
     }
   ],
   "dependencies": {
+    "com.oddworm.heapexplorer": "https://github.com/pschraut/UnityHeapExplorer.git#4.1.1",
     "com.unity-atoms.unity-atoms-base-atoms": "4.5.0",
     "com.unity-atoms.unity-atoms-core": "4.5.0",
     "com.unity-atoms.unity-atoms-fsm": "4.5.0",
