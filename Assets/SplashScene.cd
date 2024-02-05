@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SplashView" Collapsed="true">
+    <Position X="3.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>REAAAAAAAAAAAAAAAAAAgAACAAAAAAAIIAAwAAgACBA=</HashCode>
+      <FileName>Assets\_Main\Scripts\UI\View\SplashView.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="signInControllerFactory" />
+      <Field Name="signInController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SignInControllerFactory" Collapsed="true">
+    <Position X="6.75" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAGAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\UI\View\SignInControllerFactory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="controllers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Interface Name="SignInController" Collapsed="true">
+    <Position X="3.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\UI\View\SignInController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
