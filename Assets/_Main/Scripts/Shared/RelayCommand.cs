@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RelayCommand<T> : ICommand
+public class RelayCommand<T> : ICommandPattern
 {
     private readonly Action<T> _execute;
     private readonly Predicate<T> _canExecute;
