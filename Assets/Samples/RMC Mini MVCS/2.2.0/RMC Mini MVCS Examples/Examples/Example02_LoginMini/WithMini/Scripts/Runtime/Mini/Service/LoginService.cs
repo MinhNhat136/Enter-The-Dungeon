@@ -18,7 +18,7 @@ namespace RMC.Core.Architectures.Mini.Samples.Login.WithMini.Mini.Service
     public class LoginService : BaseService  // Extending 'base' is optional
     {
         //  Events ----------------------------------------
-        public readonly OnLoginCompletedUnityEvent OnLoginCompleted = new OnLoginCompletedUnityEvent();
+        public readonly OnLoginCompletedUnityEvent OnLoginCompleted = new();
         
         //  Properties ------------------------------------
         

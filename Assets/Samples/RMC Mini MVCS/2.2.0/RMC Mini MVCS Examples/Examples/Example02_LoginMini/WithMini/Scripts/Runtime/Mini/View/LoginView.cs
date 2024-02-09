@@ -24,13 +24,13 @@ namespace RMC.Core.Architectures.Mini.Samples.Login.WithMini.Mini.View
     {
         //  Events ----------------------------------------
         [HideInInspector] 
-        public readonly LoginUnityEvent OnLogin = new LoginUnityEvent();
+        public readonly LoginUnityEvent OnLogin = new();
         
         [HideInInspector] 
-        public readonly CanLoginChangedUnityEvent OnCanLoginChanged = new CanLoginChangedUnityEvent();
+        public readonly CanLoginChangedUnityEvent OnCanLoginChanged = new();
         
         [HideInInspector] 
-        public readonly LogoutUnityEvent OnLogout = new LogoutUnityEvent();
+        public readonly LogoutUnityEvent OnLogout = new();
         
         //  Properties ------------------------------------
         public bool IsInitialized { get { return _isInitialized;} }

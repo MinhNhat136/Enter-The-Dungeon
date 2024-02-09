@@ -21,8 +21,8 @@ namespace RMC.Core.Architectures.Mini.Samples.Login.WithMini.Mini.Model
         public Observable<bool> CanLogin { get { return _canLogin;} }
         
         //  Fields ----------------------------------------
-        private readonly Observable<bool> _canLogin = new Observable<bool>();
-        private readonly Observable<UserData> _loggedInUserData = new Observable<UserData>();
+        private readonly Observable<bool> _canLogin = new();
+        private readonly Observable<UserData> _loggedInUserData = new();
 
         
         //  Initialization  -------------------------------

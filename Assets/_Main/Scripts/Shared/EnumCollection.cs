@@ -4,7 +4,7 @@ public enum SignInType
     GameCenter,
     Facebook,
     Google,
-    Guest,
+    Guess,
 }
 
 public enum PopupType
