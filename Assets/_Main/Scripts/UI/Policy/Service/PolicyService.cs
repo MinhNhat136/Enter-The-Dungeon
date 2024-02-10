@@ -1,42 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using UnityEngine;
+using RMC.Core.Architectures.Mini.Context;
+using RMC.Core.Architectures.Mini.Service;
+using System.Threading.Tasks;
+using UnityEngine.Events;
 
-public class PolicyService : IPopupService
+
+// CAUTION: NOT YET COMPELTED THIS CLASS 
+namespace Atomic.UI
 {
-    private bool isAccept = false;
-    private bool isPopupShown = false;
+    //  Namespace Properties ------------------------------
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    
-    public bool IsAccept
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
+
+    public class PolicyService : BaseService
     {
-        get => isAccept;
-        private set 
-        { 
-            isAccept = value;
-            IsPopupShown = false;
-        }
-    }
-    public bool IsPopupShown
-    {
-        get => isPopupShown;
-        set
+        //  Events ----------------------------------------
+        public readonly UnityEvent<bool> OnCheckCompleted = new();
+
+        //  Initialization  -------------------------------
+        public override void Initialize(IContext context)
         {
-            isPopupShown = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsPopupShown"));
+            base.Initialize(context);
+
         }
-    }
+
+        //  Other Methods ---------------------------------
+        public void CheckAcceptedPolicy()
+        {
+            RequireIsInitialized();
+
+            CheckAsync();
+        }
+
+        private async void CheckAsync()
+        {
+            RequireIsInitialized();
+
+            await Task.Delay(500);
+
+            bool IsAccepted = false;
+
+            OnCheckCompleted.Invoke(IsAccepted);
+        }
+
+        public void AcceptPolicy()
+        {
+
+        }
+
+        public void ShowTermsOfPolicy()
+        {
+
+        }
+
+        //  Event Handlers --------------------------------
 
 
-    public void AcceptPolicy()
-    {
-        IsAccept = true;
-    }
-
-    public bool CanShowPopup()
-    {
-        return !IsAccept && !IsPopupShown;
     }
 }
+
+
+
+    
