@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Mini MVCS/Samples/Example02_LoginMini/WithMini/Scenes/LoginWithMiniExample.unity
-    guid: 15ebac25defb3c345a72379453a8451a
+    path: Assets/_Main/Scenes/SplashScene.unity
+    guid: a7ac842097dcf0040b5adea036f2852b
   m_configObjects: {}
