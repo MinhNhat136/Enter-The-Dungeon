@@ -76,7 +76,6 @@ namespace Atomic.UI
 
         public void OnDestroy()
         {
-            Debug.Log("Destroy");
             _buttonOK.onClickEvent.RemoveAllListeners();
         }
 

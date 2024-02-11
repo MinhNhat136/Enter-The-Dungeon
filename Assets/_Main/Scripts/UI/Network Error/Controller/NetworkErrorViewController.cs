@@ -77,7 +77,11 @@ namespace Atomic.UI
         //  Event Handlers --------------------------------
         private void View_OnClickButtonOK()
         {
-            Application.Quit();
+#if UNITY_EDITOR
+            AppHelper.Quit();
+#else
+        Application.Quit();
+#endif
         }
 
         private void Model_OnNetworkConnectionChange(bool previousConnection, bool currentConnetion)
