@@ -454,7 +454,7 @@ MonoBehaviour:
     Category: Splash
     Name: Popup
     Custom: 0
-  OverrideSorting: 1
+  OverrideSorting: 0
   BlockBackButton: 1
   RestoreSelectedAfterHide: 1
   HideOnAnyButton: 0

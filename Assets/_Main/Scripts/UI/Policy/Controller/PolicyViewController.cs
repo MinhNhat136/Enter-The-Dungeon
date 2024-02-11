@@ -41,8 +41,8 @@ namespace Atomic.UI
         private IContext _context;
 
         //  Dependencies ----------------------------------
-        private PolicyService _service;
-        private PolicyView _view;
+        private readonly PolicyService _service;
+        private readonly PolicyView _view;
 
         //  Initialization  -------------------------------
         public PolicyViewController(PolicyService service, PolicyView view)
@@ -61,7 +61,6 @@ namespace Atomic.UI
 
                 _view.OnAcceptPolicy.AddListener(View_OnClickAcceptPolicy);
                 _view.OnShowTermsOfPolicy.AddListener(View_OnClickShowTermsOfPolicy);
-
 
             }
         }

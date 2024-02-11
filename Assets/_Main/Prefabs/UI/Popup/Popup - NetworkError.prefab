@@ -35,10 +35,10 @@ RectTransform:
   - {fileID: 2811068400253431529}
   m_Father: {fileID: 2156781567066716812}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100.43}
-  m_SizeDelta: {x: 0, y: 388}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4282087103875055367
 CanvasRenderer:
@@ -110,9 +110,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 3504319919860294117}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 90}
   m_SizeDelta: {x: 209, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4872734978786303749
@@ -322,13 +322,14 @@ GameObject:
   - component: {fileID: 2702121056984334598}
   - component: {fileID: 237623115822511432}
   - component: {fileID: 6541390757867660755}
+  - component: {fileID: 2249930931870702864}
   m_Layer: 5
   m_Name: Popup - NetworkError
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2156781567066716812
 RectTransform:
   m_ObjectHideFlags: 0
@@ -347,8 +348,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 540, y: -360}
+  m_SizeDelta: {x: 1080, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2702121056984334598
 Canvas:
@@ -446,23 +447,39 @@ MonoBehaviour:
   ClearSelectedOnHide: 0
   AutoSelectAfterShow: 0
   AutoSelectTarget: {fileID: 0}
-  ParentMode: 0
+  ParentMode: 1
   ParentTag:
-    Category: None
-    Name: None
+    Category: Splash
+    Name: Popup
     Custom: 0
   OverrideSorting: 1
   BlockBackButton: 1
   RestoreSelectedAfterHide: 1
-  HideOnAnyButton: 1
+  HideOnAnyButton: 0
   HideOnBackButton: 0
-  HideOnClickContainer: 1
-  HideOnClickOverlay: 1
+  HideOnClickContainer: 0
+  HideOnClickOverlay: 0
   Overlay: {fileID: 0}
   Container: {fileID: 0}
   Labels: []
   Images: []
   Buttons: []
+--- !u!114 &2249930931870702864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8072094785858247096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3860c60cb21444489d04c8e1678ee40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnClickButtonOK:
+    m_PersistentCalls:
+      m_Calls: []
+  _buttonOK: {fileID: 5625899043287061988}
 --- !u!1001 &2743091118026667582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -537,7 +554,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 77547482991319255, guid: 6f3281b4b97fad24790255f23e1586f9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -326.43
+      value: -240
       objectReference: {fileID: 0}
     - target: {fileID: 77547482991319255, guid: 6f3281b4b97fad24790255f23e1586f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -565,3 +582,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 77547482991319255, guid: 6f3281b4b97fad24790255f23e1586f9, type: 3}
   m_PrefabInstance: {fileID: 2743091118026667582}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5625899043287061988 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7494657776171869146, guid: 6f3281b4b97fad24790255f23e1586f9, type: 3}
+  m_PrefabInstance: {fileID: 2743091118026667582}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c6d918500348269ab48ea9646e337b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
