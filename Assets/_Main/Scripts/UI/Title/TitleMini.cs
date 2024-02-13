@@ -1,3 +1,4 @@
+using Atomic.Controllers;
 using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
 using System;
@@ -6,7 +7,7 @@ namespace Atomic.UI
 {
     public class TitleMini : IMiniMvcs
     {
-        private TitleView _view;
+        private readonly AppTitleView _view;
 
         public bool IsInitialized
         {
@@ -15,7 +16,7 @@ namespace Atomic.UI
 
         private bool _isInitialized;
 
-        public TitleMini(TitleView view) 
+        public TitleMini(AppTitleView view) 
         {
             _view = view;
         }
@@ -26,22 +27,22 @@ namespace Atomic.UI
             {
                 _isInitialized = true;
 
-                Context context = new Context();
+                Context context = new();
 
-                SignInControllerBuilder builder = new SignInControllerBuilder();
+                SignInControllerBuilder builder = new();
 
-                SignInWithGuessService signInWithGuessService = new();
+                GuestSignInService signInWithGuessService = new();
                 signInWithGuessService.Initialize(context);
 
-                SignInWithGuessController signInWithGuessController = new(signInWithGuessService);
+                GuessSignInController signInWithGuessController = new(signInWithGuessService);
                 signInWithGuessController.Initialize(context);
 
-                SignUpWithGuessController signUpWithGuessController = new();
+                GuestSignUpController signUpWithGuessController = new();
 
                 builder.SetSignInWithGuessController(signInWithGuessController);
                 _view.Initialize(context);
 
-                TitleViewController _controller = new(builder, _view, signUpWithGuessController);
+                AppTitleViewController _controller = new(builder, _view, signUpWithGuessController);
                 _controller.Initialize(context);
 
             }

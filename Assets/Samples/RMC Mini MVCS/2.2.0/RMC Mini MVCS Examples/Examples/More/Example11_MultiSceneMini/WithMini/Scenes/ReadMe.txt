@@ -1,1 +1,0 @@
-This is a multi-scene demo. You must add all Scenes in this folder to the Unity build settings before pressing play. Enjoy!

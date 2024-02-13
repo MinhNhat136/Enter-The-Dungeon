@@ -15,7 +15,7 @@ MonoBehaviour:
   FlowGraphId: d02130a8-89b1-408a-a72d-fcea5d868a12
   NodeId: a919cfa0-b81b-4752-863a-6ee8453c1fb3
   NodeType: 0
-  NodeName: Load Scene
+  NodeName: Load Lobby Scene
   NodeDescription: 
   InputPorts:
   - NodeId: a919cfa0-b81b-4752-863a-6ee8453c1fb3
@@ -23,7 +23,7 @@ MonoBehaviour:
     Direction: 0
     Capacity: 1
     Connections:
-    - cc12056b-c09e-43ba-abdb-26a16bbfd421
+    - 2a20f505-e17b-4470-97cf-7e0def4f98fe
     Value: 
     ValueTypeQualifiedName: 
     CanBeDeleted: 0
@@ -45,13 +45,13 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 1
   ClearGraphHistory: 0
-  Position: {x: 367.19998, y: 1.6000061}
-  GetSceneBy: 1
+  Position: {x: 489.43304, y: 140.03343}
+  GetSceneBy: 0
   LoadSceneMode: 1
   AllowSceneActivation: 1
   SceneActivationDelay: 0.2
   SceneBuildIndex: 0
-  SceneName: 
+  SceneName: LobbyScene
   WaitForSceneToLoad: 1
   PreventLoadingSameScene: 1
   ConnectProgressor: 1
@@ -93,9 +93,8 @@ MonoBehaviour:
     PortId: cc12056b-c09e-43ba-abdb-26a16bbfd421
     Direction: 1
     Capacity: 0
-    Connections:
-    - 7f39e62f-9cc0-4ad8-a4b9-0c1650cf1515
-    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Share","Name":"TapToStart","Custom":false},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
+    Connections: []
+    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Splash","Name":"TapToStart","Custom":false},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
     ValueTypeQualifiedName: Doozy.Runtime.UIManager.Nodes.PortData.UIOutputPortData,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     CanBeDeleted: 0
@@ -107,7 +106,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 0
   ClearGraphHistory: 0
-  Position: {x: 159.20001, y: -0.80000305}
+  Position: {x: 184.79997, y: -0.7999878}
   OnEnterShowViews:
   - Id:
       Category: Splash
@@ -116,14 +115,75 @@ MonoBehaviour:
     Mode: 0
   OnEnterHideViews: []
   OnExitShowViews: []
-  OnExitHideViews:
-  - Id:
-      Category: Splash
-      Name: Title
-      Custom: 0
-    Mode: 0
+  OnExitHideViews: []
   OnEnterHideAllViews: 0
   OnExitHideAllViews: 0
+--- !u!114 &-2679261205795861657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2479a69f56cf54c96de81c44e8ad1a, type: 3}
+  m_Name: Portal
+  m_EditorClassIdentifier: 
+  FlowGraphId: d02130a8-89b1-408a-a72d-fcea5d868a12
+  NodeId: cb38c743-b07f-4043-93a2-cf7d52ea0bff
+  NodeType: 1
+  NodeName: Portal
+  NodeDescription: 
+  InputPorts: []
+  OutputPorts:
+  - NodeId: cb38c743-b07f-4043-93a2-cf7d52ea0bff
+    PortId: 2a20f505-e17b-4470-97cf-7e0def4f98fe
+    Direction: 1
+    Capacity: 0
+    Connections:
+    - 7f39e62f-9cc0-4ad8-a4b9-0c1650cf1515
+    Value: 
+    ValueTypeQualifiedName: 
+    CanBeDeleted: 0
+    CanBeReordered: 0
+  RunUpdate: 0
+  RunFixedUpdate: 0
+  RunLateUpdate: 0
+  NodeState: 0
+  CanBeDeleted: 1
+  Passthrough: 1
+  ClearGraphHistory: 0
+  Position: {x: 246.40001, y: 138.2998}
+  Trigger: 0
+  SignalPayload:
+    StreamId:
+      Category: Splash
+      Name: LoadScene
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+  ButtonId:
+    Category: None
+    Name: None
+    Custom: 0
+  ToggleId:
+    Category: None
+    Name: None
+    Custom: 0
+  CommandToggle: 2
+  ViewId:
+    Category: None
+    Name: None
+    Custom: 0
+  CommandShowHide: 0
 --- !u!114 &-2388227767424014905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,8 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
   m_Name: Splash
   m_EditorClassIdentifier: 
-  EditorPosition: {x: -20, y: 156, z: 0}
-  EditorScale: {x: 1, y: 1, z: 1}
+  EditorPosition: {x: -75.2, y: 68.8, z: 0}
+  EditorScale: {x: 0.65751624, y: 0.65751624, z: 1}
   Id: d02130a8-89b1-408a-a72d-fcea5d868a12
   GraphName: Flow Graph
   GraphDescription: 
@@ -203,5 +263,6 @@ MonoBehaviour:
   - {fileID: -2388227767424014905}
   - {fileID: -2928608873898764135}
   - {fileID: -8337593037181476979}
+  - {fileID: -2679261205795861657}
   RootNode: {fileID: -2388227767424014905}
   ActiveNode: {fileID: 0}

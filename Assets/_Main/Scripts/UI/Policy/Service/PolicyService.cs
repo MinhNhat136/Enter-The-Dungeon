@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 
 // CAUTION: NOT YET COMPELTED THIS CLASS 
-namespace Atomic.UI
+namespace Atomic.Services
 {
     //  Namespace Properties ------------------------------
 

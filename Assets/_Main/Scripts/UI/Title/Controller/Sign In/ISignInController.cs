@@ -1,8 +1,7 @@
-using Atomic.UI;
-using System.ComponentModel;
+using Atomic.Models;
 
 public interface ISignInController
 {
     void StartSignInProcess();
-    void OnSignedInComplete(UserData userData, bool wasSuccessful);
+    void OnSignedInComplete(UserProfileData userData, bool wasSuccessful);
 }

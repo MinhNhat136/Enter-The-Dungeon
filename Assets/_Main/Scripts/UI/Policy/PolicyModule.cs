@@ -1,6 +1,8 @@
+using Atomic.Controllers;
+using Atomic.Services;
+using Atomic.UI.Views;
 using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
-using System.Runtime.CompilerServices;
 
 
 
@@ -23,7 +25,7 @@ namespace Atomic.UI
         {
             get { return _isInitialized; }
         }
-        public PolicyChecker PolicyChecker
+        public PolicyValidationController PolicyChecker
         {
             get { return _policyChecker; }
         }
@@ -45,7 +47,7 @@ namespace Atomic.UI
         //  Dependencies ----------------------------------
         private readonly UIPopup _policyPopup;
         private Context _context;
-        private PolicyChecker _policyChecker;
+        private PolicyValidationController _policyChecker;
         private PolicyService _policyService;
 
 
@@ -63,7 +65,7 @@ namespace Atomic.UI
 
                 _context = new Context();
                 _policyService = new PolicyService();
-                _policyChecker = new PolicyChecker(_policyService);
+                _policyChecker = new PolicyValidationController(_policyService);
 
                 _policyService.Initialize(_context);
                 _policyChecker.Initialize(_context);
@@ -86,9 +88,9 @@ namespace Atomic.UI
         public void InitPolicyPopupMVC()
         {
             var popup = UIPopup.Get(_policyPopup.name);
-            if (popup.TryGetComponent<PolicyView>(out PolicyView view))
+            if (popup.TryGetComponent<PolicyInfoView>(out PolicyInfoView view))
             {
-                PolicyViewController controller = new(_policyService, view);
+                PolicyDisplayController controller = new(_policyService, view);
 
                 view.Initialize(Context);
                 controller.Initialize(Context);

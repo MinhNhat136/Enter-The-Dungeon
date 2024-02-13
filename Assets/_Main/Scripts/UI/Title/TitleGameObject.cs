@@ -5,7 +5,7 @@ using UnityEngine;
 public class TitleGameObject : MonoBehaviour
 {
     [SerializeField]
-    private TitleView _titleView;
+    private AppTitleView _titleView;
     // Start is called before the first frame update
     void Start()
     {
