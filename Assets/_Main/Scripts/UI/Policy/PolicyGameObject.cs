@@ -9,7 +9,7 @@ namespace Atomic.UI
         // Start is called before the first frame update
         void Start()
         {
-            PolicyModule mini = new(_policyPopup);
+            PolicyMini mini = new(_policyPopup);
             mini.Initialize();
         }
 

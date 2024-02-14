@@ -9,7 +9,7 @@ namespace Atomic.UI
         // Start is called before the first frame update
         void Start()
         {
-            NetworkModule module = new(_popup);
+            NetworkMini module = new(_popup);
             module.Initialize();
         }
 

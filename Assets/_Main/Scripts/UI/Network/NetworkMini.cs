@@ -14,7 +14,7 @@ namespace Atomic.UI
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class NetworkModule : IMiniMvcs
+    public class NetworkMini : IMiniMvcs
     {
         //  Events ----------------------------------------
 
@@ -38,7 +38,7 @@ namespace Atomic.UI
 
 
         //  Initialization  -------------------------------
-        public NetworkModule(UIPopup popup)
+        public NetworkMini(UIPopup popup)
         {
             _popup = popup;
         }

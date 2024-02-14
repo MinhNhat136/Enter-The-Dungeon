@@ -15,7 +15,7 @@ namespace Atomic.UI
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PolicyModule : IMiniMvcs
+    public class PolicyMini : IMiniMvcs
     {
         //  Events ----------------------------------------
 
@@ -52,7 +52,7 @@ namespace Atomic.UI
 
 
         //  Initialization  -------------------------------
-        public PolicyModule(UIPopup policyPopup)
+        public PolicyMini(UIPopup policyPopup)
         {
             _policyPopup = policyPopup;
         }

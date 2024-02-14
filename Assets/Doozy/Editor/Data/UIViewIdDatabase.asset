@@ -16,6 +16,8 @@ MonoBehaviour:
     Items:
     - Category: None
       Name: None
+    - Category: Shared
+      Name: Settings
     - Category: Splash
       Name: Loading
     - Category: Splash
