@@ -698,11 +698,41 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: <color=#00FFFF>Loading...</color>
---- !u!1 &1636073592 stripped
+--- !u!1 &1380476814 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 813502772020946121, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2498796293649051693, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
   m_PrefabInstance: {fileID: 463413833191794771}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1380476820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1380476814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f003aa0ad0a4c469338c205df004d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Payload:
+    StreamId:
+      Category: Splash
+      Name: LoadScene
+      Custom: 0
+    SignalValueType: 0
+    IntegerValue: 0
+    BooleanValue: 0
+    FloatValue: 0
+    StringValue: 
+    ColorValue: {r: 0, g: 0, b: 0, a: 0}
+    Vector2Value: {x: 0, y: 0}
+    Vector3Value: {x: 0, y: 0, z: 0}
+    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+  SendOnStart: 0
+  SendOnEnable: 0
+  SendOnDisable: 0
+  SendOnDestroy: 0
 --- !u!1 &1797544905
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,42 +971,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4103047445178862660, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
   m_PrefabInstance: {fileID: 463413833191794771}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636073592}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79da85767243ca043b13f00df7d7f559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2075734052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1636073592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78f003aa0ad0a4c469338c205df004d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Payload:
-    StreamId:
-      Category: Splash
-      Name: LoadScene
-      Custom: 0
-    SignalValueType: 0
-    IntegerValue: 0
-    BooleanValue: 0
-    FloatValue: 0
-    StringValue: 
-    ColorValue: {r: 0, g: 0, b: 0, a: 0}
-    Vector2Value: {x: 0, y: 0}
-    Vector3Value: {x: 0, y: 0, z: 0}
-    Vector4Value: {x: 0, y: 0, z: 0, w: 0}
-  SendOnStart: 0
-  SendOnEnable: 0
-  SendOnDisable: 0
-  SendOnDestroy: 0
 --- !u!1001 &463413833191794771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1104,7 +1104,11 @@ PrefabInstance:
     - target: {fileID: 4103047445178862660, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       propertyPath: _signalSender
       value: 
-      objectReference: {fileID: 2075734052}
+      objectReference: {fileID: 1380476820}
+    - target: {fileID: 4103047445178862660, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
+      propertyPath: _loadSceneSignal
+      value: 
+      objectReference: {fileID: 1380476820}
     - target: {fileID: 4568226852640662868, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       propertyPath: m_text
       value: <color=#00FFFF>Loading...</color>
@@ -1254,15 +1258,15 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 813502772020946121, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2075734052}
     - targetCorrespondingSourceObject: {fileID: 2777208324885808392, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 463413833191794773}
     - targetCorrespondingSourceObject: {fileID: 750335608970656789, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1354984499}
+    - targetCorrespondingSourceObject: {fileID: 2498796293649051693, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1380476820}
   m_SourcePrefab: {fileID: 100100000, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
 --- !u!114 &463413833191794772 stripped
 MonoBehaviour:

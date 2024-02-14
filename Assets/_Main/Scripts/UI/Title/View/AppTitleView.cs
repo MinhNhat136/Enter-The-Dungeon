@@ -52,7 +52,7 @@ namespace Atomic.UI
         private GameObject _loadingProgressBar;
 
         [SerializeField]
-        private SignalSender _signalSender;
+        private SignalSender _loadSceneSignal;
 
         private bool _isInitialized = false;
         private IContext _context;
@@ -142,7 +142,7 @@ namespace Atomic.UI
         {
             SetVisibleLoadingProgressBar(true);
             SetVisibleTaptoStartButton(false);
-            _signalSender.SendSignal();
+            _loadSceneSignal.SendSignal();
         }
     }
 }

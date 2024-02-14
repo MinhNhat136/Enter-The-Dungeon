@@ -28,7 +28,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8074dc491ddc34f4e83332d9eae76980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: 224, y: 112}
+  Position: {x: 176, y: 16}
   Name: End
   IndividualRoomTemplates: []
   RoomTemplateSets: []
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8074dc491ddc34f4e83332d9eae76980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: 384, y: 176}
+  Position: {x: 176, y: 128}
   Name: Room
   IndividualRoomTemplates: []
   RoomTemplateSets: []
@@ -140,7 +140,7 @@ MonoBehaviour:
   - {fileID: 4914226955029081615}
   - {fileID: -3864503872433684781}
   EditorData:
-    PanOffset: {x: 74.030945, y: 14.107895}
+    PanOffset: {x: 394.66034, y: 147.21516}
     Zoom: 0.9556204
   RoomType: Edgar.Unity.Room
   ConnectionType: Edgar.Unity.Connection
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8074dc491ddc34f4e83332d9eae76980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Position: {x: 208, y: 208}
+  Position: {x: 176, y: 208}
   Name: Room
   IndividualRoomTemplates: []
   RoomTemplateSets: []
