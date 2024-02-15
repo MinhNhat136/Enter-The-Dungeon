@@ -868,18 +868,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: View - Title
       objectReference: {fileID: 0}
-    - target: {fileID: 813502772020946121, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1669621247736315245, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1829950759}
-    - target: {fileID: 1669621247736315245, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3663047197730971081, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -920,12 +912,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7276877428691345296, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: OnStartBehaviour
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7276877428691345296, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: HandleCanvasGroupBlockRaycasts
+    - target: {fileID: 6752591638838486505, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
+      propertyPath: DeselectAfterPress
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8287398948094106604, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
@@ -959,18 +947,6 @@ PrefabInstance:
     - target: {fileID: 8287398948094106604, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 1440
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287398948094106604, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287398948094106604, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8287398948094106604, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8287398948094106604, guid: de9afc6deca799a4191f01c43c0ae6e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1938,10 +1914,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7007023317696501009, guid: bd9c42cd52826884d94a2e5de964731f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd9c42cd52826884d94a2e5de964731f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

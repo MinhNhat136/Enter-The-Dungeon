@@ -10,14 +10,11 @@ namespace Atomic.Controllers
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-
-    /// <summary>
-    /// TODO: Replace with comments...
-    /// </summary>
     public class PolicyValidationController : IController
     {
         //  Events ----------------------------------------
-        public UnityEvent OnShowPolicy = new();
+        public readonly UnityEvent OnShowPolicy = new();
+
 
         //  Properties ------------------------------------
         public bool IsInitialized
@@ -74,12 +71,11 @@ namespace Atomic.Controllers
             RequireIsInitialized();
             if (!isAccepted)
             {
+                UnityEngine.Debug.Log("show");
                 OnShowPolicy.Invoke();
             }
 
         }
-
-
     }
 
 }

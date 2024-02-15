@@ -27,7 +27,7 @@ namespace Atomic.UI
         }
         public PolicyValidationController PolicyChecker
         {
-            get { return _policyChecker; }
+            get { return _policyValidationController; }
         }
 
         public PolicyService PolicyService
@@ -47,7 +47,7 @@ namespace Atomic.UI
         //  Dependencies ----------------------------------
         private readonly UIPopup _policyPopup;
         private Context _context;
-        private PolicyValidationController _policyChecker;
+        private PolicyValidationController _policyValidationController;
         private PolicyService _policyService;
 
 
@@ -65,12 +65,13 @@ namespace Atomic.UI
 
                 _context = new Context();
                 _policyService = new PolicyService();
-                _policyChecker = new PolicyValidationController(_policyService);
+                _policyValidationController = new PolicyValidationController(_policyService);
+                _policyValidationController.OnShowPolicy.AddListener(InitPolicyPopupMVC);
 
                 _policyService.Initialize(_context);
-                _policyChecker.Initialize(_context);
+                _policyValidationController.Initialize(_context);
 
-                _policyChecker.OnShowPolicy.AddListener(InitPolicyPopupMVC);
+
             }
         }
 
@@ -87,6 +88,7 @@ namespace Atomic.UI
 
         public void InitPolicyPopupMVC()
         {
+            UnityEngine.Debug.Log("init");
             var popup = UIPopup.Get(_policyPopup.name);
             if (popup.TryGetComponent<PolicyInfoView>(out PolicyInfoView view))
             {

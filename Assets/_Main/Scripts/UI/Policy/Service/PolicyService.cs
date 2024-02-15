@@ -1,10 +1,9 @@
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Service;
-using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Events;
 
 
-// CAUTION: NOT YET COMPELTED THIS CLASS 
 namespace Atomic.Services
 {
     //  Namespace Properties ------------------------------
@@ -31,34 +30,19 @@ namespace Atomic.Services
         public void CheckAcceptedPolicy()
         {
             RequireIsInitialized();
-
-            CheckAsync();
-        }
-
-        private async void CheckAsync()
-        {
-            RequireIsInitialized();
-
-            await Task.Delay(500);
-
-            bool IsAccepted = false;
-
-            OnCheckCompleted.Invoke(IsAccepted);
+            bool isAccepted = ES3.Load<bool>(GameDataKey.IsAcceptedPolicy, false);
+            OnCheckCompleted.Invoke(isAccepted);
         }
 
         public void AcceptPolicy()
         {
-
+            ES3.Save<bool>(GameDataKey.IsAcceptedPolicy, true);
         }
 
         public void ShowTermsOfPolicy()
         {
-
+            Application.OpenURL("https://www.law365.co/blog/end-user-license-agreement");
         }
-
-        //  Event Handlers --------------------------------
-
-
     }
 }
 
