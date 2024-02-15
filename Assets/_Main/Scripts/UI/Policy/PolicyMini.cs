@@ -65,12 +65,14 @@ namespace Atomic.UI
 
                 _context = new Context();
                 _policyService = new PolicyService();
+
                 _policyValidationController = new PolicyValidationController(_policyService);
                 _policyValidationController.OnShowPolicy.AddListener(InitPolicyPopupMVC);
 
                 _policyService.Initialize(_context);
                 _policyValidationController.Initialize(_context);
 
+                _policyValidationController.CheckPolicy();
 
             }
         }
@@ -88,7 +90,6 @@ namespace Atomic.UI
 
         public void InitPolicyPopupMVC()
         {
-            UnityEngine.Debug.Log("init");
             var popup = UIPopup.Get(_policyPopup.name);
             if (popup.TryGetComponent<PolicyInfoView>(out PolicyInfoView view))
             {

@@ -48,8 +48,6 @@ namespace Atomic.Controllers
                 _context = context;
 
                 _service.OnCheckCompleted.AddListener(Service_OnCheckCompleted);
-
-                _service.CheckAcceptedPolicy();
             }
         }
 
@@ -62,7 +60,11 @@ namespace Atomic.Controllers
         }
 
         //  Other Methods ---------------------------------
-
+        public void CheckPolicy()
+        {
+            RequireIsInitialized();
+            _service.CheckAcceptedPolicy();
+        }
 
 
         //  Event Handlers --------------------------------
@@ -71,7 +73,6 @@ namespace Atomic.Controllers
             RequireIsInitialized();
             if (!isAccepted)
             {
-                UnityEngine.Debug.Log("show");
                 OnShowPolicy.Invoke();
             }
 
