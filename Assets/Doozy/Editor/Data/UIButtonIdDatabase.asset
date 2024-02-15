@@ -24,8 +24,30 @@ MonoBehaviour:
       Name: Guest
     - Category: None
       Name: None
+    - Category: Settings
+      Name: About
+    - Category: Settings
+      Name: Connect
+    - Category: Settings
+      Name: GiveUp
+    - Category: Settings
+      Name: Language
+    - Category: Settings
+      Name: Like
+    - Category: Settings
+      Name: Logout
+    - Category: Settings
+      Name: OtherGames
+    - Category: Settings
+      Name: Rate
+    - Category: Settings
+      Name: UserID
+    - Category: Share
+      Name: Back
     - Category: Share
       Name: OK
+    - Category: Share
+      Name: Settings
     - Category: Share
       Name: TermsOfService
     - Category: Splash

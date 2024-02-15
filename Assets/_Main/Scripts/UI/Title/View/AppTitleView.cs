@@ -28,6 +28,10 @@ namespace Atomic.UI
         [HideInInspector]
         public readonly UnityEvent SignInWithGoogleUnityEvent = new();
 
+        [HideInInspector]
+        public readonly UnityEvent ShowViewSettingsUnityEvent = new();
+
+
         //  Properties ------------------------------------
         public bool IsInitialized { get { return _isInitialized; } }
         public IContext Context { get { return _context; } }
@@ -45,6 +49,9 @@ namespace Atomic.UI
         [SerializeField] 
         private UIButton _buttonSignInWithGuest;
         
+        [SerializeField]
+        private UIButton _buttonSetting;
+        
         [SerializeField] 
         private UIButton _buttonTapToStart;
 
@@ -53,6 +60,7 @@ namespace Atomic.UI
 
         [SerializeField]
         private SignalSender _loadSceneSignal;
+
 
         private bool _isInitialized = false;
         private IContext _context;
@@ -130,6 +138,11 @@ namespace Atomic.UI
         private void SignInWithGoogleButton_OnClicked()
         {
             SignInWithGoogleUnityEvent.Invoke();
+        }
+
+        private void SettingsButton_OnClicked()
+        {
+            ShowViewSettingsUnityEvent.Invoke();
         }
 
         private void SignInController_OnSignInCompleted(SignInCompletionCommand command)
