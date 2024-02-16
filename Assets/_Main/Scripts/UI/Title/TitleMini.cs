@@ -29,22 +29,10 @@ namespace Atomic.UI
 
                 Context context = new();
 
-                SignInControllerBuilder builder = new();
+                AppTitleViewController _controller = new(_view);
 
-                GuestSignInService signInWithGuessService = new();
-                signInWithGuessService.Initialize(context);
-
-                GuessSignInController signInWithGuessController = new(signInWithGuessService);
-                signInWithGuessController.Initialize(context);
-
-                GuestSignUpController signUpWithGuessController = new();
-
-                builder.SetSignInWithGuessController(signInWithGuessController);
                 _view.Initialize(context);
-
-                AppTitleViewController _controller = new(builder, _view, signUpWithGuessController);
                 _controller.Initialize(context);
-
             }
         }
 

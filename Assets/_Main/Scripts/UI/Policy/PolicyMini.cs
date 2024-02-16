@@ -86,8 +86,6 @@ namespace Atomic.UI
         }
 
         //  Other Methods ---------------------------------
-        public void ShowPolicyPopup(UIPopup popup) => popup!.Show();
-
         public void InitPolicyPopupMVC()
         {
             var popup = UIPopup.Get(_policyPopup.name);
@@ -98,7 +96,7 @@ namespace Atomic.UI
                 view.Initialize(Context);
                 controller.Initialize(Context);
 
-                ShowPolicyPopup(popup);
+                popup!.Show();
             }
             else throw new System.Exception("Module Policy null view");
 
