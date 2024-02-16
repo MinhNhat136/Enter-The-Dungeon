@@ -15,6 +15,6 @@ MonoBehaviour:
   Database:
     Items:
     - Category: Loading
-      Name: Main
+      Name: Lobby
     - Category: None
       Name: None
