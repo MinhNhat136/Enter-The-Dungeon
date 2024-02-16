@@ -16,14 +16,12 @@ namespace Atomic.Models
 
         //  Fields ----------------------------------------
         public string Name { get; set; }
-        public int Age { get; set; }
 
         //  Initialization  -------------------------------
 
         public UserProfileData(string name, int age)
         {
             Name = name;
-            Age = age;
         }
 
         //  Methods ---------------------------------------

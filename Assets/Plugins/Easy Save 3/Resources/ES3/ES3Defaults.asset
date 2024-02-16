@@ -32,10 +32,6 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
-    - Edgar.Unity
-    - Edgar.Unity.Editor
-    - Edgar.Unity.Examples
-    - Edgar.Unity.FogOfWar.URP
     - PPv2URPConverters
     - RMC.Core.Mini.Editor
     - RMC.Core.Mini.Editor.Tests

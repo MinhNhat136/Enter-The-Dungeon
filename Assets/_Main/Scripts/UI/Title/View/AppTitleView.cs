@@ -148,7 +148,6 @@ namespace Atomic.UI
 
         private void SignInController_OnSignInCompleted(SignInCompletionCommand command)
         {
-            Debug.Log(command.WasSuccess);
             SetVisibleSignInButtons(!command.WasSuccess);
             SetVisibleTaptoStartButton(command.WasSuccess);
         }

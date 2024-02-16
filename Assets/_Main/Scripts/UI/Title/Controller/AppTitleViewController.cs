@@ -73,7 +73,7 @@ namespace Atomic.Controllers
         //  Event Handlers --------------------------------
         private void View_OnSignInWithGuess()
         {
-            Context.CommandManager.InvokeCommand(new OnGuessSignInCommand());
+            Context.CommandManager.InvokeCommand(new OnGuestSignInCommand());
         }
 
         private void View_OnSignInWithGameCenter()

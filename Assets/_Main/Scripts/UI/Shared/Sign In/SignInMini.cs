@@ -32,7 +32,7 @@ public class SignInMini : IMiniMvcs
             _isInitialized = true;
 
             GuessSignInService guessSignInService = new();
-            GuessSignInController guessSignInController = new(guessSignInService);
+            GuestSignInController guessSignInController = new(guessSignInService);
 
             RequireContext();
             guessSignInService.Initialize(_context);
