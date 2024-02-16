@@ -1,3 +1,4 @@
+using Atomic.Command;
 using Atomic.Models;
 using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
@@ -32,11 +33,11 @@ namespace Atomic.Controllers
         //  Fields ----------------------------------------
         private bool _isInitialized;
         private IContext _context;
-        private readonly GuestSignInService _service;
+        private readonly GuessSignInService _service;
 
 
         //  Initialization  -------------------------------
-        public GuessSignInController(GuestSignInService service)
+        public GuessSignInController(GuessSignInService service)
         {
             _service = service;
         }
@@ -49,6 +50,8 @@ namespace Atomic.Controllers
                 _context = context;
 
                 _service.OnSignInCompleted.AddListener(OnSignedInComplete);
+
+                Context.CommandManager.AddCommandListener<OnGuessSignInCommand>(StartSignInProcess);
             }
         }
 
@@ -65,7 +68,7 @@ namespace Atomic.Controllers
 
 
         //  Other Methods ---------------------------------
-        public void StartSignInProcess()
+        public void StartSignInProcess(OnGuessSignInCommand command)
         {
             RequireIsInitialized();
             _service.SignIn();

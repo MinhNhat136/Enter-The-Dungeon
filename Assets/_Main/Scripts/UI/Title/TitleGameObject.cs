@@ -1,15 +1,16 @@
 using Atomic.UI;
-
+using RMC.Core.Architectures.Mini.Context;
 using UnityEngine;
 
-public class TitleGameObject : MonoBehaviour
+public class TitleGameObject : ContextContainer
 {
     [SerializeField]
     private AppTitleView _titleView;
-    // Start is called before the first frame update
-    void Start()
+
+    public void OnStart()
     {
-        TitleMini titleModule = new TitleMini(_titleView);
-        titleModule.Initialize();
+        TitleMini titleMini = new TitleMini(_titleView);
+        titleMini.Initialize();
+        _context = titleMini.Context;
     }
 }

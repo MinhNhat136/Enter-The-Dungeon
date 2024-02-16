@@ -1,3 +1,4 @@
+using Atomic.Command;
 using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
@@ -36,23 +37,13 @@ namespace Atomic.Controllers
         private IContext _context;
         private readonly AppTitleView _view;
 
-        private readonly ISignInController _signInWithGuessController;
-        private readonly ISignInController _signInWithGameCenterController;
-        private readonly ISignInController _signInWithFacebookController;
-        private readonly ISignInController _signInWithGoogleController;
 
         private readonly GuestSignUpController _signUpWithGuessController; 
 
         //  Initialization  -------------------------------
-        public AppTitleViewController(SignInControllerBuilder builder, AppTitleView view, GuestSignUpController signUpWithGuessController)
+        public AppTitleViewController(AppTitleView view)
         {
-            _signInWithGuessController = builder.GetSignInController(SignInType.Guess);
-            /*_signInWithGameCenterController = builder.GetSignInController(SignInType.GameCenter);
-            _signInWithFacebookController = builder.GetSignInController(SignInType.Facebook);
-            _signInWithGoogleController = builder.GetSignInController(SignInType.Google);*/
-
             _view = view;
-            _signUpWithGuessController = signUpWithGuessController;
         }
 
         public void Initialize(IContext context)
@@ -63,9 +54,9 @@ namespace Atomic.Controllers
                 _context = context;
 
                 _view.SignInWithGuessUnityEvent.AddListener(View_OnSignInWithGuess);
-                /*_view.SignInWithGameCenterUnityEvent.AddListener(View_OnSignInWithGameCenter);
+                _view.SignInWithGameCenterUnityEvent.AddListener(View_OnSignInWithGameCenter);
                 _view.SignInWithFacebookUnityEvent.AddListener(View_OnSignInWithFacebook);
-                _view.SignInWithGoogleUnityEvent.AddListener(View_OnSignInWithGoogle);*/
+                _view.SignInWithGoogleUnityEvent.AddListener(View_OnSignInWithGoogle);
             }
         }
 
@@ -82,22 +73,23 @@ namespace Atomic.Controllers
         //  Event Handlers --------------------------------
         private void View_OnSignInWithGuess()
         {
-            _signInWithGuessController.StartSignInProcess();
+            Context.CommandManager.InvokeCommand(new OnGuessSignInCommand());
         }
 
         private void View_OnSignInWithGameCenter()
         {
-            _signInWithGameCenterController.StartSignInProcess();
+            UnityEngine.Debug.Log("Sign In With Guess");
+
         }
 
         private void View_OnSignInWithFacebook()
         {
-            _signInWithFacebookController.StartSignInProcess();
+            UnityEngine.Debug.Log("Sign In With Guess");
         }
 
         private void View_OnSignInWithGoogle()
         {
-            _signInWithGoogleController.StartSignInProcess();
+            UnityEngine.Debug.Log("Sign In With Guess");
         }
 
     }

@@ -7,7 +7,7 @@ namespace Atomic.UI
     {
         [SerializeField] private UIPopup _popup;
         // Start is called before the first frame update
-        void Start()
+        public void OnStart()
         {
             NetworkMini module = new(_popup);
             module.Initialize();
