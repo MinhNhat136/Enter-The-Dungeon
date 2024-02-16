@@ -1,3 +1,4 @@
+using Atomic.Command;
 using Doozy.Runtime.Signals;
 using Doozy.Runtime.UIManager.Components;
 using RMC.Core.Architectures.Mini.Context;
@@ -147,6 +148,7 @@ namespace Atomic.UI
 
         private void SignInController_OnSignInCompleted(SignInCompletionCommand command)
         {
+            Debug.Log(command.WasSuccess);
             SetVisibleSignInButtons(!command.WasSuccess);
             SetVisibleTaptoStartButton(command.WasSuccess);
         }

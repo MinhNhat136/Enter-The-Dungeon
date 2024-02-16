@@ -15,7 +15,7 @@ namespace Atomic.UI
     /// The Service handles external data 
     /// </summary>
 
-    public class GuestSignInService : BaseService
+    public class GuessSignInService : BaseService
     {
         //  Events ----------------------------------------
         public readonly UnityEvent<UserProfileData, bool> OnSignInCompleted = new();
@@ -44,8 +44,8 @@ namespace Atomic.UI
         private void Login()
         {
             RequireIsInitialized();
-            UserProfileData user = ES3.Load<UserProfileData>(GameDataKey.UserProfileData);
-            bool wasSuccess = user != null ? true : false;
+            UserProfileData user = ES3.Load<UserProfileData>(GameDataKey.UserProfileData, new UserProfileData("", 0));
+            bool wasSuccess = user.Name != "" ? true : false;
             OnSignInCompleted.Invoke(user, wasSuccess);
         }
 

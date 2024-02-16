@@ -1,7 +1,7 @@
 using Atomic.Models;
 using RMC.Core.Architectures.Mini.Controller.Commands;
 
-namespace Atomic.UI
+namespace Atomic.Command
 {
     public class SignInCompletionCommand : ICommand
     {

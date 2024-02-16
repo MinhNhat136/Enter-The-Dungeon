@@ -1,5 +1,4 @@
 using Atomic.Controllers;
-using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
 using System;
 
@@ -15,11 +14,14 @@ namespace Atomic.UI
         }
 
         private bool _isInitialized;
+        private IContext _context; 
 
         public TitleMini(AppTitleView view) 
         {
             _view = view;
         }
+
+        public IContext Context { get { return _context; } }
 
         public void Initialize()
         {
@@ -27,12 +29,12 @@ namespace Atomic.UI
             {
                 _isInitialized = true;
 
-                Context context = new();
+                _context = new Context();
 
                 AppTitleViewController _controller = new(_view);
 
-                _view.Initialize(context);
-                _controller.Initialize(context);
+                _view.Initialize(_context);
+                _controller.Initialize(_context);
             }
         }
 

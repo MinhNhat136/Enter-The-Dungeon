@@ -123,7 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &56994433
+--- !u!224 &154123868 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5920044268817283092, guid: e9492cb3647fb3f4fb82a4ee493de916, type: 3}
+  m_PrefabInstance: {fileID: 1416345864964962789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &370470127
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,21 +136,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 56994434}
+  - component: {fileID: 370470128}
+  - component: {fileID: 370470129}
   m_Layer: 0
-  m_Name: 'Guess Sign In '
+  m_Name: 'Sign In '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &56994434
+--- !u!4 &370470128
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56994433}
+  m_GameObject: {fileID: 370470127}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -154,11 +160,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2024997333}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!224 &154123868 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5920044268817283092, guid: e9492cb3647fb3f4fb82a4ee493de916, type: 3}
-  m_PrefabInstance: {fileID: 1416345864964962789}
+--- !u!114 &370470129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370470127}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e035aefd6f10d084ab7e4e1e478eaff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contextContainer: {fileID: 1302699063}
 --- !u!1 &421167277 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8988377035897992149, guid: e9492cb3647fb3f4fb82a4ee493de916, type: 3}
@@ -302,37 +316,6 @@ MonoBehaviour:
   rightGroupSettingsView: {fileID: 1416345864964962790}
   leftGroupSettingsView: {fileID: 421167282}
   bottomGroupSettingsView: {fileID: 1749466374}
---- !u!1 &662091448
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 662091449}
-  m_Layer: 0
-  m_Name: Guess Sign Up
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &662091449
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 662091448}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2024997333}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &837384305
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,6 +1028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2024997333}
+  - component: {fileID: 2024997334}
   m_Layer: 0
   m_Name: Feature Manager
   m_TagString: Untagged
@@ -1061,7 +1045,7 @@ Transform:
   m_GameObject: {fileID: 2024997332}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1110.1049, y: 629.27203, z: 7.867142}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1069,10 +1053,26 @@ Transform:
   - {fileID: 837384307}
   - {fileID: 992206672}
   - {fileID: 542311989}
-  - {fileID: 56994434}
-  - {fileID: 662091449}
+  - {fileID: 370470128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2024997334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024997332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a6d5ce04c4cb0488605ce52b2f09c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TitleGameObject: {fileID: 1302699063}
+  SignInGameObject: {fileID: 370470129}
+  NetworkGameObject: {fileID: 992206671}
+  PolicyGameObject: {fileID: 837384306}
+  SettingsGameObject: {fileID: 542311990}
 --- !u!1001 &1416345864964962789
 PrefabInstance:
   m_ObjectHideFlags: 0

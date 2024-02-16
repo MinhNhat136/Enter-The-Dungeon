@@ -14,7 +14,7 @@ public class SettingsGameObject : MonoBehaviour
     [SerializeField]
     private BottomGroupSettingsView bottomGroupSettingsView;
 
-    private void Start()
+    public void OnStart()
     {
         SettingsMini mini = new SettingsMini(rightGroupSettingsView, leftGroupSettingsView, bottomGroupSettingsView);
         mini.Initialize();

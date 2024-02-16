@@ -1,3 +1,4 @@
+using Atomic.Command;
 using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
@@ -72,7 +73,7 @@ namespace Atomic.Controllers
         //  Event Handlers --------------------------------
         private void View_OnSignInWithGuess()
         {
-            UnityEngine.Debug.Log("Sign In With Guess");
+            Context.CommandManager.InvokeCommand(new OnGuessSignInCommand());
         }
 
         private void View_OnSignInWithGameCenter()
