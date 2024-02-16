@@ -1,6 +1,4 @@
 using Atomic.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SettingsGameObject : MonoBehaviour
@@ -16,7 +14,7 @@ public class SettingsGameObject : MonoBehaviour
 
     public void OnStart()
     {
-        SettingsMini mini = new SettingsMini(rightGroupSettingsView, leftGroupSettingsView, bottomGroupSettingsView);
+        SettingsMini mini = new(rightGroupSettingsView, leftGroupSettingsView, bottomGroupSettingsView);
         mini.Initialize();
     }
 }

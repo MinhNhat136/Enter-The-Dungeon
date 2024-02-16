@@ -37,9 +37,6 @@ namespace Atomic.Controllers
         private IContext _context;
         private readonly AppTitleView _view;
 
-
-        private readonly GuestSignUpController _signUpWithGuessController; 
-
         //  Initialization  -------------------------------
         public AppTitleViewController(AppTitleView view)
         {

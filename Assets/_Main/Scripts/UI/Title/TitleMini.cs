@@ -14,7 +14,7 @@ namespace Atomic.UI
         }
 
         private bool _isInitialized;
-        private IContext _context; 
+        private IContext _context;
 
         public TitleMini(AppTitleView view) 
         {

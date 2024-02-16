@@ -1,12 +1,15 @@
+using Atomic.Command;
 using Doozy.Runtime.UIManager.Components;
+using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.View;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace Atomic.Template
+namespace Atomic.UI
 {
     //  Namespace Properties ------------------------------
 
@@ -18,7 +21,7 @@ namespace Atomic.Template
     public class GuestSignUpView : MonoBehaviour, IView
     {
         //  Events ----------------------------------------
-
+        public readonly UnityEvent<string> OnClickButtonOkUnityEvent = new();
 
         //  Properties ------------------------------------
         public bool IsInitialized
@@ -37,13 +40,13 @@ namespace Atomic.Template
         private UIButton _buttonOK;
 
         [SerializeField]
-        private TMP_InputField _inputField;
-        
+        private TMP_InputField _inputUsername;
+
+        [SerializeField] 
+        private UIPopup _popup;
+
         private bool _isInitialized;
         private IContext _context;
-
-
-        //  Dependencies ----------------------------------
 
 
         //  Initialization  -------------------------------
@@ -54,7 +57,8 @@ namespace Atomic.Template
                 _isInitialized = true;
                 _context = context;
 
-
+                _buttonOK.onClickEvent.AddListener(ButtonOk_OnClicked);
+                Context.CommandManager.AddCommandListener<OnSignUpCompleteCommand>((p) => HidePopup());
             }
         }
 
@@ -67,10 +71,25 @@ namespace Atomic.Template
         }
 
         //  Unity Methods   -------------------------------
-
+        private void OnDestroy()
+        {
+            Context.CommandManager.RemoveCommandListener<OnSignUpCompleteCommand>((p) => HidePopup());
+        }
 
         //  Other Methods ---------------------------------
 
 
+        //  Event Handlers --------------------------------
+        private void ButtonOk_OnClicked()
+        {
+            if (_inputUsername.text == "") return; 
+            OnClickButtonOkUnityEvent.Invoke(_inputUsername.text);
+        }
+
+        private void HidePopup()
+        {
+            RequireIsInitialized();
+            _popup.Hide();
+        }
     }
 }

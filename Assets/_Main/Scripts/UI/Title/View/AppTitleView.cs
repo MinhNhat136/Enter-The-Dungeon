@@ -115,6 +115,11 @@ namespace Atomic.UI
             _buttonTapToStart.gameObject.SetActive(isVisible);
         }
 
+        private void SetVisibleSettingsButton(bool isVisible)
+        {
+            _buttonSetting.gameObject.SetActive(isVisible);
+        }
+
         private void SetVisibleLoadingProgressBar(bool isVisible)
         {
             _loadingProgressBar.gameObject.SetActive(isVisible);
@@ -149,6 +154,7 @@ namespace Atomic.UI
         private void SignInController_OnSignInCompleted(SignInCompletionCommand command)
         {
             SetVisibleSignInButtons(!command.WasSuccess);
+            SetVisibleSettingsButton(!command.WasSuccess);
             SetVisibleTaptoStartButton(command.WasSuccess);
         }
 

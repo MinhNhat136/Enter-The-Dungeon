@@ -1,18 +1,23 @@
+using Doozy.Runtime.UIManager.Containers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GuestSignUpGameObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private UIPopup _popupSignUp;
+
+    [SerializeField]
+    private ContextContainer _contextContainer;
+
+    public void OnStart()
     {
-        
+        GuestSignUpMini guestSignUpMini = new(_popupSignUp)
+        {
+            Context = _contextContainer.Context
+        };
+        guestSignUpMini.Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

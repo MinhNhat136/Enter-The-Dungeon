@@ -9,7 +9,7 @@ public class TitleGameObject : ContextContainer
 
     public void OnStart()
     {
-        TitleMini titleMini = new TitleMini(_titleView);
+        TitleMini titleMini = new(_titleView);
         titleMini.Initialize();
         _context = titleMini.Context;
     }

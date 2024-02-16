@@ -1,12 +1,26 @@
+using Atomic.Command;
 using Atomic.Models;
+using Atomic.Services;
+using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
 using System;
 
 namespace Atomic.Controllers
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
     public class GuestSignUpController : IController
     {
+        //  Events ----------------------------------------
+
+
+        //  Properties ------------------------------------
         public bool IsInitialized
         {
             get { return _isInitialized; }
@@ -17,8 +31,22 @@ namespace Atomic.Controllers
             get { return _context; }
         }
 
+        //  Fields ----------------------------------------
         private bool _isInitialized;
         private IContext _context;
+
+        private readonly GuestSignUpView _view;
+        private readonly GuestSignUpService _service;
+
+        //  Dependencies ----------------------------------
+
+
+        //  Initialization  -------------------------------
+        public GuestSignUpController(GuestSignUpView view, GuestSignUpService service)
+        {
+            _view = view;
+            _service = service;
+        }
 
         public void Initialize(IContext context)
         {
@@ -27,6 +55,8 @@ namespace Atomic.Controllers
                 _isInitialized = true;
                 _context = context;
 
+                _view.OnClickButtonOkUnityEvent.AddListener(View_OnClickedButtonOk);
+                _service.OnSignUpCompletedUnityEvent.AddListener(Service_OnSignUpCompletedUnityEvent);
             }
         }
 
@@ -38,9 +68,19 @@ namespace Atomic.Controllers
             }
         }
 
-        public void SignUp(UserProfileData userData)
-        {
+        //  Other Methods ---------------------------------
 
+
+        //  Event Handlers --------------------------------
+
+        private void View_OnClickedButtonOk(string username)
+        {
+            _service.SignUp(username);
+        }
+
+        private void Service_OnSignUpCompletedUnityEvent(UserProfileData userProfileData)
+        {
+            Context.CommandManager.InvokeCommand(new OnSignUpCompleteCommand(userProfileData));
         }
     }
 }

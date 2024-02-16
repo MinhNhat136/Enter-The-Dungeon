@@ -11,7 +11,7 @@ public class SignInGameObject : MonoBehaviour
 
     public void OnStart()
     {
-        SignInMini signInMini = new SignInMini();
+        SignInMini signInMini = new();
         signInMini.Context = contextContainer.Context;
         signInMini.Initialize();
     }

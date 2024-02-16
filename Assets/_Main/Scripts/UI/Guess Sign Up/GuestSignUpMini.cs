@@ -1,9 +1,10 @@
+using Atomic.Command;
 using Atomic.Controllers;
+using Atomic.Services;
 using Atomic.UI;
+using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GuestSignUpMini : IMiniMvcs
@@ -24,6 +25,9 @@ public class GuestSignUpMini : IMiniMvcs
     }
 
     //  Fields ----------------------------------------
+    [SerializeField]
+    private UIPopup _popup;
+
     private bool _isInitialized;
     private IContext _context;
 
@@ -31,14 +35,19 @@ public class GuestSignUpMini : IMiniMvcs
 
 
     //  Initialization  -------------------------------
+    public GuestSignUpMini(UIPopup popup)
+    {
+        _popup = popup;
+    }
+
     public void Initialize()
     {
         if (!IsInitialized)
         {
             _isInitialized = true;
 
-
-            
+            RequireContext();
+            Context.CommandManager.AddCommandListener<SignInCompletionCommand>(InitSignUpMVC);
         }
     }
 
@@ -56,5 +65,25 @@ public class GuestSignUpMini : IMiniMvcs
         {
             throw new Exception("Sign Up Mini not have Context");
         }
+    }
+
+    public void InitSignUpMVC(SignInCompletionCommand command)
+    {
+        if (command.WasSuccess) return;
+
+        var popup = UIPopup.Get(_popup.name);
+        if (popup.TryGetComponent<GuestSignUpView>(out GuestSignUpView view))
+        {
+            GuestSignUpService service = new();
+            GuestSignUpController controller = new(view, service);
+
+            service.Initialize(Context);
+            view.Initialize(Context);
+            controller.Initialize(Context);
+
+            popup!.Show();
+        }
+        else throw new System.Exception("Module Policy null view");
+
     }
 }

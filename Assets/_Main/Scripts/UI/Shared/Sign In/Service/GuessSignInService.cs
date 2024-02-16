@@ -44,8 +44,8 @@ namespace Atomic.UI
         private void Login()
         {
             RequireIsInitialized();
-            UserProfileData user = ES3.Load<UserProfileData>(GameDataKey.UserProfileData, new UserProfileData("", 0));
-            bool wasSuccess = user.Name != "" ? true : false;
+            UserProfileData user = ES3.Load<UserProfileData>(GameDataKey.UserProfileData, new UserProfileData(""));
+            bool wasSuccess = user.Name != "";
             OnSignInCompleted.Invoke(user, wasSuccess);
         }
 

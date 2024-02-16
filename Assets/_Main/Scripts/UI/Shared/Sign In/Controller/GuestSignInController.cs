@@ -51,7 +51,8 @@ namespace Atomic.Controllers
 
                 _service.OnSignInCompleted.AddListener(OnSignedInComplete);
 
-                Context.CommandManager.AddCommandListener<OnGuestSignInCommand>(StartSignInProcess);
+                Context.CommandManager.AddCommandListener<OnGuestSignInCommand>((p) => StartSignInProcess());
+                Context.CommandManager.AddCommandListener<OnSignUpCompleteCommand>((p) => StartSignInProcess());
             }
         }
 
@@ -68,7 +69,7 @@ namespace Atomic.Controllers
 
 
         //  Other Methods ---------------------------------
-        public void StartSignInProcess(OnGuestSignInCommand command)
+        public void StartSignInProcess()
         {
             RequireIsInitialized();
             _service.SignIn();

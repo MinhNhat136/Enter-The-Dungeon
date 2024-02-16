@@ -10,6 +10,7 @@ public class SplashFeatureManager : MonoBehaviour
     public NetworkGameObject NetworkGameObject;
     public PolicyGameObject PolicyGameObject;
     public SettingsGameObject SettingsGameObject;
+    public GuestSignUpGameObject GuestSignUpGameObject;
 
     private void Start()
     {
@@ -17,7 +18,8 @@ public class SplashFeatureManager : MonoBehaviour
         PolicyGameObject.OnStart();
         TitleGameObject.OnStart();
         SignInGameObject.OnStart();
-        SettingsGameObject.OnStart();   
+        SettingsGameObject.OnStart();
+        GuestSignUpGameObject.OnStart();
     }
 
 }

@@ -19,7 +19,7 @@ namespace Atomic.Models
 
         //  Initialization  -------------------------------
 
-        public UserProfileData(string name, int age)
+        public UserProfileData(string name)
         {
             Name = name;
         }

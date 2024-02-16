@@ -1348,7 +1348,7 @@ RectTransform:
   m_GameObject: {fileID: 8885244810712014332}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6881571517800173033}
@@ -1368,7 +1368,7 @@ Canvas:
   m_GameObject: {fileID: 8885244810712014332}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1485,7 +1485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonOK: {fileID: 3371464758844741777}
-  _inputField: {fileID: 472523322479575570}
+  _inputUsername: {fileID: 472523322479575570}
+  _popup: {fileID: 1806328852104354735}
 --- !u!1001 &5101319283022478155
 PrefabInstance:
   m_ObjectHideFlags: 0
