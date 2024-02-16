@@ -15,8 +15,6 @@ namespace Atomic.UI
             mini.Initialize();
         }
 
-
-
     }
 
 }

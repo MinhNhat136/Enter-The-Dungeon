@@ -19,4 +19,7 @@ public class SplashFeatureManager : MonoBehaviour
         SignInGameObject.OnStart();
         SettingsGameObject.OnStart();   
     }
+
 }
+
+
