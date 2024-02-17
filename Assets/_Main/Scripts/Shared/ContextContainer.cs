@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class ContextContainer : MonoBehaviour
 {
     protected IContext _context; 
-    public IContext Context
+    public virtual IContext Context
     {
         get
         {

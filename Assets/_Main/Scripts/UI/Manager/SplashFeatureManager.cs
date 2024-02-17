@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SplashFeatureManager : MonoBehaviour
 {
-    public TitleGameObject TitleGameObject;
+    public AppTitleGameObject TitleGameObject;
     public SignInGameObject SignInGameObject;
     public NetworkGameObject NetworkGameObject;
     public PolicyGameObject PolicyGameObject;

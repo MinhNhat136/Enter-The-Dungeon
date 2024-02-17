@@ -2,6 +2,7 @@ using Atomic.Controllers;
 using Atomic.Models;
 using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
+using System;
 
 
 namespace Atomic.UI
@@ -25,14 +26,16 @@ namespace Atomic.UI
             get { return _isInitialized; }
         }
 
-        public IContext Context { get { return _context; } }
+        public IContext Context 
+        { 
+            get { return _context; } 
+            set { _context = value; }
+        }
 
         //  Fields ----------------------------------------
         private bool _isInitialized;
         private IContext _context;
         private readonly UIPopup _popup;
-        private NetworkStateModel _model; 
-        private NetworkStatusController _checker;
 
         //  Dependencies ----------------------------------
 
@@ -49,10 +52,10 @@ namespace Atomic.UI
             {
                 _isInitialized = true;
 
-                _context = new Context();
+                NetworkStateModel _model = new();
+                NetworkStatusController _checker = new(_model);
 
-                _model = new NetworkStateModel();
-                _checker = new NetworkStatusController(_model);
+                RequireContext();
 
                 _model.Initialize(_context);
                 _checker.Initialize(_context);
@@ -65,6 +68,14 @@ namespace Atomic.UI
         public void RequireIsInitialized()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void RequireContext()
+        {
+            if (Context == null)
+            {
+                throw new Exception("Network Mini not have Context");
+            }
         }
 
         private void OnNetworkConnectionChange(bool previousConnetion, bool currentConnection)
@@ -90,7 +101,11 @@ namespace Atomic.UI
             View_DisplayNetworkStatus(popup);
             if (popup.TryGetComponent<NetworkErrorDisplayView>(out NetworkErrorDisplayView view))
             {
-                NetworkErrorDisplayController _controller = new(view, _model);
+                var model = Context.ModelLocator.GetItem<NetworkStateModel>();
+
+                NetworkErrorDisplayController _controller = new(view, model);
+
+                RequireContext();
 
                 view.Initialize(Context);
                 _controller.Initialize(Context);

@@ -29,10 +29,6 @@ namespace Atomic.UI
         [HideInInspector]
         public readonly UnityEvent SignInWithGoogleUnityEvent = new();
 
-        [HideInInspector]
-        public readonly UnityEvent ShowViewSettingsUnityEvent = new();
-
-
         //  Properties ------------------------------------
         public bool IsInitialized { get { return _isInitialized; } }
         public IContext Context { get { return _context; } }
@@ -122,7 +118,7 @@ namespace Atomic.UI
 
         private void SetVisibleLoadingProgressBar(bool isVisible)
         {
-            _loadingProgressBar.gameObject.SetActive(isVisible);
+            _loadingProgressBar.SetActive(isVisible);
         }
 
         //  Event Handlers --------------------------------
@@ -144,11 +140,6 @@ namespace Atomic.UI
         private void SignInWithGoogleButton_OnClicked()
         {
             SignInWithGoogleUnityEvent.Invoke();
-        }
-
-        private void SettingsButton_OnClicked()
-        {
-            ShowViewSettingsUnityEvent.Invoke();
         }
 
         private void SignInController_OnSignInCompleted(SignInCompletionCommand command)

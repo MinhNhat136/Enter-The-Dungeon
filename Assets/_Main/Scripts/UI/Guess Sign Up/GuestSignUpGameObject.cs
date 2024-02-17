@@ -1,6 +1,4 @@
 using Doozy.Runtime.UIManager.Containers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GuestSignUpGameObject : MonoBehaviour
@@ -9,7 +7,7 @@ public class GuestSignUpGameObject : MonoBehaviour
     private UIPopup _popupSignUp;
 
     [SerializeField]
-    private ContextContainer _contextContainer;
+    private ContextContainerSO _contextContainer;
 
     public void OnStart()
     {

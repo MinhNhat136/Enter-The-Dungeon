@@ -3,6 +3,7 @@ using Atomic.Services;
 using Atomic.UI.Views;
 using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
+using System;
 
 
 
@@ -35,9 +36,10 @@ namespace Atomic.UI
             get { return _policyService; }
         }
 
-        public Context Context
+        public IContext Context
         {
             get { return _context; }
+            set { _context = value; }
         }
 
         //  Fields ----------------------------------------
@@ -46,7 +48,7 @@ namespace Atomic.UI
 
         //  Dependencies ----------------------------------
         private readonly UIPopup _policyPopup;
-        private Context _context;
+        private IContext _context;
         private PolicyValidationController _policyValidationController;
         private PolicyService _policyService;
 
@@ -63,11 +65,12 @@ namespace Atomic.UI
             {
                 _isInitialized = true;
 
-                _context = new Context();
                 _policyService = new PolicyService();
 
                 _policyValidationController = new PolicyValidationController(_policyService);
                 _policyValidationController.OnShowPolicy.AddListener(InitPolicyPopupMVC);
+
+                RequireContext();
 
                 _policyService.Initialize(_context);
                 _policyValidationController.Initialize(_context);
@@ -82,6 +85,14 @@ namespace Atomic.UI
             if (!IsInitialized)
             {
                 throw new System.Exception("No instance of Policy Mini");
+            }
+        }
+
+        public void RequireContext()
+        {
+            if (Context == null)
+            {
+                throw new Exception("Sign Up Mini not have Context");
             }
         }
 

@@ -5,11 +5,18 @@ namespace Atomic.UI
 {
     public class NetworkGameObject : MonoBehaviour
     {
-        [SerializeField] private UIPopup _popup;
-        // Start is called before the first frame update
+        [SerializeField] 
+        private UIPopup _popup;
+
+        [SerializeField]
+        private ContextContainerSO _contextContainer;
+
         public void OnStart()
         {
-            NetworkMini module = new(_popup);
+            NetworkMini module = new(_popup)
+            {
+                Context = _contextContainer.Context
+            };
             module.Initialize();
         }
 
