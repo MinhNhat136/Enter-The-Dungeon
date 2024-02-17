@@ -1,4 +1,5 @@
 using Doozy.Runtime.UIManager.Containers;
+using RMC.Core.Architectures.Mini.Context;
 using UnityEngine;
 
 namespace Atomic.UI
@@ -8,15 +9,9 @@ namespace Atomic.UI
         [SerializeField] 
         private UIPopup _popup;
 
-        [SerializeField]
-        private ContextContainerSO _contextContainer;
-
         public void OnStart()
         {
-            NetworkMini module = new(_popup)
-            {
-                Context = _contextContainer.Context
-            };
+            NetworkMini module = new(_popup, new Context());
             module.Initialize();
         }
 

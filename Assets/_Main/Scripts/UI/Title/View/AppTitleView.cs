@@ -77,7 +77,7 @@ namespace Atomic.UI
 
                 _buttonTapToStart.onClickEvent.AddListener(TapToStartButton_OnClicked);
 
-                Context.CommandManager.AddCommandListener<SignInCompletionCommand>(SignInController_OnSignInCompleted);
+                Context.CommandManager.AddCommandListener<SignInValidateCompletionCommand>(SignInController_OnSignInCompleted);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Atomic.UI
         //  Unity Methods   -------------------------------
         protected void OnDestroy()
         {
-            Context?.CommandManager?.RemoveCommandListener<SignInCompletionCommand>(
+            Context?.CommandManager?.RemoveCommandListener<SignInValidateCompletionCommand>(
                 SignInController_OnSignInCompleted);
 
         }
@@ -142,7 +142,7 @@ namespace Atomic.UI
             SignInWithGoogleUnityEvent.Invoke();
         }
 
-        private void SignInController_OnSignInCompleted(SignInCompletionCommand command)
+        private void SignInController_OnSignInCompleted(SignInValidateCompletionCommand command)
         {
             SetVisibleSignInButtons(!command.WasSuccess);
             SetVisibleSettingsButton(!command.WasSuccess);

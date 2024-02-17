@@ -16,17 +16,17 @@ namespace Atomic.UI
         private bool _isInitialized;
         private IContext _context;
 
-        public AppTitleMini(AppTitleView view) 
+        public AppTitleMini(AppTitleView view, IContext context) 
         {
             _view = view;
+            _context = context;
         }
 
         public IContext Context 
         { 
             get { return _context; } 
-            set { _context = value; }
+            private set { _context = value; }
         }
-
         public void Initialize()
         {
             if (!IsInitialized)

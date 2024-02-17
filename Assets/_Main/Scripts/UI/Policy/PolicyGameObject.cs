@@ -1,4 +1,6 @@
 using Doozy.Runtime.UIManager.Containers;
+using RMC.Core.Architectures.Mini.Context;
+using System;
 using UnityEngine;
 
 namespace Atomic.UI
@@ -8,16 +10,15 @@ namespace Atomic.UI
         [SerializeField] 
         private UIPopup _policyPopup;
 
-        [SerializeField]
-        private ContextContainerSO _contextContainer;
-
         public void OnStart()
         {
-            PolicyMini mini = new(_policyPopup) 
-            {
-                Context = _contextContainer.Context
-            };
-            mini.Initialize();
+            Context context = new();
+
+            PolicyValidationMini validationMini = new(context);
+            PolicyDisplayMini displayMini = new(_policyPopup, context);
+            
+            validationMini.Initialize();
+            displayMini.Initialize();
         }
 
     }

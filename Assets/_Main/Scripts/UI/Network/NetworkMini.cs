@@ -29,7 +29,7 @@ namespace Atomic.UI
         public IContext Context 
         { 
             get { return _context; } 
-            set { _context = value; }
+            private set { _context = value; }
         }
 
         //  Fields ----------------------------------------
@@ -41,9 +41,10 @@ namespace Atomic.UI
 
 
         //  Initialization  -------------------------------
-        public NetworkMini(UIPopup popup)
+        public NetworkMini(UIPopup popup, IContext context)
         {
             _popup = popup;
+            _context = context;
         }
 
         public void Initialize()
