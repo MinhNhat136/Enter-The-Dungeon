@@ -14,7 +14,7 @@ namespace Atomic.UI
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// Manages a minimalistic display of policy information through a popup UI, integrating with the application's command system for policy validation.
     /// </summary>
     public class PolicyValidationMini : IMiniMvcs
     {

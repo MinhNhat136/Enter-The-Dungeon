@@ -10,7 +10,7 @@ namespace Atomic.UI
         [SerializeField] 
         private UIPopup _policyPopup;
 
-        public void OnStart()
+        public void OnEnable()
         {
             Context context = new();
 

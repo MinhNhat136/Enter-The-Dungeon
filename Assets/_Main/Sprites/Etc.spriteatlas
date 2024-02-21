@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Etc
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 01cf104b0ae4e4cd8be240c06c1edee3, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - d1e42930e47b941418a1fc1bfd8345af: 21300000
+    - 46600970a8b974d759d44405fa61eec7: 3225854880745552460
+    - b5067f417714c453ea06612b86874d4b: 7461551315471710605
+    - 743fc551622034093a11efcbcb9d49fc: 7803171745462721284
+    - b93eeb9129fde4411ae1d965b57b93c4: -2527460341794489050
+    - 506843b1805b344b5a64de6c7d1bc768: 21300000
+    - f78d6eb19e5b44152a71d2d3be9af0c8: -2192968532387711199
+    - bfa01af180f7649b4b44863da178d4c3: 21300000
+    - 69040842f70554dba9a1f1a4afc09d52: 21300000
+    - 3e62591325a054f378067cef7784d1db: -3571094400610070868
+    - b27e8174ec45b4b99ad666846972ca53: 21300000
+    - 435f2db4d17224ffeb9d28d98b001822: 4965702589195753682
+    - 1aa0fb065258042eca1c11dcbdde9a86: 21300000
+    - 403ebae645e904940babfac55dbb3184: -1955166092432882607
+    - bbd3a837ade7c4fc0b54dd29d1b0a7a7: 21300000
+    - e78b69e89cdcd46d28129c02932f1ab1: 21300000
+    - 8ddb9369782c54cdc814044ad3dddcf1: 21300000
+    - 4c9808e986a184183a63e4b7d925e103: 21300000
+    - a47b971a0fb5347429a6dacfdbea0858: -7033240994483071447
+    - a47b971a0fb5347429a6dacfdbea0858: 9068793679979327954
+    - d2b25fbb97c8641cdbe1c030a8b8966f: 21300000
+    - f7ac1d1df71c64f99bcd6de611d7e522: 21300000
+    - 9a75923d32717430b834f2afc6328cbd: 21300000
+    - 74f81b5d8ffac42749ba4c0d9650dc59: 21300000
+    - 7a35fc8d45ba64aeaba31bb5102148ab: 21300000
+    - e557639d1acd84734b384b6a04b18720: 21300000
+    - 7b5fcb9d384fe426bb012077a2a3339b: 21300000
+    - b5a7bdde1a53e4302b8a9adc31426485: 21300000
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: d1e42930e47b941418a1fc1bfd8345af, type: 3}
+  - {fileID: 3225854880745552460, guid: 46600970a8b974d759d44405fa61eec7, type: 3}
+  - {fileID: 7461551315471710605, guid: b5067f417714c453ea06612b86874d4b, type: 3}
+  - {fileID: 7803171745462721284, guid: 743fc551622034093a11efcbcb9d49fc, type: 3}
+  - {fileID: -2527460341794489050, guid: b93eeb9129fde4411ae1d965b57b93c4, type: 3}
+  - {fileID: 21300000, guid: 506843b1805b344b5a64de6c7d1bc768, type: 3}
+  - {fileID: -2192968532387711199, guid: f78d6eb19e5b44152a71d2d3be9af0c8, type: 3}
+  - {fileID: 21300000, guid: bfa01af180f7649b4b44863da178d4c3, type: 3}
+  - {fileID: 21300000, guid: 69040842f70554dba9a1f1a4afc09d52, type: 3}
+  - {fileID: -3571094400610070868, guid: 3e62591325a054f378067cef7784d1db, type: 3}
+  - {fileID: 21300000, guid: b27e8174ec45b4b99ad666846972ca53, type: 3}
+  - {fileID: 4965702589195753682, guid: 435f2db4d17224ffeb9d28d98b001822, type: 3}
+  - {fileID: 21300000, guid: 1aa0fb065258042eca1c11dcbdde9a86, type: 3}
+  - {fileID: -1955166092432882607, guid: 403ebae645e904940babfac55dbb3184, type: 3}
+  - {fileID: 21300000, guid: bbd3a837ade7c4fc0b54dd29d1b0a7a7, type: 3}
+  - {fileID: 21300000, guid: e78b69e89cdcd46d28129c02932f1ab1, type: 3}
+  - {fileID: 21300000, guid: 8ddb9369782c54cdc814044ad3dddcf1, type: 3}
+  - {fileID: 21300000, guid: 4c9808e986a184183a63e4b7d925e103, type: 3}
+  - {fileID: -7033240994483071447, guid: a47b971a0fb5347429a6dacfdbea0858, type: 3}
+  - {fileID: 9068793679979327954, guid: a47b971a0fb5347429a6dacfdbea0858, type: 3}
+  - {fileID: 21300000, guid: d2b25fbb97c8641cdbe1c030a8b8966f, type: 3}
+  - {fileID: 21300000, guid: f7ac1d1df71c64f99bcd6de611d7e522, type: 3}
+  - {fileID: 21300000, guid: 9a75923d32717430b834f2afc6328cbd, type: 3}
+  - {fileID: 21300000, guid: 74f81b5d8ffac42749ba4c0d9650dc59, type: 3}
+  - {fileID: 21300000, guid: 7a35fc8d45ba64aeaba31bb5102148ab, type: 3}
+  - {fileID: 21300000, guid: e557639d1acd84734b384b6a04b18720, type: 3}
+  - {fileID: 21300000, guid: 7b5fcb9d384fe426bb012077a2a3339b, type: 3}
+  - {fileID: 21300000, guid: b5a7bdde1a53e4302b8a9adc31426485, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - toggle_checkbox_off
+  - page_navi_bg_left_0
+  - switch_off_bg_0
+  - top_status_bg_0
+  - page_navi_bg_right_0
+  - status_icon_star
+  - textfield_activity_0
+  - status_icon_gem
+  - InputField_required_circle
+  - page_navi_bg_middle_0
+  - notify_frame_green
+  - textfield_disable_0
+  - status_btn_add
+  - switch_on_bg_0
+  - switch_on_handle
+  - notify_frame_red
+  - InputField_icon_error
+  - switch_off_handle
+  - textfield_error_0
+  - textfield_error_1
+  - status_icon_energy
+  - toggle_checkbox_on
+  - notify_small_dot
+  - InputField_icon_lock
+  - pagenavi_point
+  - status_icon_gold
+  - InputField_icon_user
+  - InputField_icon_mail
+  m_RenderDataMap: {}
+  m_Tag: Etc
+  m_IsVariant: 0

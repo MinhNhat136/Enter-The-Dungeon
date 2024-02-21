@@ -11,10 +11,8 @@ namespace Atomic.Controllers
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// Manages the display of policy information, handling user interactions and coordinating between the view and service layers.
     /// </summary>
-
-
     public class PolicyDisplayController : IController
     {
         //  Events ----------------------------------------

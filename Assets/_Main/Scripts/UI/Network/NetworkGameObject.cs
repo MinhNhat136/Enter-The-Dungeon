@@ -9,7 +9,7 @@ namespace Atomic.UI
         [SerializeField] 
         private UIPopup _popup;
 
-        public void OnStart()
+        public void Start()
         {
             NetworkMini module = new(_popup, new Context());
             module.Initialize();

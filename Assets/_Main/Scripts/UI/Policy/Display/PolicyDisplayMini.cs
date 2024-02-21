@@ -94,7 +94,7 @@ public class PolicyDisplayMini : IMiniMvcs
 
             popup!.Show();
         }
-        else throw new System.Exception("Module Policy null view");
+        else throw new System.Exception("Policy popup view component not found.");
 
     }
 

@@ -13,7 +13,6 @@ namespace Atomic.Services
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-
     public class PolicyDisplayService : BaseService
     {
         //  Events ----------------------------------------

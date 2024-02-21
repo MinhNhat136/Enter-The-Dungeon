@@ -11,7 +11,7 @@ public class AppTitleGameObject : MonoBehaviour
     [SerializeField]
     private UIPopup _signUpPopup;
 
-    public void OnStart()
+    public void OnEnable()
     {
         var context = new Context();
         AppTitleMini titleMini = new(_titleView, context);
