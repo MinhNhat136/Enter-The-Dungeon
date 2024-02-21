@@ -68,7 +68,10 @@ namespace Atomic.UI
 
         public void RequireIsInitialized()
         {
-            throw new System.NotImplementedException();
+            if (!IsInitialized)
+            {
+                throw new System.Exception("Network Mini not initialize");
+            }
         }
 
         public void RequireContext()
@@ -90,7 +93,7 @@ namespace Atomic.UI
             {
                 return; 
             }
-
+            RequireIsInitialized();
             InitNetworkErrorPopupMVC();
         }
 
