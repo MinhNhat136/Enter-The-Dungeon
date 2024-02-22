@@ -30,12 +30,8 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - Assembly-CSharp
     - Assembly-CSharp-firstpass
-    - PPv2URPConverters
-    - RMC.Core.Mini.Editor
-    - RMC.Core.Mini.Editor.Tests
-    - RMC.Core.Mini.Runtime
+    - Assembly-CSharp
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

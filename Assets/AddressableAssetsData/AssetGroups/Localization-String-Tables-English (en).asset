@@ -16,19 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 3658aa5f00db66740b5aa56795b79836
-  m_SerializeEntries:
-  - m_GUID: 8c9372abbd6dd5746bd5e2eccb88e68f
-    m_Address: "Ng\xF4n ng\u1EEF_en"
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c990082da014f2d43b05d599ec4dc649
-    m_Address: App Title_en
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-en
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: a74b2bb3463e982479973c04d9d5c55a, type: 2}
   m_SchemaSet:
