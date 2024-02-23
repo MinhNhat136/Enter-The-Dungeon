@@ -13,5 +13,17 @@ MonoBehaviour:
   m_Name: ES3GlobalReferences
   m_EditorClassIdentifier: 
   refId:
-    _Keys: []
-    _Values: 
+    _Keys:
+    - {fileID: 2800000, guid: 74047943233d4264293a815de84b57dc, type: 3}
+    - {fileID: 21300000, guid: 562204515c48aea4cbafb7f0be2257c4, type: 2}
+    - {fileID: 2800000, guid: 316e3d930a41fe941861e28a1c01e8a8, type: 3}
+    - {fileID: 21300000, guid: dfc30498a9a399f4fa2eeb4b5a85f5cb, type: 2}
+    - {fileID: 11500000, guid: 3fffa93fc62a49e41be123f5bba9bf0c, type: 3}
+    - {fileID: 2800000, guid: 3028dc075ba8c584d9bc7d1e0255e038, type: 3}
+    - {fileID: 2800000, guid: 57631dc1b0b39a846b883a3482d43a2f, type: 3}
+    - {fileID: 2800000, guid: beafbeddc71c2bb4b834e31dede3025f, type: 3}
+    - {fileID: 2800000, guid: b36d8b8f0da38bf4d920697885348250, type: 3}
+    - {fileID: 2800000, guid: 3dca60dac12678b4abc6d175a01783d3, type: 3}
+    - {fileID: 2800000, guid: 825cc4f23e9d117408fd73a93f3fc5ac, type: 3}
+    - {fileID: 2800000, guid: eaadf0ad10d633949a6e57d7f1c21ab0, type: 3}
+    _Values: 305fcfea7be437148eb83c86a5d4b823671791ba53988909f31390137adddb45533966166da15f2f54f069e38e6b82680b71d7bf68e7495320b90a75904c67649b8e66e97f2fca2e9e3e3c2a9ff22858d83c25a56db2596c1889cb8edf79264f
