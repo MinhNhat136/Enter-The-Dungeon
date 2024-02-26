@@ -33,8 +33,9 @@ namespace Doozy.Runtime.UIManager
         }
         public enum Splash
         {
-            Loading,
-            Title
+            AppTitle,
+            InitGame,
+            LoadLobby
         }    
     }
 }

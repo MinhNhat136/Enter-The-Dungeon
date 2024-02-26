@@ -1,4 +1,5 @@
 
+
 namespace Atomic.Template
 {
     //  Namespace Properties ------------------------------
@@ -14,7 +15,7 @@ namespace Atomic.Template
 
 
         //  Properties ------------------------------------
-
+       
 
         //  Fields ----------------------------------------
 
@@ -24,7 +25,7 @@ namespace Atomic.Template
 
         //  Initialization  -------------------------------
 
-
+        
         //  Unity Methods   -------------------------------
 
 

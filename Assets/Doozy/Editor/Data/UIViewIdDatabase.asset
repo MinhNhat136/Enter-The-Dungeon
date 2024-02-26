@@ -19,6 +19,8 @@ MonoBehaviour:
     - Category: Shared
       Name: Settings
     - Category: Splash
-      Name: Loading
+      Name: AppTitle
     - Category: Splash
-      Name: Title
+      Name: InitGame
+    - Category: Splash
+      Name: LoadLobby

@@ -37,6 +37,10 @@ MonoBehaviour:
     - RMC.Core.Mini.Editor
     - RMC.Core.Mini.Editor.Tests
     - RMC.Core.Mini.Runtime
+    - Sirenix.OdinInspector.Modules.Unity.Addressables
+    - Sirenix.OdinInspector.Modules.UnityLocalization
+    - Sirenix.OdinInspector.Modules.UnityLocalization.Editor
+    - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

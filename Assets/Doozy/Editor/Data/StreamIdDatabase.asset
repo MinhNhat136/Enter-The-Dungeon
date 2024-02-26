@@ -17,4 +17,6 @@ MonoBehaviour:
     - Category: None
       Name: None
     - Category: Splash
-      Name: LoadScene
+      Name: LoadLobbyScene
+    - Category: Splash
+      Name: ShowTitle
