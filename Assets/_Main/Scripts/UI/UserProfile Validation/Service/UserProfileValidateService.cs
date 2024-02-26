@@ -34,9 +34,10 @@ namespace Atomic.UI
         }
 
         //  Methods ---------------------------------------
-        public void UserProfileValidate()
+        public async void UserProfileValidate()
         {
             RequireIsInitialized();
+            await Task.Delay(2000);
             UserProfileData user = ES3.Load<UserProfileData>(GameDataKey.UserProfileData, new UserProfileData(""));
             bool wasSuccess = user.Name != "";
             OnValidateCompleted.Invoke(user, wasSuccess);

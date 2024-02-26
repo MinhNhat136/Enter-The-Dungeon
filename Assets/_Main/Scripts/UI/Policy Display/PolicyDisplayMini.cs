@@ -73,13 +73,16 @@ public class PolicyDisplayMini : IMiniMvcs
     public void Command_OnPolicyChecked(PolicyValidateCompletionCommand command)
     {
         if (command.IsAccepted) return;
+        Debug.Log("show policy");
         InitPolicyPopupMVC();
+        
     }
 
 
     public void InitPolicyPopupMVC()
     {
         var popup = UIPopup.Get(_policyPopup.name);
+        Debug.Log("init nay");
         if (popup.TryGetComponent<PolicyInfoView>(out PolicyInfoView view))
         {
             PolicyDisplayService service = new();

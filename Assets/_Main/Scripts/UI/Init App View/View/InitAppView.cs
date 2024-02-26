@@ -1,14 +1,10 @@
 ﻿using Atomic.Command;
-using Atomic.Core;
 using DG.Tweening;
 using Doozy.Runtime.Signals;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.View;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Atomic.UI
 {
@@ -64,7 +60,8 @@ namespace Atomic.UI
                 _isInitialized = true;
                 _context = context;
 
-                
+                Context.CommandManager.AddCommandListener<StartPolicyValidateProgressCommand>(Command_StartCheckPolicy);
+                Context.CommandManager.AddCommandListener<UserProfileValidateCommand>(Command_StartValidateUserProfile);
             }
         }
 
@@ -78,7 +75,11 @@ namespace Atomic.UI
 
         //  Unity Methods   -------------------------------
 
-
+        public void OnDestroy()
+        {
+            Context.CommandManager.RemoveCommandListener<StartPolicyValidateProgressCommand>(Command_StartCheckPolicy);
+            Context.CommandManager.RemoveCommandListener<UserProfileValidateCommand>(Command_StartValidateUserProfile);
+        }
         //  Other Methods ---------------------------------
         public void SendSignal_ShowAppTitleView()
         {
@@ -93,12 +94,18 @@ namespace Atomic.UI
         //  Event Handlers --------------------------------
         public void SetStateText(string value)
         {
-            Debug.Log(value);
             _stateText.text = value;
         }
 
+        public void Command_StartCheckPolicy(StartPolicyValidateProgressCommand command)
+        {
+            SetStateText("Check Policy");
+        }
 
-
+        public void Command_StartValidateUserProfile(UserProfileValidateCommand command)
+        {
+            SetStateText("Check UserProfile");
+        }
 
     }
 }

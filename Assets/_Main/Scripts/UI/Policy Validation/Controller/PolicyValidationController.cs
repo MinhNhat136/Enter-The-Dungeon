@@ -3,6 +3,7 @@ using Atomic.Services;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
 using System;
+using System.Diagnostics;
 
 
 namespace Atomic.Controllers

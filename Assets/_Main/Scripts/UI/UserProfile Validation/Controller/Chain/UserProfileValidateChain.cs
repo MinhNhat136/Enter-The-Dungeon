@@ -9,7 +9,6 @@ namespace Atomic.Chain
     {
         public override void Handle()
         {
-            Debug.Log("handle here");
             _context.CommandManager.InvokeCommand(new UserProfileValidateCommand());
         }
 
@@ -17,10 +16,6 @@ namespace Atomic.Chain
         {
             _context = context;
             _context.CommandManager.AddCommandListener<UserProfileValidateCompletionCommand>((p) =>
-            {
-                _nextChain?.Handle();
-            });
-            _context.CommandManager.AddCommandListener<OnFormFillCompleteCommand>((_) =>
             {
                 _nextChain?.Handle();
             });

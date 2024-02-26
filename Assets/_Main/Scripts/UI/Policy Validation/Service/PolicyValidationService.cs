@@ -1,8 +1,11 @@
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Service;
-using UnityEngine;
+using System.Threading.Tasks;
 using UnityEngine.Events;
 
+
+// CAUTION: NOT COMPLETED GET POLICY DATA FROM SERVER
+// IM USING FAKE TASK.DELAY
 
 namespace Atomic.Services
 {
@@ -13,7 +16,6 @@ namespace Atomic.Services
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-
     public class PolicyValidationService : BaseService
     {
         //  Events ----------------------------------------
@@ -23,19 +25,18 @@ namespace Atomic.Services
         public override void Initialize(IContext context)
         {
             base.Initialize(context);
-
         }
 
         //  Other Methods ---------------------------------
-        public void CheckAcceptedPolicy()
+        public async void CheckAcceptedPolicy()
         {
             RequireIsInitialized();
-            bool isAccepted = ES3.Load<bool>(GameDataKey.IsAcceptedPolicy, false);
-            OnCheckCompleted.Invoke(isAccepted);
+            await Task.Delay(2000);
+            OnCheckCompleted.Invoke(ES3.Load<bool>(GameDataKey.IsAcceptedPolicy, false));
         }
     }
 }
 
 
 
-    
+
