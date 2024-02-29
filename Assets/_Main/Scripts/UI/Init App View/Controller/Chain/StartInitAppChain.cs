@@ -15,7 +15,6 @@ namespace Atomic.Chain
 
         public IEnumerator Coroutine_DelayLoading()
         {
-            Debug.Log("delay time");
             yield return new WaitForSeconds(1);
             _nextChain?.Handle();
         }

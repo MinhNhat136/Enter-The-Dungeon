@@ -48,9 +48,6 @@ namespace Atomic.UI
         
         [SerializeField]
         private UIButton _buttonSetting;
-        
-        [SerializeField] 
-        private UIButton _buttonTapToStart;
 
         [SerializeField]
         private SignalSender _loadSceneSignal;
@@ -72,7 +69,6 @@ namespace Atomic.UI
                 _buttonSignInWithGoogle.onClickEvent.AddListener(SignInWithGoogleButton_OnClicked);
                 _buttonSignInWithGuest.onClickEvent.AddListener(SignInWithGuessButton_OnClicked);
 
-                Context.CommandManager.AddCommandListener<UserProfileValidateCompletionCommand>(OnUserProfileValidateCompleted);
             }
         }
 
@@ -85,31 +81,10 @@ namespace Atomic.UI
         }
 
         //  Unity Methods   -------------------------------
-        protected void OnDestroy()
-        {
-            Context?.CommandManager?.RemoveCommandListener<UserProfileValidateCompletionCommand>(
-                OnUserProfileValidateCompleted);
 
-        }
 
         //  Other Methods ---------------------------------
-        private void SetVisibleSignInButtons(bool isVisible)
-        {
-            _buttonSignInWithFacebook.gameObject.SetActive(isVisible);
-            _buttonSignInWithGuest.gameObject.SetActive(isVisible);
-            _buttonSignInWithGoogle.gameObject.SetActive(isVisible);
-            _buttonSignInWithGameCenter.gameObject.SetActive(isVisible);
-        }
 
-        private void SetVisibleTaptoStartButton(bool isVisible)
-        {
-            _buttonTapToStart.gameObject.SetActive(isVisible);
-        }
-
-        private void SetVisibleSettingsButton(bool isVisible)
-        {
-            _buttonSetting.gameObject.SetActive(isVisible);
-        }
 
         //  Event Handlers --------------------------------
         private void SignInWithGuessButton_OnClicked()
@@ -130,13 +105,6 @@ namespace Atomic.UI
         private void SignInWithGoogleButton_OnClicked()
         {
             SignUpWithGoogleUnityEvent.Invoke();
-        }
-
-        private void OnUserProfileValidateCompleted(UserProfileValidateCompletionCommand command)
-        {
-            SetVisibleSignInButtons(!command.WasSuccess);
-            SetVisibleSettingsButton(!command.WasSuccess);
-            SetVisibleTaptoStartButton(command.WasSuccess);
         }
 
     }

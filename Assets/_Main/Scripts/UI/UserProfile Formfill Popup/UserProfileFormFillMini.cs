@@ -70,7 +70,6 @@ public class UserProfileFormFillMini : IMiniMvcs
 
     public void InitFormfillMVC(OnFillFormCommand command)
     {
-        Debug.Log("test");
         var popup = UIPopup.Get(_popup.name);
         if (popup.TryGetComponent<UserProfileFormFillView>(out UserProfileFormFillView view))
         {
