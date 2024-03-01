@@ -4,7 +4,6 @@ using Atomic.Core.Interface;
 using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
-using System.Collections.Generic;
 
 namespace Atomic.Controllers
 {
@@ -35,7 +34,6 @@ namespace Atomic.Controllers
         private bool _isInitialized;
         private IContext _context;
         private readonly InitAppView _view;
-        private readonly List<IChain> _chains = new();
 
         //  Initialization  -------------------------------
         public InitAppController(InitAppView view)
@@ -50,28 +48,8 @@ namespace Atomic.Controllers
                 _isInitialized = true;
                 _context = context;
 
-                Context.CommandManager.AddCommandListener<UserProfileValidateCompletionCommand>((p) =>
-                {
-                    if (p.WasSuccess)
-                    {
-                        _view.SendSignal_LoadLobbyScene();
-                    }
-                    else _view.SendSignal_ShowAppTitleView();
-                });
 
-                IChain loadingInitApp = new StartInitAppChain();
-                IChain policyValidationChain = new PolicyValidateChain();
-                IChain userProfileValidationChain = new UserProfileValidateChain();
-
-                loadingInitApp.SetContext(_context).SetNextHandler(policyValidationChain);
-                policyValidationChain.SetContext(_context).SetNextHandler(userProfileValidationChain);
-                userProfileValidationChain.SetContext(_context);
-
-                _chains.Add(loadingInitApp);
-                _chains.Add(policyValidationChain);
-                _chains.Add(userProfileValidationChain);
-
-                _chains[0].Handle();
+                Context.CommandManager.AddCommandListener<OnUIFlowStartCommand>(InitApp);
             }
         }
 
@@ -88,6 +66,26 @@ namespace Atomic.Controllers
 
 
         //  Other Methods ---------------------------------
+        private void InitApp(OnUIFlowStartCommand command)
+        {
+            InitChain();
+        }
+
+        private void InitChain()
+        {
+            IChain loadingInitApp = new StartInitAppChain();
+            IChain networkValidateChain = new NetworkValidateChain();
+            IChain policyValidationChain = new PolicyValidateChain();
+            IChain userProfileValidationChain = new UserProfileValidateChain();
+
+            loadingInitApp.SetContext(_context).SetNextHandler(networkValidateChain);
+            networkValidateChain.SetContext(_context).SetNextHandler(policyValidationChain);
+            policyValidationChain.SetContext(_context).SetNextHandler(userProfileValidationChain);
+            userProfileValidationChain.SetContext(_context);
+
+            loadingInitApp.Handle();
+        }
+
 
 
         //  Event Handlers --------------------------------

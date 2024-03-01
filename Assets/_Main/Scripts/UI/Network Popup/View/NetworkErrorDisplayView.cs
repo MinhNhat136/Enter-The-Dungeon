@@ -20,6 +20,7 @@ namespace Atomic.UI
     {
         //  Events ----------------------------------------
         [HideInInspector] public UnityEvent OnClickButtonOK = new();
+        [HideInInspector] public UnityEvent OnViewDestroy = new();
 
         //  Properties ------------------------------------
         public bool IsInitialized
@@ -69,6 +70,7 @@ namespace Atomic.UI
         public void HidePopup()
         {
             RequireIsInitialized();
+            OnViewDestroy.Invoke();
             _uiPopup.Hide();
         }
 

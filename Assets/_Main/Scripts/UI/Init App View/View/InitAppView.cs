@@ -1,4 +1,5 @@
 ﻿using Atomic.Command;
+using Atomic.Controllers;
 using DG.Tweening;
 using Doozy.Runtime.Signals;
 using RMC.Core.Architectures.Mini.Context;
@@ -44,13 +45,6 @@ namespace Atomic.UI
         [SerializeField]
         private DOTweenAnimation _loadingAnimation;
 
-
-        [SerializeField]
-        private SignalSender _loadLobbyScene;
-
-        [SerializeField]
-        private SignalSender _showAppTitleView;
-
         //  Initialization  -------------------------------
 
         public void Initialize(IContext context)
@@ -61,6 +55,7 @@ namespace Atomic.UI
                 _context = context;
 
                 Context.CommandManager.AddCommandListener<StartPolicyValidateProgressCommand>(Command_StartCheckPolicy);
+                Context.CommandManager.AddCommandListener<StartValidateNetworkConnectionCommand>(Command_StartValidateNetworkConnection);
                 Context.CommandManager.AddCommandListener<UserProfileValidateCommand>(Command_StartValidateUserProfile);
             }
         }
@@ -79,34 +74,31 @@ namespace Atomic.UI
         {
             Context.CommandManager.RemoveCommandListener<StartPolicyValidateProgressCommand>(Command_StartCheckPolicy);
             Context.CommandManager.RemoveCommandListener<UserProfileValidateCommand>(Command_StartValidateUserProfile);
+            Context.CommandManager.RemoveCommandListener<StartValidateNetworkConnectionCommand>(Command_StartValidateNetworkConnection);
         }
         //  Other Methods ---------------------------------
-        public void SendSignal_ShowAppTitleView()
-        {
-            _showAppTitleView.SendSignal();
-        }
 
-        public void SendSignal_LoadLobbyScene()
-        {
-            _loadLobbyScene.SendSignal();
-        }
-
-        //  Event Handlers --------------------------------
         public void SetStateText(string value)
         {
             _stateText.text = value;
         }
+        //  Event Handlers --------------------------------
+        private void Command_StartValidateNetworkConnection(StartValidateNetworkConnectionCommand command)
+        {
+            SetStateText("Check Network Connection");
+        }
 
-        public void Command_StartCheckPolicy(StartPolicyValidateProgressCommand command)
+        private void Command_StartCheckPolicy(StartPolicyValidateProgressCommand command)
         {
             SetStateText("Check Policy");
         }
 
-        public void Command_StartValidateUserProfile(UserProfileValidateCommand command)
+        private void Command_StartValidateUserProfile(UserProfileValidateCommand command)
         {
             SetStateText("Check UserProfile");
         }
 
+        
     }
 }
 

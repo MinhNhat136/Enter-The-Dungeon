@@ -1,8 +1,6 @@
 using Atomic.UI;
-using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
 using System;
-using UnityEngine;
 
 namespace Atomic.Core
 {

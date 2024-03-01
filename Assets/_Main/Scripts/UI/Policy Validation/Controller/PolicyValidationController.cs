@@ -1,9 +1,8 @@
-using Atomic.Command;
 using Atomic.Services;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
+using RMC.Core.Architectures.Mini.Controller.Commands;
 using System;
-using System.Diagnostics;
 
 
 namespace Atomic.Controllers
@@ -11,6 +10,29 @@ namespace Atomic.Controllers
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+    public class PolicyValidateCompletionCommand : ICommand
+    {
+        private readonly bool _isAccepted;
+
+        public bool IsAccepted
+        {
+            get { return _isAccepted; }
+        }
+
+        public PolicyValidateCompletionCommand(bool isAccepted)
+        {
+            _isAccepted = isAccepted;
+        }
+    }
+
+    public class StartPolicyValidateProgressCommand : ICommand
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class PolicyValidationController : IController
     {
         //  Properties ------------------------------------

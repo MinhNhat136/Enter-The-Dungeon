@@ -46,7 +46,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 1
   ClearGraphHistory: 0
-  Position: {x: 543.27484, y: 364.38327}
+  Position: {x: 760.8944, y: 359.7419}
   GetSceneBy: 0
   LoadSceneMode: 0
   AllowSceneActivation: 1
@@ -84,7 +84,6 @@ MonoBehaviour:
     Capacity: 1
     Connections:
     - 2a20f505-e17b-4470-97cf-7e0def4f98fe
-    - cc12056b-c09e-43ba-abdb-26a16bbfd421
     Value: '{"CanGoBack":false}'
     ValueTypeQualifiedName: Doozy.Runtime.UIManager.Nodes.PortData.GoBackInputPortData,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -109,7 +108,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 0
   ClearGraphHistory: 0
-  Position: {x: 247.19998, y: 363.4831}
+  Position: {x: 464.89444, y: 358.94186}
   OnEnterShowViews:
   - Id:
       Category: Splash
@@ -155,9 +154,8 @@ MonoBehaviour:
     PortId: cc12056b-c09e-43ba-abdb-26a16bbfd421
     Direction: 1
     Capacity: 0
-    Connections:
-    - fa277edf-46db-4cb9-a526-d990f2dbf6a6
-    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Splash","Name":"TapToStart","Custom":false},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
+    Connections: []
+    Value: '{"Trigger":0,"TimeDelay":0.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Splash","Name":"TapToStart","Custom":false},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
     ValueTypeQualifiedName: Doozy.Runtime.UIManager.Nodes.PortData.UIOutputPortData,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     CanBeDeleted: 0
@@ -233,7 +231,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 1
   ClearGraphHistory: 0
-  Position: {x: 2.7498991, y: 365.83054}
+  Position: {x: 251.16661, y: 359.14304}
   Trigger: 0
   SignalPayload:
     StreamId:
@@ -377,8 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
   m_Name: Splash
   m_EditorClassIdentifier: 
-  EditorPosition: {x: 148, y: 64, z: 0}
-  EditorScale: {x: 0.57175326, y: 0.57175326, z: 1}
+  EditorPosition: {x: 96.8, y: 16, z: 0}
+  EditorScale: {x: 0.65751624, y: 0.65751624, z: 1}
   Id: d02130a8-89b1-408a-a72d-fcea5d868a12
   GraphName: Flow Graph
   GraphDescription: 
@@ -589,7 +587,7 @@ MonoBehaviour:
   CanBeDeleted: 1
   Passthrough: 1
   ClearGraphHistory: 0
-  Position: {x: 836.07495, y: 364.38327}
+  Position: {x: 1053.6942, y: 359.7419}
   GetSceneBy: 0
   SceneBuildIndex: 0
   SceneName: SplashScene

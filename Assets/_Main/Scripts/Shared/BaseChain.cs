@@ -27,5 +27,10 @@ namespace Atomic.Chain
         {
 
         }
+
+        public virtual void OnDestroyChain()
+        {
+
+        }
     }
 }

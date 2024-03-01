@@ -1,11 +1,6 @@
 using Atomic.Controllers;
 using Atomic.Services;
-using Atomic.UI.Views;
-using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
-using System;
-
-
 
 namespace Atomic.UI
 {
@@ -54,8 +49,6 @@ namespace Atomic.UI
                 PolicyValidationService _policyService = new();
                 PolicyValidationController _policyValidationController = new(_policyService);
 
-                RequireContext();
-
                 _policyService.Initialize(_context);
                 _policyValidationController.Initialize(_context);
             }
@@ -66,14 +59,6 @@ namespace Atomic.UI
             if (!IsInitialized)
             {
                 throw new System.Exception("No instance of Policy Mini");
-            }
-        }
-
-        public void RequireContext()
-        {
-            if (Context == null)
-            {
-                throw new Exception("Policy Mini not have Context");
             }
         }
 

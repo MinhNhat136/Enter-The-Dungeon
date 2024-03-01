@@ -45,10 +45,10 @@ namespace Atomic.Controllers
                 _isInitialized = true;
                 _context = context;
 
-                _view.onFlowStart += View_OnFlowStart;
-                _view.onFlowResume += View_OnFlowResume;
-                _view.onFlowPause += View_OnFlowPause;
-                _view.onFlowStop += View_OnFlowStop;
+                Context.CommandManager.AddCommandListener<OnNetworkConnectChangeCommand>(Command_OnNetworkConntectionChange);
+                Context.CommandManager.AddCommandListener<UserProfileValidateCompletionCommand>(Command_UserProfileValidateCompleted);
+
+                StartFlow();
             }
         }
 
@@ -62,34 +62,43 @@ namespace Atomic.Controllers
 
 
         //  Unity Methods   -------------------------------
-
+        public void OnDestroy()
+        {
+            Context.CommandManager.RemoveCommandListener<OnNetworkConnectChangeCommand>(Command_OnNetworkConntectionChange);
+            Context.CommandManager.RemoveCommandListener<UserProfileValidateCompletionCommand>(Command_UserProfileValidateCompleted);
+        }
 
         //  Other Methods ---------------------------------
-
-
-        //  Event Handlers --------------------------------
-        public void View_OnFlowStart()
+        private void StartFlow()
         {
-            RequireIsInitialized();
+            _view.StartFlow();
             Context.CommandManager.InvokeCommand(new OnUIFlowStartCommand());
         }
 
-        public void View_OnFlowResume()
+        //  Event Handlers --------------------------------
+        private void Command_OnNetworkConntectionChange(OnNetworkConnectChangeCommand command)
         {
-            RequireIsInitialized();
-            Context.CommandManager.InvokeCommand(new OnUIFlowResumeCommand());
+            if(command.CurrentValue == command.PreviousValue)
+            {
+                return;
+            }
+
+            if(command.CurrentValue == false)
+            {
+                _view.StopFlow();
+                return;
+            }
+            _view.ResumeFlow();
+            
         }
 
-        public void View_OnFlowPause()
+        private void Command_UserProfileValidateCompleted(UserProfileValidateCompletionCommand command)
         {
-            RequireIsInitialized();
-            Context.CommandManager.InvokeCommand(new OnUIFlowPauseCommand());
-        }
-
-        public void View_OnFlowStop()
-        {
-            RequireIsInitialized();
-            Context.CommandManager.InvokeCommand(new OnUIFlowStopCommad());
+            if (command.WasSuccess)
+            {
+                _view.SendSignal_LoadLobbyScene();
+            }
+            else _view.SendSignal_ShowAppTitleView();
         }
     }
 

@@ -1,3 +1,4 @@
+using Atomic.Command;
 using Atomic.Core;
 using Atomic.Models;
 using RMC.Core.Architectures.Mini.Context;
@@ -18,6 +19,11 @@ namespace Atomic.Controllers
         {
 
         }
+    }
+
+    public class StartValidateNetworkConnectionCommand : ICommand
+    {
+
     }
 
     /// <summary>
@@ -58,8 +64,7 @@ namespace Atomic.Controllers
                 _isInitialized = true;
                 _context = context;
 
-                Coroutines.StartCoroutine(Coroutine_CheckNetworkAvailability());
-                _model.GetConnectionStatus.OnValueChanged.AddListener(Model_OnNetworkStatusChange);
+                Context.CommandManager.AddCommandListener<StartValidateNetworkConnectionCommand>(Command_CheckNetworkConnection);
             }
         }
 
@@ -72,29 +77,29 @@ namespace Atomic.Controllers
         }
 
         //  Other Methods ---------------------------------
-        public IEnumerator Coroutine_CheckNetworkAvailability()
+        public IEnumerator Coroutine_CheckNetworkConnection()
         {
-            RequireIsInitialized();
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(2f);
             Check_NetworkAvailability();
-
-        }
+        } 
 
         public void Check_NetworkAvailability()
         {
+            bool previousValue = _model.GetConnectionStatus.Value;
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 _model.SetConnectionStatus = false;
             }
             else _model.SetConnectionStatus = true;
-            Coroutines.StartCoroutine(Coroutine_CheckNetworkAvailability());
+            Context.CommandManager.InvokeCommand(new OnNetworkConnectChangeCommand(previousValue, _model.GetConnectionStatus.Value));
+
+            Coroutines.StartCoroutine(Coroutine_CheckNetworkConnection());
         }
 
         // Event Handling ---------------------------------
-        public void Model_OnNetworkStatusChange(bool previousValue, bool currentValue)
+        public void Command_CheckNetworkConnection(StartValidateNetworkConnectionCommand command)
         {
-            Context.CommandManager.InvokeCommand(new OnNetworkConnectChangeCommand(previousValue, currentValue));
+            Check_NetworkAvailability();
         }
-
     }
 }

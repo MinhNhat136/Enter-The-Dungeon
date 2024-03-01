@@ -1,20 +1,15 @@
 using Atomic.Controllers;
 using Doozy.Runtime.Nody;
+using Doozy.Runtime.Signals;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.View;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Atomic.UI
 {
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-    public enum FlowState
-    {
-        Pause,
-        Normal,
-    }
 
     /// <summary>
     /// TODO: Replace with comments...
@@ -23,17 +18,7 @@ namespace Atomic.UI
     public class SplashUIFlowView : MonoBehaviour, IView
     {
         //  Events ----------------------------------------
-        [HideInInspector]
-        public UnityAction onFlowStart;
 
-        [HideInInspector]
-        public UnityAction onFlowResume;
-
-        [HideInInspector]
-        public UnityAction onFlowPause;
-
-        [HideInInspector]
-        public UnityAction onFlowStop;
 
         //  Properties ------------------------------------
         public bool IsInitialized
@@ -50,7 +35,13 @@ namespace Atomic.UI
         [SerializeField]
         private FlowController _flowController;
 
-        private FlowState _currentState;
+        [SerializeField]
+        private SignalSender _loadLobbyScene;
+        [SerializeField]
+        private SignalSender _showAppTitleView;
+
+
+
         private bool _isInitialized;
         private IContext _context;
 
@@ -63,9 +54,7 @@ namespace Atomic.UI
             {
                 _isInitialized = true;
                 _context = context;
-                _currentState = FlowState.Normal;
 
-                Context.CommandManager.AddCommandListener<OnNetworkConnectChangeCommand>(Command_OnNetworkConnectionChange);
             }
         }
 
@@ -79,46 +68,34 @@ namespace Atomic.UI
 
 
         //  Unity Methods   -------------------------------
-        private void OnEnable()
-        {
-            _flowController.onStart.AddListener(onFlowStart.Invoke);
-            _flowController.onPause.AddListener(onFlowPause.Invoke);
-            _flowController.onResume.AddListener(onFlowResume.Invoke);
-            _flowController.onStop.AddListener(onFlowStop.Invoke);
-        }
 
-        private void OnDisable()
-        {
-            _flowController.onStart.RemoveListener(onFlowStart.Invoke);
-            _flowController.onPause.RemoveListener(onFlowPause.Invoke);
-            _flowController.onResume.RemoveListener(onFlowResume.Invoke);
-            _flowController.onStop.RemoveListener(onFlowStop.Invoke);
-        }
 
         //  Other Methods ---------------------------------
+        public void PauseFlow() => _flowController.PauseFlow();
+        public void ResumeFlow() => _flowController.ResumeFlow();
+        public void StartFlow() => _flowController.StartFlow();
+        public void StopFlow() => _flowController.StopFlow();
 
-
-        //  Event Handlers --------------------------------
-        private void Command_OnNetworkConnectionChange(OnNetworkConnectChangeCommand command)
+        public void SendSignal_ShowAppTitleView()
         {
-            if (command.PreviousValue == command.CurrentValue)
-            {
-                return;
-            }
-
-            if (command.CurrentValue && _currentState == FlowState.Pause)
-            {
-                _currentState = FlowState.Normal;
-                return;
-            }
-
-            if(!command.CurrentValue && _currentState == FlowState.Normal)
-            {
-            }
+            _showAppTitleView.SendSignal();
         }
 
+        public void SendSignal_LoadLobbyScene()
+        {
+            _loadLobbyScene.SendSignal();
+        }
 
+        private void Command_UserProfileValideCompleted(UserProfileValidateCompletionCommand command)
+        {
+            if (command.WasSuccess)
+            {
+                SendSignal_LoadLobbyScene();
+            }
+            else SendSignal_ShowAppTitleView();
+        }
 
+        //  Event Handlers --------------------------------
 
     }
 

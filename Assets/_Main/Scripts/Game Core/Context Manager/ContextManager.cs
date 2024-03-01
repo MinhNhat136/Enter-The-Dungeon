@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class ContextManager : MonoBehaviour
 {
+    [Tooltip("CAUTION: Sort Service < Popup < View < Core")]
     [SerializeField]
     private BaseGameObjectInitializableWithContext[] _modules;
 
     [Button]
-    private bool CheckForDuplicateReferences()
+    private void CheckForDuplicateReferences()
     {
         Dictionary<BaseGameObjectInitializableWithContext, bool> encounteredElements = new();
 
@@ -19,7 +20,6 @@ public class ContextManager : MonoBehaviour
             if (encounteredElements.ContainsKey(module))
             {
                 Debug.LogError("Duplicate reference detected: " + module.gameObject.name);
-                return true;
             }
             else
             {
@@ -27,7 +27,6 @@ public class ContextManager : MonoBehaviour
             }
         }
         Debug.Log("No duplicate module or reference found ");
-        return false;
     }
 
     public void Start()

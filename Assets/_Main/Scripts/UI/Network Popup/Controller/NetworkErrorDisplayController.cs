@@ -52,8 +52,9 @@ namespace Atomic.Controllers
                 _isInitialized = true;
                 _context = context;
 
-
                 _view.OnClickButtonOK.AddListener(View_OnClickButtonOK);
+                _view.OnViewDestroy.AddListener(View_OnDestroy);
+
                 _model.GetConnectionStatus.OnValueChanged.AddListener(Model_OnNetworkConnectionChange);
             }
         }
@@ -67,13 +68,16 @@ namespace Atomic.Controllers
         }
 
         //  Other Methods ---------------------------------
-        private void OnDestroyController()
+
+
+        //  Event Handlers --------------------------------
+        private void View_OnDestroy()
         {
             _view.OnClickButtonOK.RemoveListener(View_OnClickButtonOK);
+            _view.OnViewDestroy.RemoveListener(View_OnDestroy);
             _model.GetConnectionStatus.OnValueChanged.RemoveListener(Model_OnNetworkConnectionChange);
         }
 
-        //  Event Handlers --------------------------------
         private void View_OnClickButtonOK()
         {
             Application.Quit();
@@ -88,7 +92,6 @@ namespace Atomic.Controllers
 
             if (currentConnetion)
             {
-                OnDestroyController();
                 _view.HidePopup();
             }
 

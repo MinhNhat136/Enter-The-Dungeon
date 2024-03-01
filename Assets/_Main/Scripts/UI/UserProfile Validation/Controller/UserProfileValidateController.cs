@@ -3,6 +3,7 @@ using Atomic.Models;
 using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
+using RMC.Core.Architectures.Mini.Controller.Commands;
 using System;
 
 namespace Atomic.Controllers
@@ -10,6 +11,28 @@ namespace Atomic.Controllers
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+    public class UserProfileValidateCommand : ICommand
+    {
+
+    }
+
+    public class UserProfileValidateCompletionCommand : ICommand
+    {
+        //  Properties ------------------------------------
+        public UserProfileData UserData { get { return _userData; } }
+        public bool WasSuccess { get { return _wasSuccess; } }
+
+        //  Fields ----------------------------------------
+        private readonly UserProfileData _userData;
+        private readonly bool _wasSuccess;
+
+        //  Initialization  -------------------------------
+        public UserProfileValidateCompletionCommand(UserProfileData userData, bool wasSuccess)
+        {
+            _userData = userData;
+            _wasSuccess = wasSuccess;
+        }
+    }
 
     /// <summary>
     /// </summary>
@@ -51,8 +74,8 @@ namespace Atomic.Controllers
 
                 _service.OnValidateCompleted.AddListener(OnValidateComplete);
 
-                Context.CommandManager.AddCommandListener<UserProfileValidateCommand>((p) => StartValidate());
-                Context.CommandManager.AddCommandListener<OnFormFillCompleteCommand>((p) => StartValidate());
+                Context.CommandManager.AddCommandListener<UserProfileValidateCommand>(Command_UserProfileValidate);
+                Context.CommandManager.AddCommandListener<OnFormFillCompleteCommand>(Command_OnFormFillCompleteCommand);
             }
         }
 
@@ -81,7 +104,15 @@ namespace Atomic.Controllers
         }
 
         //  Event Handlers --------------------------------
+        private void Command_UserProfileValidate(UserProfileValidateCommand command)
+        {
+            StartValidate();
+        }
 
+        private void Command_OnFormFillCompleteCommand(OnFormFillCompleteCommand command)
+        {
+            StartValidate();
+        }
     }
 }
 

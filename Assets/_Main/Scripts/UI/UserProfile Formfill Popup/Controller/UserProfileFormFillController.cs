@@ -1,9 +1,9 @@
-using Atomic.Command;
 using Atomic.Models;
 using Atomic.Services;
 using Atomic.UI;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Controller;
+using RMC.Core.Architectures.Mini.Controller.Commands;
 using System;
 
 namespace Atomic.Controllers
@@ -11,7 +11,24 @@ namespace Atomic.Controllers
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+    public class OnFillFormCommand : ICommand
+    {
 
+    }
+    public class OnFormFillCompleteCommand : ICommand
+    {
+        private readonly UserProfileData _userProfileData;
+
+        public UserProfileData UserProfileData
+        {
+            get { return _userProfileData; }
+        }
+
+        public OnFormFillCompleteCommand(UserProfileData userProfileData)
+        {
+            _userProfileData = userProfileData;
+        }
+    }
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>

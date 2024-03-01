@@ -13,6 +13,7 @@ namespace Atomic.Core.Interface
         IChain SetNextHandler(IChain chain);
         IChain SetContext(IContext context);
         void Handle();
+        void OnDestroyChain();
     }
 
 }

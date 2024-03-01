@@ -1,4 +1,4 @@
-using Atomic.Command;
+using Atomic.Controllers;
 using Doozy.Runtime.UIManager.Components;
 using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
@@ -40,7 +40,7 @@ namespace Atomic.UI
         [SerializeField]
         private TMP_InputField _inputUsername;
 
-        [SerializeField] 
+        [SerializeField]
         private UIPopup _popup;
 
         private bool _isInitialized;
@@ -56,13 +56,13 @@ namespace Atomic.UI
                 _context = context;
 
                 _buttonOK.onClickEvent.AddListener(ButtonOk_OnClicked);
-                Context.CommandManager.AddCommandListener<OnFormFillCompleteCommand>(HidePopup);
+                Context.CommandManager.AddCommandListener<UserProfileValidateCompletionCommand>(HidePopup);
             }
         }
 
         public void RequireIsInitialized()
         {
-            if(!IsInitialized)
+            if (!IsInitialized)
             {
                 throw new System.Exception("GuestSignUpView not yet initialized");
             }
@@ -72,7 +72,7 @@ namespace Atomic.UI
         private void OnDestroy()
         {
             _buttonOK.onClickEvent.RemoveListener(ButtonOk_OnClicked);
-            Context.CommandManager.RemoveCommandListener<OnFormFillCompleteCommand>(HidePopup);
+            Context.CommandManager.RemoveCommandListener<UserProfileValidateCompletionCommand>(HidePopup);
         }
 
         //  Other Methods ---------------------------------
@@ -81,14 +81,18 @@ namespace Atomic.UI
         //  Event Handlers --------------------------------
         private void ButtonOk_OnClicked()
         {
-            if (_inputUsername.text == "") return; 
+            if (_inputUsername.text == "") return;
             OnClickButtonOkUnityEvent.Invoke(_inputUsername.text);
         }
 
-        private void HidePopup(OnFormFillCompleteCommand command)
+        private void HidePopup(UserProfileValidateCompletionCommand command)
         {
             RequireIsInitialized();
-            _popup.Hide();
+            if (command.WasSuccess)
+            {
+                _popup.Hide();
+
+            }
         }
     }
 }
