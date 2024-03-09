@@ -31,6 +31,8 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp
+    - Atomic.Character.Module
+    - Atomic.Core
     - Cinemachine
     - NodeCanvas
     - ParadoxNotion
@@ -39,12 +41,6 @@ MonoBehaviour:
     - RMC.Core.Mini.Editor
     - RMC.Core.Mini.Editor.Tests
     - RMC.Core.Mini.Runtime
-    - SingularityGroup.HotReload.Editor
-    - SingularityGroup.HotReload.Runtime
-    - SingularityGroup.HotReload.Runtime.Public
-    - Sirenix.OdinInspector.Modules.Unity.Addressables
-    - Sirenix.OdinInspector.Modules.UnityLocalization
-    - Sirenix.OdinInspector.Modules.UnityLocalization.Editor
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

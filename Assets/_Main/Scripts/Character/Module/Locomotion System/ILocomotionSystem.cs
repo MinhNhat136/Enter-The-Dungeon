@@ -1,6 +1,10 @@
-public interface ILocomotionSystem
+namespace Atomic.Character.Module
 {
-    public void ApplyMovement();
-    public void ApplyRotation();
-    public void ApplyAnimator();
+    public interface ILocomotionSystem
+    {
+        public void ApplyMovement();
+        public void ApplyRotation();
+        public void ApplyAnimator();
+    }
+
 }

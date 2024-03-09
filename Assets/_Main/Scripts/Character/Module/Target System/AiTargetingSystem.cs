@@ -1,4 +1,3 @@
-using Atomic.Character.Module;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -62,7 +61,7 @@ namespace Atomic.Character.Module
 
         void EvaluateScores()
         {
-
+            Debug.Log("hello");
 
             foreach (var memory in memory.memories)
             {

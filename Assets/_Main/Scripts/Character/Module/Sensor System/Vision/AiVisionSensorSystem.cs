@@ -1,4 +1,3 @@
-using RMC.Core.Architectures.Mini.Context;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace Atomic.Character.Module
     /// determine if they are within the sensor's field of view, 
     /// and filter objects based on their layers.
     /// </summary>
-    public class AiVisionSensorSystem : MonoBehaviour, IInitializable
+    public class AiVisionSensorSystem : MonoBehaviour
     {
         //  Events ----------------------------------------
 
