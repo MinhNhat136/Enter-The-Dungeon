@@ -52,7 +52,7 @@ MonoBehaviour:
   AllowSceneActivation: 1
   SceneActivationDelay: 2
   SceneBuildIndex: 0
-  SceneName: SampleScene
+  SceneName: PrototypeScene
   WaitForSceneToLoad: 1
   PreventLoadingSameScene: 1
   ConnectProgressor: 1
@@ -166,7 +166,7 @@ MonoBehaviour:
     Capacity: 0
     Connections:
     - db565f50-6d67-4093-a9a9-adcfacf5db68
-    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Share","Name":"Settings","Custom":true},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
+    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Share","Name":"Settings","Custom":false},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
     ValueTypeQualifiedName: Doozy.Runtime.UIManager.Nodes.PortData.UIOutputPortData,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     CanBeDeleted: 1
@@ -181,8 +181,8 @@ MonoBehaviour:
   Position: {x: 250.4, y: 290.20078}
   OnEnterShowViews:
   - Id:
-      Category: Splash
-      Name: AppTitle
+      Category: None
+      Name: None
       Custom: 0
     Mode: 1
   OnEnterHideViews: []
@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02761efe598a45c98fa1baf4d446c6a7, type: 3}
   m_Name: Splash
   m_EditorClassIdentifier: 
-  EditorPosition: {x: 77.6, y: -29.6, z: 0}
+  EditorPosition: {x: 274.4, y: 68.00001, z: 0}
   EditorScale: {x: 0.43232757, y: 0.43232757, z: 1}
   Id: d02130a8-89b1-408a-a72d-fcea5d868a12
   GraphName: Flow Graph
@@ -515,7 +515,7 @@ MonoBehaviour:
     Direction: 1
     Capacity: 0
     Connections: []
-    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Share","Name":"Back","Custom":true},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
+    Value: '{"Trigger":2,"TimeDelay":3.0,"SignalPayload":{"StreamId":{"Category":"None","Name":"None","Custom":false},"SignalValueType":0,"IntegerValue":0,"BooleanValue":false,"FloatValue":0.0,"StringValue":"","ColorValue":{"r":0.0,"g":0.0,"b":0.0,"a":0.0},"Vector2Value":{"x":0.0,"y":0.0},"Vector3Value":{"x":0.0,"y":0.0,"z":0.0},"Vector4Value":{"x":0.0,"y":0.0,"z":0.0,"w":0.0}},"ButtonId":{"Category":"Share","Name":"Back","Custom":false},"ToggleId":{"Category":"None","Name":"None","Custom":false},"CommandToggle":2,"ViewId":{"Category":"None","Name":"None","Custom":false},"CommandShowHide":0}'
     ValueTypeQualifiedName: Doozy.Runtime.UIManager.Nodes.PortData.UIOutputPortData,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     CanBeDeleted: 0
@@ -532,7 +532,7 @@ MonoBehaviour:
   - Id:
       Category: Shared
       Name: Settings
-      Custom: 1
+      Custom: 0
     Mode: 1
   OnEnterHideViews: []
   OnExitShowViews: []
@@ -540,7 +540,7 @@ MonoBehaviour:
   - Id:
       Category: Shared
       Name: Settings
-      Custom: 1
+      Custom: 0
     Mode: 1
   OnEnterHideAllViews: 0
   OnExitHideAllViews: 0

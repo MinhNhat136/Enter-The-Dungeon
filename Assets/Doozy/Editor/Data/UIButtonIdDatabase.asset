@@ -13,4 +13,18 @@ MonoBehaviour:
   m_Name: UIButtonIdDatabase
   m_EditorClassIdentifier: 
   Database:
-    Items: []
+    Items:
+    - Category: Login
+      Name: Facebook
+    - Category: Login
+      Name: GameCenter
+    - Category: Login
+      Name: Google
+    - Category: Login
+      Name: Guest
+    - Category: None
+      Name: None
+    - Category: Share
+      Name: Back
+    - Category: Share
+      Name: Settings

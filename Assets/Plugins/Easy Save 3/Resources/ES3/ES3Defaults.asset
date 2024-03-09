@@ -31,12 +31,11 @@ MonoBehaviour:
     serializationDepthLimit: 64
     assemblyNames:
     - Assembly-CSharp
-    - Assembly-CSharp-firstpass
-    - Atomic
     - Cinemachine
     - NodeCanvas
     - ParadoxNotion
     - PPv2URPConverters
+    - Project.External
     - RMC.Core.Mini.Editor
     - RMC.Core.Mini.Editor.Tests
     - RMC.Core.Mini.Runtime
