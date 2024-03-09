@@ -5,22 +5,38 @@ using UnityEngine;
 
 namespace Atomic.Character.Player
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
     public class PlayerWeaponController : MonoBehaviour
     {
+        //  Events ----------------------------------------
+
+
+        //  Properties ------------------------------------
+
+
+        //  Fields ----------------------------------------
         private const float REFERENCE_BULLET_SPEED = 20;
-        //This is the default speed from whcih our mass formula is derived.
 
 
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private float bulletSpeed;
         [SerializeField] private Transform gunPoint;
-
-
-
         [SerializeField] private Transform weaponHolder;
 
 
+        //  Initialization  -------------------------------
 
+
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
         private void Shoot()
         {
             GameObject newBullet =
@@ -52,6 +68,14 @@ namespace Atomic.Character.Player
         }
 
         public Transform GunPoint() => gunPoint;
+
+        //  Event Handlers --------------------------------
+
+
+
+
+
+
     }
 
 }

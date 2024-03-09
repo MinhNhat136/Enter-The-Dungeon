@@ -69,6 +69,7 @@ namespace Atomic.Character.Player
         private bool _isRunning;
 
         private bool _isInitialized;
+
         //  Initialization  -------------------------------
         public void Initialize()
         {

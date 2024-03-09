@@ -1,13 +1,23 @@
+using RMC.Core.Architectures.Mini.Context;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Atomic.Character.Player
 {
-    public class PlayerModel : MonoBehaviour
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
+    public class PlayerModel : MonoBehaviour, IInitializable
     {
+        //  Events ----------------------------------------
         [HideInInspector]
         public UnityEvent<bool> OnStateRunning = new();
 
+        //  Properties ------------------------------------
         public PlayerControls Controls { get; private set; }
 
         public Vector2 MoveInput;
@@ -27,6 +37,45 @@ namespace Atomic.Character.Player
             }
         }
 
+        public bool IsInitialized => throw new System.NotImplementedException();
+
+        //  Fields ----------------------------------------
+        private bool _isInitialized;
+
+        //  Initialization  -------------------------------
+        public void Initialize()
+        {
+            if (!_isInitialized)
+            {
+                AssignInputEvents();
+            }
+        }
+
+        public void RequireIsInitialized()
+        {
+            if (!_isInitialized)
+            {
+                throw new System.Exception("PlayerModel not initialized");
+            }
+        }
+
+        //  Unity Methods   -------------------------------
+        private void Awake()
+        {
+            Controls = new PlayerControls();
+        }
+
+        private void OnEnable()
+        {
+            Controls.Enable();
+        }
+
+        private void OnDisable()
+        {
+            Controls.Disable();
+        }
+
+        //  Other Methods ---------------------------------
         public void AssignInputEvents()
         {
             Controls.Character.Movement.performed += context =>
@@ -48,21 +97,8 @@ namespace Atomic.Character.Player
                 OnStateRunning?.Invoke(false);
             };
         }
+        //  Event Handlers --------------------------------
 
-        private void Awake()
-        {
-            Controls = new PlayerControls();
-        }
-
-        private void OnEnable()
-        {
-            Controls.Enable();
-        }
-
-        private void OnDisable()
-        {
-            Controls.Disable();
-        }
     }
 
 }

@@ -4,25 +4,19 @@ using UnityEngine.Animations.Rigging;
 
 namespace Atomic.Character.Player
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
     public class PlayerTargetingSystem : MonoBehaviour
     {
-        [SerializeField]
-        private Rig _rigAim;
+        //  Events ----------------------------------------
 
-        [SerializeField]
-        private LayerMask _layerMask;
 
-        [SerializeField]
-        private GameObject _aimTarget;
-
-        private float memorySpan = 3.0f;
-        public float distanceWeight = 1.0f;
-
-        AiVisionSensorMemory memory = new AiVisionSensorMemory(10);
-        AiVisionSensorSystem sensor;
-
-        public AiMemory bestMemory;
-
+        //  Properties ------------------------------------
         public GameObject Target
         {
             get { return bestMemory.gameObject; }
@@ -43,13 +37,34 @@ namespace Atomic.Character.Player
             get { return bestMemory.distance; }
         }
 
+        //  Fields ----------------------------------------
+        [SerializeField]
+        private Rig _rigAim;
+
+        [SerializeField]
+        private LayerMask _layerMask;
+
+        [SerializeField]
+        private GameObject _aimTarget;
+
+        private float memorySpan = 3.0f;
+        public float distanceWeight = 1.0f;
+
+        AiVisionSensorMemory memory = new AiVisionSensorMemory(10);
+        AiVisionSensorSystem sensor;
+
+        public AiMemory bestMemory;
+
+        //  Initialization  -------------------------------
+
+
+        //  Unity Methods   -------------------------------
         private void Start()
         {
             sensor = GetComponent<AiVisionSensorSystem>();
         }
 
-
-        // Update is called once per frame
+        //  Other Methods ---------------------------------
         public void OnUpdate()
         {
             memory.UpdateSense(sensor, _layerMask);
@@ -61,7 +76,7 @@ namespace Atomic.Character.Player
 
         private void UpdateAimPoint()
         {
-            if(Target != null)
+            if (Target != null)
             {
                 _rigAim.weight = 1.0f;
                 _aimTarget.transform.position = Target.transform.position;
@@ -93,6 +108,9 @@ namespace Atomic.Character.Player
         {
             return 1.0f - (value / maxValue);
         }
+
+        //  Event Handlers --------------------------------
+
     }
 
 }
