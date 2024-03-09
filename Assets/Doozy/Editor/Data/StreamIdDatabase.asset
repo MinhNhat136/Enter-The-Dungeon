@@ -13,10 +13,4 @@ MonoBehaviour:
   m_Name: StreamIdDatabase
   m_EditorClassIdentifier: 
   Database:
-    Items:
-    - Category: None
-      Name: None
-    - Category: Splash
-      Name: LoadLobbyScene
-    - Category: Splash
-      Name: ShowTitle
+    Items: []

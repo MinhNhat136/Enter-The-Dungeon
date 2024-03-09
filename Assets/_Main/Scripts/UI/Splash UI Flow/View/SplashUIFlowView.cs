@@ -4,6 +4,7 @@ using Doozy.Runtime.Signals;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.View;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Atomic.UI
 {
@@ -18,7 +19,8 @@ namespace Atomic.UI
     public class SplashUIFlowView : MonoBehaviour, IView
     {
         //  Events ----------------------------------------
-
+        [HideInInspector]
+        public UnityEvent OnViewDestroy = new();
 
         //  Properties ------------------------------------
         public bool IsInitialized
@@ -68,7 +70,10 @@ namespace Atomic.UI
 
 
         //  Unity Methods   -------------------------------
-
+        private void OnDestroy()
+        {
+            OnViewDestroy.Invoke();
+        }
 
         //  Other Methods ---------------------------------
         public void PauseFlow() => _flowController.PauseFlow();
@@ -85,16 +90,6 @@ namespace Atomic.UI
         {
             _loadLobbyScene.SendSignal();
         }
-
-        private void Command_UserProfileValideCompleted(UserProfileValidateCompletionCommand command)
-        {
-            if (command.WasSuccess)
-            {
-                SendSignal_LoadLobbyScene();
-            }
-            else SendSignal_ShowAppTitleView();
-        }
-
         //  Event Handlers --------------------------------
 
     }

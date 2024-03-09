@@ -90,12 +90,12 @@ namespace Atomic.UI
 
         private void Command_StartCheckPolicy(StartPolicyValidateProgressCommand command)
         {
-            SetStateText("Check Policy");
+            SetStateText("Checking for Policy");
         }
 
         private void Command_StartValidateUserProfile(UserProfileValidateCommand command)
         {
-            SetStateText("Check UserProfile");
+            SetStateText("Checking for UserProfile");
         }
 
         

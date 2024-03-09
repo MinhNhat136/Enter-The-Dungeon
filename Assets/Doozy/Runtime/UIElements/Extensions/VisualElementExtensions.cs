@@ -1565,21 +1565,19 @@ namespace Doozy.Runtime.UIElements.Extensions
         #endregion
 
         #region Style - UnityBackgroundScaleMode
-
+        
         /// <summary> Background image scaling in element's box </summary>
         /// <param name="target"> Target VisualElement </param>
         /// <param name="value"> Keyword used on style value types </param>
-        [System.Obsolete]
         public static T SetStyleBackgroundScaleMode<T>(this T target, UnityEngine.ScaleMode value) where T : VisualElement
         {
-            target.style.unityBackgroundScaleMode = new StyleEnum<ScaleMode>(value);
+            target.style.unityBackgroundScaleMode = new StyleEnum<UnityEngine.ScaleMode>(value);
             return target;
         }
-
+        
         /// <summary> Get the Background image scaling in element's box </summary>
         /// <param name="target"> Target VisualElement </param>
-        [System.Obsolete]
-        public static ScaleMode GetStyleBackgroundScaleMode<T>(this T target) where T : VisualElement =>
+        public static UnityEngine.ScaleMode GetStyleBackgroundScaleMode<T>(this T target) where T : VisualElement =>
             target.style.unityBackgroundScaleMode.value;
         
         #endregion

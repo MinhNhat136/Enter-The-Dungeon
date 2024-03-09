@@ -14,7 +14,7 @@ TagManager:
   - UI
   - Enemy
   - Player
-  - Tree
+  - Obstacle
   - Ground
   - CursorTest
   - 

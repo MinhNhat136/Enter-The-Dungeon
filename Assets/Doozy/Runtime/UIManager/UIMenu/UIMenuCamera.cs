@@ -254,7 +254,6 @@ namespace Doozy.Runtime.UIManager.UIMenu
             currentState = State.Running;
         }
 
-        [Obsolete]
         public void StopMultiShot()
         {
             if (!m_MultiShotStarted) return;
@@ -293,8 +292,7 @@ namespace Doozy.Runtime.UIManager.UIMenu
             StopAllCoroutines();
             StartCoroutine(MultiShotForCustomDuration());
         }
-
-        [Obsolete]
+        
         private IEnumerator MultiShotForCustomDuration()
         {
             yield return new WaitForSecondsRealtime(tickInterval);
@@ -592,7 +590,6 @@ namespace Doozy.Runtime.UIManager.UIMenu
             RestoreCanvasScalerSettings();
         }
 
-        [Obsolete]
         private void Run(bool singleShot = true)
         {
             target = SnapshotTarget.rect;
@@ -642,7 +639,6 @@ namespace Doozy.Runtime.UIManager.UIMenu
             }
         }
 
-        [Obsolete]
         public void GenerateSnapshots(string fileName, string targetPath, List<SnapshotData> snapshot)
         {
             #if UNITY_EDITOR

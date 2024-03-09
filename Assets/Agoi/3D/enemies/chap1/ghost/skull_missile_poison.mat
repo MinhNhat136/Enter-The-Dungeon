@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: skull_missile_poison
+  m_Shader: {fileID: 4800000, guid: f9635cfbb11bdb7458a605c1603a8062, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - EMISSION
+  - RAMP
+  - RIM
+  - TCP2_REFLECTIONS_FRESNEL
+  - TCP2_RIM_LIGHTING_LIGHTMASK
+  - TCP2_SHADOW_LIGHT_COLOR
+  - TCP2_UV_NORMALS_FULL
+  m_LightmapFlags: 6
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 1f6b18ddc04b95d4980078be2ddd7f49, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+    - _Cull: 2
+    - _CutOff: 0
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _EmissionChannel: 4
+    - _EmissionRate: 0.5
+    - _FogFade: 0
+    - _FresnelMax: 1.5
+    - _FresnelPower: 0
+    - _Glossiness: 0
+    - _GlowRate: 0
+    - _IceTexBlend: 1
+    - _IndirectIntensity: 1
+    - _MatCapMaskChannel: 0
+    - _Metallic: 0
+    - _NormalsSource: 0
+    - _OcclusionChannel: 0
+    - _Outline: 0
+    - _OutlineLightingTypeURP: 0
+    - _OutlineMinWidth: 1
+    - _OutlineTextureLOD: 5
+    - _OutlineWidth: 1
+    - _RampBands: 4
+    - _RampOffset: 0
+    - _RampSmooth: 0.67
+    - _RampThreshold: 0.39
+    - _ReceiveShadowsOff: 1
+    - _ReflectionSmoothness: 0.5
+    - _RimMax: 1
+    - _ShadowColorLightAtten: 1
+    - _Shininess: 0.04
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SpecularRoughness: 0.5
+    - _SpecularToonSmoothness: 0.05
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UseBump: 0
+    - _UseFresnelReflections: 1
+    - _UseMatCapMask: 0
+    - _UseNormalMap: 0
+    - _UseOutline: 0
+    - _UseReflections: 0
+    - _UseRimLightMask: 1
+    - _UseSpec: 0
+    - _UseSpecular: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 0, g: 1, b: 0, a: 1}
+    - _FogColor: {r: 0, g: 0, b: 0, a: 0}
+    - _GlowOutlineColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _IceEmission: {r: 0, g: 0, b: 0, a: 1}
+    - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SColor: {r: 0.764151, g: 0.6576476, b: 0.50102353, a: 1}
+    - _SpecColor: {r: 0.20401889, g: 0.20754719, b: 0.15761839, a: 1}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

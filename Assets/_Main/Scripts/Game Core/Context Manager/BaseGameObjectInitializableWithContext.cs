@@ -1,5 +1,4 @@
 ﻿using RMC.Core.Architectures.Mini.Context;
-using System.Collections;
 using UnityEngine;
 
 namespace Atomic.Core

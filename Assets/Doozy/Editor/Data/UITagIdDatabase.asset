@@ -16,5 +16,5 @@ MonoBehaviour:
     Items:
     - Category: None
       Name: None
-    - Category: Splash
-      Name: Popup
+    - Category: Popup
+      Name: Parent

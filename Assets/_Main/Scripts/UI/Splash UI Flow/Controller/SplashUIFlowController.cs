@@ -45,6 +45,8 @@ namespace Atomic.Controllers
                 _isInitialized = true;
                 _context = context;
 
+                _view.OnViewDestroy.AddListener(OnDestroy);
+
                 Context.CommandManager.AddCommandListener<OnNetworkConnectChangeCommand>(Command_OnNetworkConntectionChange);
                 Context.CommandManager.AddCommandListener<UserProfileValidateCompletionCommand>(Command_UserProfileValidateCompleted);
 
@@ -66,6 +68,8 @@ namespace Atomic.Controllers
         {
             Context.CommandManager.RemoveCommandListener<OnNetworkConnectChangeCommand>(Command_OnNetworkConntectionChange);
             Context.CommandManager.RemoveCommandListener<UserProfileValidateCompletionCommand>(Command_UserProfileValidateCompleted);
+
+            _view.OnViewDestroy.RemoveListener(OnDestroy);
         }
 
         //  Other Methods ---------------------------------
@@ -85,10 +89,10 @@ namespace Atomic.Controllers
 
             if(command.CurrentValue == false)
             {
-                _view.StopFlow();
+                _view.PauseFlow();
                 return;
             }
-            _view.ResumeFlow();
+            _view.StartFlow();
             
         }
 

@@ -3,26 +3,15 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public FlowController controller;
-    // Start is called before the first frame update
-    void Start()
+    public void Update()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-      if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Test stop");
+            Time.timeScale = 0f; 
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
             Time.timeScale = 0f;
-        }  
-      if(Input.GetKeyUp(KeyCode.S))
-        {
-            Time.timeScale = 1f;
-            controller.ResumeFlow();
-
         }
     }
 }

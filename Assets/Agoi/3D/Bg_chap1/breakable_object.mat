@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: breakable_object
+  m_Shader: {fileID: 4800000, guid: 6aa34382cfe024046b7367afed44902b, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - TCP2_REFLECTIONS_FRESNEL
+  - TCP2_RIM_LIGHTING_LIGHTMASK
+  - TCP2_SHADOW_LIGHT_COLOR
+  - TCP2_UV_NORMALS_FULL
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BlinkTex:
+        m_Texture: {fileID: 2800000, guid: f894b0d4d6bea48408581d101d1047e0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: df1ffe74a49666a4d9101994fa4a3f37, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+    - _BlinkDelay: 2
+    - _BlinkFrom: -1
+    - _BlinkTime: 1
+    - _BlinkTo: 1
+    - _BumpScale: 1
+    - _Culling: 2
+    - _Cutoff: 0.5
+    - _DirectIntensityOutline: 1
+    - _EdgeWidth: 0
+    - _EmissionRate: 0
+    - _FogHeight: 0
+    - _FresnelMin: 0
+    - _GlossMapScale: 1
+    - _GlossyReflections: 1
+    - _IceTexBlend: 1
+    - _IndirectIntensity: 1
+    - _MatCapMaskChannel: 0
+    - _Metallic: 0
+    - _NormalsSource: 0
+    - _OcclusionChannel: 0
+    - _Outline: 178.9
+    - _OutlineLightingTypeURP: 0
+    - _OutlineMinWidth: 1
+    - _OutlineTextureLOD: 5
+    - _OutlineWidth: 1
+    - _RampBands: 4
+    - _RampOffset: 0
+    - _RampSmooth: 0.01
+    - _RampThreshold: 0.75
+    - _ReceiveShadowsOff: 1
+    - _ReflectionSmoothness: 0.5
+    - _RimMax: 1
+    - _ShadowColorLightAtten: 1
+    - _SingleIndirectColor: 0
+    - _SpecSmooth: 0.05
+    - _SpecularMapType: 0
+    - _SpecularToonSize: 0.25
+    - _SpecularType: 0
+    - _UVSec: 0
+    - _UseBump: 0
+    - _UseFresnelReflections: 1
+    - _UseMatCapMask: 0
+    - _UseNormalMap: 0
+    - _UseOutline: 0
+    - _UseReflections: 0
+    - _UseRimLightMask: 1
+    - _UseSpec: 0
+    - _UseSpecular: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _BlinkColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _IceEmission: {r: 0, g: 0, b: 0, a: 1}
+    - _MatCapColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ReflectionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  m_BuildTextureStacks: []

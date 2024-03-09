@@ -32,11 +32,17 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
+    - Atomic
     - Cinemachine
+    - NodeCanvas
+    - ParadoxNotion
     - PPv2URPConverters
     - RMC.Core.Mini.Editor
     - RMC.Core.Mini.Editor.Tests
     - RMC.Core.Mini.Runtime
+    - SingularityGroup.HotReload.Editor
+    - SingularityGroup.HotReload.Runtime
+    - SingularityGroup.HotReload.Runtime.Public
     - Sirenix.OdinInspector.Modules.Unity.Addressables
     - Sirenix.OdinInspector.Modules.UnityLocalization
     - Sirenix.OdinInspector.Modules.UnityLocalization.Editor

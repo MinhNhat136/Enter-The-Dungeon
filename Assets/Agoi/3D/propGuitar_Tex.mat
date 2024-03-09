@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: propGuitar_Tex
+  m_Shader: {fileID: 4800000, guid: 77d3fbab8e5c27743bbb12c7b191dfed, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _DissolveMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GlowTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 2572ea26865edf04db394532195bd8d4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+    - _Cull: 2
+    - _CutOff: 0
+    - _DetailNormalMapScale: 1
+    - _EdgeWidth: 0
+    - _EmissionRate: 0
+    - _FogDisabled: 0
+    - _FresnelPower: 0.89
+    - _Glossiness: 0
+    - _GlowRate: 0
+    - _IceEmissionRate: 0
+    - _IceTexScale: 0
+    - _Mode: 0
+    - _Outline: 0.03
+    - _ShadowDisabled: 0
+    - _SpecularHighlights: 1
+    - _TintFade: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 0, g: 0, b: 0, a: 1}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowOutlineColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _IceEmission: {r: 0, g: 0.74509805, b: 0.8156863, a: 1}
+    - _IceOutlineColor: {r: 0.14999998, g: 0.5, b: 1, a: 1}
+    - _OutlineColor: {r: 0.13207549, g: 0.12397652, b: 0.12397652, a: 1}
+    - _ShadowDirection: {r: 0, g: 0, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

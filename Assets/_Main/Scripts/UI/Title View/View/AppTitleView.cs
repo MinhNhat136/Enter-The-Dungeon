@@ -48,10 +48,6 @@ namespace Atomic.UI
         [SerializeField]
         private UIButton _buttonSetting;
 
-        [SerializeField]
-        private SignalSender _loadSceneSignal;
-
-
         private bool _isInitialized = false;
         private IContext _context;
 

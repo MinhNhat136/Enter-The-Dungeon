@@ -74,20 +74,15 @@ namespace Atomic.Controllers
         private void InitChain()
         {
             IChain loadingInitApp = new StartInitAppChain();
-            IChain networkValidateChain = new NetworkValidateChain();
             IChain policyValidationChain = new PolicyValidateChain();
             IChain userProfileValidationChain = new UserProfileValidateChain();
 
-            loadingInitApp.SetContext(_context).SetNextHandler(networkValidateChain);
-            networkValidateChain.SetContext(_context).SetNextHandler(policyValidationChain);
+            loadingInitApp.SetContext(_context).SetNextHandler(policyValidationChain);
             policyValidationChain.SetContext(_context).SetNextHandler(userProfileValidationChain);
             userProfileValidationChain.SetContext(_context);
 
             loadingInitApp.Handle();
         }
-
-
-
         //  Event Handlers --------------------------------
 
 
