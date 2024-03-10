@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Atomic.Character.Module
 {
@@ -12,17 +11,14 @@ namespace Atomic.Character.Module
     /// </summary>
     public class AiTargetingSystem : MonoBehaviour
     {
-        [HideInInspector] public readonly UnityEvent targetChange = new();
+        [SerializeField] private string _targetLayer; 
+        [SerializeField] private float _memorySpan = 3.0f;
+        [SerializeField] public float _distanceWeight = 1.0f;
 
-        private float memorySpan = 3.0f;
-        public float distanceWeight = 1.0f;
 
-        private LayerMask targetLayer; 
-
-        AiVisionSensorMemory memory = new AiVisionSensorMemory(10);
-        AiVisionSensorSystem sensor;
-
-        AiMemory bestMemory;
+        private AiVisionSensorMemory memory = new AiVisionSensorMemory(10);
+        private AiVisionSensorSystem sensor;
+        private AiMemory bestMemory;
 
         public GameObject Target
         {
@@ -53,16 +49,14 @@ namespace Atomic.Character.Module
         // Update is called once per frame
         void Update()
         {
-            memory.UpdateSense(sensor, targetLayer);
-            memory.ForgetMemory(memorySpan);
+            memory.UpdateSense(sensor, "Player");
+            memory.ForgetMemory(_memorySpan);
 
             EvaluateScores();
         }
 
         void EvaluateScores()
         {
-            Debug.Log("hello");
-
             foreach (var memory in memory.memories)
             {
                 memory.score = CalculateScore(memory);
@@ -75,7 +69,7 @@ namespace Atomic.Character.Module
 
         public float CalculateScore(AiMemory memory)
         {
-            float distanceScore = Normalize(memory.distance, sensor.Distance) * distanceWeight;
+            float distanceScore = Normalize(memory.distance, sensor.Distance) * _distanceWeight;
             return distanceScore;
         }
 

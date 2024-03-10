@@ -8,7 +8,6 @@ namespace Atomic.Character.Module
         private Animator anim;
         private bool isGrabbingWeapon;
 
-
         #region Gun transforms region
         [SerializeField] private Transform[] gunTransforms;
 

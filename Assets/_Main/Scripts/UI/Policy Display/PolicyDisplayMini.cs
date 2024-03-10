@@ -1,13 +1,9 @@
-using Atomic.Command;
 using Atomic.Controllers;
 using Atomic.Services;
 using Atomic.UI.Views;
 using Doozy.Runtime.UIManager.Containers;
 using RMC.Core.Architectures.Mini.Context;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PolicyDisplayMini : IMiniMvcs
 {

@@ -21,6 +21,7 @@ namespace Atomic.Character.Module
 
 
         //  Fields ----------------------------------------
+        [SerializeReference]
         public List<AiMemory> memories = new();
         public GameObject[] objects;
 
@@ -35,9 +36,9 @@ namespace Atomic.Character.Module
 
 
         //  Other Methods ---------------------------------
-        public void UpdateSense(AiVisionSensorSystem sensor, LayerMask objectLayer)
+        public void UpdateSense(AiVisionSensorSystem sensor, string layerName)
         {
-            int targets = sensor.Filter(objects, objectLayer.ToString());
+            int targets = sensor.Filter(objects, layerName);
             for (int i = 0; i < targets; i++)
             {
                 GameObject target = objects[i];
@@ -71,7 +72,6 @@ namespace Atomic.Character.Module
         {
             memories.RemoveAll(m => m.Age > olderThan);
             memories.RemoveAll(m => !m.gameObject);
-            memories.RemoveAll(m => !m.gameObject.activeSelf);
             //Add more logic here
         }
 

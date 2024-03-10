@@ -1,17 +1,12 @@
 {
-    "name": "Atomic.Character.Module",
+    "name": "Atomic.Character",
     "rootNamespace": "",
     "references": [
-        "GUID:7f7d1af65c2641843945d409d28f2e20",
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:818057ebd45f3e5469264f2525d0ad83"
+        "GUID:7f7d1af65c2641843945d409d28f2e20",
+        "GUID:7f72f931463130b47a9fee7879f8cdd3"
     ],
-    "includePlatforms": [
-        "Android",
-        "Editor",
-        "WSA",
-        "WindowsStandalone64"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -466,7 +466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 119230865}
   - component: {fileID: 119230866}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Rig 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 166916586}
   - component: {fileID: 166916587}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_TragetTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -916,7 +916,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 196510486}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_IK_target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2536,7 +2536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 524216052}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon_Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2631,7 +2631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 535072616}
   - component: {fileID: 535072617}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Gun_Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2775,7 +2775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 551065834}
   - component: {fileID: 551065835}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_IK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2826,6 +2826,50 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3505226547261043365, guid: 02097ff7d4f39e040b62297b2bc1a5d8, type: 3}
   m_PrefabInstance: {fileID: 1567662432}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &572018947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 572018949}
+  - component: {fileID: 572018948}
+  m_Layer: 0
+  m_Name: Agents Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &572018948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572018947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e925fb148fa26b845a1672adcb5e7e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &572018949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572018947}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.687546, y: -4.1701746, z: -2.4048262}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &572609312
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,7 +3404,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 671096221}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Player Aim Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4150,7 +4194,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 945351316}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon_Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4518,7 +4562,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 975376891}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: GunPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4894,7 +4938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1073298058}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon_Revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5484,7 +5528,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1155908563}
   - component: {fileID: 1155908564}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_TargetTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5727,7 +5771,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1201845089}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon_Auto-Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6490,7 +6534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1354336790}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon_Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7206,7 +7250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1474452907}
   - component: {fileID: 1474452908}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Head_Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7955,7 +7999,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1656302693}
   - component: {fileID: 1656302694}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Rig 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8115,7 +8159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1658848704}
   - component: {fileID: 1658848705}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_TragetTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8190,7 +8234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1675843671}
   - component: {fileID: 1675843672}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_TragetTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8428,16 +8472,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1746550274}
+  - component: {fileID: 1746550285}
   - component: {fileID: 1746550270}
   - component: {fileID: 1746550279}
   - component: {fileID: 1746550277}
   - component: {fileID: 1746550278}
-  - component: {fileID: 1746550280}
   - component: {fileID: 1746550284}
-  - component: {fileID: 1746550285}
+  - component: {fileID: 1746550280}
   - component: {fileID: 1746550287}
   - component: {fileID: 1746550286}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8536,14 +8580,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _aimTarget: {fileID: 489048664}
-  distanceWeight: 1
+  _memorySpan: 1
+  _turnSpeed: 60
+  _distanceWeight: 1
   bestMemory:
     gameObject: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
     direction: {x: 0, y: 0, z: 0}
     distance: 0
     angle: 0
-    damage: 0
     lastTime: 0
     score: 0
 --- !u!195 &1746550280
@@ -8580,9 +8625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0384885239f14a3488e8e901bc4b93ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alo: 0
-  _distance: 10
-  _angle: 30
+  _distance: 4
+  _angle: 180
   _height: 1
   _scanFrequency: 15
   _maxObjectsRemember: 10
@@ -8592,7 +8636,7 @@ MonoBehaviour:
   _occlusionLayer:
     serializedVersion: 2
     m_Bits: 256
-  _meshColor: {r: 1, g: 0, b: 0, a: 0}
+  _meshColor: {r: 1, g: 0, b: 0, a: 0.41960785}
   objects: []
 --- !u!114 &1746550285
 MonoBehaviour:
@@ -8606,10 +8650,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61294d361d657cb4c8ebab3a0a1b3ff3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStateRunning:
-    m_PersistentCalls:
-      m_Calls: []
-  MoveInput: {x: 0, y: 0}
+  _affiliation: 0
+  _bodyWeakPoint: {fileID: 671096221}
+  _isPlayer: 1
 --- !u!114 &1746550286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8623,35 +8666,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentBlackboard: {fileID: 0}
-  _serializedBlackboard: '{"_variables":{"WalkSpeed":{"_propertyPath":"Atomic.Character.Player.PlayerLocomotionSystem.WalkSpeed","_name":"WalkSpeed","_id":"e70240eb-977c-48d0-b871-4603a7ac3e3c","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"RunSpeed":{"_propertyPath":"Atomic.Character.Player.PlayerLocomotionSystem.RunSpeed","_name":"RunSpeed","_id":"79bb62f9-832d-4517-9bf4-72ab6f42b18f","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"OnStateRunning":{"_propertyPath":"Atomic.Character.Player.PlayerModel.OnStateRunning","_name":"OnStateRunning","_id":"b752dbb0-215d-41e0-a6ae-61058d387da4","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Events.UnityEvent`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
-    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"MoveInput":{"_propertyPath":"Atomic.Character.Player.PlayerModel.MoveInput","_name":"MoveInput","_id":"3f559acd-a0e5-475c-be3a-669886ff9e7e","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Vector2,
-    UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"},"PlayerAnimator":{"_value":1,"_name":"PlayerAnimator","_id":"1247f2e6-014f-4803-b233-91788e5167ae","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Animator,
-    UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}}}'
-  _objectReferences:
-  - {fileID: 0}
-  - {fileID: 7934456445945973027}
-  _serializedVariables:
-  - _json: '{"_propertyPath":"Atomic.Character.Player.PlayerLocomotionSystem.WalkSpeed","_name":"WalkSpeed","_id":"e70240eb-977c-48d0-b871-4603a7ac3e3c","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
-    _references: []
-  - _json: '{"_propertyPath":"Atomic.Character.Player.PlayerLocomotionSystem.RunSpeed","_name":"RunSpeed","_id":"79bb62f9-832d-4517-9bf4-72ab6f42b18f","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
-    _references: []
-  - _json: '{"_propertyPath":"Atomic.Character.Player.PlayerModel.OnStateRunning","_name":"OnStateRunning","_id":"b752dbb0-215d-41e0-a6ae-61058d387da4","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Events.UnityEvent`1[[System.Boolean,
-      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]],
-      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
-    _references: []
-  - _json: '{"_propertyPath":"Atomic.Character.Player.PlayerModel.MoveInput","_name":"MoveInput","_id":"3f559acd-a0e5-475c-be3a-669886ff9e7e","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Vector2,
-      UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
-    _references: []
-  - _json: '{"_value":1,"_name":"PlayerAnimator","_id":"1247f2e6-014f-4803-b233-91788e5167ae","$type":"NodeCanvas.Framework.Variable`1[[UnityEngine.Animator,
-      UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
-    _references:
-    - {fileID: 0}
-    - {fileID: 7934456445945973027}
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
 --- !u!114 &1746550287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8665,16 +8682,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Player.PlayerModel|AssignInputEvents|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_position":{"x":273.2994,"y":-11.05778},"$type":"NodeCanvas.StateMachines.ActionState","$id":"0"},{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|set_Speed|System.Void","_paramsInfo":"System.Single"},"parameter":{"_type":"System.Single","_name":"WalkSpeed","_targetVariableID":"e70240eb-977c-48d0-b871-4603a7ac3e3c"},"$type":"NodeCanvas.Tasks.Actions.SetProperty_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|ApplyAnimator|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|ApplyRotation|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|ApplyMovement|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"actions":[]},"foldUpdate":true,"foldExit":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Locomotion
-    State","_position":{"x":524.2149,"y":105.174},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"1"},{"_actionList":{"executionMode":1,"actions":[{"parameter":{"_value":"xVelocity"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"PlayerAnimator","_targetVariableID":"1247f2e6-014f-4803-b233-91788e5167ae"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_value":"zVelocity"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"PlayerAnimator","_targetVariableID":"1247f2e6-014f-4803-b233-91788e5167ae"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetFloat"},{"parameter":{"_value":"isRunning"},"parameterHashID":{},"setTo":{},"overrideAgent":{"_type":"UnityEngine.Animator","_name":"PlayerAnimator","_targetVariableID":"1247f2e6-014f-4803-b233-91788e5167ae"},"$type":"NodeCanvas.Tasks.Actions.MecanimSetBool"}]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Idle
-    State","_position":{"x":705.9321,"y":231.0277},"$type":"NodeCanvas.StateMachines.ActionState","$id":"2"},{"_position":{"x":728.1827,"y":-64.25926},"$type":"NodeCanvas.StateMachines.AnyState"},{"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorSystem|Scan|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_position":{"x":500.3658,"y":297.2389},"$type":"NodeCanvas.StateMachines.ActionState"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"UnityEngine.Vector2","_value":{"$type":"UnityEngine.Vector2"}},"field":{"_baseInfo":"Atomic.Character.Player.PlayerModel|MoveInput"},"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_condition":{"checkValue":{"_type":"UnityEngine.Vector2","_value":{"$type":"UnityEngine.Vector2"}},"field":{"_baseInfo":"Atomic.Character.Player.PlayerModel|MoveInput"},"_invert":true,"$type":"NodeCanvas.Tasks.Conditions.CheckField","$version":1},"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorSystem|OnUpdate|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|ApplyAnimator|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|ApplyRotation|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|ApplyMovement|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerTargetingSystem|OnUpdate|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"actions":[]},"foldEnter":true,"foldUpdate":true,"foldExit":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Locomotion
+    State","_position":{"x":490.6031,"y":34.80172},"$type":"NodeCanvas.StateMachines.SuperActionState"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorSystem|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionSystem|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":270.7082,"y":-46.78573},"$type":"NodeCanvas.StateMachines.OnFSMEnter"}],"connections":[],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences: []
   _boundGraphSource:
     _version: 3.28
     _category: 
     _comments: 
-    _translation: {x: 103.37692, y: 7.2007165}
-    _zoomFactor: 0.65283215
+    _translation: {x: 266, y: 64}
+    _zoomFactor: 0.55512714
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -8898,7 +8914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1762287493}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Aim_Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8996,7 +9012,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1781693769}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_IK_hint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9317,7 +9333,7 @@ GameObject:
   - component: {fileID: 1848969761}
   - component: {fileID: 1848969760}
   - component: {fileID: 1848969759}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10235,7 +10251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1974358293}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Weapon_Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10743,7 +10759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2078607759}
   - component: {fileID: 2078607760}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: LeftHand_TragetTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11086,7 +11102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5877186365523336113}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11141,7 +11157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 446431900584974531}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightToe_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11215,7 +11231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3037467615110622489}
   - component: {fileID: 2448998506153414981}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: robot_hat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11273,7 +11289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5264412028915167480}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11382,7 +11398,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4066830651786927009}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11460,7 +11476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 284825801516515969}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftHandIndex2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11476,7 +11492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5333737010932095841}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11492,7 +11508,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4164646159600795121}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11568,7 +11584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8735238838730002125}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11660,7 +11676,7 @@ GameObject:
   - component: {fileID: 2100212498848852622}
   - component: {fileID: 7163385055161965123}
   - component: {fileID: 7122689048996237120}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11676,7 +11692,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7054697567308007605}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11924,7 +11940,7 @@ GameObject:
   - component: {fileID: 6323424781700870450}
   - component: {fileID: 3853464474423029441}
   - component: {fileID: 9064824677778096952}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_revolver_emission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11975,7 +11991,7 @@ GameObject:
   - component: {fileID: 5112768670256351695}
   - component: {fileID: 7475177964367701880}
   - component: {fileID: 5705574230711405226}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_sniper_rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12007,7 +12023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7818962554033159846}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12038,7 +12054,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2707992340478320659}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12056,7 +12072,7 @@ GameObject:
   - component: {fileID: 8389445310668185431}
   - component: {fileID: 7210907550426226589}
   - component: {fileID: 695519860749757125}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_rifle_emission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12318,7 +12334,7 @@ GameObject:
   - component: {fileID: 6069930517719852390}
   - component: {fileID: 5569484206294428356}
   - component: {fileID: 7425265943586864244}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_pistol_emission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12384,7 +12400,7 @@ GameObject:
   - component: {fileID: 8209700386965213676}
   - component: {fileID: 7768731169146626863}
   - component: {fileID: 1743722580230443029}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_revolver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12400,7 +12416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1785986265314156169}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12418,7 +12434,7 @@ GameObject:
   - component: {fileID: 5582286933399598461}
   - component: {fileID: 8848874610166589859}
   - component: {fileID: 7342631684448139532}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_sniper_rifle_emission_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12434,7 +12450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1236528132554825551}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:HeadTop_End
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12466,7 +12482,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5337341211652018378}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12482,7 +12498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6519458296591472322}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightHandIndex2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12498,7 +12514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 768076909326551060}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12593,7 +12609,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8080530504505200897}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12693,7 +12709,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5188193172998581821}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12964,7 +12980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3396348741242188063}
   - component: {fileID: 1465278143515174192}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: robot_backpack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13040,7 +13056,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3398841449259492747}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightHandIndex3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13071,7 +13087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8926601063470605605}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftHandIndex1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13089,7 +13105,7 @@ GameObject:
   - component: {fileID: 3831846853129429248}
   - component: {fileID: 3607501493959088349}
   - component: {fileID: 7670598482903985548}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13120,7 +13136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3722796509787650826}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13160,7 +13176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4751261165221673057}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13176,7 +13192,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 548220214825848596}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightHandIndex4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13192,7 +13208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3745331138850108123}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13208,7 +13224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7336191013643700823}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftHandIndex4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13285,7 +13301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099198329586470960}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13379,7 +13395,7 @@ GameObject:
   - component: {fileID: 7934456445945973029}
   - component: {fileID: 7934456445945973028}
   - component: {fileID: 7934456445945973030}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: character_main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13452,7 +13468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2471500747714685366}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13520,7 +13536,7 @@ GameObject:
   - component: {fileID: 1143577971009527626}
   - component: {fileID: 2117493426143749114}
   - component: {fileID: 5663176226333934296}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13536,7 +13552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 840712682457093972}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13554,7 +13570,7 @@ GameObject:
   - component: {fileID: 7874400133477531047}
   - component: {fileID: 6388745572294953575}
   - component: {fileID: 508332263153094087}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_sniper_rifle_emission_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13612,7 +13628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4238971005007540684}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13807,7 +13823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1779830918203549807}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:RightHandIndex1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13945,7 +13961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1119565771064226034}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftHandIndex3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13963,7 +13979,7 @@ GameObject:
   - component: {fileID: 8504569421880066387}
   - component: {fileID: 142684886162156748}
   - component: {fileID: 3679525407729794295}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: weap_shotgun_emission
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13987,7 +14003,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3466362536831180391}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14020,7 +14036,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2587064405074120421}
   - component: {fileID: 5972254882521217638}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Robot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14036,7 +14052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2748445930170554917}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: mixamorig:Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14091,13 +14107,14 @@ SceneRoots:
   m_Roots:
   - {fileID: 1125065101}
   - {fileID: 1269053111}
+  - {fileID: 705507995}
   - {fileID: 952644914}
   - {fileID: 1401884568}
   - {fileID: 98464366}
-  - {fileID: 705507995}
   - {fileID: 264788315}
   - {fileID: 1746550274}
   - {fileID: 2141233248}
   - {fileID: 361610845}
   - {fileID: 489048668}
   - {fileID: 118706225}
+  - {fileID: 572018949}

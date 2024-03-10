@@ -1,3 +1,4 @@
+using Atomic.Core.Interface;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Atomic.Character.Module
     /// determine if they are within the sensor's field of view, 
     /// and filter objects based on their layers.
     /// </summary>
-    public class AiVisionSensorSystem : MonoBehaviour
+    public class AiVisionSensorSystem : MonoBehaviour, IInitializable
     {
         //  Events ----------------------------------------
 
@@ -28,8 +29,6 @@ namespace Atomic.Character.Module
                 return objects; 
             }
         }
-
-        public bool alo;
 
         public bool IsInitialized 
         {
@@ -92,6 +91,15 @@ namespace Atomic.Character.Module
         }
 
         //  Unity Methods   -------------------------------
+        public void OnUpdate()
+        {
+            scanTimer -= Time.deltaTime;
+            if (scanTimer <= 0)
+            {
+                scanTimer += scanInterval;
+                Scan();
+            }
+        }
 
         private void OnValidate()
         {
@@ -260,9 +268,6 @@ namespace Atomic.Character.Module
             return mesh;
 
         }
-
-        
-
         //  Event Handlers --------------------------------
 
     }

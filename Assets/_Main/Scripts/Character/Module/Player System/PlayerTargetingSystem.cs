@@ -1,5 +1,8 @@
+using Atomic.Character.Player;
+using System;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Atomic.Character.Module
 {
@@ -46,31 +49,40 @@ namespace Atomic.Character.Module
         [SerializeField]
         private GameObject _aimTarget;
 
-        private float memorySpan = 3.0f;
-        public float distanceWeight = 1.0f;
+        [SerializeField]
+        private float _memorySpan = 3.0f;
 
-        AiVisionSensorMemory memory = new AiVisionSensorMemory(10);
-        AiVisionSensorSystem sensor;
+        [SerializeField]
+        private float _turnSpeed = 3.0f;
+
+        [SerializeField]
+        private float _distanceWeight = 1.0f;
+
+        private AiVisionSensorMemory _memorySystem;
+        private AiVisionSensorSystem _sensor;
+        private PlayerAgent _model;
 
         public AiMemory bestMemory;
-
         //  Initialization  -------------------------------
 
 
         //  Unity Methods   -------------------------------
         private void Start()
         {
-            sensor = GetComponent<AiVisionSensorSystem>();
+            _memorySystem = new AiVisionSensorMemory(10);
+            _model = GetComponent<PlayerAgent>();
+            _sensor = _model.VisionSensor;
         }
 
         //  Other Methods ---------------------------------
         public void OnUpdate()
         {
-            memory.UpdateSense(sensor, _layerMask);
-            memory.ForgetMemory(memorySpan);
+            _memorySystem.UpdateSense(_sensor, "Enemy");
+            _memorySystem.ForgetMemory(_memorySpan);
 
             EvaluateScores();
             UpdateAimPoint();
+
         }
 
         private void UpdateAimPoint()
@@ -78,7 +90,8 @@ namespace Atomic.Character.Module
             if (Target != null)
             {
                 _rigAim.weight = 1.0f;
-                _aimTarget.transform.position = Target.transform.position;
+                //_aimTarget.transform.position = Target.transform.position;
+                _aimTarget.transform.position = Vector3.Lerp(_aimTarget.transform.position, TargetPosition, _turnSpeed * Time.deltaTime);
             }
             else
                 _rigAim.weight = 0.0f;
@@ -87,7 +100,8 @@ namespace Atomic.Character.Module
 
         void EvaluateScores()
         {
-            foreach (var memory in memory.memories)
+            
+            foreach (var memory in _memorySystem.memories)
             {
                 memory.score = CalculateScore(memory);
                 if (bestMemory == null || memory.score > bestMemory.score)
@@ -99,7 +113,7 @@ namespace Atomic.Character.Module
 
         public float CalculateScore(AiMemory memory)
         {
-            float distanceScore = Normalize(memory.distance, sensor.Distance) * distanceWeight;
+            float distanceScore = Normalize(memory.distance, _sensor.Distance) * _distanceWeight;
             return distanceScore;
         }
 

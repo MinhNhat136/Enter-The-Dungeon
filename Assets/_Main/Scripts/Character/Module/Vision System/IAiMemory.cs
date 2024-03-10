@@ -1,4 +1,3 @@
-using UnityEngine.TextCore.Text;
 using UnityEngine;
 
 namespace Atomic.Character.Module

@@ -18,6 +18,11 @@ namespace Atomic.Character.Module
 
 
         //  Properties ------------------------------------
+        public Vector2 MoveInput 
+        { 
+            get; private set; 
+        }
+
         public float Speed
         {
             get
@@ -62,7 +67,7 @@ namespace Atomic.Character.Module
 
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
-        private PlayerModel _inputsSystem;
+        private PlayerAgent _model;
 
         private float _speed;
         private Vector3 _movementDirection;
@@ -75,30 +80,14 @@ namespace Atomic.Character.Module
         {
             if (!_isInitialized)
             {
-                _navMeshAgent = GetComponent<NavMeshAgent>();
-                _animator = GetComponentInChildren<Animator>();
-                _inputsSystem = GetComponent<PlayerModel>();
-
-                _inputsSystem.OnStateRunning.AddListener((value) =>
-                {
-                    if (value)
-                    {
-                        Speed = RunSpeed;
-                        IsRunning = true;
-                    }
-                    else
-                    {
-                        Speed = WalkSpeed;
-                        IsRunning = false;
-                    }
-                });
-
                 _speed = _walkSpeed;
+                AssignInputEvents();
             }
         }
 
         public void RequireIsInitialized()
         {
+
             if (!_isInitialized)
             {
                 throw new System.Exception("Not initialized player locomotion system");
@@ -106,13 +95,39 @@ namespace Atomic.Character.Module
         }
 
         //  Unity Methods   -------------------------------
-        private void OnDestroy()
+        private void Awake()
         {
-            _inputsSystem.OnStateRunning.RemoveAllListeners();
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+            _animator = GetComponentInChildren<Animator>();
+            _model = GetComponent<PlayerAgent>();
+
         }
 
-
         //  Other Methods ---------------------------------
+        public void AssignInputEvents()
+        {
+            _model.Controls.Character.Movement.performed += context =>
+            {
+                MoveInput = context.ReadValue<Vector2>();
+            };
+            _model.Controls.Character.Movement.canceled += context =>
+            {
+                MoveInput = Vector2.zero;
+            };
+
+            _model.Controls.Character.Run.performed += context =>
+            {
+                IsRunning = true;
+                Speed = RunSpeed;
+            };
+
+            _model.Controls.Character.Run.canceled += context =>
+            {
+                IsRunning = false;
+                Speed = WalkSpeed;
+            };
+        }
+
         public void ApplyAnimator()
         {
             float xVelocity = Vector3.Dot(_movementDirection.normalized, transform.right);
@@ -140,16 +155,13 @@ namespace Atomic.Character.Module
 
         public void ApplyMovement()
         {
-            _movementDirection = new Vector3(_inputsSystem.InputHorizontal, 0, _inputsSystem.InputVertical);
+            _movementDirection = new Vector3(MoveInput.x, 0, MoveInput.y);
 
             if (_movementDirection.magnitude > 0)
             {
                 _navMeshAgent.Move(_movementDirection * _speed * Time.deltaTime);
             }
         }
-
-
-
         //  Event Handlers --------------------------------
 
     }

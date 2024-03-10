@@ -13,7 +13,6 @@ namespace Atomic.Models
     {
         //  Events ----------------------------------------
 
-
         //  Properties ------------------------------------
         public Observable<GameState> GameState
         {

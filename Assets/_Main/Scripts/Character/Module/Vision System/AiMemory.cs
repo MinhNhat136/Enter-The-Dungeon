@@ -1,3 +1,4 @@
+using Atomic.Character.Model;
 using UnityEngine;
 
 namespace Atomic.Character.Module
@@ -21,8 +22,13 @@ namespace Atomic.Character.Module
         public Vector3 direction;
         public float distance;
         public float angle;
-        public float damage;
         public float lastTime;
         public float score;
     }
+
+    public class TargetAgentMemory : AiMemory
+    {
+        public BaseAgent targetAgent; 
+    }
+
 }
