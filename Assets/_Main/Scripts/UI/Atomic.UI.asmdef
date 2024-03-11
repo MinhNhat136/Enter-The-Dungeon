@@ -1,0 +1,20 @@
+{
+    "name": "Atomic.UI",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f23c2cfd3b841e54ea02531ac15ff316",
+        "GUID:4245cf09d0036f34e8bb2477b3fed3c2",
+        "GUID:7f72f931463130b47a9fee7879f8cdd3",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:5ab110c06cf13334280ae9b12324df99"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

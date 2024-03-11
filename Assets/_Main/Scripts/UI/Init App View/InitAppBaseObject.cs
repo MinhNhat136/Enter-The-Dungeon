@@ -28,7 +28,6 @@ namespace Atomic.Core
         {
             if (!IsInitialized)
             {
-                Debug.Log("hello");
                 _isInitialized = true;
                 _context = context;
 

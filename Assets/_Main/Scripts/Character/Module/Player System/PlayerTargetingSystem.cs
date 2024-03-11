@@ -75,6 +75,8 @@ namespace Atomic.Character.Module
         }
 
         //  Other Methods ---------------------------------
+        private void DSoemitni() { }
+
         public void OnUpdate()
         {
             _memorySystem.UpdateSense(_sensor, "Enemy");
