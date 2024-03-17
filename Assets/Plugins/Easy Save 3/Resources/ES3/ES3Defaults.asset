@@ -33,7 +33,9 @@ MonoBehaviour:
     - Assembly-CSharp
     - Atomic.Character
     - Atomic.Core
+    - Atomic.UI
     - Cinemachine
+    - Doozy.Runtime
     - NodeCanvas
     - ParadoxNotion
     - PPv2URPConverters

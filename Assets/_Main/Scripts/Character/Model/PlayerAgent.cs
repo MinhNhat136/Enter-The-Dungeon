@@ -1,8 +1,7 @@
 using Atomic.Character.Model;
 using Atomic.Character.Module;
-using Atomic.Core.Interface;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.AI;
 
 namespace Atomic.Character.Player
 {
@@ -18,36 +17,73 @@ namespace Atomic.Character.Player
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
+        public float RunSpeed { get { return _runSpeed; } }
+        public float WalkSpeed { get { return _walkSpeed; } }
+        public float TurnSpeed { get { return _turnSpeed; } }
+        public bool IsRunning { get { return _isRunning; } }
+        public Transform DefaultAimPoint { get { return _defaultAimPoint; } }
+
         public PlayerControls Controls { get; private set; }
-        public AiVisionSensorSystem VisionSensor { get; private set; }
-        public BaseAgent TargetAgent { get; set; }
+
 
         //  Fields ----------------------------------------
+        [Header("MOVEMENT MODULE")]
+        [SerializeField] private float _walkSpeed;
+        [SerializeField] private float _runSpeed;
+        [SerializeField] private float _turnSpeed;
 
+        [Header("TARGETING MODULE")]
+        [SerializeField] private Transform _defaultAimPoint;
+
+        private bool _isRunning;
 
         //  Initialization  -------------------------------
-
-
-        //  Unity Methods   -------------------------------
-        private new void Awake()
+        public override void Initialize()
         {
-            base.Awake();
-            Controls = new PlayerControls();
-            VisionSensor = GetComponent<AiVisionSensorSystem>();
+            if (!IsInitialized)
+            {
+                base.Initialize();
+
+                BaseAnimator = GetComponentInChildren<Animator>();
+                BaseNavMeshAgent = GetComponent<NavMeshAgent>();
+                BaseAnimator = GetComponentInChildren<Animator>();
+                SensorSystem = GetComponent<AiVisionSensorController>();
+                LocomotionSystem = GetComponent<PlayerLocomotionController>();
+                AgentAnimatorController = GetComponent<PlayerAnimatorController>();
+
+                Controls = new PlayerControls();
+                AssignInputEvents();
+            }
         }
 
-        private void OnEnable()
+        //  Unity Methods   -------------------------------
+        public override void DoEnable()
         {
+            base.DoEnable();
             Controls.Enable();
         }
 
-        private void OnDisable()
+        public override void DoDisable()
         {
+            base.DoDisable();
             Controls.Disable();
         }
 
         //  Other Methods ---------------------------------
-        
+        public void AssignInputEvents()
+        {
+            Controls.Character.Run.performed += context =>
+            {
+                _isRunning = true;
+            };
+
+            Controls.Character.Run.canceled += context =>
+            {
+                _isRunning = false;
+            };
+        }
+
+
 
         //  Event Handlers --------------------------------
 

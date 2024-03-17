@@ -1,4 +1,5 @@
 using Atomic.Character.Module;
+using Atomic.Core.Interface;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,61 +12,70 @@ namespace Atomic.Character.Model
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public abstract class BaseAgent : MonoBehaviour
+    public abstract class BaseAgent : MonoBehaviour, IInitializable, IDoEnable
     {
         //  Events ----------------------------------------
 
 
         //  Properties ------------------------------------
-        public bool IsPlayer { get { return _isPlayer; } }
-
-        public bool IsDeath { get { return _isDeath; } set { _isDeath = value; } }
-        public bool IsStun { get { return _isStun; } set { _isStun = value; } }
-                
+        #region Config
         public float Affiliation { get { return _affiliation; } }
         public Vector3 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
+        public bool IsInitialized { get { return _isInitialized; } }
+        #endregion
+
+
+        #region Module Controller 
         public Transform BodyWeakPoint { get { return _bodyWeakPoint; } }
-        public NavMeshAgent Agent { get; private set; }
-        public virtual Animator Animator { get; private set; }
-        public virtual BaseAgent TargetAgent { get { return _targetAgent; } set { _targetAgent = value; } }
-        public virtual ILocomotionSystem LocomotionSystem { get; protected set; }
+        public NavMeshAgent BaseNavMeshAgent { get; protected set; }
+        public virtual Animator BaseAnimator { get; protected set; }
+        public virtual IAnimatorController AgentAnimatorController { get; protected set; }
+        public virtual ILocomotionController LocomotionSystem { get; protected set; }
         public virtual IDamageable Damageable { get; protected set; }
         public virtual IVisionSystem SensorSystem { get; protected set; }
         public virtual IAiWeaponControlSystem WeaponControlSystem { get; protected set; }
+        #endregion
 
         //  Fields ----------------------------------------
         [SerializeField] private int _affiliation;
         [SerializeField] private Transform _bodyWeakPoint;
-        [SerializeField] private bool _isPlayer;
 
         private Vector3 _moveDirection;
-        private BaseAgent _targetAgent;
         private AgentsManager _agentManager;
+        private bool _isInitialized;
 
-        private bool _isStun; 
-        private bool _isDeath;
 
         //  Initialization  -------------------------------
+        public virtual void Initialize()
+        {
+            if (!_isInitialized)
+            {
+                _isInitialized = true;
+                _agentManager = FindObjectOfType<AgentsManager>();
+                _agentManager.RegisterAgent(this);
+            }
+        }
 
+        public void RequireIsInitialized()
+        {
+            if (!_isInitialized)
+            {
+                throw new System.Exception("Base Agent not initialized");
+            }
+        }
 
         //  Unity Methods   -------------------------------
-        public void Awake()
-        {
-            _agentManager = FindObjectOfType<AgentsManager>();
-            Agent = GetComponent<NavMeshAgent>();
-            Animator = GetComponentInChildren<Animator>();
-        }
-
-        void Start()
-        {
-            _agentManager = GameObject.FindObjectOfType<AgentsManager>();
-
-            _agentManager.RegisterAgent(this);
-        }
-
         void OnDestroy()
         {
             _agentManager.UnRegisterAgent(this);
+        }
+
+        public virtual void DoEnable()
+        {
+        }
+
+        public virtual void DoDisable()
+        {
         }
         //  Other Methods ---------------------------------
 

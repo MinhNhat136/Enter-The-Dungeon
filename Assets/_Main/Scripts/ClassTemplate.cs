@@ -1,6 +1,8 @@
 
 
 using RMC.Core.Architectures.Mini.Context;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Atomic.Template
 {
@@ -20,7 +22,6 @@ namespace Atomic.Template
        
 
         //  Fields ----------------------------------------
-
 
         //  Initialization  -------------------------------
 
