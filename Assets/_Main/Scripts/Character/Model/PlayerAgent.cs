@@ -17,9 +17,6 @@ namespace Atomic.Character.Player
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
-        public float RunSpeed { get { return _runSpeed; } }
-        public float WalkSpeed { get { return _walkSpeed; } }
-        public float TurnSpeed { get { return _turnSpeed; } }
         public bool IsRunning { get { return _isRunning; } }
         public Transform DefaultAimPoint { get { return _defaultAimPoint; } }
 
@@ -46,13 +43,16 @@ namespace Atomic.Character.Player
 
                 BaseAnimator = GetComponentInChildren<Animator>();
                 BaseNavMeshAgent = GetComponent<NavMeshAgent>();
+                MemoryController = GetComponent<AiMemoryController>();
                 BaseAnimator = GetComponentInChildren<Animator>();
-                SensorSystem = GetComponent<AiVisionSensorController>();
-                LocomotionSystem = GetComponent<PlayerLocomotionController>();
-                AgentAnimatorController = GetComponent<PlayerAnimatorController>();
+                VisionController = GetComponent<AiVisionSensorController>();
+
 
                 Controls = new PlayerControls();
                 AssignInputEvents();
+
+                LocomotionController.TurnSpeed = _turnSpeed;
+                LocomotionController.MoveSpeed = _walkSpeed;
             }
         }
 
@@ -72,19 +72,25 @@ namespace Atomic.Character.Player
         //  Other Methods ---------------------------------
         public void AssignInputEvents()
         {
+            Controls.Character.Movement.performed += context =>
+            {
+                LocomotionController.MoveInput = context.ReadValue<Vector2>();
+            };
+            Controls.Character.Movement.canceled += context =>
+            {
+                LocomotionController.MoveInput = Vector2.zero;
+            };
             Controls.Character.Run.performed += context =>
             {
+                LocomotionController.MoveSpeed = _runSpeed;
                 _isRunning = true;
             };
-
             Controls.Character.Run.canceled += context =>
             {
+                LocomotionController.MoveSpeed = _walkSpeed;
                 _isRunning = false;
             };
         }
-
-
-
         //  Event Handlers --------------------------------
 
     }

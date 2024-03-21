@@ -8526,12 +8526,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1746550274}
   - component: {fileID: 1746550285}
-  - component: {fileID: 1746550270}
+  - component: {fileID: 1746550288}
+  - component: {fileID: 1746550284}
+  - component: {fileID: 1746550290}
   - component: {fileID: 1746550279}
+  - component: {fileID: 1746550289}
   - component: {fileID: 1746550277}
   - component: {fileID: 1746550278}
-  - component: {fileID: 1746550284}
-  - component: {fileID: 1746550288}
   - component: {fileID: 1746550280}
   - component: {fileID: 1746550287}
   - component: {fileID: 1746550286}
@@ -8542,18 +8543,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1746550270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1746550269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2097d23725642384b9b7f832d654668f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1746550274
 Transform:
   m_ObjectHideFlags: 0
@@ -8626,16 +8615,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fecbb90d207d2749b09562c9fb55f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rigAim: {fileID: 1656302694}
+  _targetMasks: []
   _aimTarget: {fileID: 489048664}
   _memorySpan: 10
   _turnSpeed: 60
   _distanceWeight: 1
   _maxRememberObjects: 8
-  _targetMasks:
-  - Enemy
-  - Obstacle
-  - Cursor
   bestMemory:
     gameObject: {fileID: 0}
     position: {x: 0, y: 0, z: 0}
@@ -8739,16 +8724,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerTargetingController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"actions":[]},"foldUpdate":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Patrol
-    State","_position":{"x":970.3685,"y":-64.28159},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"0"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Attack
-    State","_position":{"x":778.9999,"y":78.99991},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"1"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerLocomotionController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.PlayerTargetingController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|DoEnable|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":702.2001,"y":-152.2},"$type":"NodeCanvas.StateMachines.OnFSMEnter"},{"_position":{"x":1182.8,"y":-99.80002},"$type":"NodeCanvas.StateMachines.AnyState","$id":"3"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Death
-    State","_position":{"x":1189.6,"y":178.8},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"4"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":637.8,"y":313.2},"$type":"NodeCanvas.StateMachines.OnFSMExit"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
-  _boundGraphObjectReferences: []
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.AiBaseLocomotionController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiTargetingController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"actions":[]},"foldUpdate":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Patrol
+    State","_position":{"x":979.9685,"y":-56.28162},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"0"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Attack
+    State","_position":{"x":778.9999,"y":78.99991},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"1"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Player.PlayerAgent"},"parameters":[{"_type":"Atomic.Character.Player.PlayerAgent","_value":{"$content":1,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiBaseLocomotionController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Model.BaseAgent"},"parameters":[{"_type":"Atomic.Character.Model.BaseAgent","_value":{"$content":1,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiTargetingController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Model.BaseAgent"},"parameters":[{"_type":"Atomic.Character.Model.BaseAgent","_value":{"$content":1,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|DoEnable|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":702.2001,"y":-152.2},"$type":"NodeCanvas.StateMachines.OnFSMEnter"},{"_position":{"x":1414.0,"y":-71.00001},"$type":"NodeCanvas.StateMachines.AnyState","$id":"3"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Death
+    State","_position":{"x":1424.0,"y":161.2},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"4"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":698.6,"y":222.0},"$type":"NodeCanvas.StateMachines.OnFSMExit"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"3"},"_targetNode":{"$ref":"4"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphObjectReferences:
+  - {fileID: 0}
+  - {fileID: 1746550285}
   _boundGraphSource:
     _version: 3.28
     _category: 
     _comments: 
-    _translation: {x: -163, y: 133}
+    _translation: {x: -523, y: 146}
     _zoomFactor: 1
   _firstActivation: 0
   _enableAction: 0
@@ -8768,6 +8755,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34417f19c2dd1854e833391196cdedce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1746550289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746550269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2097d23725642384b9b7f832d654668f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1746550290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746550269}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf2b1892166fef4995050734779b306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1746982451 stripped

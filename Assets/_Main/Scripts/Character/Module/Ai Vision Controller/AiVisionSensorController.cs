@@ -14,13 +14,13 @@ namespace Atomic.Character.Module
     /// determine if they are within the sensor's field of view, 
     /// and filter objects based on their layers.
     /// </summary>
-    public class AiVisionSensorController : MonoBehaviour, IVisionSystem
+    public class AiVisionSensorController : MonoBehaviour, IVisionController
     {
         //  Events ----------------------------------------
 
 
         //  Properties ------------------------------------
-        public float Distance { get { return _distance; } }
+        public float VisionDistance { get { return _distance; } }
         public List<GameObject> Objects
         {
             get

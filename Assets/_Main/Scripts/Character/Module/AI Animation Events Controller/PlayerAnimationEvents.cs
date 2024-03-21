@@ -5,11 +5,11 @@ namespace Atomic.Character.Player
 {
     public class PlayerAnimationEvents : MonoBehaviour
     {
-        private PlayerWeaponVisuals _visualController;
+        private AiWeaponVisuals _visualController;
 
         private void Start()
         {
-            _visualController = GetComponentInParent<PlayerWeaponVisuals>();
+            _visualController = GetComponentInParent<AiWeaponVisuals>();
         }
 
         public void ReloadIsOver()

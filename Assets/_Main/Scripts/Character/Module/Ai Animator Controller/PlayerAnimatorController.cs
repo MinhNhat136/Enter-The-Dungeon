@@ -1,4 +1,6 @@
+using Atomic.Character.Model;
 using Atomic.Character.Module;
+using Atomic.Core.Interface;
 using UnityEngine;
 
 namespace Atomic.Character.Player
@@ -10,7 +12,7 @@ namespace Atomic.Character.Player
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PlayerAnimatorController : MonoBehaviour, IAnimatorController
+    public class PlayerAnimatorController : MonoBehaviour, IAnimatorController, IInitializableWithBaseModel<PlayerAgent>
     {
         //  Events ----------------------------------------
 
@@ -21,19 +23,23 @@ namespace Atomic.Character.Player
             get { return _isInitialized; }
         }
 
+
         //  Fields ----------------------------------------
         private PlayerAgent _model;
         private Animator _animator;
-
+        public PlayerAgent Model
+        {
+            get { return _model; }
+        }
         private bool _isInitialized;
 
         //  Initialization  -------------------------------
-        public void Initialize()
+        public void Initialize(PlayerAgent model)
         {
-            if(!_isInitialized)
+            if (!_isInitialized)
             {
                 _isInitialized = true;
-                _model = GetComponent<PlayerAgent>();
+                _model = model;
                 _animator = _model.BaseAnimator;
             }
         }
@@ -62,7 +68,6 @@ namespace Atomic.Character.Player
             _animator.SetBool("isRunning", playRunAnimation);
         }
 
-        
         //  Event Handlers --------------------------------
 
     }
