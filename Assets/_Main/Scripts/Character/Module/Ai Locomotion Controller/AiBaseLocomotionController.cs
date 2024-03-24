@@ -9,7 +9,9 @@ namespace Atomic.Character.Module
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// Controls locomotion for AI agents using a NavMeshAgent for navigation. 
+    /// Note that the associated Animator component should not utilize root motion.
+    /// CAUTION: USING THIS CLASS WITH AnimatorEventsListerner IN CHILD GAMEOBJECT CONTAIN ANIMATOR.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
     public class AiBaseLocomotionController : MonoBehaviour, ILocomotionController
@@ -102,6 +104,11 @@ namespace Atomic.Character.Module
             {
                 _navMeshAgent.Move(_model.MoveDirection * MoveSpeed * Time.deltaTime);
             }
+        }
+
+        public void Stop()
+        {
+            throw new System.NotImplementedException();
         }
 
 

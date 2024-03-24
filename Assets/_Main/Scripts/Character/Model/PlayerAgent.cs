@@ -20,9 +20,11 @@ namespace Atomic.Character.Player
         public bool IsRunning { get { return _isRunning; } }
         public Transform DefaultAimPoint { get { return _defaultAimPoint; } }
 
-        public PlayerControls Controls { get; private set; }
-
-
+        public PlayerControls InputControls { get; private set; }
+        public override IAnimatorController AgentAnimatorController 
+        {
+            get { return _animatorController; }
+        }
         //  Fields ----------------------------------------
         [Header("MOVEMENT MODULE")]
         [SerializeField] private float _walkSpeed;
@@ -32,6 +34,7 @@ namespace Atomic.Character.Player
         [Header("TARGETING MODULE")]
         [SerializeField] private Transform _defaultAimPoint;
 
+        private PlayerAnimatorController _animatorController;
         private bool _isRunning;
 
         //  Initialization  -------------------------------
@@ -41,14 +44,7 @@ namespace Atomic.Character.Player
             {
                 base.Initialize();
 
-                BaseAnimator = GetComponentInChildren<Animator>();
-                BaseNavMeshAgent = GetComponent<NavMeshAgent>();
-                MemoryController = GetComponent<AiMemoryController>();
-                BaseAnimator = GetComponentInChildren<Animator>();
-                VisionController = GetComponent<AiVisionSensorController>();
-
-
-                Controls = new PlayerControls();
+                InputControls = new PlayerControls();
                 AssignInputEvents();
 
                 LocomotionController.TurnSpeed = _turnSpeed;
@@ -60,36 +56,27 @@ namespace Atomic.Character.Player
         public override void DoEnable()
         {
             base.DoEnable();
-            Controls.Enable();
+            InputControls.Enable();
         }
 
         public override void DoDisable()
         {
             base.DoDisable();
-            Controls.Disable();
+            InputControls.Disable();
         }
 
         //  Other Methods ---------------------------------
         public void AssignInputEvents()
         {
-            Controls.Character.Movement.performed += context =>
+            InputControls.Character.Movement.performed += context =>
             {
                 LocomotionController.MoveInput = context.ReadValue<Vector2>();
             };
-            Controls.Character.Movement.canceled += context =>
+            InputControls.Character.Movement.canceled += context =>
             {
                 LocomotionController.MoveInput = Vector2.zero;
             };
-            Controls.Character.Run.performed += context =>
-            {
-                LocomotionController.MoveSpeed = _runSpeed;
-                _isRunning = true;
-            };
-            Controls.Character.Run.canceled += context =>
-            {
-                LocomotionController.MoveSpeed = _walkSpeed;
-                _isRunning = false;
-            };
+
         }
         //  Event Handlers --------------------------------
 

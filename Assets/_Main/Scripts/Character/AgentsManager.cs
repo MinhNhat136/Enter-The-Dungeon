@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class AgentsManager : MonoBehaviour
 {
-    private List<BaseAgent> _agents;
+    private List<BaseAgent> _agents = new();
 
-    private void Awake()
-    {
-        _agents = new();
-    }
 
     public void RegisterAgent(BaseAgent agent) 
     {

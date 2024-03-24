@@ -1,6 +1,5 @@
 using Atomic.Character.Module;
 using Atomic.Core.Interface;
-using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,22 +34,61 @@ namespace Atomic.Character.Model
         public Vector3 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
         public bool IsInitialized { get { return _isInitialized; } }
         public Transform BodyWeakPoint { get { return _bodyWeakPoint; } }
+        public BaseAgent TargetAgent { get { return _targetAgent; } set { _targetAgent = value; } }
         #endregion
 
         #region Engine Components
-        public NavMeshAgent BaseNavMeshAgent { get; protected set; }
-        public virtual Animator BaseAnimator { get; protected set; }
+        public NavMeshAgent BaseNavMeshAgent { get { return _navMeshAgent; }}
+        public virtual Animator BaseAnimator { get { return _animator; } }
         #endregion
 
         #region Module Controllers 
-        public virtual IAnimatorController AgentAnimatorController { get; protected set; }
-        public virtual ILocomotionController LocomotionController { get; protected set; }
-        public virtual IHitBoxController HitBoxController { get; protected set; }
-        public virtual ITakeDamageController Damageable { get; protected set; }
-        public virtual IAiMemoryController MemoryController { get; protected set; }
-        public virtual IVisionController VisionController { get; protected set; }
-        public virtual IAiWeaponControlSystem WeaponControl { get; protected set; }
-        public virtual ITargetingController TargetingController { get; protected set; }
+        public virtual IAnimatorController AgentAnimatorController 
+        {
+            get;
+            protected set;
+        }
+        public virtual ILocomotionController LocomotionController
+        {
+            get { return _locomotionController; }
+            protected set { _locomotionController = value; }
+        }
+
+        public virtual IHitBoxController HitBoxController
+        {
+            get { return _hitBoxController; }
+            protected set { _hitBoxController = value; }
+        }
+
+        public virtual ITakeDamageController Damageable
+        {
+            get { return _takeDamageController; }
+            protected set { _takeDamageController = value; }
+        }
+
+        public virtual IAiMemoryController MemoryController
+        {
+            get { return _memoryController; }
+            protected set { _memoryController = value; }
+        }
+
+        public virtual IVisionController VisionController
+        {
+            get { return _visionController; }
+            protected set { _visionController = value; }
+        }
+
+        public virtual IAiWeaponControlSystem WeaponControl
+        {
+            get { return _weaponControlSystem; }
+            protected set { _weaponControlSystem = value; }
+        }
+
+        public virtual ITargetingController TargetingController
+        {
+            get { return _targetingController; }
+            protected set { _targetingController = value; }
+        }
         #endregion
 
         //  Collections -----------------------------------
@@ -60,13 +98,25 @@ namespace Atomic.Character.Model
         [SerializeField] private int _affiliation;
         [SerializeField] private Transform _bodyWeakPoint;
 
+        private long _controllerBitSequence = 0;
+        private bool _isInitialized;
+
         private Vector3 _moveDirection;
         private AgentsManager _agentManager;
-        private bool _isInitialized;
-        private BaseAgent targetAi;
-        private long _controllerBitSequence = 0;
+        private BaseAgent _targetAgent;
 
- 
+        [SerializeField]
+        private Animator _animator;
+        [SerializeField]
+        private NavMeshAgent _navMeshAgent; 
+
+        private ILocomotionController _locomotionController;
+        private IHitBoxController _hitBoxController;
+        private IAiMemoryController _memoryController;
+        private IVisionController _visionController;
+        private ITargetingController _targetingController;
+        private ITakeDamageController _takeDamageController;
+        private IAiWeaponControlSystem _weaponControlSystem;    
 
         //  Initialization  -------------------------------
         public virtual void Initialize()
@@ -139,14 +189,13 @@ namespace Atomic.Character.Model
             {
                 return;
             }
-            BaseNavMeshAgent = agent;
+            _navMeshAgent = agent;
         }
 
         protected virtual void SetComponent_Animator()
         {
-            BaseAnimator = GetComponentInChildren<Animator>();
+            _animator = GetComponentInChildren<Animator>();
         }
-
 
         protected virtual void SetController_Locomotion()
         {

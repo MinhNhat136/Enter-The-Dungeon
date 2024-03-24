@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Atomic.Character.Module
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// This class is responsible for managing and updating memories of detected objects by an AI senso.
+    /// This class is responsible for managing and updating memories of detected objects by an AI sensor.
     /// It tracks information about detected objects. 
     /// And also provides functionalities for updating, fetching, and forgetting memories based on specified criteria.
     /// </summary>
@@ -18,17 +19,15 @@ namespace Atomic.Character.Module
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
-        public Dictionary<GameObject, AiMemoryObject> Memories => memories;
+        public List<AiMemoryObject> Memories => memories;
 
         public Predicate<AiMemoryObject> ForgetCondition { get {  return _forgetCondition; } set { _forgetCondition = value; } }
 
         //  Collections  ----------------------------------
-        public Dictionary<GameObject, AiMemoryObject> memories = new Dictionary<GameObject, AiMemoryObject>(32);
+        public List<AiMemoryObject> memories = new List<AiMemoryObject>(32);
 
         //  Fields ----------------------------------------
         private Predicate<AiMemoryObject> _forgetCondition;
-
-
 
         //  Initialization  -------------------------------
 
@@ -37,12 +36,14 @@ namespace Atomic.Character.Module
 
 
         //  Other Methods ---------------------------------
-        public void UpdateSense(IVisionController sensor, string layerName, GameObject[] objects)
+        public void UpdateSenses(IVisionController sensor, string layerName, GameObject[] objects)
         {
             int targets = sensor.Filter(objects, layerName);
+            
             for (int i = 0; i < targets; i++)
             {
-                RefreshMemory(objects[i]);
+                GameObject target = objects[i]; 
+                RefreshMemory(target);
             }
         }
 
@@ -60,34 +61,18 @@ namespace Atomic.Character.Module
 
         public AiMemoryObject FetchMemory(GameObject gameObject)
         {
-
-            if (!memories.ContainsKey(gameObject))
+            AiMemoryObject memory = memories.Find(x => x.gameObject == gameObject);
+            if (memory == null)
             {
-                AiMemoryObject newMemory = new AiMemoryObject();
-                memories.Add(gameObject, newMemory);
+                memory = new AiMemoryObject();
+                memories.Add(memory);
             }
-
-            return memories[gameObject];
+            return memory;
         }
 
         public void ForgetMemory()
         {
-            List<GameObject> keysToRemove = new List<GameObject>(32);
-
-            foreach (var pair in memories)
-            {
-                AiMemoryObject memory = pair.Value;
-
-                if (_forgetCondition(memory))
-                {
-                    keysToRemove.Add(pair.Key);
-                }
-            }
-
-            foreach (GameObject key in keysToRemove)
-            {
-                memories.Remove(key);
-            }
+            memories.RemoveAll(_forgetCondition);
         }
 
         //  Event Handlers --------------------------------

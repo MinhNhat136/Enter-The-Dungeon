@@ -1,5 +1,7 @@
 using Atomic.Core.Interface;
+using Sirenix.Serialization;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Atomic.Character.Module
@@ -21,6 +23,7 @@ namespace Atomic.Character.Module
 
         //  Properties ------------------------------------
         public float VisionDistance { get { return _distance; } }
+        public float VisionAngle { get { return _angle; } }
         public List<GameObject> Objects
         {
             get
@@ -33,6 +36,7 @@ namespace Atomic.Character.Module
         {
             get { return _isInitialized; }
         }
+
 
         //  Fields ----------------------------------------
 
@@ -176,7 +180,6 @@ namespace Atomic.Character.Module
                 {
                     buffer[count++] = obj;
                 }
-
                 if (buffer.Length == count)
                 {
                     break;

@@ -61,11 +61,9 @@ namespace Atomic.Character.Player
             float xVelocity = Vector3.Dot(_model.MoveDirection.normalized, transform.right);
             float zVelocity = Vector3.Dot(_model.MoveDirection.normalized, transform.forward);
 
-            _animator.SetFloat("xVelocity", xVelocity, .1f, Time.deltaTime);
-            _animator.SetFloat("zVelocity", zVelocity, .1f, Time.deltaTime);
+            _animator.SetFloat("Horizontal", xVelocity, .1f, Time.deltaTime);
+            _animator.SetFloat("Vertical", zVelocity, .1f, Time.deltaTime);
 
-            bool playRunAnimation = _model.IsRunning & _model.MoveDirection.magnitude > 0;
-            _animator.SetBool("isRunning", playRunAnimation);
         }
 
         //  Event Handlers --------------------------------

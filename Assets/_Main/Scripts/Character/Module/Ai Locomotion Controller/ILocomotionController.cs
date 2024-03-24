@@ -11,5 +11,7 @@ namespace Atomic.Character.Module
         public float MoveSpeed { get; set; }
         public void ApplyMovement();
         public void ApplyRotation();
+        public void Stop();
+
     }
 }

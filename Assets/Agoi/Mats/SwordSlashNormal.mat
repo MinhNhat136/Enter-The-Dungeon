@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SwordSlashNormal
+  m_Shader: {fileID: 4800000, guid: 9d375417885db22458fcf631ce7cdc59, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Dissolve:
+        m_Texture: {fileID: 2800000, guid: b3af029772a77174da6da2e65ee17425, type: 3}
+        m_Scale: {x: 3.39, y: 1.03}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionTex:
+        m_Texture: {fileID: 2800000, guid: a4c3c75aa8ec45e4dabd00a6520f95c6, type: 3}
+        m_Scale: {x: 1, y: 1.15}
+        m_Offset: {x: 0.05, y: 0.18}
+    - _MainTexture:
+        m_Texture: {fileID: 2800000, guid: a5888cfd1d4d019499d4626eb33e72b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0.6}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+    - _Desaturation: 0.18
+    - _Emission: 4.79
+    - _InvFade: 0.03
+    - _Opacity: 18.61
+    - _Usedepth: 0
+    m_Colors:
+    - _AddColor: {r: 0.08102114, g: 0.023584902, b: 1, a: 0}
+    - _Remap: {r: 0, g: 1, b: 0, a: 0}
+    - _SpeedMainTexUVNoiseZW: {r: 0, g: 0, b: 1, a: 0}
+  m_BuildTextureStacks: []
