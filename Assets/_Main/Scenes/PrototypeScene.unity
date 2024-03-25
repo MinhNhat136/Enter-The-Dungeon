@@ -13458,9 +13458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _serializedExposedParameters: []
-  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.AiLocomotionWithRootMotionController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Player.PlayerAnimatorController","_value":1},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiTargetingAgentController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"actions":[]},"foldUpdate":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Patrol
-    State","_position":{"x":1016.852,"y":-52.76885},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"0"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Attack
-    State","_position":{"x":1217.214,"y":117.6401},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"1"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Player.PlayerAgent"},"parameters":[{"_type":"Atomic.Character.Player.PlayerAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Player.PlayerAnimatorController","_value":1},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Module.AiVisionSensorController","_value":3},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiTargetingAgentController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Model.BaseAgent"},"parameters":[{"_type":"Atomic.Character.Model.BaseAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Module.AiTargetingAgentController","_value":4},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Player.PlayerAgent"},"parameters":[{"_type":"Atomic.Character.Player.PlayerAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Player.PlayerAnimatorController","_value":1},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiLocomotionWithRootMotionController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Model.BaseAgent"},"parameters":[{"_type":"Atomic.Character.Model.BaseAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Module.AiLocomotionWithRootMotionController","_value":5},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|DoEnable|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":782.1149,"y":-200.5002},"$type":"NodeCanvas.StateMachines.OnFSMEnter"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":698.6,"y":222.0},"$type":"NodeCanvas.StateMachines.OnFSMExit"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
+  _boundGraphSerialization: '{"type":"NodeCanvas.StateMachines.FSM","nodes":[{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Module.AiLocomotionWithRootMotionController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Player.PlayerAnimatorController","_value":1},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiTargetingAgentController|Tick|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_onExitList":{"actions":[]},"foldUpdate":true,"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Locomotion","_position":{"x":1016.852,"y":-52.76885},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"0"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Attack","_position":{"x":658.6882,"y":252.0024},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"1"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Charge","_position":{"x":843.4971,"y":98.13728},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"2"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Player.PlayerAgent"},"parameters":[{"_type":"Atomic.Character.Player.PlayerAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Player.PlayerAnimatorController","_value":1},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiVisionSensorController|Initialize|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Module.AiVisionSensorController","_value":3},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiTargetingAgentController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Model.BaseAgent"},"parameters":[{"_type":"Atomic.Character.Model.BaseAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Module.AiTargetingAgentController","_value":4},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAnimatorController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Player.PlayerAgent"},"parameters":[{"_type":"Atomic.Character.Player.PlayerAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Player.PlayerAnimatorController","_value":1},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Module.AiLocomotionWithRootMotionController|Initialize|System.Void","_paramsInfo":"Atomic.Character.Model.BaseAgent"},"parameters":[{"_type":"Atomic.Character.Model.BaseAgent","_value":{"$content":2,"$type":"Atomic.Character.Player.PlayerAgent"}}],"returnValue":{},"overrideAgent":{"_type":"Atomic.Character.Module.AiLocomotionWithRootMotionController","_value":5},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"},{"method":{"_baseInfo":"Atomic.Character.Player.PlayerAgent|DoEnable|System.Void","_paramsInfo":""},"parameters":[],"returnValue":{},"$type":"NodeCanvas.Tasks.Actions.ExecuteFunction_Multiplatform"}]},"_position":{"x":1197.476,"y":-447.0426},"$type":"NodeCanvas.StateMachines.OnFSMEnter"},{"_position":{"x":1427.153,"y":-221.0876},"$type":"NodeCanvas.StateMachines.AnyState","$id":"4"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Death","_position":{"x":1301.755,"y":-62.29901},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"5"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Revive","_position":{"x":1161.341,"y":92.77671},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"6"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Get-Hit","_position":{"x":1793.91,"y":-60.44731},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"7"},{"_position":{"x":2061.475,"y":137.1474},"$type":"NodeCanvas.StateMachines.EmptyState","$id":"8"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Knock-down","_position":{"x":2240.309,"y":240.2904},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"9"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Stun","_position":{"x":1808.222,"y":252.4782},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"10"},{"_onEnterList":{"executionMode":1,"actions":[]},"_onUpdateList":{"executionMode":1,"actions":[]},"_onExitList":{"executionMode":1,"actions":[]},"_color":{"r":1.0,"g":0.42,"b":0.32,"a":1.0},"_name":"Roll","_position":{"x":1539.231,"y":-62.1257},"$type":"NodeCanvas.StateMachines.SuperActionState","$id":"11"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":1424.829,"y":-445.4629},"$type":"NodeCanvas.StateMachines.OnFSMUpdate"},{"_conditionList":{"conditions":[]},"_actionList":{"executionMode":1,"actions":[]},"_position":{"x":1608.888,"y":-447.7473},"$type":"NodeCanvas.StateMachines.OnFSMExit"}],"connections":[{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"0"},"_targetNode":{"$ref":"2"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"1"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"1"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"2"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"5"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"0"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"7"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"4"},"_targetNode":{"$ref":"11"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"5"},"_targetNode":{"$ref":"6"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"7"},"_targetNode":{"$ref":"8"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"9"},"$type":"NodeCanvas.StateMachines.FSMConnection"},{"_sourceNode":{"$ref":"8"},"_targetNode":{"$ref":"10"},"$type":"NodeCanvas.StateMachines.FSMConnection"}],"canvasGroups":[],"localBlackboard":{"_variables":{}}}'
   _boundGraphObjectReferences:
   - {fileID: 0}
   - {fileID: 8820889029169018120}
@@ -13472,8 +13470,8 @@ MonoBehaviour:
     _version: 3.28
     _category: 
     _comments: 
-    _translation: {x: -381, y: 241}
-    _zoomFactor: 0.9109693
+    _translation: {x: -704, y: 185}
+    _zoomFactor: 0.6128456
   _firstActivation: 0
   _enableAction: 0
   _disableAction: 0
@@ -42010,6 +42008,7 @@ GameObject:
   - component: {fileID: 4707188031764680925}
   - component: {fileID: 1729768159910247196}
   - component: {fileID: 2856684042915678491}
+  - component: {fileID: 8820889029169018124}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -44674,6 +44673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbf2b1892166fef4995050734779b306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  memories: []
 --- !u!114 &8820889029169018123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44686,20 +44686,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fecbb90d207d2749b09562c9fb55f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets: []
   targetLayer: Enemy
   _memorySpan: 3
   _distanceWeight: 20
+  _angleWeight: 1
+  _ageWeight: 1
   _maxNumberTarget: 16
-  bestMemory:
-    gameObject: {fileID: 0}
-    position: {x: 0, y: 0, z: 0}
-    direction: {x: 0, y: 0, z: 0}
-    layerIndex: 0
-    distance: 0
-    angle: 0
-    lastTime: 0
-    score: 0
+--- !u!114 &8820889029169018124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7970940360446834589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a221e91cdd91c14c8461a90ec881d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 0}
+  bulletSpeed: 0
+  gunPoint: {fileID: 0}
+  weaponHolder: {fileID: 0}
 --- !u!4 &8899935160414402856
 Transform:
   m_ObjectHideFlags: 0

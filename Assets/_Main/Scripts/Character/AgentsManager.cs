@@ -7,7 +7,7 @@ public class AgentsManager : MonoBehaviour
     private List<BaseAgent> _agents = new();
 
 
-    public void RegisterAgent(BaseAgent agent) 
+    public void RegisterAgent(BaseAgent agent)
     {
         _agents.Add(agent);
     }
@@ -17,8 +17,8 @@ public class AgentsManager : MonoBehaviour
         _agents.Remove(agent);
     }
 
-    public void UnRegisterAll() 
-    { 
+    public void UnRegisterAll()
+    {
         _agents.Clear();
     }
 }
