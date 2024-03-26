@@ -58,8 +58,8 @@ namespace Atomic.Character.Stats
         }
 
         //  Collections -----------------------------------
-        protected readonly List<ParameterModifier> statModifiers;
-        public readonly ReadOnlyCollection<ParameterModifier> StatModifiers;
+        protected readonly List<ParameterModifier> _parameterModifiers;
+        public readonly ReadOnlyCollection<ParameterModifier> ParameterModifiers;
 
         //  Fields ----------------------------------------
         private float _baseValue;
@@ -72,8 +72,8 @@ namespace Atomic.Character.Stats
         //  Initialization  -------------------------------
         public Parameter()
         {
-            statModifiers = new List<ParameterModifier>();
-            StatModifiers = statModifiers.AsReadOnly();
+            _parameterModifiers = new List<ParameterModifier>();
+            ParameterModifiers = _parameterModifiers.AsReadOnly();
         }
 
         public Parameter(float baseValue) : this()
@@ -85,12 +85,12 @@ namespace Atomic.Character.Stats
         public virtual void AddModifier(ParameterModifier mod)
         {
             _isDirty = true;
-            statModifiers.Add(mod);
+            _parameterModifiers.Add(mod);
         }
 
         public virtual bool RemoveModifier(ParameterModifier mod)
         {
-            if (statModifiers.Remove(mod))
+            if (_parameterModifiers.Remove(mod))
             {
                 _isDirty = true;
                 return true;
@@ -100,16 +100,16 @@ namespace Atomic.Character.Stats
 
         public virtual void UpdateModifier(int index, ParameterModifier newModifier)
         {
-            if (index < 0 || index >= statModifiers.Count)
+            if (index < 0 || index >= _parameterModifiers.Count)
                 throw new ArgumentOutOfRangeException(nameof(index), "Index of StatModifier is out of range.");
 
-            statModifiers[index] = newModifier;
+            _parameterModifiers[index] = newModifier;
             _isDirty = true;
         }
 
         public virtual bool RemoveAllModifiersFromSource(object source)
         {
-            int numRemovals = statModifiers.RemoveAll(mod => mod.Source == source);
+            int numRemovals = _parameterModifiers.RemoveAll(mod => mod.Source == source);
 
             if (numRemovals > 0)
             {
@@ -133,11 +133,11 @@ namespace Atomic.Character.Stats
             float finalValue = _baseValue;
             float sumPercentAdd = 0;
 
-            statModifiers.Sort(CompareModifierOrder);
+            _parameterModifiers.Sort(CompareModifierOrder);
 
-            for (int i = 0; i < statModifiers.Count; i++)
+            for (int i = 0; i < _parameterModifiers.Count; i++)
             {
-                ParameterModifier mod = statModifiers[i];
+                ParameterModifier mod = _parameterModifiers[i];
 
                 if (mod.Type == ParameterModifierType.Flat)
                 {
@@ -147,7 +147,7 @@ namespace Atomic.Character.Stats
                 {
                     sumPercentAdd += mod.Value;
 
-                    if (i + 1 >= statModifiers.Count || statModifiers[i + 1].Type != ParameterModifierType.PercentAdd)
+                    if (i + 1 >= _parameterModifiers.Count || _parameterModifiers[i + 1].Type != ParameterModifierType.PercentAdd)
                     {
                         finalValue *= 1 + sumPercentAdd;
                         sumPercentAdd = 0;

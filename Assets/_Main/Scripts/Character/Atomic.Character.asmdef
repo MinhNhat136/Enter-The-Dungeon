@@ -2,9 +2,9 @@
     "name": "Atomic.Character",
     "rootNamespace": "",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:7f7d1af65c2641843945d409d28f2e20",
-        "GUID:7f72f931463130b47a9fee7879f8cdd3"
+        "Unity.InputSystem",
+        "Unity.Animation.Rigging",
+        "Atomic.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
