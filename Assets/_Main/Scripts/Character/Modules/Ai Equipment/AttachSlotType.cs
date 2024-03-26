@@ -1,4 +1,4 @@
-namespace StickManFight
+namespace Atomic.Character.Module
 {
     public enum AttachSlotType
     {

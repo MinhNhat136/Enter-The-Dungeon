@@ -17,8 +17,6 @@ namespace Atomic.Character.Player
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
-        public Parameters myStats;
-
         public bool IsRunning { get { return _isRunning; } }
         public Transform DefaultAimPoint { get { return _defaultAimPoint; } }
 
