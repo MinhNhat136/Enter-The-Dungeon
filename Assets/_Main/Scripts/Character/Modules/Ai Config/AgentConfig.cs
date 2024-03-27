@@ -3,103 +3,96 @@ using UnityEngine;
 
 namespace Atomic.Character.Config
 {
-    [CreateAssetMenu(menuName = "AgentConfig/Default")]
+    [CreateAssetMenu(menuName = "Ai Module Config/Agent/Default")]
     public class AgentConfig : BaseSO
     {
+        [Header("DESCRIPTION")]
         [SerializeField]
-        public string title;
+        public string Title;
+
+        [Header("LOCOMOTION")]
+        [SerializeField]
+        public float WalkSpeed;
 
         [SerializeField]
-        public float _walkSpeed;
+        public float RunSpeed;
 
         [SerializeField]
-        public float _runSpeed;
+        public float RotateSpeed;
 
         [SerializeField]
-        public float _rotateSpeed;
+        public float Acceleration;
+
+        [Header("LAYER")]
+        [SerializeField]
+        public LayerMask HitBoxLayer;
 
         [SerializeField]
-        public float _acceleration;
+        public LayerMask AgentTargetLayers;
+
+        [Header("NAVMESH")]
+        [SerializeField]
+        public int AvoidancePriorityNormal;
 
         [SerializeField]
-        public LayerMask _hitBoxLayer;
+        public int AvoidancePriorityAttack;
+
 
         [SerializeField]
-        public LayerMask _enemyHitBoxLayer;
+        public float EnemyCloseRange;
 
         [SerializeField]
-        public int _avoidancePriorityNormal;
+        public float DeadDuration;
+
+        [Header("STATUS")]
+        [SerializeField]
+        public bool CanBeStagger;
 
         [SerializeField]
-        public int _avoidancePriorityAttack;
+        public bool RiseAfterBreak;
 
         [SerializeField]
-        public float enemyCloseRange;
+        public bool CanGetHitAnim;
 
         [SerializeField]
-        public float deadDuration;
+        public bool CanBeFreeze;
 
         [SerializeField]
-        public bool canBeStagger;
+        public bool CanBeFear;
 
         [SerializeField]
-        public bool riseAfterBreak;
+        public bool CanBeRabid;
 
         [SerializeField]
-        public bool canGetHitAnim;
+        public bool CanBeBurn;
 
         [SerializeField]
-        public bool _canBeFreeze;
+        public bool CanBeShock;
 
         [SerializeField]
-        public bool _canBeFear;
+        public bool CanBeToxic;
 
         [SerializeField]
-        public bool _canBeRabid;
+        public bool CanBeBleed;
 
         [SerializeField]
-        public bool _canBeBurn;
+        public bool CanBeSlow;
 
         [SerializeField]
-        public bool _canBeShock;
+        public bool CanBeArmorBreak;
 
         [SerializeField]
-        public bool _canBeToxic;
+        public bool CanBeKnockBack;
 
         [SerializeField]
-        public bool _canBeBleed;
+        public bool CanBeKnockDown;
 
         [SerializeField]
-        public bool _canBeSlow;
+        public bool CanBeHooked;
 
         [SerializeField]
-        public bool _canBeArmorBreak;
+        public float KnockBackDeceleration;
 
-        [SerializeField]
-        public bool _canBeKnockBack;
-
-        [SerializeField]
-        public bool _canBeKnockDown;
-
-        [SerializeField]
-        public bool _canBeHooked;
-
-        [SerializeField]
-        public float _knockBackDeceleration;
-
-        [SerializeField]
-        [Tooltip("Play Appear state")]
-        public bool _needSpawnAnimation;
-
-        [SerializeField]
-        [Tooltip("Play animation in Appear state")]
-        public bool _hasSpawnAnimation;
-
-        [SerializeField]
-        public ParticleSystem appearFxPrefab;
-
-        [SerializeField]
-        public float appearFxScale;
     }
 
 }

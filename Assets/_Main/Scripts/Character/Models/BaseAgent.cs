@@ -18,20 +18,18 @@ namespace Atomic.Character.Model
         //  Statics ---------------------------------------
         private static long Controller_LocomotionIndex = 1L << 0;
         private static long Controller_HitBoxIndex = 1L << 1;
-        private static long Controller_TakeDamageIndex = 1L << 2;
-        private static long Controller_VisionIndex = 1L << 3;
-        private static long Controller_HealthIndex = 1L << 4;
-        private static long Controller_AnimatorControllerIndex = 1L << 5;
-        private static long Controller_MemoryIndex = 1L << 7;
-        private static long Controller_TargetingIndex = 1L << 8;
-        private static long Controller_WeaponIndex = 1L << 9;
+        private static long Controller_VisionIndex = 1L << 2;
+        private static long Controller_HealthIndex = 1L << 3;
+        private static long Controller_AnimatorControllerIndex = 1L << 4;
+        private static long Controller_MemoryIndex = 1L << 5;
+        private static long Controller_TargetingIndex = 1L << 6;
+        private static long Controller_WeaponIndex = 1L << 7;
 
         //  Events ----------------------------------------
 
 
         //  Properties ------------------------------------
-        #region Config
-        public float Affiliation { get { return _affiliation; } }
+        #region Config Runtime
         public Vector3 MoveDirection { get { return _moveDirection; } set { _moveDirection = value; } }
         public bool IsInitialized { get { return _isInitialized; } }
         public Transform BodyWeakPoint { get { return _bodyWeakPoint; } }
@@ -46,8 +44,8 @@ namespace Atomic.Character.Model
         #region Module Controllers 
         public virtual IAnimatorController AgentAnimatorController
         {
-            get;
-            protected set;
+            get { return _agentAnimatorController; }
+            protected set { _agentAnimatorController = value; }
         }
         public virtual ILocomotionController LocomotionController
         {
@@ -59,12 +57,6 @@ namespace Atomic.Character.Model
         {
             get { return _hitBoxController; }
             protected set { _hitBoxController = value; }
-        }
-
-        public virtual ITakeDamageController Damageable
-        {
-            get { return _takeDamageController; }
-            protected set { _takeDamageController = value; }
         }
 
         public virtual IAiMemoryController MemoryController
@@ -96,7 +88,6 @@ namespace Atomic.Character.Model
 
 
         //  Fields ----------------------------------------
-        [SerializeField] private int _affiliation;
         [SerializeField] private Transform _bodyWeakPoint;
 
         private long _controllerBitSequence = 0;
@@ -105,18 +96,15 @@ namespace Atomic.Character.Model
         private Vector3 _moveDirection;
         private AgentsManager _agentManager;
         private BaseAgent _targetAgent;
-
-        [SerializeField]
         private Animator _animator;
-        [SerializeField]
         private NavMeshAgent _navMeshAgent;
 
         private ILocomotionController _locomotionController;
+        private IAnimatorController _agentAnimatorController;
         private IHitBoxController _hitBoxController;
         private IAiMemoryController _memoryController;
         private IVisionController _visionController;
         private ITargetingController _targetingController;
-        private ITakeDamageController _takeDamageController;
         private IAiWeaponControlSystem _weaponControlSystem;
 
         //  Initialization  -------------------------------
@@ -133,14 +121,14 @@ namespace Atomic.Character.Model
                 SetComponent_Animator();
 
                 // Controllers
-                SetController_Locomotion();
-                SetController_HitBox();
-                SetController_TakeDamage();
-                SetController_Vision();
-                SetController_Animator();
-                SetController_Memory();
-                SetController_Targeting();
-                SetController_Weapon();
+                SetController<ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex);
+                SetController<IHitBoxController>(ref _hitBoxController, Controller_HitBoxIndex);
+                SetController<IVisionController>(ref _visionController, Controller_VisionIndex);
+                SetController<IAnimatorController>(ref _agentAnimatorController, Controller_AnimatorControllerIndex);
+                SetController<ITargetingController>(ref _targetingController, Controller_TargetingIndex);
+                SetController<IAiMemoryController>(ref _memoryController, Controller_MemoryIndex);
+                SetController<IAiWeaponControlSystem>(ref _weaponControlSystem, Controller_WeaponIndex);
+
 
                 Debug.Log(LongToBitString(_controllerBitSequence));
             }
@@ -185,6 +173,7 @@ namespace Atomic.Character.Model
             return bitString;
         }
 
+        #region Setup
         protected virtual void SetComponent_NavMeshAgent()
         {
             if (!TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
@@ -199,86 +188,19 @@ namespace Atomic.Character.Model
             _animator = GetComponentInChildren<Animator>();
         }
 
-        protected virtual void SetController_Locomotion()
+        protected virtual void SetController<TController>(ref TController _controller, long bitController)
         {
-            if (!TryGetComponent<ILocomotionController>(out ILocomotionController locomotionController))
+            if (!TryGetComponent<TController>(out TController controller))
             {
                 return;
             }
-            LocomotionController = locomotionController;
-            _controllerBitSequence |= Controller_LocomotionIndex;
+            _controller = controller;
+            _controllerBitSequence |= bitController;
         }
 
-        protected virtual void SetController_Animator()
-        {
-            if (!TryGetComponent<IAnimatorController>(out IAnimatorController animatorController))
-            {
-                return;
-            }
-            AgentAnimatorController = animatorController;
-            _controllerBitSequence |= Controller_AnimatorControllerIndex;
-        }
+        #endregion
 
-        protected virtual void SetController_HitBox()
-        {
-            if (!TryGetComponent<IHitBoxController>(out IHitBoxController hitBoxController))
-            {
-                return;
-            }
-            HitBoxController = hitBoxController;
-            _controllerBitSequence |= Controller_HitBoxIndex;
-        }
-
-        protected virtual void SetController_TakeDamage()
-        {
-            if (!TryGetComponent<ITakeDamageController>(out ITakeDamageController takeDamageController))
-            {
-                return;
-            }
-            Damageable = takeDamageController;
-            _controllerBitSequence |= Controller_TakeDamageIndex;
-        }
-
-        protected virtual void SetController_Vision()
-        {
-            if (!TryGetComponent<IVisionController>(out IVisionController visionController))
-            {
-                return;
-            }
-            VisionController = visionController;
-            _controllerBitSequence |= Controller_VisionIndex;
-        }
-
-        protected virtual void SetController_Memory()
-        {
-            if (!TryGetComponent<IAiMemoryController>(out IAiMemoryController memoryController))
-            {
-                return;
-            }
-            MemoryController = memoryController;
-            _controllerBitSequence |= Controller_MemoryIndex;
-        }
-
-        protected virtual void SetController_Targeting()
-        {
-            if (!TryGetComponent<ITargetingController>(out ITargetingController targetingController))
-            {
-                return;
-            }
-            TargetingController = targetingController;
-            _controllerBitSequence |= Controller_TargetingIndex;
-        }
-
-        protected virtual void SetController_Weapon()
-        {
-            if (!TryGetComponent<IAiWeaponControlSystem>(out IAiWeaponControlSystem weaponController))
-            {
-                return;
-            }
-            WeaponControl = weaponController;
-            _controllerBitSequence |= Controller_WeaponIndex;
-        }
-
+        public abstract void Assign();
         //  Event Handlers --------------------------------
 
     }

@@ -1,8 +1,8 @@
-using Atomic.Character.Module;
+using Atomic.Character.Model;
 using Atomic.Core.Interface;
 using UnityEngine;
 
-namespace Atomic.Character.Player
+namespace Atomic.Character.Module
 {
     //  Namespace Properties ------------------------------
 
@@ -52,6 +52,7 @@ namespace Atomic.Character.Player
         public void Tick()
         {
             ApplyAnimator();
+
         }
 
         //  Other Methods ---------------------------------
@@ -63,6 +64,11 @@ namespace Atomic.Character.Player
             _animator.SetFloat("Horizontal", xVelocity, .1f, Time.deltaTime);
             _animator.SetFloat("Vertical", zVelocity, .1f, Time.deltaTime);
 
+        }
+
+        public void ApplyRoll()
+        {
+            _animator.Play("roll");
         }
 
         //  Event Handlers --------------------------------

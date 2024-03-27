@@ -19,8 +19,16 @@ namespace Atomic.Character.Module
 
 
         //  Properties ------------------------------------
-        public float VisionDistance { get { return _distance; } }
-        public float VisionAngle { get { return _angle; } }
+        public float VisionDistance { get; set; }
+        public float VisionAngle { get; set; }
+        public float VisionHeight { get; set ; }
+        public float ScanFrequency { get; set; }
+        public int MaxObjectRemember { get; set; }
+        public LayerMask VisionLayer { get; set; }
+        public LayerMask OcclusionLayer { get; set; }
+        public Color MeshVisionColor { get; set; }
+
+
         public List<GameObject> Objects
         {
             get
@@ -35,33 +43,8 @@ namespace Atomic.Character.Module
         }
 
 
+
         //  Fields ----------------------------------------
-
-        [SerializeField]
-        private float _distance = 10f;
-
-        [SerializeField]
-        private float _angle = 30f;
-
-        [SerializeField]
-        private float _height = 1.0f;
-
-        [SerializeField]
-        private int _scanFrequency = 30;
-
-        [SerializeField]
-        private int _maxObjectsRemember = 10;
-
-        [SerializeField]
-        private LayerMask _targetLayers;
-
-        [SerializeField]
-        private LayerMask _occlusionLayer;
-
-        [SerializeField]
-        private Color _meshColor = Color.red;
-
-        [SerializeField]
         private List<GameObject> objects = new(32);
 
 
@@ -78,8 +61,8 @@ namespace Atomic.Character.Module
             if (!IsInitialized)
             {
                 _isInitialized = true;
-                scanInterval = 1.0f / _scanFrequency;
-                colliders = new Collider[_maxObjectsRemember];
+                scanInterval = 1.0f / ScanFrequency;
+                colliders = new Collider[MaxObjectRemember];
             }
         }
 
@@ -102,37 +85,11 @@ namespace Atomic.Character.Module
             }
         }
 
-        private void OnValidate()
-        {
-            mesh = CreateWedMesh();
-        }
-
-        private void OnDrawGizmos()
-        {
-            if (mesh)
-            {
-                Gizmos.color = _meshColor;
-                Gizmos.DrawMesh(mesh, transform.position, transform.rotation);
-
-                Gizmos.DrawWireSphere(transform.position, _distance);
-                for (int i = 0; i < count; i++)
-                {
-                    Gizmos.DrawSphere(colliders[i].transform.position, 0.2f);
-                }
-
-                Gizmos.color = Color.green;
-                foreach (var obj in Objects)
-                {
-                    Gizmos.DrawSphere(obj.transform.position, 0.2f);
-                }
-            }
-        }
-
         //  Other Methods ---------------------------------
 
         public void Scan()
         {
-            count = Physics.OverlapSphereNonAlloc(transform.position, _distance, colliders, _targetLayers,
+            count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, colliders, VisionLayer,
                 QueryTriggerInteraction.Collide);
             Objects.Clear();
             for (int i = 0; i < count; i++)
@@ -153,14 +110,14 @@ namespace Atomic.Character.Module
 
             direction.y = 0;
             float deltaAngle = Vector3.Angle(direction, transform.forward);
-            if (deltaAngle > _angle)
+            if (deltaAngle > VisionAngle)
             {
                 return false;
             }
 
-            origin.y += _height / 2;
+            origin.y += VisionHeight / 2;
             dest.y = origin.y;
-            if (Physics.Linecast(origin, dest, _occlusionLayer))
+            if (Physics.Linecast(origin, dest, OcclusionLayer))
             {
                 return false;
             }
@@ -185,90 +142,7 @@ namespace Atomic.Character.Module
             return count;
         }
 
-        Mesh CreateWedMesh()
-        {
-            Mesh mesh = new Mesh();
-
-            int segments = 10;
-            int numTriangles = (segments * 4) + 2 + 2;
-            int numVertices = numTriangles * 3;
-            Vector3[] vertices = new Vector3[numVertices];
-            int[] triangles = new int[numVertices];
-
-            Vector3 bottomCenter = Vector3.zero;
-            Vector3 bottomLeft = Quaternion.Euler(0, -_angle, 0) * Vector3.forward * _distance;
-            Vector3 bottomRight = Quaternion.Euler(0, _angle, 0) * Vector3.forward * _distance;
-
-            Vector3 topCenter = bottomCenter + Vector3.up * _height;
-            Vector3 topRight = bottomRight + Vector3.up * _height;
-            Vector3 topLeft = bottomLeft + Vector3.up * _height;
-
-            int vert = 0;
-
-            // left Side
-            vertices[vert++] = bottomCenter;
-            vertices[vert++] = bottomLeft;
-            vertices[vert++] = topLeft;
-
-            vertices[vert++] = topLeft;
-            vertices[vert++] = topCenter;
-            vertices[vert++] = bottomCenter;
-
-            // right side
-            vertices[vert++] = bottomCenter;
-            vertices[vert++] = topCenter;
-            vertices[vert++] = topRight;
-
-            vertices[vert++] = topRight;
-            vertices[vert++] = bottomRight;
-            vertices[vert++] = bottomCenter;
-
-            float currentAngle = -_angle;
-            float deltaAngle = (_angle * 2) / segments;
-            for (int i = 0; i < segments; ++i)
-            {
-                bottomLeft = Quaternion.Euler(0, currentAngle, 0) * Vector3.forward * _distance;
-                bottomRight = Quaternion.Euler(0, currentAngle + deltaAngle, 0) * Vector3.forward * _distance;
-
-                topRight = bottomRight + Vector3.up * _height;
-                topLeft = bottomLeft + Vector3.up * _height;
-
-                // far side
-                vertices[vert++] = bottomLeft;
-                vertices[vert++] = bottomRight;
-                vertices[vert++] = topRight;
-
-                vertices[vert++] = topRight;
-                vertices[vert++] = topLeft;
-                vertices[vert++] = bottomLeft;
-
-                // top
-                vertices[vert++] = topCenter;
-                vertices[vert++] = topLeft;
-                vertices[vert++] = topRight;
-
-                // bottom
-                vertices[vert++] = bottomCenter;
-                vertices[vert++] = bottomRight;
-                vertices[vert++] = bottomLeft;
-
-                currentAngle += deltaAngle;
-            }
-
-
-            for (int i = 0; i < numVertices; ++i)
-            {
-                triangles[i] = i;
-            }
-
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
-            mesh.RecalculateNormals();
-
-            return mesh;
-
-        }
-
+        
         //  Event Handlers --------------------------------
 
     }

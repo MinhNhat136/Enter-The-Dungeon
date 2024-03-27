@@ -5,6 +5,12 @@ namespace Atomic.Character.Module
 {
     public interface ITargetingController : IInitializableWithBaseModel<BaseAgent>, ITickable
     {
+        public string TargetLayer { get; set; }
+        public float MemorySpan { get; set; }
+        public float DistanceWeight { get; set; }
+        public float AngleWeight { get; set; }
+        public float AgeWeight { get; set; }
+        public int MaxNumberTarget { get; set; }
         public void UpdateTarget();
         public void EvaluateTargetScores();
         public bool ForgetTargetConditions(AiMemoryObject memory);

@@ -17,6 +17,13 @@ namespace Atomic.Character.Module
 
 
         //  Properties ------------------------------------
+        public string TargetLayer { get; set; }
+        public float MemorySpan { get; set; }
+        public float DistanceWeight { get; set; }
+        public float AngleWeight { get; set; }
+        public float AgeWeight { get; set; }
+        public int MaxNumberTarget { get; set; }
+
         public GameObject Target
         {
             get { return bestMemory.gameObject; }
@@ -51,23 +58,7 @@ namespace Atomic.Character.Module
         private GameObject[] targets;
 
         //  Fields ----------------------------------------
-        [SerializeField]
-        private string targetLayer;
-
-        [SerializeField]
-        private float _memorySpan = 3.0f;
-
-        [SerializeField]
-        private float _distanceWeight = 1.0f;
-
-        [SerializeField]
-        private float _angleWeight = 1.0f;
-
-        [SerializeField]
-        private float _ageWeight = 1.0f;
-
-        [SerializeField]
-        private int _maxNumberTarget = 16;
+        
 
         private IAiMemoryController _memoryController;
         private IVisionController _sensor;
@@ -81,7 +72,7 @@ namespace Atomic.Character.Module
         {
             if (!_isInitialized)
             {
-                targets = new GameObject[_maxNumberTarget];
+                targets = new GameObject[MaxNumberTarget];
                 _isInitialized = true;
 
                 _model = model;
@@ -104,7 +95,7 @@ namespace Atomic.Character.Module
 
         public void Tick()
         {
-            _memoryController.UpdateSenses(_sensor, targetLayer, targets);
+            _memoryController.UpdateSenses(_sensor, TargetLayer, targets);
             _memoryController.ForgetMemory();
 
             EvaluateTargetScores();
@@ -147,9 +138,9 @@ namespace Atomic.Character.Module
 
         public float CalculateScore(AiMemoryObject memory)
         {
-            float distanceScore = Normalize(memory.distance, _sensor.VisionDistance) * _distanceWeight;
-            float angleScore = Normalize(memory.angle, _sensor.VisionAngle) * _angleWeight;
-            float ageScore = Normalize(memory.Age, _memorySpan) * _ageWeight;
+            float distanceScore = Normalize(memory.distance, _sensor.VisionDistance) * DistanceWeight;
+            float angleScore = Normalize(memory.angle, _sensor.VisionAngle) * AngleWeight;
+            float ageScore = Normalize(memory.Age, MemorySpan) * AgeWeight;
             return distanceScore + angleScore + ageScore;
         }
 
@@ -160,7 +151,7 @@ namespace Atomic.Character.Module
         //  Event Handlers --------------------------------
         public bool ForgetTargetConditions(AiMemoryObject memory)
         {
-            return memory.Age > _memorySpan;
+            return memory.Age > MemorySpan;
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace StickManFight
+namespace Atomic.Character.Stats
 {
 	public static class ParameterNames
 	{

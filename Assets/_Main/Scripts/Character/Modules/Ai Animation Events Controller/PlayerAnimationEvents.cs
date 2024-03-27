@@ -1,7 +1,6 @@
-using Atomic.Character.Module;
 using UnityEngine;
 
-namespace Atomic.Character.Player
+namespace Atomic.Character.Module
 {
     public class PlayerAnimationEvents : MonoBehaviour
     {

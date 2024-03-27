@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Atomic.Character.Config
 {
-    [CreateAssetMenu(menuName = "AgentConfig/Player", fileName = "PlayerConfig")]
+    [CreateAssetMenu(menuName = "Ai Module Config/Agent/Player", fileName = "Player Config")]
     public class PlayerConfig : AgentConfig
     {
         

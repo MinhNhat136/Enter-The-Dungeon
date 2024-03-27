@@ -28,7 +28,7 @@ namespace Atomic.Character.Module
         {
             get; set;
         }
-        public float TurnSpeed
+        public float RotationSpeed
         {
             get; set;
         }
@@ -43,6 +43,11 @@ namespace Atomic.Character.Module
             {
                 return _model;
             }
+        }
+
+        public float Acceleration 
+        { 
+            get; set; 
         }
 
         //  Fields ----------------------------------------
@@ -62,6 +67,10 @@ namespace Atomic.Character.Module
                 _model = model;
 
                 _navMeshAgent = _model.BaseNavMeshAgent;
+
+                _navMeshAgent.speed = MoveSpeed;
+                _navMeshAgent.angularSpeed = RotationSpeed;
+                _navMeshAgent.acceleration = Acceleration;
             }
         }
 
@@ -93,7 +102,7 @@ namespace Atomic.Character.Module
             desiredRotation.x = 0;
             desiredRotation.z = 0;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, TurnSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);
         }
 
         public void ApplyMovement()

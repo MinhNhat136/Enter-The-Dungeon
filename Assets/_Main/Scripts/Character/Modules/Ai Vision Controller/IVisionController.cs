@@ -5,9 +5,14 @@ namespace Atomic.Character.Module
 {
     public interface IVisionController : IInitializable, ITickable
     {
-        public float VisionDistance { get; }
-        public float VisionAngle { get; }
-
+        public float VisionDistance { get; set; }
+        public float VisionAngle { get; set; }
+        public float VisionHeight { get; set; }
+        public float ScanFrequency { get; set; }
+        public int MaxObjectRemember { get; set; }
+        public LayerMask VisionLayer { get; set; }
+        public LayerMask OcclusionLayer { get; set; }
+        public Color MeshVisionColor { get; set; }
 
         public void Scan();
         public int Filter(GameObject[] buffer, string layerName);

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace Atomic.Character.Player
+namespace Atomic.Character.Module
 {
     //  Namespace Properties ------------------------------
 
