@@ -15,6 +15,7 @@ namespace Atomic.Character.Model
     public class PlayerAgent : BaseAgent
     {
         //  Events ----------------------------------------
+        [HideInInspector] public bool isAttack;
 
         //  Properties ------------------------------------
         public PlayerControls InputControls { get; private set; }
@@ -79,7 +80,15 @@ namespace Atomic.Character.Model
             {
                 _animatorController.ApplyRoll();
             };
+            InputControls.Character.Attack.performed += context =>
+            {
+                isAttack = true;
+            };
 
+            InputControls.Character.Attack.canceled += context =>
+            {
+                isAttack = false;
+            };
         }
 
         public void AssignLocomotionController()

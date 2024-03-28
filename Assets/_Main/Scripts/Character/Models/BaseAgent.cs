@@ -107,6 +107,8 @@ namespace Atomic.Character.Model
         private ITargetingController _targetingController;
         private IAiWeaponControlSystem _weaponControlSystem;
 
+        private AiHealth _healthController;
+        
         //  Initialization  -------------------------------
         public virtual void Initialize()
         {
@@ -129,8 +131,7 @@ namespace Atomic.Character.Model
                 SetController<IAiMemoryController>(ref _memoryController, Controller_MemoryIndex);
                 SetController<IAiWeaponControlSystem>(ref _weaponControlSystem, Controller_WeaponIndex);
 
-
-                Debug.Log(LongToBitString(_controllerBitSequence));
+                _healthController = GetComponent<AiHealth>();
             }
         }
 

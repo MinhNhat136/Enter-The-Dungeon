@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Atomic.Core.Interface;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Atomic.Character.Module
 {
-    public class AiHealth : MonoBehaviour
+    public class AiHealth : MonoBehaviour, IInitializable
     {
         public float MaxHealth = 10f;
 
@@ -14,11 +15,26 @@ namespace Atomic.Character.Module
         public float CurrentHealth { get; set; }
         public bool Invincible { get; set; }
 
-        bool m_IsDead;
-
-        void Start()
+        public bool IsInitialized
         {
-            CurrentHealth = MaxHealth;
+            get {  return _isInitialized; }
+        }
+
+        bool m_IsDead;
+        bool _isInitialized; 
+        public void Initialize()
+        {
+            if (!_isInitialized)
+            {
+                _isInitialized = true;
+                CurrentHealth = MaxHealth;
+                m_IsDead = false;
+            }
+        }
+
+        public void RequireIsInitialized()
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Increase(float healAmount)
@@ -72,5 +88,7 @@ namespace Atomic.Character.Module
                 OnZero?.Invoke();
             }
         }
+
+        
     }
 }
