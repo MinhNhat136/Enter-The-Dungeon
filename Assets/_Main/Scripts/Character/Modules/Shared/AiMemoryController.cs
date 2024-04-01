@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,20 +12,19 @@ namespace Atomic.Character.Module
     /// It tracks information about detected objects. 
     /// And also provides functionalities for updating, fetching, and forgetting memories based on specified criteria.
     /// </summary>
-    public class AiMemoryController : MonoBehaviour, IAiMemoryController
+    public class AiMemoryController
     {
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
         public List<AiMemoryObject> Memories => memories;
 
-        public Predicate<AiMemoryObject> ForgetCondition { get { return _forgetCondition; } set { _forgetCondition = value; } }
-
         //  Collections  ----------------------------------
         public List<AiMemoryObject> memories = new List<AiMemoryObject>(32);
 
         //  Fields ----------------------------------------
-        private Predicate<AiMemoryObject> _forgetCondition;
+        [SerializeField]
+        private float _memorySpan; 
 
         //  Initialization  -------------------------------
 
@@ -35,25 +33,25 @@ namespace Atomic.Character.Module
 
 
         //  Other Methods ---------------------------------
-        public void UpdateSenses(IVisionController sensor, string layerName, GameObject[] objects)
+        public void UpdateSenses(IVisionController sensor, GameObject unit, string layerName, GameObject[] objects)
         {
             int targets = sensor.Filter(objects, layerName);
 
             for (int i = 0; i < targets; i++)
             {
-                RefreshMemory(objects[i]);
+                RefreshMemory(objects[i], unit);
             }
         }
 
-        public void RefreshMemory(GameObject target)
+        public void RefreshMemory(GameObject target, GameObject unit)
         {
             AiMemoryObject memory = FetchMemory(target);
             memory.gameObject = target;
             memory.position = target.transform.position;
-            memory.direction = target.transform.position - transform.position;
+            memory.direction = target.transform.position - unit.transform.position;
             memory.layerIndex = target.layer;
             memory.distance = memory.direction.magnitude;
-            memory.angle = Vector3.Angle(transform.forward, memory.direction);
+            memory.angle = Vector3.Angle(unit.transform.forward, memory.direction);
             memory.lastTime = Time.time;
         }
 
@@ -70,7 +68,7 @@ namespace Atomic.Character.Module
 
         public void ForgetMemory()
         {
-            memories.RemoveAll(_forgetCondition);
+            memories.RemoveAll(memory => memory.Age > _memorySpan);
         }
 
         //  Event Handlers --------------------------------

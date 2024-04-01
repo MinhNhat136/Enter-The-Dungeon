@@ -1,5 +1,6 @@
 using Atomic.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character.Config
 {
@@ -43,56 +44,6 @@ namespace Atomic.Character.Config
 
         [SerializeField]
         public float DeadDuration;
-
-        [Header("STATUS")]
-        [SerializeField]
-        public bool CanBeStagger;
-
-        [SerializeField]
-        public bool RiseAfterBreak;
-
-        [SerializeField]
-        public bool CanGetHitAnim;
-
-        [SerializeField]
-        public bool CanBeFreeze;
-
-        [SerializeField]
-        public bool CanBeFear;
-
-        [SerializeField]
-        public bool CanBeRabid;
-
-        [SerializeField]
-        public bool CanBeBurn;
-
-        [SerializeField]
-        public bool CanBeShock;
-
-        [SerializeField]
-        public bool CanBeToxic;
-
-        [SerializeField]
-        public bool CanBeBleed;
-
-        [SerializeField]
-        public bool CanBeSlow;
-
-        [SerializeField]
-        public bool CanBeArmorBreak;
-
-        [SerializeField]
-        public bool CanBeKnockBack;
-
-        [SerializeField]
-        public bool CanBeKnockDown;
-
-        [SerializeField]
-        public bool CanBeHooked;
-
-        [SerializeField]
-        public float KnockBackDeceleration;
-
     }
 
 }

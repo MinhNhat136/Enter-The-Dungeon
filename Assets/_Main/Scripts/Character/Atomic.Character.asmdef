@@ -4,7 +4,7 @@
     "references": [
         "Unity.InputSystem",
         "Unity.Animation.Rigging",
-        "Atomic.Core"
+        "Atomic.Core.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

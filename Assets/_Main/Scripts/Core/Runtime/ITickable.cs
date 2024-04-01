@@ -4,5 +4,13 @@
     {
         //  General Methods  ------------------------------
         public void Tick();
+        public virtual void FixedTick()
+        {
+
+        }
+        public virtual void LateTick()
+        {
+
+        }
     }
 }

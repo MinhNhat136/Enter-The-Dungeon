@@ -194,13 +194,19 @@ namespace Atomic.Core
             }
         }
 
-        public static void SetController<TController>(this MonoBehaviour bhv, ref TController _controller, long bitController, ref long bitSequence)
+        public static void SetController<TController>(this MonoBehaviour bhv ,ref TController _controller, long bitController, ref long bitSequence)
         {
             if (!bhv.TryGetComponent<TController>(out TController controller))
             {
                 return;
             }
             _controller = controller;
+            bitSequence |= bitController;
+        }
+
+        public static void AddController<TController>(ref TController controller, long bitController, ref long bitSequence) where TController : new()
+        {
+            controller = new TController();
             bitSequence |= bitController;
         }
 

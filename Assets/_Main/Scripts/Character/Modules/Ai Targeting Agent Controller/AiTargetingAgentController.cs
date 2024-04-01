@@ -60,7 +60,7 @@ namespace Atomic.Character.Module
         //  Fields ----------------------------------------
 
 
-        private IAiMemoryController _memoryController;
+        private AiMemoryController _memoryController;
         private IVisionController _sensor;
         private BaseAgent _model;
         private bool _isInitialized;
@@ -79,7 +79,6 @@ namespace Atomic.Character.Module
                 _sensor = _model.VisionController;
                 _memoryController = _model.MemoryController;
 
-                _memoryController.ForgetCondition = ForgetTargetConditions;
             }
         }
 
@@ -95,7 +94,7 @@ namespace Atomic.Character.Module
 
         public void Tick()
         {
-            _memoryController.UpdateSenses(_sensor, TargetLayer, targets);
+            _memoryController.UpdateSenses(_sensor, this.gameObject,TargetLayer, targets);
             _memoryController.ForgetMemory();
 
             EvaluateTargetScores();
@@ -154,10 +153,7 @@ namespace Atomic.Character.Module
             return 1.0f - (value / maxValue);
         }
         //  Event Handlers --------------------------------
-        public bool ForgetTargetConditions(AiMemoryObject memory)
-        {
-            return memory.Age > MemorySpan;
-        }
+
     }
 }
 

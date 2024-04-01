@@ -13,6 +13,5 @@ namespace Atomic.Character.Module
         public int MaxNumberTarget { get; set; }
         public void UpdateTarget();
         public void EvaluateTargetScores();
-        public bool ForgetTargetConditions(AiMemoryObject memory);
     }
 }

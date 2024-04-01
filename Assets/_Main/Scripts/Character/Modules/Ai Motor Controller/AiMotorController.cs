@@ -42,7 +42,7 @@ namespace Atomic.Character.Module
             {
                 _isInitialized = true;
 
-                AtomicExtension.SetController<ILocomotionController>(this, ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+                this.SetController<ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
             }
         }
 

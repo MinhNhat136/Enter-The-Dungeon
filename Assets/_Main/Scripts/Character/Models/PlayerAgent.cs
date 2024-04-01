@@ -18,16 +18,29 @@ namespace Atomic.Character.Model
         [HideInInspector] public bool isRolling; 
 
         //  Properties ------------------------------------
-        public PlayerControls InputControls { get; private set; }
+        public PlayerControls InputControls 
+        { 
+            get; private set; 
+        }
         public override IAnimatorController AgentAnimatorController
         {
             get { return _animatorController; }
         }
+        public Collider[] Colliders
+        {
+            get { return _colliders; }
+        }
 
         //  Fields ----------------------------------------
+        [Header("CONFIG")]
         [SerializeField] private PlayerConfig _agentConfig;
         [SerializeField] private VisionConfig _visionConfig;
-        [SerializeField] private TargetingConfig _targetingConfig; 
+        [SerializeField] private TargetingConfig _targetingConfig;  
+        [SerializeField] private HitBoxConfig _hitBoxConfig;
+        
+        
+        [Header("COMPONENTS")]        
+        [SerializeField] private Collider[] _colliders;
 
         private PlayerAnimatorController _animatorController;
 
@@ -63,6 +76,7 @@ namespace Atomic.Character.Model
 
             AssignInputEvents();
             AssignLocomotionController();
+            AssignHitBoxController();
 
             _visionConfig.Assign(VisionController);
             _targetingConfig.Assign(TargetingController);
@@ -102,6 +116,11 @@ namespace Atomic.Character.Model
             LocomotionController.Acceleration = _agentConfig.Acceleration;
         }
 
+        public void AssignHitBoxController()
+        {
+            _hitBoxConfig.Assign(HitBoxController);
+            HitBoxController.Colliders = Colliders;
+        }
 
         //  Event Handlers --------------------------------
 

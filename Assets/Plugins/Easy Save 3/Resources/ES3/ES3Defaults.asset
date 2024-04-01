@@ -32,7 +32,8 @@ MonoBehaviour:
     assemblyNames:
     - Assembly-CSharp
     - Atomic.Character
-    - Atomic.Core
+    - Atomic.Core.Editor
+    - Atomic.Core.Runtime
     - Atomic.UI
     - Cinemachine
     - Doozy.Runtime

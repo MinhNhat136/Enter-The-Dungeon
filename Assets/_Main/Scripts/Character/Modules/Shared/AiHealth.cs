@@ -8,12 +8,9 @@ namespace Atomic.Character.Module
     {
         public float MaxHealth = 10f;
 
-        public UnityAction<float, GameObject> OnDecreased;
-        public UnityAction<float> OnIncreased;
         public UnityAction OnZero;
 
         public float CurrentHealth { get; set; }
-        public bool Invincible { get; set; }
 
         public bool IsInitialized
         {
@@ -39,41 +36,17 @@ namespace Atomic.Character.Module
 
         public void Increase(float healAmount)
         {
-            float healthBefore = CurrentHealth;
             CurrentHealth += healAmount;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
-
-            float trueHealAmount = CurrentHealth - healthBefore;
-            if (trueHealAmount > 0f)
-            {
-                OnIncreased?.Invoke(trueHealAmount);
-            }
         }
 
-        public void Decrease(float damage, GameObject damageSource)
+        public void Decrease(float damage)
         {
-            if (Invincible)
-                return;
-
-            float healthBefore = CurrentHealth;
             CurrentHealth -= damage;
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
-
-            float trueDamageAmount = healthBefore - CurrentHealth;
-            if (trueDamageAmount > 0f)
-            {
-                OnDecreased?.Invoke(trueDamageAmount, damageSource);
-            }
-
-            HandleDeath();
         }
 
         public void Kill()
         {
             CurrentHealth = 0f;
-
-            OnDecreased?.Invoke(MaxHealth, null);
-
             HandleDeath();
         }
 

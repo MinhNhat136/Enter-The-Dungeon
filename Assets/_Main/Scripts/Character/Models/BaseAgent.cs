@@ -1,7 +1,6 @@
 using Atomic.Character.Module;
 using Atomic.Core;
 using Atomic.Core.Interface;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,7 +20,6 @@ namespace Atomic.Character.Model
         private static long Controller_LocomotionIndex = 1L << 0;
         private static long Controller_HitBoxIndex = 1L << 1;
         private static long Controller_VisionIndex = 1L << 2;
-        private static long Controller_HealthIndex = 1L << 3;
         private static long Controller_AnimatorControllerIndex = 1L << 4;
         private static long Controller_MemoryIndex = 1L << 5;
         private static long Controller_TargetingIndex = 1L << 6;
@@ -55,13 +53,13 @@ namespace Atomic.Character.Model
             protected set { _locomotionController = value; }
         }
 
-        public virtual IHitBoxController HitBoxController
+        public virtual AiHitBoxController HitBoxController
         {
             get { return _hitBoxController; }
             protected set { _hitBoxController = value; }
         }
 
-        public virtual IAiMemoryController MemoryController
+        public virtual AiMemoryController MemoryController
         {
             get { return _memoryController; }
             protected set { _memoryController = value; }
@@ -84,6 +82,11 @@ namespace Atomic.Character.Model
             get { return _targetingController; }
             protected set { _targetingController = value; }
         }
+
+        public virtual AiHealth HealthController
+        {
+            get { return _healthController; }
+        }
         #endregion
 
         //  Collections -----------------------------------
@@ -101,16 +104,23 @@ namespace Atomic.Character.Model
         private Animator _animator;
         private NavMeshAgent _navMeshAgent;
 
+        #region Interface Controller
         private ILocomotionController _locomotionController;
         private IAnimatorController _agentAnimatorController;
-        private IHitBoxController _hitBoxController;
-        private IAiMemoryController _memoryController;
         private IVisionController _visionController;
         private ITargetingController _targetingController;
         private IAiWeaponControlSystem _weaponControlSystem;
+        #endregion
 
+        #region Monobehaviour Controller
+        private AiHitBoxController _hitBoxController;
         private AiHealth _healthController;
-        
+        #endregion
+
+        #region Non-Monobehaviour Controller
+        private AiMemoryController _memoryController;
+        #endregion
+
         //  Initialization  -------------------------------
         public virtual void Initialize()
         {
@@ -125,14 +135,15 @@ namespace Atomic.Character.Model
                 SetComponent_Animator();
 
                 // Controllers
-                AtomicExtension.SetController<ILocomotionController>(this, ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
-                AtomicExtension.SetController<IHitBoxController>(this, ref _hitBoxController, Controller_HitBoxIndex, ref _controllerBitSequence);
-                AtomicExtension.SetController<IVisionController>(this, ref _visionController, Controller_VisionIndex, ref _controllerBitSequence);
-                AtomicExtension.SetController<IAnimatorController>(this, ref _agentAnimatorController, Controller_AnimatorControllerIndex, ref _controllerBitSequence);
-                AtomicExtension.SetController<ITargetingController>(this, ref _targetingController, Controller_TargetingIndex, ref _controllerBitSequence);
-                AtomicExtension.SetController<IAiMemoryController>(this, ref _memoryController, Controller_MemoryIndex, ref _controllerBitSequence);
-                AtomicExtension.SetController<IAiWeaponControlSystem>(this, ref _weaponControlSystem, Controller_WeaponIndex, ref _controllerBitSequence);
+                this.SetController<ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+                this.SetController<IVisionController>(ref _visionController, Controller_VisionIndex, ref _controllerBitSequence);
+                this.SetController<IAnimatorController>(ref _agentAnimatorController, Controller_AnimatorControllerIndex, ref _controllerBitSequence);
+                this.SetController<ITargetingController>(ref _targetingController, Controller_TargetingIndex, ref _controllerBitSequence);
+                this.SetController<IAiWeaponControlSystem>(ref _weaponControlSystem, Controller_WeaponIndex, ref _controllerBitSequence);
+                
+                this.SetController<AiHitBoxController>(ref _hitBoxController, Controller_HitBoxIndex, ref _controllerBitSequence);
 
+                AtomicExtension.AddController<AiMemoryController>(ref _memoryController, Controller_MemoryIndex, ref _controllerBitSequence);
                 _healthController = GetComponent<AiHealth>();
                 Debug.Log(LongToBitString(_controllerBitSequence));
             }
@@ -191,8 +202,6 @@ namespace Atomic.Character.Model
         {
             _animator = GetComponentInChildren<Animator>();
         }
-
-       
 
         #endregion
 
