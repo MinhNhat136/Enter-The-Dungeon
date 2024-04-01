@@ -3,19 +3,33 @@ using UnityEngine.AI;
 
 namespace Atomic.Character.Module
 {
+    /// <summary>
+    /// OnAnimatorMove Event Sender 
+    /// </summary>
     [RequireComponent(typeof(Animator))]
     public class AnimatorEventsListenerWithRootMotion : AnimatorEventsListener
     {
-        private NavMeshAgent _agent;
+        public System.Action AnimatorMoveEvent;
 
         public void Awake()
         {
-            _agent = GetComponentInParent<NavMeshAgent>();
+            IAnimatorMoveReceive[] animatorMoves = GetComponentsInParent<IAnimatorMoveReceive>();
+            for (int i = 0; i < animatorMoves.Length; i++)
+            {
+                var receiver = animatorMoves[i];
+                AnimatorMoveEvent += () =>
+                {
+                    if (receiver.enabled)
+                    {
+                        receiver.OnAnimatorMoveEvent();
+                    }
+                };
+            }
         }
 
         public void OnAnimatorMove()
         {
-            transform.parent.position = _agent.nextPosition;
+            AnimatorMoveEvent?.Invoke();
         }
     }
 

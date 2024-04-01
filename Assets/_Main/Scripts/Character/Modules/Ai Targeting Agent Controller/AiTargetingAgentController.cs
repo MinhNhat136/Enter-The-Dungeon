@@ -58,7 +58,7 @@ namespace Atomic.Character.Module
         private GameObject[] targets;
 
         //  Fields ----------------------------------------
-        
+
 
         private IAiMemoryController _memoryController;
         private IVisionController _sensor;
@@ -100,12 +100,14 @@ namespace Atomic.Character.Module
 
             EvaluateTargetScores();
             UpdateTarget();
+
         }
 
         public void UpdateTarget()
         {
             if (bestMemory == null)
             {
+                _model.TargetAgent = null;
                 return;
             }
             if (bestMemory.gameObject == null)
@@ -119,13 +121,16 @@ namespace Atomic.Character.Module
             }
             if (bestMemory.gameObject.TryGetComponent<BaseAgent>(out BaseAgent targetAgent))
             {
-
                 _model.TargetAgent = targetAgent;
             }
         }
 
         public void EvaluateTargetScores()
         {
+            if(_memoryController.Memories.Count == 0)
+            {
+                bestMemory = null;
+            }
             foreach (var memory in _memoryController.Memories)
             {
                 memory.score = CalculateScore(memory);

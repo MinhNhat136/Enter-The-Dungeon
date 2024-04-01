@@ -2,7 +2,7 @@
 
 namespace Atomic.Character.Module
 {
-    public class BaseDamageHandler : MonoBehaviour, IDamageHandler
+    public class BaseDamageHandler : MonoBehaviour, IDamageable
     {
 
         public float SensibilityToSelfdamage = 0.5f;

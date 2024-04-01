@@ -1,5 +1,4 @@
 using Atomic.Character.Config;
-using Atomic.Character.Model;
 using Atomic.Character.Module;
 using UnityEngine;
 
@@ -16,6 +15,7 @@ namespace Atomic.Character.Model
     {
         //  Events ----------------------------------------
         [HideInInspector] public bool isAttack;
+        [HideInInspector] public bool isRolling; 
 
         //  Properties ------------------------------------
         public PlayerControls InputControls { get; private set; }
@@ -59,6 +59,8 @@ namespace Atomic.Character.Model
         //  Other Methods ---------------------------------
         public override void Assign()
         {
+            _animatorController = GetComponent<PlayerAnimatorController>();
+
             AssignInputEvents();
             AssignLocomotionController();
 
@@ -78,8 +80,10 @@ namespace Atomic.Character.Model
             };
             InputControls.Character.Roll.performed += context =>
             {
-                _animatorController.ApplyRoll();
+                isRolling = true;
             };
+            InputControls.Character.Roll.canceled += context => isRolling = false; 
+
             InputControls.Character.Attack.performed += context =>
             {
                 isAttack = true;

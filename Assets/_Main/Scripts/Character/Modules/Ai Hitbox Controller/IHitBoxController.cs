@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Atomic.Character.Module
 {
-    public interface IHitBoxController : IInitializableWithBaseModel<BaseAgent>
+    public interface IHitBoxController : IInitializableWithBaseModel<BaseAgent>, IDamageable
     {
         public Collider Collider { get; set; }
         public void TurnOnTrigger();

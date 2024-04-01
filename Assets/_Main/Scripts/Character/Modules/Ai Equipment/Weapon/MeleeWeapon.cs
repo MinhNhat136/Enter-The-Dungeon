@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour
+namespace Atomic.Character.Module
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MeleeWeapon : Weapon
     {
+        // Start is called before the first frame update
+        void Start()
+        {
 
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
 
+        }
     }
 }
+

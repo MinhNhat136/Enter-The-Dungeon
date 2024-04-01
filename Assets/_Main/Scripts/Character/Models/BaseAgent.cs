@@ -1,5 +1,7 @@
 using Atomic.Character.Module;
+using Atomic.Core;
 using Atomic.Core.Interface;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -123,15 +125,16 @@ namespace Atomic.Character.Model
                 SetComponent_Animator();
 
                 // Controllers
-                SetController<ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex);
-                SetController<IHitBoxController>(ref _hitBoxController, Controller_HitBoxIndex);
-                SetController<IVisionController>(ref _visionController, Controller_VisionIndex);
-                SetController<IAnimatorController>(ref _agentAnimatorController, Controller_AnimatorControllerIndex);
-                SetController<ITargetingController>(ref _targetingController, Controller_TargetingIndex);
-                SetController<IAiMemoryController>(ref _memoryController, Controller_MemoryIndex);
-                SetController<IAiWeaponControlSystem>(ref _weaponControlSystem, Controller_WeaponIndex);
+                AtomicExtension.SetController<ILocomotionController>(this, ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+                AtomicExtension.SetController<IHitBoxController>(this, ref _hitBoxController, Controller_HitBoxIndex, ref _controllerBitSequence);
+                AtomicExtension.SetController<IVisionController>(this, ref _visionController, Controller_VisionIndex, ref _controllerBitSequence);
+                AtomicExtension.SetController<IAnimatorController>(this, ref _agentAnimatorController, Controller_AnimatorControllerIndex, ref _controllerBitSequence);
+                AtomicExtension.SetController<ITargetingController>(this, ref _targetingController, Controller_TargetingIndex, ref _controllerBitSequence);
+                AtomicExtension.SetController<IAiMemoryController>(this, ref _memoryController, Controller_MemoryIndex, ref _controllerBitSequence);
+                AtomicExtension.SetController<IAiWeaponControlSystem>(this, ref _weaponControlSystem, Controller_WeaponIndex, ref _controllerBitSequence);
 
                 _healthController = GetComponent<AiHealth>();
+                Debug.Log(LongToBitString(_controllerBitSequence));
             }
         }
 
@@ -189,15 +192,7 @@ namespace Atomic.Character.Model
             _animator = GetComponentInChildren<Animator>();
         }
 
-        protected virtual void SetController<TController>(ref TController _controller, long bitController)
-        {
-            if (!TryGetComponent<TController>(out TController controller))
-            {
-                return;
-            }
-            _controller = controller;
-            _controllerBitSequence |= bitController;
-        }
+       
 
         #endregion
 

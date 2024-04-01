@@ -1,16 +1,10 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+namespace Atomic.Character.Module
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Weapon : MonoBehaviour
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        
     }
 }
+

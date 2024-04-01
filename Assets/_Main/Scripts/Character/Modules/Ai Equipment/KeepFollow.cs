@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class KeepFollow : MonoBehaviour
+namespace Atomic.Character.Module
 {
-    // Start is called before the first frame update
-    void Start()
+    public class KeepFollow : MonoBehaviour
     {
-        
+        [SerializeField]
+        private Transform target;
+
+        [SerializeField]
+        private bool flatRotation;
+
+        public void Update()
+        {
+            Follow();
+        }
+
+        private void Follow()
+        {
+        }
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

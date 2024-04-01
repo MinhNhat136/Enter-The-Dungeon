@@ -16,7 +16,7 @@ MonoBehaviour:
   Angle: 30
   Height: 1
   ScanFrequency: 30
-  MaxObjectRemember: 10
+  MaxObjectRemember: 16
   VisionLayer:
     serializedVersion: 2
     m_Bits: 64

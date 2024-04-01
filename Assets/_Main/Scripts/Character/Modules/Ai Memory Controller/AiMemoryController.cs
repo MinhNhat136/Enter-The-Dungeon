@@ -41,8 +41,7 @@ namespace Atomic.Character.Module
 
             for (int i = 0; i < targets; i++)
             {
-                GameObject target = objects[i];
-                RefreshMemory(target);
+                RefreshMemory(objects[i]);
             }
         }
 
