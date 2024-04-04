@@ -1,4 +1,3 @@
-using Atomic.Character.Config;
 using Atomic.Character.Module;
 using UnityEngine;
 
@@ -15,32 +14,25 @@ namespace Atomic.Character.Model
     {
         //  Events ----------------------------------------
         [HideInInspector] public bool isAttack;
-        [HideInInspector] public bool isRolling; 
+        [HideInInspector] public bool isRolling;
+        [HideInInspector] public bool canAttack;
+
+        protected bool isInAttack;                     
+        protected bool isInCombo;                      
 
         //  Properties ------------------------------------
         public PlayerControls InputControls 
         { 
             get; private set; 
         }
-        public override IAnimatorController AgentAnimatorController
+
+        protected bool IsMoveInput
         {
-            get { return _animatorController; }
-        }
-        public Collider[] Colliders
-        {
-            get { return _colliders; }
+            get { return !Mathf.Approximately(MotorController.LocomotionController.MoveInput.sqrMagnitude, 0f); }
         }
 
+
         //  Fields ----------------------------------------
-        [Header("CONFIG")]
-        [SerializeField] private PlayerConfig _agentConfig;
-        [SerializeField] private VisionConfig _visionConfig;
-        [SerializeField] private TargetingConfig _targetingConfig;  
-        [SerializeField] private HitBoxConfig _hitBoxConfig;
-        
-        
-        [Header("COMPONENTS")]        
-        [SerializeField] private Collider[] _colliders;
 
         private PlayerAnimatorController _animatorController;
 
@@ -67,6 +59,7 @@ namespace Atomic.Character.Model
         {
             base.DoDisable();
             InputControls.Disable();
+
         }
 
         //  Other Methods ---------------------------------
@@ -75,22 +68,19 @@ namespace Atomic.Character.Model
             _animatorController = GetComponent<PlayerAnimatorController>();
 
             AssignInputEvents();
-            AssignLocomotionController();
-            AssignHitBoxController();
 
-            _visionConfig.Assign(VisionController);
-            _targetingConfig.Assign(TargetingController);
         }
+
 
         public void AssignInputEvents()
         {
             InputControls.Character.Movement.performed += context =>
             {
-                LocomotionController.MoveInput = context.ReadValue<Vector2>();
+                MotorController.LocomotionController.MoveInput = context.ReadValue<Vector2>();
             };
             InputControls.Character.Movement.canceled += context =>
             {
-                LocomotionController.MoveInput = Vector2.zero;
+                MotorController.LocomotionController.MoveInput = Vector2.zero;
             };
             InputControls.Character.Roll.performed += context =>
             {
@@ -109,17 +99,9 @@ namespace Atomic.Character.Model
             };
         }
 
-        public void AssignLocomotionController()
+        public void BindingAction()
         {
-            LocomotionController.RotationSpeed = _agentConfig.RotateSpeed;
-            LocomotionController.MoveSpeed = _agentConfig.WalkSpeed;
-            LocomotionController.Acceleration = _agentConfig.Acceleration;
-        }
-
-        public void AssignHitBoxController()
-        {
-            _hitBoxConfig.Assign(HitBoxController);
-            HitBoxController.Colliders = Colliders;
+            IsInVulnerable = _animatorController.IsRolling;
         }
 
         //  Event Handlers --------------------------------

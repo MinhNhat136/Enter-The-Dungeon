@@ -1,3 +1,4 @@
+using Atomic.Character.Model;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,26 +43,30 @@ namespace Atomic.Character.Module
             get { return _isInitialized; }
         }
 
-
+        public BaseAgent Model
+        {
+            get { return _model; }
+        }
 
         //  Fields ----------------------------------------
         private List<GameObject> objects = new(32);
 
 
         private Collider[] colliders;
-        private Mesh mesh;
-        private int count;
-        private float scanInterval;
-        private float scanTimer;
+        private int _count;
+        private float _scanInterval;
+        private float _scanTimer;
+        private BaseAgent _model;
         private bool _isInitialized;
 
         //  Initialization  -------------------------------
-        public void Initialize()
+        public void Initialize(BaseAgent model)
         {
             if (!IsInitialized)
             {
                 _isInitialized = true;
-                scanInterval = 1.0f / ScanFrequency;
+                _model = model;
+                _scanInterval = 1.0f / ScanFrequency;
                 colliders = new Collider[MaxObjectRemember];
             }
         }
@@ -77,10 +82,10 @@ namespace Atomic.Character.Module
         //  Unity Methods   -------------------------------
         public void Tick()
         {
-            scanTimer -= Time.deltaTime;
-            if (scanTimer <= 0)
+            _scanTimer -= Time.deltaTime;
+            if (_scanTimer <= 0)
             {
-                scanTimer += scanInterval;
+                _scanTimer += _scanInterval;
                 Scan();
             }
         }
@@ -89,10 +94,10 @@ namespace Atomic.Character.Module
 
         public void Scan()
         {
-            count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, colliders, VisionLayer,
+            _count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, colliders, VisionLayer,
                 QueryTriggerInteraction.Collide);
             Objects.Clear();
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < _count; i++)
             {
                 GameObject obj = colliders[i].gameObject;
                 if (IsInSight(obj))

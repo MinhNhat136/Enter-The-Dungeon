@@ -1,3 +1,4 @@
+using Atomic.Core.Interface;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -194,7 +195,9 @@ namespace Atomic.Core
             }
         }
 
-        public static void SetController<TController>(this MonoBehaviour bhv ,ref TController _controller, long bitController, ref long bitSequence)
+        public static void SetController<TModel, TController>(this TModel bhv,ref TController _controller,
+            int bitController, ref int bitSequence) 
+            where TModel : MonoBehaviour
         {
             if (!bhv.TryGetComponent<TController>(out TController controller))
             {
@@ -204,15 +207,35 @@ namespace Atomic.Core
             bitSequence |= bitController;
         }
 
-        public static void AddController<TController>(ref TController controller, long bitController, ref long bitSequence) where TController : new()
+        public static void SetController<TModel, TController>(this TModel bhv, ref TController _controller) 
+            where TModel : MonoBehaviour
         {
-            controller = new TController();
-            bitSequence |= bitController;
+            if (!bhv.TryGetComponent<TController>(out TController controller))
+            {
+                return;
+            }
+            _controller = controller;
         }
+
 
         public static bool ContainsLayer(this LayerMask layermask, int layer)
         {
             return layermask == (layermask | (1 << layer));
+        }
+
+        public static string LongToBitString(long num)
+        {
+            int numBits = sizeof(long) * 8;
+
+            string bitString = "";
+
+            for (int i = numBits - 1; i >= 0; i--)
+            {
+                int bit = (int)((num >> i) & 1);
+                bitString += bit;
+            }
+
+            return bitString;
         }
 
         public static void SetActiveChildren(this GameObject gameObjet, bool value)

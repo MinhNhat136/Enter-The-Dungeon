@@ -1,5 +1,4 @@
-﻿using Atomic.Character.Model;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace Atomic.Character.Module
@@ -36,7 +35,7 @@ namespace Atomic.Character.Module
             get { return _isInitialized; }
         }
 
-        public BaseAgent Model
+        public AiMotorController Model
         {
             get
             {
@@ -44,22 +43,38 @@ namespace Atomic.Character.Module
             }
         }
 
-        public float Acceleration 
-        { 
-            get; set ; 
+        public float Acceleration
+        {
+            get; set;
+        }
+        public bool IsStopped
+        {
+            get
+            {
+                return _isStopped;
+            }
+            set
+            {
+                _isStopped = value; 
+                if (value)
+                {
+                    Stop();
+                }
+            }
         }
 
         //  Fields ----------------------------------------
 
         private NavMeshAgent _navMeshAgent;
-        private BaseAgent _model;
+        private AiMotorController _model;
         private Animator _animator;
 
 
         private bool _isInitialized;
+        private bool _isStopped; 
 
         //  Initialization  -------------------------------
-        public void Initialize(BaseAgent model)
+        public void Initialize(AiMotorController model)
         {
             if (!_isInitialized)
             {
@@ -76,6 +91,8 @@ namespace Atomic.Character.Module
                 _navMeshAgent.speed = MoveSpeed;
                 _navMeshAgent.angularSpeed = RotationSpeed;
                 _navMeshAgent.acceleration = Acceleration;
+
+                IsStopped = false;
             }
         }
 
@@ -91,6 +108,7 @@ namespace Atomic.Character.Module
         //  Unity Methods   -------------------------------
         public void Tick()
         {
+
             ApplyMovement();
             ApplyRotation();
         }
@@ -118,6 +136,8 @@ namespace Atomic.Character.Module
 
         public void Stop()
         {
+            MoveInput = Vector2.zero;
+            _navMeshAgent.destination = transform.position;
         }
 
         public void OnAnimatorMoveEvent()

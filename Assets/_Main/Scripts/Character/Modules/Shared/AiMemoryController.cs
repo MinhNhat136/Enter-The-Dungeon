@@ -18,7 +18,10 @@ namespace Atomic.Character.Module
 
         //  Properties ------------------------------------
         public List<AiMemoryObject> Memories => memories;
-
+        public float MemorySpan
+        {
+            get; set; 
+        }
         //  Collections  ----------------------------------
         public List<AiMemoryObject> memories = new List<AiMemoryObject>(32);
 

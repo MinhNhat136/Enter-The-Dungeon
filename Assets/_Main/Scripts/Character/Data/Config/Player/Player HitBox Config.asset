@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 1
     - Name: 
       Entry: 7
       Data: 
@@ -51,21 +51,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 7
       Data: 2|Atomic.Character.Module.Freezeable, Atomic.Character
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 2
-    - Name: $v
-      Entry: 7
-      Data: 3|Atomic.Character.Module.Burnable, Atomic.Character
     - Name: 
       Entry: 8
       Data: 

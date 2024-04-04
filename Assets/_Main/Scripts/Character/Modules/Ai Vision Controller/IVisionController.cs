@@ -1,9 +1,10 @@
+using Atomic.Character.Model;
 using Atomic.Core.Interface;
 using UnityEngine;
 
 namespace Atomic.Character.Module
 {
-    public interface IVisionController : IInitializable, ITickable
+    public interface IVisionController : IInitializableWithBaseModel<BaseAgent>, ITickable
     {
         public float VisionDistance { get; set; }
         public float VisionAngle { get; set; }

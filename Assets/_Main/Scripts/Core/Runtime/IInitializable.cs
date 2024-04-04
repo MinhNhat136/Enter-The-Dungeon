@@ -10,6 +10,9 @@ namespace Atomic.Core.Interface
 
         //  General Methods  ------------------------------
         public void Initialize();
+        public virtual void DoEnable() { }
+        public virtual void DoDisable() { } 
+        public virtual void DoDestroy() { }
         void RequireIsInitialized();
     }
 }

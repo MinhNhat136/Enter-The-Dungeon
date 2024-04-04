@@ -84,6 +84,8 @@ namespace Atomic.Character.Module
         }
 
         //  Fields ----------------------------------------
+        [SerializeField] private HitBoxConfig _hitBoxConfig;
+        
         private AiHealth health;
         private BaseAgent _model;
         private bool _isInitialized;
@@ -95,6 +97,7 @@ namespace Atomic.Character.Module
             if (!_isInitialized)
             {
                 _isInitialized = true;
+
                 _model = model;
 
                 this.health = model.HealthController;
@@ -110,7 +113,10 @@ namespace Atomic.Character.Module
             }
         }
 
-
+        public void AssignHitBoxController()
+        {
+            _hitBoxConfig.Assign(this);
+        }
         //  Unity Methods   -------------------------------
         public void Tick()
         {
@@ -167,7 +173,7 @@ namespace Atomic.Character.Module
         {
             IsInvulnerable = false;
             _timeSinceLastHit = 0.0f;
-            _onResetDamage.Invoke();
+            _onResetDamage?.Invoke();
         }
 
         public void SetTriggerState(bool enabled)

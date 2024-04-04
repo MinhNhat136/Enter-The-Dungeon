@@ -1,10 +1,12 @@
-﻿using Atomic.Core.Interface;
-using UnityEngine;
+﻿using Atomic.Character.Model;
+using Atomic.Core.Interface;
+using System;
 using UnityEngine.Events;
 
 namespace Atomic.Character.Module
 {
-    public class AiHealth : MonoBehaviour, IInitializable
+    [Serializable]
+    public class AiHealth : IInitializableWithBaseModel<BaseAgent>
     {
         public float MaxHealth = 10f;
 
@@ -17,13 +19,23 @@ namespace Atomic.Character.Module
             get {  return _isInitialized; }
         }
 
+
+
+        public BaseAgent Model 
+        { 
+            get { return _model;  } 
+        }
+
         bool m_IsDead;
-        bool _isInitialized; 
-        public void Initialize()
+        bool _isInitialized;
+        BaseAgent _model; 
+
+        public void Initialize(BaseAgent model)
         {
             if (!_isInitialized)
             {
                 _isInitialized = true;
+                _model = model;
                 CurrentHealth = MaxHealth;
                 m_IsDead = false;
             }
@@ -62,6 +74,6 @@ namespace Atomic.Character.Module
             }
         }
 
-        
+       
     }
 }

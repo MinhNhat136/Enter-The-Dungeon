@@ -10,7 +10,7 @@ namespace Atomic.Character.Module
         /// </summary>
         bool enabled { get; set; }
         /// <summary>
-        /// Method Called from <seealso cref="vAnimatorMoveSender"/>
+        /// Method Called from <seealso cref="AnimatorMoveSender"/>
         /// </summary>
         void OnAnimatorMoveEvent();
     }

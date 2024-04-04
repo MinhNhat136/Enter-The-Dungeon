@@ -1,4 +1,5 @@
 ﻿using Atomic.Character.Model;
+using Atomic.Core.Interface;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -50,6 +51,10 @@ namespace Atomic.Character.Module
             get; set; 
         }
 
+        AiMotorController IInitializableWithBaseModel<AiMotorController>.Model => throw new System.NotImplementedException();
+
+        public bool IsStopped { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
         //  Fields ----------------------------------------
 
         private NavMeshAgent _navMeshAgent;
@@ -61,7 +66,7 @@ namespace Atomic.Character.Module
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
-            if (!_isInitialized)
+            /*if (!_isInitialized)
             {
                 _isInitialized = true;
                 _model = model;
@@ -71,7 +76,7 @@ namespace Atomic.Character.Module
                 _navMeshAgent.speed = MoveSpeed;
                 _navMeshAgent.angularSpeed = RotationSpeed;
                 _navMeshAgent.acceleration = Acceleration;
-            }
+            }*/
         }
 
         public void RequireIsInitialized()
@@ -94,7 +99,7 @@ namespace Atomic.Character.Module
 
         public void ApplyRotation()
         {
-            if (_model.MoveDirection == Vector3.zero)
+            /*if (_model.MoveDirection == Vector3.zero)
                 return;
 
             Quaternion desiredRotation = Quaternion.LookRotation(_model.MoveDirection);
@@ -102,20 +107,25 @@ namespace Atomic.Character.Module
             desiredRotation.x = 0;
             desiredRotation.z = 0;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);*/
         }
 
         public void ApplyMovement()
         {
-            _model.MoveDirection = new Vector3(MoveInput.x, 0, MoveInput.y);
+            /*_model.MoveDirection = new Vector3(MoveInput.x, 0, MoveInput.y);
 
             if (_model.MoveDirection.magnitude > 0)
             {
                 _navMeshAgent.Move(_model.MoveDirection * MoveSpeed * Time.deltaTime);
-            }
+            }*/
         }
 
         public void Stop()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Initialize(AiMotorController model)
         {
             throw new System.NotImplementedException();
         }

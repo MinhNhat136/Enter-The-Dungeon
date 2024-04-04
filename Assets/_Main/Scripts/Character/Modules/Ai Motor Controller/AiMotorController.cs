@@ -1,6 +1,9 @@
+using Atomic.Character.Config;
+using Atomic.Character.Model;
 using Atomic.Core;
 using Atomic.Core.Interface;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Atomic.Character.Module
 {
@@ -11,38 +14,78 @@ namespace Atomic.Character.Module
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class AiMotorController : MonoBehaviour, IInitializable
+    [RequireComponent(typeof(NavMeshAgent))]
+    public class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>, ITickable
     {
         //  Statics ---------------------------------------
-        private static long Controller_LocomotionIndex = 1L << 0;
-        private static long Controller_RollIndex = 1L << 1;
-        private static long Controller_FlyIndex = 1L << 2;
+        private static int Controller_LocomotionIndex = 1 << 0;
+        private static int Controller_RollIndex = 1 << 1;
+        private static int Controller_FlyIndex = 1 << 2;
 
         //  Events ----------------------------------------
 
 
         //  Properties ------------------------------------
-        public ILocomotionController LocomotionController {
+        public ILocomotionController LocomotionController 
+        {
             get { return _locomotionController; }
-            private set { _locomotionController = value; } }
-        public AiRollController RollController { get; private set; }
+            set { _locomotionController = value; } 
+        }
 
+        public AiRollController RollController 
+        { 
+            get; private set; 
+        }
         public bool IsInitialized
         {
             get { return _isInitialized; }
         }
+
+        public BaseAgent Model 
+        { 
+            get { return _model; } 
+        }
+
+        public NavMeshAgent BaseNavMeshAgent 
+        {
+            get { return _navMeshAgent; } 
+        }
+        public virtual Animator BaseAnimator 
+        { 
+            get { return _animator; } 
+        }
+
+        public Vector3 MoveDirection
+        { 
+            get { return _moveDirection; } 
+            set { _moveDirection = value; } 
+        }
+
         //  Fields ----------------------------------------
-        private long _controllerBitSequence = 0;
+        [SerializeField] private AgentConfig _config; 
+
+        private int _controllerBitSequence = 0;
         private bool _isInitialized;
+        private BaseAgent _model;
+        private NavMeshAgent _navMeshAgent;
+        private Animator _animator;
+        private Vector3 _moveDirection;
+
         private ILocomotionController _locomotionController;
+        
         //  Initialization  -------------------------------
-        public void Initialize()
+        public void Initialize(BaseAgent model)
         {
             if(!_isInitialized)
             {
                 _isInitialized = true;
+                _model = model;
 
-                this.SetController<ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+                _navMeshAgent = GetComponent<NavMeshAgent>();
+                _animator = GetComponentInChildren<Animator>();
+                this.SetController<AiMotorController, ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+                AssignLocomotionController();
+                _locomotionController.Initialize(this);
             }
         }
 
@@ -50,7 +93,18 @@ namespace Atomic.Character.Module
         {
         }
 
+        public void Tick()
+        {
+            _locomotionController.Tick();
+        }
+
         //  Unity Methods   -------------------------------
+        public void AssignLocomotionController()
+        {
+            LocomotionController.RotationSpeed = _config.RotateSpeed;
+            LocomotionController.MoveSpeed = _config.WalkSpeed;
+            LocomotionController.Acceleration = _config.Acceleration;
+        }
 
         //  Other Methods ---------------------------------
 

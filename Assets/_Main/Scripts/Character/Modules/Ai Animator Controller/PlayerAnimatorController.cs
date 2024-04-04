@@ -7,29 +7,13 @@ namespace Atomic.Character.Module
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+    
 
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PlayerAnimatorController : MonoBehaviour, IAnimatorController, IInitializableWithBaseModel<PlayerAgent>, IAnimatorStateInfoController
+    public class PlayerAnimatorController : MonoBehaviour, IAgentAnimator, IAnimatorStateInfoController
     {
-        //  Statics ---------------------------------------
-        #region Animator Parameter
-        public static int Horizontal        = Animator.StringToHash("Horizontal");
-        public static int Vertical          = Animator.StringToHash("Vertical");
-        public static int Hit_Horizontal    = Animator.StringToHash("Hit_Horizontal");
-        public static int Hit_Vertical      = Animator.StringToHash("Hit_Vertical");
-        public static int Dodge_Horizontal  = Animator.StringToHash("Dodge_Horizontal");
-        public static int Dodge_Vertical    = Animator.StringToHash("Dodge_Vertical");
-        #endregion
-
-        #region Animation State Name
-        public static int Summon            = Animator.StringToHash("summon");
-        public static int Locomotion        = Animator.StringToHash("locomotion");
-        public static int Roll              = Animator.StringToHash("roll");
-        public static int Break             = Animator.StringToHash("break");
-        public static int Knock_Down        = Animator.StringToHash("knock_down");
-        #endregion
 
         //  Events ----------------------------------------
 
@@ -46,12 +30,10 @@ namespace Atomic.Character.Module
         public bool IsKnockDown { get; private set; }
         public bool IsStunned { get; private set; }
 
-
-
         //  Fields ----------------------------------------
-        private PlayerAgent _model;
+        private BaseAgent _model;
         private Animator _animator;
-        public PlayerAgent Model
+        public BaseAgent Model
         {
             get { return _model; }
         }
@@ -61,19 +43,25 @@ namespace Atomic.Character.Module
         private bool _isInitialized;
 
         //  Initialization  -------------------------------
-        public void Initialize(PlayerAgent model)
+        public void Initialize(BaseAgent model)
         {
             if (!_isInitialized)
             {
                 _isInitialized = true;
                 _model = model;
-                _animator = _model.BaseAnimator;
+                _animator = GetComponentInChildren<Animator>();
             }
         }
 
         public void RequireIsInitialized()
         {
             throw new System.NotImplementedException();
+        }
+
+        protected virtual void OnDisable()
+        {
+
+            animatorStateInfos.RemoveListener();
         }
 
         //  Unity Methods   -------------------------------
@@ -86,11 +74,11 @@ namespace Atomic.Character.Module
         //  Other Methods ---------------------------------
         public void ApplyAnimator()
         {
-            float xVelocity = Vector3.Dot(_model.MoveDirection.normalized, transform.right);
-            float zVelocity = Vector3.Dot(_model.MoveDirection.normalized, transform.forward);
+            float xVelocity = Vector3.Dot(_model.MotorController.MoveDirection.normalized, transform.right);
+            float zVelocity = Vector3.Dot(_model.MotorController.MoveDirection.normalized, transform.forward);
 
-            _animator.SetFloat(Horizontal, xVelocity, .1f, Time.deltaTime);
-            _animator.SetFloat(Vertical, zVelocity, .1f, Time.deltaTime);
+            _animator.SetFloat(AnimatorParameters.InputHorizontal, xVelocity, .1f, Time.deltaTime);
+            _animator.SetFloat(AnimatorParameters.InputVertical, zVelocity, .1f, Time.deltaTime);
 
         }
 
@@ -98,7 +86,7 @@ namespace Atomic.Character.Module
         {
             _animator.Play("roll");
         }
-       
+
         public void ApplySummon()
         {
 
@@ -113,6 +101,7 @@ namespace Atomic.Character.Module
         {
 
         }
+
 
 
         //  Event Handlers --------------------------------
