@@ -1,4 +1,3 @@
-using Atomic.Character.Module;
 using UnityEngine;
 
 namespace Atomic.Character.Model
@@ -17,13 +16,19 @@ namespace Atomic.Character.Model
         [HideInInspector] public bool isRolling;
         [HideInInspector] public bool canAttack;
 
-        protected bool isInAttack;                     
-        protected bool isInCombo;                      
+        public bool IsSummon { get; private set; }
+        public bool IsDied { get; private set; }
+        public bool IsRolling { get; private set; }
+        public bool IsKnockDown { get; private set; }
+        public bool IsStunned { get; private set; }
+
+        protected bool isInAttack;
+        protected bool isInCombo;
 
         //  Properties ------------------------------------
-        public PlayerControls InputControls 
-        { 
-            get; private set; 
+        public PlayerControls InputControls
+        {
+            get; private set;
         }
 
         protected bool IsMoveInput
@@ -34,7 +39,6 @@ namespace Atomic.Character.Model
 
         //  Fields ----------------------------------------
 
-        private PlayerAnimatorController _animatorController;
 
         //  Initialization  -------------------------------
         public override void Initialize()
@@ -46,6 +50,7 @@ namespace Atomic.Character.Model
                 InputControls = new PlayerControls();
                 Assign();
             }
+
         }
 
         //  Unity Methods   -------------------------------
@@ -59,13 +64,12 @@ namespace Atomic.Character.Model
         {
             base.DoDisable();
             InputControls.Disable();
-
         }
+
 
         //  Other Methods ---------------------------------
         public override void Assign()
         {
-            _animatorController = GetComponent<PlayerAnimatorController>();
 
             AssignInputEvents();
 
@@ -86,7 +90,7 @@ namespace Atomic.Character.Model
             {
                 isRolling = true;
             };
-            InputControls.Character.Roll.canceled += context => isRolling = false; 
+            InputControls.Character.Roll.canceled += context => isRolling = false;
 
             InputControls.Character.Attack.performed += context =>
             {
@@ -101,7 +105,7 @@ namespace Atomic.Character.Model
 
         public void BindingAction()
         {
-            IsInVulnerable = _animatorController.IsRolling;
+            IsInVulnerable = IsRolling;
         }
 
         //  Event Handlers --------------------------------

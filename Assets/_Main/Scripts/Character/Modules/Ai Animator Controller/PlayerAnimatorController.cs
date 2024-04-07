@@ -12,7 +12,7 @@ namespace Atomic.Character.Module
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PlayerAnimatorController : MonoBehaviour, IAgentAnimator, IAnimatorStateInfoController
+    public class PlayerAnimatorController : MonoBehaviour, IAgentAnimator
     {
 
         //  Events ----------------------------------------
@@ -24,11 +24,7 @@ namespace Atomic.Character.Module
             get { return _isInitialized; }
         }
 
-        public bool IsSummon { get; private set; }
-        public bool IsDied { get; private set; }
-        public bool IsRolling { get; private set; }
-        public bool IsKnockDown { get; private set; }
-        public bool IsStunned { get; private set; }
+       
 
         //  Fields ----------------------------------------
         private BaseAgent _model;
@@ -37,8 +33,6 @@ namespace Atomic.Character.Module
         {
             get { return _model; }
         }
-
-        public AnimatorStateInfos animatorStateInfos => throw new System.NotImplementedException();
 
         private bool _isInitialized;
 
@@ -61,7 +55,6 @@ namespace Atomic.Character.Module
         protected virtual void OnDisable()
         {
 
-            animatorStateInfos.RemoveListener();
         }
 
         //  Unity Methods   -------------------------------

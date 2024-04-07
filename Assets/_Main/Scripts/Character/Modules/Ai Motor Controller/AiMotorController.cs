@@ -19,8 +19,9 @@ namespace Atomic.Character.Module
     {
         //  Statics ---------------------------------------
         private static int Controller_LocomotionIndex = 1 << 0;
-        private static int Controller_RollIndex = 1 << 1;
-        private static int Controller_FlyIndex = 1 << 2;
+        private static int Controller_JumpIndex = 1 << 1;
+        private static int Controller_RollIndex = 1 << 2;
+        private static int Controller_FlyIndex = 1 << 3;
 
         //  Events ----------------------------------------
 
@@ -83,7 +84,6 @@ namespace Atomic.Character.Module
 
                 _navMeshAgent = GetComponent<NavMeshAgent>();
                 _animator = GetComponentInChildren<Animator>();
-                this.SetController<AiMotorController, ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
                 AssignLocomotionController();
                 _locomotionController.Initialize(this);
             }
@@ -101,9 +101,32 @@ namespace Atomic.Character.Module
         //  Unity Methods   -------------------------------
         public void AssignLocomotionController()
         {
+            this.SetController<AiMotorController, ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+            if(_locomotionController == null)
+            {
+                return; 
+            }
             LocomotionController.RotationSpeed = _config.RotateSpeed;
             LocomotionController.MoveSpeed = _config.WalkSpeed;
             LocomotionController.Acceleration = _config.Acceleration;
+        }
+
+        public void AssignRollController()
+        {
+
+
+        }
+
+        public void AssignJumpController()
+        {
+
+
+        }
+
+        public void AssignFlyController()
+        {
+
+
         }
 
         //  Other Methods ---------------------------------
