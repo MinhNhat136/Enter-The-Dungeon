@@ -1,31 +1,49 @@
+using Atomic.Core.Interface;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Atomic.Character.Module
 {
-    public class AiRollController : MonoBehaviour, IAnimatorMoveReceive
+    public sealed class AiRollController : MonoBehaviour, IInitializableWithBaseModel<AiMotorController>
     {
-        bool isRolling;
-        public NavMeshAgent navMeshAgent; 
+        public NavMeshAgent navMeshAgent;
 
-        public virtual bool canRollAgain
+        public bool IsInitialized => _isInitialized;
+        public AiMotorController Model => _model; 
+
+        private bool _isInitialized;
+        private AiMotorController _model; 
+        public void Initialize(AiMotorController model)
         {
-            get
+            if (!_isInitialized)
             {
-                return isRolling;
+                _isInitialized = true;
+                _model = model;
+                
+                _model.ActionTriggers.Add(CharacterActionType.StopRoll, OnStopRoll);
             }
         }
-        public virtual void RollBehavior()
+
+        public void RequireIsInitialized()
         {
-            if (navMeshAgent != null && navMeshAgent.enabled)
-            {
-                navMeshAgent.SetDestination(transform.position + transform.forward); 
-            }
+            throw new System.NotImplementedException();
+        }
+        
+        public void Roll()
+        {
+            _model.IsGrounded = false;
+            Vector3 rollDirection = transform.forward;
+
+            Vector3 targetPosition = transform.position + rollDirection * 5f; 
+            navMeshAgent.SetDestination(targetPosition);
+
         }
 
-        public void OnAnimatorMoveEvent()
+        private void OnStopRoll()
         {
-            transform.position = navMeshAgent.nextPosition;
+            Debug.Log("here");
+            _model.IsGrounded = true;
+            _model.IsRolling = false;
         }
     }
 }

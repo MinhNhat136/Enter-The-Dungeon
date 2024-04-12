@@ -1,5 +1,6 @@
 using Atomic.Character.Model;
 using System.Linq;
+using Atomic.Character.Config;
 using UnityEngine;
 
 namespace Atomic.Character.Module
@@ -24,61 +25,44 @@ namespace Atomic.Character.Module
         public float AgeWeight { get; set; }
         public int MaxNumberTarget { get; set; }
 
-        public GameObject Target
-        {
-            get { return bestMemory.gameObject; }
-        }
+        public GameObject Target => _bestMemory.gameObject;
 
-        public Vector3 TargetPosition
-        {
-            get { return bestMemory.position; }
-        }
+        public Vector3 TargetPosition => _bestMemory.position;
 
-        public bool TargetInSight
-        {
-            get { return bestMemory.Age < 0.5f; }
-        }
+        public bool TargetInSight => _bestMemory.Age < 0.5f;
 
-        public float TargetDistance
-        {
-            get { return bestMemory.distance; }
-        }
+        public float TargetDistance => _bestMemory.distance;
 
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
+        public bool IsInitialized => _isInitialized;
 
-        public BaseAgent Model
-        {
-            get { return _model; }
-        }
+        public BaseAgent Model => _model;
 
         //  Collections -----------------------------------
-        private GameObject[] targets;
+        private GameObject[] _targets;
 
         //  Fields ----------------------------------------
-
+        [SerializeField] private TargetingConfig _targetingConfig;
 
         private AiMemoryController _memoryController;
         private IVisionController _sensor;
         private BaseAgent _model;
         private bool _isInitialized;
 
-        private AiMemoryObject bestMemory;
+        private AiMemoryObject _bestMemory;
 
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
             if (!_isInitialized)
             {
-                targets = new GameObject[MaxNumberTarget];
                 _isInitialized = true;
 
                 _model = model;
                 _sensor = _model.VisionController;
                 _memoryController = _model.MemoryController;
 
+                _targetingConfig.Assign(this);
+                _targets = new GameObject[MaxNumberTarget];
             }
         }
 
@@ -92,33 +76,32 @@ namespace Atomic.Character.Module
 
         //  Other Methods ---------------------------------
 
-        public void Tick()
+        public void FindTarget()
         {
-            _memoryController.UpdateSenses(_sensor, this.gameObject,TargetLayer, targets);
+            _memoryController.UpdateSenses(_sensor, gameObject,TargetLayer, _targets);
             _memoryController.ForgetMemory();
 
             EvaluateTargetScores();
             UpdateTarget();
-
         }
 
         public void UpdateTarget()
         {
-            if (bestMemory == null)
+            if (_bestMemory == null)
             {
                 _model.TargetAgent = null;
                 return;
             }
-            if (bestMemory.gameObject == null)
+            if (_bestMemory.gameObject == null)
             {
                 return;
             }
-            if (!targets.Contains(bestMemory.gameObject))
+            if (!_targets.Contains(_bestMemory.gameObject))
             {
-                bestMemory = null;
+                _bestMemory = null;
                 return;
             }
-            if (bestMemory.gameObject.TryGetComponent<BaseAgent>(out BaseAgent targetAgent))
+            if (_bestMemory.gameObject.TryGetComponent(out BaseAgent targetAgent))
             {
                 _model.TargetAgent = targetAgent;
             }
@@ -128,19 +111,19 @@ namespace Atomic.Character.Module
         {
             if(_memoryController.Memories.Count == 0)
             {
-                bestMemory = null;
+                _bestMemory = null;
             }
             foreach (var memory in _memoryController.Memories)
             {
                 memory.score = CalculateScore(memory);
-                if (bestMemory == null || memory.score > bestMemory.score)
+                if (_bestMemory == null || memory.score > _bestMemory.score)
                 {
-                    bestMemory = memory;
+                    _bestMemory = memory;
                 }
             }
         }
 
-        public float CalculateScore(AiMemoryObject memory)
+        private float CalculateScore(AiMemoryObject memory)
         {
             float distanceScore = Normalize(memory.distance, _sensor.VisionDistance) * DistanceWeight;
             float angleScore = Normalize(memory.angle, _sensor.VisionAngle) * AngleWeight;

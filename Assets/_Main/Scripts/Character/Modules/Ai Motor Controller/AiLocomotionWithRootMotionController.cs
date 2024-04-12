@@ -10,7 +10,7 @@ namespace Atomic.Character.Module
     /// <summary>
     /// Controls locomotion for AI agents using a NavMeshAgent for navigation. 
     /// Note that the associated Animator component should utilize root motion.
-    /// CAUTION: USING THIS CLASS WITH AnimatorEventsListernerWithRootMotion IN CHILD GAMEOBJECT CONTAIN ANIMATOR.
+    /// CAUTION: USING THIS CLASS WITH AnimatorEventsListenerWithRootMotion IN CHILD GAME OBJECT CONTAIN ANIMATOR.
     /// </summary>
     public class AiLocomotionWithRootMotionController : MonoBehaviour, ILocomotionController, IAnimatorMoveReceive
     {
@@ -30,18 +30,9 @@ namespace Atomic.Character.Module
         {
             get; set;
         }
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
+        public bool IsInitialized => _isInitialized;
 
-        public AiMotorController Model
-        {
-            get
-            {
-                return _model;
-            }
-        }
+        public AiMotorController Model => _model;
 
         public float Acceleration
         {
@@ -49,10 +40,7 @@ namespace Atomic.Character.Module
         }
         public bool IsStopped
         {
-            get
-            {
-                return _isStopped;
-            }
+            get => _isStopped;
             set
             {
                 _isStopped = value; 
@@ -106,12 +94,7 @@ namespace Atomic.Character.Module
         }
 
         //  Unity Methods   -------------------------------
-        public void Tick()
-        {
 
-            ApplyMovement();
-            ApplyRotation();
-        }
 
         //  Other Methods ---------------------------------
         public void ApplyRotation()
@@ -142,7 +125,10 @@ namespace Atomic.Character.Module
 
         public void OnAnimatorMoveEvent()
         {
-            transform.position = _navMeshAgent.nextPosition;
+            if (Time.deltaTime > 0)
+            {
+                transform.position = _navMeshAgent.nextPosition;
+            }
         }
     }
 

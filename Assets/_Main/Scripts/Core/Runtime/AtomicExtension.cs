@@ -207,11 +207,12 @@ namespace Atomic.Core
             bitSequence |= bitController;
         }
 
-        public static void SetController<TModel, TController>(this TModel bhv, ref TController _controller) 
+        public static void SetController<TModel, TController>(this TModel bhv, out TController _controller) 
             where TModel : MonoBehaviour
         {
             if (!bhv.TryGetComponent<TController>(out TController controller))
             {
+                _controller = default;
                 return;
             }
             _controller = controller;

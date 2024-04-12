@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,15 +10,16 @@ namespace Atomic.Character.Module
     [RequireComponent(typeof(Animator))]
     public class AnimatorEventsListenerWithRootMotion : AnimatorEventsListener
     {
-        public System.Action AnimatorMoveEvent;
+        private System.Action _animatorMoveEvent;
 
-        public void Awake()
+        public new void Awake()
         {
+            base.Awake();
             IAnimatorMoveReceive[] animatorMoves = GetComponentsInParent<IAnimatorMoveReceive>();
-            for (int i = 0; i < animatorMoves.Length; i++)
+            if (!animatorMoves.Any()) return;
+            foreach (var receiver in animatorMoves)
             {
-                var receiver = animatorMoves[i];
-                AnimatorMoveEvent += () =>
+                _animatorMoveEvent += () =>
                 {
                     if (receiver.enabled)
                     {
@@ -29,8 +31,10 @@ namespace Atomic.Character.Module
 
         public void OnAnimatorMove()
         {
-            AnimatorMoveEvent?.Invoke();
+            _animatorMoveEvent?.Invoke();
         }
+        
+
     }
 
 }

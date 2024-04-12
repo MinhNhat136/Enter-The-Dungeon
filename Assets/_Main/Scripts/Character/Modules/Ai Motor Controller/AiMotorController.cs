@@ -1,9 +1,12 @@
+using System;
+using System.Collections.Generic;
 using Atomic.Character.Config;
 using Atomic.Character.Model;
 using Atomic.Core;
 using Atomic.Core.Interface;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character.Module
 {
@@ -15,64 +18,52 @@ namespace Atomic.Character.Module
     /// TODO: Replace with comments...
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>, ITickable
+    public sealed class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>, ICharacterActionTrigger
     {
         //  Statics ---------------------------------------
-        private static int Controller_LocomotionIndex = 1 << 0;
-        private static int Controller_JumpIndex = 1 << 1;
-        private static int Controller_RollIndex = 1 << 2;
-        private static int Controller_FlyIndex = 1 << 3;
+        private static readonly int ControllerLocomotionIndex = 1 << 0;
+        private static readonly int ControllerJumpIndex = 1 << 1;
+        private static readonly int ControllerRollIndex = 1 << 2;
+        private static readonly int ControllerFlyIndex = 1 << 3;
 
         //  Events ----------------------------------------
-
-
+        
         //  Properties ------------------------------------
-        public ILocomotionController LocomotionController 
-        {
-            get { return _locomotionController; }
-            set { _locomotionController = value; } 
-        }
+        public ILocomotionController LocomotionController => _locomotionController;
 
-        public AiRollController RollController 
-        { 
-            get; private set; 
-        }
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
+        public AiRollController RollController => _rollController;
+        
+        public bool IsInitialized => _isInitialized;
 
-        public BaseAgent Model 
-        { 
-            get { return _model; } 
-        }
+        public BaseAgent Model => _model;
 
-        public NavMeshAgent BaseNavMeshAgent 
-        {
-            get { return _navMeshAgent; } 
-        }
-        public virtual Animator BaseAnimator 
-        { 
-            get { return _animator; } 
-        }
+        public NavMeshAgent BaseNavMeshAgent => _navMeshAgent;
 
-        public Vector3 MoveDirection
-        { 
-            get { return _moveDirection; } 
-            set { _moveDirection = value; } 
-        }
+        public Animator BaseAnimator => _animator;
+
+        public Vector3 MoveDirection { get; set; }
+
+        public bool IsGrounded { get; set; }
+        public bool IsRolling { get; set; }
+        public bool IsJumping { get; set; }
+
+        public Dictionary<CharacterActionType, Action> ActionTriggers => _actionTriggers;
+        
+        //  Collections -----------------------------------
+        private readonly Dictionary<CharacterActionType, Action> _actionTriggers = new(); 
 
         //  Fields ----------------------------------------
-        [SerializeField] private AgentConfig _config; 
+        [FormerlySerializedAs("_config")] 
+        [SerializeField] private AgentConfig config; 
 
         private int _controllerBitSequence = 0;
         private bool _isInitialized;
         private BaseAgent _model;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
-        private Vector3 _moveDirection;
 
         private ILocomotionController _locomotionController;
+        private AiRollController _rollController;
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -82,56 +73,56 @@ namespace Atomic.Character.Module
                 _isInitialized = true;
                 _model = model;
 
+                IsGrounded = true; 
+
                 _navMeshAgent = GetComponent<NavMeshAgent>();
                 _animator = GetComponentInChildren<Animator>();
+                
                 AssignLocomotionController();
+                AssignRollController();
+                
                 _locomotionController.Initialize(this);
+                _rollController.Initialize(this);
             }
         }
 
         public void RequireIsInitialized()
         {
-        }
-
-        public void Tick()
-        {
-            _locomotionController.Tick();
+            if (!_isInitialized)
+            {
+                throw new Exception("AiMotorController not initialized");
+            }
         }
 
         //  Unity Methods   -------------------------------
-        public void AssignLocomotionController()
+        private void AssignLocomotionController()
         {
-            this.SetController<AiMotorController, ILocomotionController>(ref _locomotionController, Controller_LocomotionIndex, ref _controllerBitSequence);
+            this.SetController(ref _locomotionController, ControllerLocomotionIndex, ref _controllerBitSequence);
             if(_locomotionController == null)
             {
                 return; 
             }
-            LocomotionController.RotationSpeed = _config.RotateSpeed;
-            LocomotionController.MoveSpeed = _config.WalkSpeed;
-            LocomotionController.Acceleration = _config.Acceleration;
+            LocomotionController.RotationSpeed = config.RotateSpeed;
+            LocomotionController.MoveSpeed = config.WalkSpeed;
+            LocomotionController.Acceleration = config.Acceleration;
         }
 
-        public void AssignRollController()
+        private void AssignRollController()
         {
-
-
+            this.SetController(ref _rollController, ControllerRollIndex, ref _controllerBitSequence);
         }
-
-        public void AssignJumpController()
-        {
-
-
-        }
-
-        public void AssignFlyController()
-        {
-
-
-        }
+        
 
         //  Other Methods ---------------------------------
 
 
         //  Event Handlers --------------------------------
+        public void OnCharacterActionTrigger(CharacterActionType actionType)
+        {
+            if (_actionTriggers.TryGetValue(actionType, out var trigger))
+            {
+                trigger.Invoke();
+            }
+        }
     }
 }

@@ -17,4 +17,4 @@ MonoBehaviour:
   DistanceWeight: 1
   AngleWeight: 1
   AgeWeight: 1
-  MaxNumberTarget: 8
+  MaxNumberTarget: 16

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Atomic.Character.Module
 {
-    public interface IVisionController : IInitializableWithBaseModel<BaseAgent>, ITickable
+    public interface IVisionController : IInitializableWithBaseModel<BaseAgent>
     {
         public float VisionDistance { get; set; }
         public float VisionAngle { get; set; }

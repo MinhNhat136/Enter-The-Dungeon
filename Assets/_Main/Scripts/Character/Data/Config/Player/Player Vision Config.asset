@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Distance: 10
   Angle: 30
-  Height: 1
+  Height: 3
   ScanFrequency: 30
   MaxObjectRemember: 16
   VisionLayer:

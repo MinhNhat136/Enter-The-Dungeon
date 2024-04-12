@@ -12,48 +12,33 @@ namespace Atomic.Character.Model
     public class PlayerAgent : BaseAgent
     {
         //  Events ----------------------------------------
-        [HideInInspector] public bool isAttack;
-        [HideInInspector] public bool isRolling;
-        [HideInInspector] public bool canAttack;
-
-        public bool IsSummon { get; private set; }
-        public bool IsDied { get; private set; }
-        public bool IsRolling { get; private set; }
-        public bool IsKnockDown { get; private set; }
-        public bool IsStunned { get; private set; }
-
-        protected bool isInAttack;
-        protected bool isInCombo;
 
         //  Properties ------------------------------------
-        public PlayerControls InputControls
+        private PlayerControls InputControls
         {
-            get; private set;
+            get;
+            set;
         }
 
-        protected bool IsMoveInput
-        {
-            get { return !Mathf.Approximately(MotorController.LocomotionController.MoveInput.sqrMagnitude, 0f); }
-        }
+        protected bool IsMoveInput => !Mathf.Approximately(MotorController.LocomotionController.MoveInput.sqrMagnitude, 0f);
 
 
         //  Fields ----------------------------------------
 
-
         //  Initialization  -------------------------------
         public override void Initialize()
         {
+            Debug.Log("run");
             if (!IsInitialized)
             {
                 base.Initialize();
 
                 InputControls = new PlayerControls();
+                
                 Assign();
             }
 
         }
-
-        //  Unity Methods   -------------------------------
         public override void DoEnable()
         {
             base.DoEnable();
@@ -66,50 +51,65 @@ namespace Atomic.Character.Model
             InputControls.Disable();
         }
 
+        //  Unity Methods   -------------------------------
+        public void Awake()
+        {
+            Initialize();
+        }
 
+        public void OnEnable()
+        {
+            DoEnable();
+        }
+
+        public void OnDisable()
+        {
+            DoDisable();
+        }
+        
         //  Other Methods ---------------------------------
         public override void Assign()
         {
-
             AssignInputEvents();
-
         }
 
 
-        public void AssignInputEvents()
+        private void AssignInputEvents()
         {
             InputControls.Character.Movement.performed += context =>
             {
                 MotorController.LocomotionController.MoveInput = context.ReadValue<Vector2>();
             };
-            InputControls.Character.Movement.canceled += context =>
+            InputControls.Character.Movement.canceled += _ =>
             {
                 MotorController.LocomotionController.MoveInput = Vector2.zero;
             };
-            InputControls.Character.Roll.performed += context =>
+            InputControls.Character.Roll.performed += _ =>
             {
-                isRolling = true;
-            };
-            InputControls.Character.Roll.canceled += context => isRolling = false;
-
-            InputControls.Character.Attack.performed += context =>
-            {
-                isAttack = true;
+                MotorController.IsRolling = true;
             };
 
-            InputControls.Character.Attack.canceled += context =>
+            InputControls.Character.Attack.performed += _ =>
             {
-                isAttack = false;
+            };
+
+            InputControls.Character.Attack.canceled += _ =>
+            {
             };
         }
-
-        public void BindingAction()
-        {
-            IsInVulnerable = IsRolling;
-        }
-
         //  Event Handlers --------------------------------
 
+        // Movement Behaviour
+        public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
+        public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
+        public void ApplyMovementAnimation() => AgentAnimatorController.ApplyMovementAnimation();
+      
+        // Roll Behaviour
+        public void ApplyRollMovement() => MotorController.RollController.Roll();
+        public void ApplyRollAnimation() => AgentAnimatorController.ApplyRollAnimation();
+        
+
+        // Attack Behaviour
     }
 
 }

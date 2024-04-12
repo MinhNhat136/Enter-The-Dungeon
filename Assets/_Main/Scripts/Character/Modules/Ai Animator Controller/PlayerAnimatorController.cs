@@ -23,9 +23,7 @@ namespace Atomic.Character.Module
         {
             get { return _isInitialized; }
         }
-
-       
-
+        
         //  Fields ----------------------------------------
         private BaseAgent _model;
         private Animator _animator;
@@ -58,14 +56,9 @@ namespace Atomic.Character.Module
         }
 
         //  Unity Methods   -------------------------------
-        public void Tick()
-        {
-            ApplyAnimator();
-
-        }
 
         //  Other Methods ---------------------------------
-        public void ApplyAnimator()
+        public void ApplyMovementAnimation()
         {
             float xVelocity = Vector3.Dot(_model.MotorController.MoveDirection.normalized, transform.right);
             float zVelocity = Vector3.Dot(_model.MotorController.MoveDirection.normalized, transform.forward);
@@ -74,29 +67,27 @@ namespace Atomic.Character.Module
             _animator.SetFloat(AnimatorParameters.InputVertical, zVelocity, .1f, Time.deltaTime);
 
         }
-
-        public void ApplyRoll()
+        
+        public void ApplyRollAnimation()
         {
             _animator.Play("roll");
         }
 
-        public void ApplySummon()
+        public void ApplySummonAnimation()
         {
 
         }
 
-        public void ApplyBreak()
+        public void ApplyBreakAnimation()
         {
 
         }
 
-        public void ApplyKnock_Down()
+        public void ApplyKnockDownAnimation()
         {
 
         }
-
-
-
+        
         //  Event Handlers --------------------------------
 
     }

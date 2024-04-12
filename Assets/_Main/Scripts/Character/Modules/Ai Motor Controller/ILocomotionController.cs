@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Atomic.Character.Module
 {
-    public interface ILocomotionController : IInitializableWithBaseModel<AiMotorController>, ITickable
+    public interface ILocomotionController : IInitializableWithBaseModel<AiMotorController>
     {
         public bool IsStopped { get; set; }
         public Vector2 MoveInput { get; set; }

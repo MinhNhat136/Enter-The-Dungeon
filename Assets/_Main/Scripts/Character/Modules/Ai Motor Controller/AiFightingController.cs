@@ -6,20 +6,20 @@ namespace Atomic.Character.Module
 {
     public class AiFightingController : MonoBehaviour, ITickable
     {
-        private PlayerAgent agent;
-        private Animator animator; 
+        private PlayerAgent _agent;
+        private Animator _animator; 
 
         public void Awake()
         {
-            agent = GetComponent<PlayerAgent>();
-            animator = GetComponentInChildren<Animator>();
+            _agent = GetComponent<PlayerAgent>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         public void Attack()
         {
-            Vector3 dirTarget = agent.TargetAgent.transform.position - transform.position;
+            Vector3 dirTarget = _agent.TargetAgent.transform.position - transform.position;
             transform.forward = dirTarget;
-            animator.Play("shotgun_charge_release");
+            _animator.Play("shotgun_charge_release");
             Debug.Log("Attack");
         }
 

@@ -1,5 +1,7 @@
+using System;
 using Atomic.Character.Model;
 using System.Collections.Generic;
+using Atomic.Character.Config;
 using UnityEngine;
 
 namespace Atomic.Character.Module
@@ -22,7 +24,7 @@ namespace Atomic.Character.Module
         //  Properties ------------------------------------
         public float VisionDistance { get; set; }
         public float VisionAngle { get; set; }
-        public float VisionHeight { get; set ; }
+        public float VisionHeight { get; set; }
         public float ScanFrequency { get; set; }
         public int MaxObjectRemember { get; set; }
         public LayerMask VisionLayer { get; set; }
@@ -30,29 +32,19 @@ namespace Atomic.Character.Module
         public Color MeshVisionColor { get; set; }
 
 
-        public List<GameObject> Objects
-        {
-            get
-            {
-                return objects;
-            }
-        }
+        public List<GameObject> Objects => _objects;
 
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
+        public bool IsInitialized => _isInitialized;
 
-        public BaseAgent Model
-        {
-            get { return _model; }
-        }
+        public BaseAgent Model => _model;
 
         //  Fields ----------------------------------------
-        private List<GameObject> objects = new(32);
+        [SerializeField] private VisionConfig _visionConfig;
+
+        private List<GameObject> _objects = new(32);
 
 
-        private Collider[] colliders;
+        private Collider[] _colliders;
         private int _count;
         private float _scanInterval;
         private float _scanTimer;
@@ -66,8 +58,10 @@ namespace Atomic.Character.Module
             {
                 _isInitialized = true;
                 _model = model;
+                
+                _visionConfig.Assign(this);
                 _scanInterval = 1.0f / ScanFrequency;
-                colliders = new Collider[MaxObjectRemember];
+                _colliders = new Collider[MaxObjectRemember];
             }
         }
 
@@ -75,12 +69,14 @@ namespace Atomic.Character.Module
         {
             if (!IsInitialized)
             {
-                throw new System.Exception("AiVisionSensorSystem not initialized");
+                throw new Exception("AiVisionSensorSystem not initialized");
             }
         }
 
         //  Unity Methods   -------------------------------
-        public void Tick()
+
+
+        public void VisionScan()
         {
             _scanTimer -= Time.deltaTime;
             if (_scanTimer <= 0)
@@ -94,12 +90,12 @@ namespace Atomic.Character.Module
 
         public void Scan()
         {
-            _count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, colliders, VisionLayer,
+            _count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, _colliders, VisionLayer,
                 QueryTriggerInteraction.Collide);
             Objects.Clear();
             for (int i = 0; i < _count; i++)
             {
-                GameObject obj = colliders[i].gameObject;
+                GameObject obj = _colliders[i].gameObject;
                 if (IsInSight(obj))
                 {
                     Objects.Add(obj);
@@ -126,6 +122,7 @@ namespace Atomic.Character.Module
             {
                 return false;
             }
+
             return true;
         }
 
@@ -139,16 +136,17 @@ namespace Atomic.Character.Module
                 {
                     buffer[count++] = obj;
                 }
+
                 if (buffer.Length == count)
                 {
                     break;
                 }
             }
+
             return count;
         }
 
-        
-        //  Event Handlers --------------------------------
 
+        //  Event Handlers --------------------------------
     }
 }

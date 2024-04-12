@@ -1,4 +1,3 @@
-using Atomic.Character.Config;
 using Atomic.Character.Module;
 using Atomic.Core;
 using Atomic.Core.Interface;
@@ -25,58 +24,49 @@ namespace Atomic.Character.Model
 
         //  Properties ------------------------------------
         #region Config Runtime
-        public bool IsInitialized { get { return _isInitialized; } }
-        public Transform BodyWeakPoint { get { return _bodyWeakPoint; } }
-        public BaseAgent TargetAgent { get { return _targetAgent; } set { _targetAgent = value; } }
-        public bool IsInVulnerable { get; set; }
-        public bool IsGrounded { get; set; }
-        public bool IsDead { get; set; }
+        public bool IsInitialized => _isInitialized;
+        public Transform BodyWeakPoint => _bodyWeakPoint;
+        public BaseAgent TargetAgent { get; set; }
 
-
-        #endregion
-
-        #region Engine Components
         #endregion
 
         #region Module Controllers 
         public virtual IAgentAnimator AgentAnimatorController
         {
-            get { return _agentAnimatorController; }
-            protected set { _agentAnimatorController = value; }
+            get => _agentAnimatorController;
+            protected set => _agentAnimatorController = value;
         }
         public virtual AiMotorController MotorController
         {
-            get { return _motorController; }
-            protected set { _motorController = value; }
+            get => _motorController;
+            protected set => _motorController = value;
         }
 
         public virtual AiHitBoxController HitBoxController
         {
-            get { return _hitBoxController; }
-            protected set { _hitBoxController = value; }
+            get => _hitBoxController;
+            protected set => _hitBoxController = value;
         }
 
         public virtual AiMemoryController MemoryController
         {
-            get { return _memoryController; }
-            protected set { _memoryController = value; }
+            get => _memoryController;
+            protected set => _memoryController = value;
         }
 
         public virtual IVisionController VisionController
         {
-            get { return _visionController; }
-            protected set { _visionController = value; }
+            get => _visionController;
+            protected set => _visionController = value;
         }
         public virtual ITargetingController TargetingController
         {
-            get { return _targetingController; }
-            protected set { _targetingController = value; }
+            get => _targetingController;
+            protected set => _targetingController = value;
         }
 
-        public virtual AiHealth HealthController
-        {
-            get { return _healthController; }
-        }
+        public virtual AiHealth HealthController => _healthController;
+
         #endregion
 
         //  Fields ----------------------------------------
@@ -85,7 +75,6 @@ namespace Atomic.Character.Model
         private bool _isInitialized;
 
         private AgentsManager _agentManager;
-        private BaseAgent _targetAgent;
 
         #region Controller
         private IAgentAnimator _agentAnimatorController;
@@ -149,12 +138,17 @@ namespace Atomic.Character.Model
             };
             _healthController = new AiHealth();
 
-            this.SetController<BaseAgent, IAgentAnimator>(ref _agentAnimatorController);
-            this.SetController<BaseAgent, IVisionController>(ref _visionController);
-            this.SetController<BaseAgent, ITargetingController>(ref _targetingController);
-            this.SetController<BaseAgent, AiMotorController>(ref _motorController);
-            this.SetController<BaseAgent, AiHitBoxController>(ref _hitBoxController);
-
+            this.SetController(out _agentAnimatorController);
+            this.SetController(out _visionController);
+            this.SetController(out _targetingController);
+            this.SetController(out _motorController);
+            this.SetController(out _hitBoxController);
+            
+            _agentAnimatorController.Initialize(this);
+            _visionController.Initialize(this);
+            _targetingController.Initialize(this);
+            _motorController.Initialize(this);
+            _hitBoxController.Initialize(this);
         }
         //  Event Handlers --------------------------------
 

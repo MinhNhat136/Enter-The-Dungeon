@@ -23,8 +23,37 @@ namespace Atomic.Character.Module
         public static int Knock_Down         = Animator.StringToHash("knock_down");
     }
 
-    public interface IAgentAnimator : IInitializableWithBaseModel<BaseAgent>, ITickable
+    public interface IAgentAnimator : IInitializableWithBaseModel<BaseAgent>
     {
-        public void ApplyAnimator();
+        public virtual void ApplyMovementAnimation()
+        {
+            
+        }
+
+        public virtual void ApplyRollAnimation()
+        {
+            
+        }
+
+        public virtual void ApplyJumpAnimation()
+        {
+            
+        }
+
+        public virtual void ApplySummonAnimation()
+        {
+            
+        }
+
+        public virtual void ApplyBreakAnimation()
+        {
+            
+        }
+
+        public virtual void ApplyKnockDownAnimation()
+        {
+            
+        }
+
     }
 }
