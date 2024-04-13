@@ -32,6 +32,8 @@ namespace Atomic.Character.Module
         private NavMeshAgent _navMeshAgent;
         private AiMotorController _model;
 
+        private RaycastHit _rayCastHit;
+        private NavMeshHit _navMeshHit;
         //  Initialization  -------------------------------
         public void Initialize(AiMotorController model)
         {
@@ -58,15 +60,15 @@ namespace Atomic.Character.Module
         {
             Vector3 rollDirection = transform.forward;
 
-            if (Physics.Raycast(transform.position, rollDirection, out var hit, rollDirection
+            if (Physics.Raycast(transform.position, rollDirection, out _rayCastHit, rollDirection
                     .magnitude * distance, obstacleLayer))
             {
-                if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 10, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 10, NavMesh.AllAreas))
                 {
 #if UNITY_EDITOR
-                    DrawDebugLine(transform.position, navMeshHit.position);
+                    DrawDebugLine(transform.position, _navMeshHit.position);
 #endif
-                    return navMeshHit.position;
+                    return _navMeshHit.position;
                 }
             }
 #if UNITY_EDITOR

@@ -3,6 +3,7 @@ using Atomic.Core;
 using Atomic.Core.Interface;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character.Model
 {
@@ -25,7 +26,7 @@ namespace Atomic.Character.Model
         //  Properties ------------------------------------
         #region Config Runtime
         public bool IsInitialized => _isInitialized;
-        public Transform BodyWeakPoint => _bodyWeakPoint;
+        public Transform BodyWeakPoint => bodyWeakPoint;
         public BaseAgent TargetAgent { get; set; }
 
         #endregion
@@ -70,7 +71,8 @@ namespace Atomic.Character.Model
         #endregion
 
         //  Fields ----------------------------------------
-        [SerializeField] private Transform _bodyWeakPoint;
+        [FormerlySerializedAs("_bodyWeakPoint")] 
+        [SerializeField] private Transform bodyWeakPoint;
 
         private bool _isInitialized;
 

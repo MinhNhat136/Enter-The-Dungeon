@@ -14,13 +14,10 @@ namespace Atomic.Character.Model
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
-        private PlayerControls InputControls
-        {
-            get;
-            set;
-        }
+        private PlayerControls InputControls { get; set; }
 
-        protected bool IsMoveInput => !Mathf.Approximately(MotorController.LocomotionController.MoveInput.sqrMagnitude, 0f);
+        protected bool IsMoveInput =>
+            !Mathf.Approximately(MotorController.LocomotionController.MoveInput.sqrMagnitude, 0f);
 
 
         //  Fields ----------------------------------------
@@ -34,11 +31,11 @@ namespace Atomic.Character.Model
                 base.Initialize();
 
                 InputControls = new PlayerControls();
-                
+
                 Assign();
             }
-
         }
+
         public override void DoEnable()
         {
             base.DoEnable();
@@ -66,7 +63,7 @@ namespace Atomic.Character.Model
         {
             DoDisable();
         }
-        
+
         //  Other Methods ---------------------------------
         public override void Assign()
         {
@@ -76,26 +73,14 @@ namespace Atomic.Character.Model
 
         private void AssignInputEvents()
         {
-            InputControls.Character.Movement.performed += context =>
-            {
-                MotorController.LocomotionController.MoveInput = context.ReadValue<Vector2>();
-            };
-            InputControls.Character.Movement.canceled += _ =>
-            {
-                MotorController.LocomotionController.MoveInput = Vector2.zero;
-            };
-            InputControls.Character.Roll.performed += _ =>
-            {
-                MotorController.IsRolling = true;
-            };
-
-            InputControls.Character.Attack.performed += _ =>
-            {
-            };
-
-            InputControls.Character.Attack.canceled += _ =>
-            {
-            };
+            InputControls.Character.Movement.performed += 
+                context => MotorController.LocomotionController.MoveInput = context.ReadValue<Vector2>();
+            InputControls.Character.Movement.canceled +=
+                _ => MotorController.LocomotionController.MoveInput = Vector2.zero;
+            InputControls.Character.Roll.performed += 
+                _ => MotorController.IsRolling = true;
+            InputControls.Character.Attack.performed +=
+                _ => MotorController.IsAttacking = true;  
         }
         //  Event Handlers --------------------------------
 
@@ -103,13 +88,15 @@ namespace Atomic.Character.Model
         public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
         public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
         public void ApplyMovementAnimation() => AgentAnimatorController.ApplyMovementAnimation();
-      
+
         // Roll Behaviour
         public void ApplyRollMovement() => MotorController.RollController.Roll();
         public void ApplyRollAnimation() => AgentAnimatorController.ApplyRollAnimation();
         
-
         // Attack Behaviour
+        public void ApplyAttack()
+        {
+            
+        }
     }
-
 }

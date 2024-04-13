@@ -18,7 +18,8 @@ namespace Atomic.Character.Module
     /// Controls the behavior of an AI character, including movement, rolling, jumping, attack, and other actions.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public sealed class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>, ICharacterActionTrigger
+    public sealed class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>,
+        ICharacterActionTrigger
     {
         //  Statics ---------------------------------------
         private static readonly int ControllerLocomotionIndex = 1 << 0;
@@ -27,7 +28,7 @@ namespace Atomic.Character.Module
         private static readonly int ControllerFlyIndex = 1 << 3;
 
         //  Events ----------------------------------------
-        
+
         //  Properties ------------------------------------
         public ILocomotionController LocomotionController => _locomotionController;
         public AiRollController RollController => _rollController;
@@ -39,48 +40,40 @@ namespace Atomic.Character.Module
         public bool IsInitialized => _isInitialized;
         public bool IsGrounded { get; set; }
         public bool IsRolling { get; set; }
+        public bool IsAttacking { get; set; }
         public bool IsJumping { get; set; }
 
         public Dictionary<CharacterActionType, Action> ActionTriggers => _actionTriggers;
-        
+
         //  Collections -----------------------------------
-        private readonly Dictionary<CharacterActionType, Action> _actionTriggers = new(); 
+        private readonly Dictionary<CharacterActionType, Action> _actionTriggers = new();
 
         //  Fields ----------------------------------------
-        [FormerlySerializedAs("_config")] 
-        [SerializeField] private AgentConfig config; 
+        [FormerlySerializedAs("_config")] [SerializeField]
+        private AgentConfig config;
 
-        private int _controllerBitSequence = 0;
+        private int _controllerBitSequence;
         private bool _isInitialized;
-        
+
         private BaseAgent _model;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
         private ILocomotionController _locomotionController;
         private AiRollController _rollController;
-        
+
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
-            if(!_isInitialized)
+            if (!_isInitialized)
             {
                 _isInitialized = true;
                 _model = model;
 
                 _navMeshAgent = GetComponent<NavMeshAgent>();
                 _animator = GetComponentInChildren<Animator>();
-                
-                AssignLocomotionController();
-                AssignRollController();
-                
-                _locomotionController.Initialize(this);
-                _rollController.Initialize(this);
-                
-                
-                IsGrounded = true;
-                IsRolling = false;
-                IsJumping = false; 
 
+                Assign();
+                ResetStateFlag();
             }
         }
 
@@ -93,24 +86,42 @@ namespace Atomic.Character.Module
         }
 
         //  Unity Methods   -------------------------------
+
+        //  Other Methods ---------------------------------
+        private void Assign()
+        {
+            AssignLocomotionController();
+            AssignRollController();
+        }
+
         private void AssignLocomotionController()
         {
             this.SetController(ref _locomotionController, ControllerLocomotionIndex, ref _controllerBitSequence);
-            if(_locomotionController == null)
+            if (_locomotionController == null)
             {
-                return; 
+                return;
             }
+
             LocomotionController.RotationSpeed = config.RotateSpeed;
             LocomotionController.MoveSpeed = config.WalkSpeed;
             LocomotionController.Acceleration = config.Acceleration;
+            
+            _locomotionController.Initialize(this);
         }
 
         private void AssignRollController()
         {
             this.SetController(ref _rollController, ControllerRollIndex, ref _controllerBitSequence);
+            _rollController.Initialize(this);
         }
-        //  Other Methods ---------------------------------
 
+        private void ResetStateFlag()
+        {
+            IsGrounded = true;
+            IsRolling = false;
+            IsJumping = false;
+            IsAttacking = false;
+        }
 
         //  Event Handlers --------------------------------
         public void OnCharacterActionTrigger(CharacterActionType actionType)
