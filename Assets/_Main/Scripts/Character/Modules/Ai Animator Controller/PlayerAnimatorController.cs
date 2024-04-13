@@ -1,5 +1,4 @@
 using Atomic.Character.Model;
-using Atomic.Core.Interface;
 using UnityEngine;
 
 namespace Atomic.Character.Module
@@ -19,18 +18,12 @@ namespace Atomic.Character.Module
 
 
         //  Properties ------------------------------------
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
-        
+        public bool IsInitialized => _isInitialized;
+        public BaseAgent Model => _model;
+
         //  Fields ----------------------------------------
         private BaseAgent _model;
         private Animator _animator;
-        public BaseAgent Model
-        {
-            get { return _model; }
-        }
 
         private bool _isInitialized;
 
@@ -49,11 +42,7 @@ namespace Atomic.Character.Module
         {
             throw new System.NotImplementedException();
         }
-
-        protected virtual void OnDisable()
-        {
-
-        }
+        
 
         //  Unity Methods   -------------------------------
 
@@ -68,10 +57,7 @@ namespace Atomic.Character.Module
 
         }
         
-        public void ApplyRollAnimation()
-        {
-            _animator.Play("roll");
-        }
+        public void ApplyRollAnimation() => _animator.Play("roll");
 
         public void ApplySummonAnimation()
         {

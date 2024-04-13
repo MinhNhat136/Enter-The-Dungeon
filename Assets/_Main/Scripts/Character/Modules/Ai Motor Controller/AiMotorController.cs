@@ -15,7 +15,7 @@ namespace Atomic.Character.Module
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// Controls the behavior of an AI character, including movement, rolling, jumping, attack, and other actions.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
     public sealed class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>, ICharacterActionTrigger
@@ -30,19 +30,13 @@ namespace Atomic.Character.Module
         
         //  Properties ------------------------------------
         public ILocomotionController LocomotionController => _locomotionController;
-
         public AiRollController RollController => _rollController;
-        
-        public bool IsInitialized => _isInitialized;
-
         public BaseAgent Model => _model;
-
         public NavMeshAgent BaseNavMeshAgent => _navMeshAgent;
-
         public Animator BaseAnimator => _animator;
-
         public Vector3 MoveDirection { get; set; }
 
+        public bool IsInitialized => _isInitialized;
         public bool IsGrounded { get; set; }
         public bool IsRolling { get; set; }
         public bool IsJumping { get; set; }
@@ -58,10 +52,10 @@ namespace Atomic.Character.Module
 
         private int _controllerBitSequence = 0;
         private bool _isInitialized;
+        
         private BaseAgent _model;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
-
         private ILocomotionController _locomotionController;
         private AiRollController _rollController;
         
@@ -73,8 +67,6 @@ namespace Atomic.Character.Module
                 _isInitialized = true;
                 _model = model;
 
-                IsGrounded = true; 
-
                 _navMeshAgent = GetComponent<NavMeshAgent>();
                 _animator = GetComponentInChildren<Animator>();
                 
@@ -83,6 +75,12 @@ namespace Atomic.Character.Module
                 
                 _locomotionController.Initialize(this);
                 _rollController.Initialize(this);
+                
+                
+                IsGrounded = true;
+                IsRolling = false;
+                IsJumping = false; 
+
             }
         }
 
@@ -111,8 +109,6 @@ namespace Atomic.Character.Module
         {
             this.SetController(ref _rollController, ControllerRollIndex, ref _controllerBitSequence);
         }
-        
-
         //  Other Methods ---------------------------------
 
 

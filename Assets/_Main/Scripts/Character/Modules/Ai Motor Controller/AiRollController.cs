@@ -4,22 +4,43 @@ using UnityEngine.AI;
 
 namespace Atomic.Character.Module
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Controls rolling behavior for an AI character, managing initialization, rolling actions, and stopping the roll.
+    /// </summary>
     public sealed class AiRollController : MonoBehaviour, IInitializableWithBaseModel<AiMotorController>
     {
-        public NavMeshAgent navMeshAgent;
+        //  Events ----------------------------------------
+
+
+        //  Properties ------------------------------------
 
         public bool IsInitialized => _isInitialized;
-        public AiMotorController Model => _model; 
+        public AiMotorController Model => _model;
+
+        //  Fields ----------------------------------------
+        [SerializeField] private float distance;
+        [SerializeField] private LayerMask obstacleLayer;
+        [SerializeField] private Color debugLineColor = Color.red;
+        [SerializeField] private float debugLineDuration = 1f;
 
         private bool _isInitialized;
-        private AiMotorController _model; 
+
+        private NavMeshAgent _navMeshAgent;
+        private AiMotorController _model;
+
+        //  Initialization  -------------------------------
         public void Initialize(AiMotorController model)
         {
             if (!_isInitialized)
             {
                 _isInitialized = true;
                 _model = model;
-                
+
+                _navMeshAgent = _model.BaseNavMeshAgent;
                 _model.ActionTriggers.Add(CharacterActionType.StopRoll, OnStopRoll);
             }
         }
@@ -28,23 +49,52 @@ namespace Atomic.Character.Module
         {
             throw new System.NotImplementedException();
         }
-        
+
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
+        private Vector3 SetDestinationForRoll()
+        {
+            Vector3 rollDirection = transform.forward;
+
+            if (Physics.Raycast(transform.position, rollDirection, out var hit, rollDirection
+                    .magnitude * distance, obstacleLayer))
+            {
+                if (NavMesh.SamplePosition(hit.point, out var navMeshHit, 10, NavMesh.AllAreas))
+                {
+#if UNITY_EDITOR
+                    DrawDebugLine(transform.position, navMeshHit.position);
+#endif
+                    return navMeshHit.position;
+                }
+            }
+#if UNITY_EDITOR
+            DrawDebugLine(transform.position, transform.position + rollDirection * distance);
+#endif
+            return transform.position + rollDirection * distance;
+        }
+
+#if UNITY_EDITOR
+        private void DrawDebugLine(Vector3 startPoint, Vector3 endPoint)
+        {
+            Debug.DrawLine(startPoint, endPoint, debugLineColor, debugLineDuration);
+        }
+#endif
+
         public void Roll()
         {
             _model.IsGrounded = false;
-            Vector3 rollDirection = transform.forward;
 
-            Vector3 targetPosition = transform.position + rollDirection * 5f; 
-            navMeshAgent.SetDestination(targetPosition);
-
+            Vector3 targetPosition = SetDestinationForRoll();
+            _navMeshAgent.SetDestination(targetPosition);
         }
 
+        //  Event Handlers --------------------------------
         private void OnStopRoll()
         {
-            Debug.Log("here");
             _model.IsGrounded = true;
             _model.IsRolling = false;
         }
     }
 }
-
