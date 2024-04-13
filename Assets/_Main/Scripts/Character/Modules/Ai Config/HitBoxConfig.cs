@@ -28,7 +28,7 @@ namespace Atomic.Character.Module
        
         public void Assign(AiHitBoxController hitBoxController)
         {
-            hitBoxController.InvulnerabiltyTime = InvulnerabiltyTime;
+            hitBoxController.InvulnerableTime = InvulnerabiltyTime;
             hitBoxController.HitAngle = HitAngle;
             hitBoxController.HitForwardRotation = HitForwardRotation;
 

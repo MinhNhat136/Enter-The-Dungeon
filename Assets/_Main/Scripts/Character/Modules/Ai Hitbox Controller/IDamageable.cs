@@ -9,7 +9,7 @@ namespace Atomic.Character.Module
     public struct DamageMessage
     {
         public BaseAgent damager;
-        public int amount;
+        public readonly int amount;
         public Vector3 direction;
         public Vector3 damageSource;
         public PassiveEffect passiveEffect;

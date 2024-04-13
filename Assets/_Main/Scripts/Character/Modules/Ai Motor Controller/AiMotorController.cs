@@ -22,16 +22,20 @@ namespace Atomic.Character.Module
         ICharacterActionTrigger
     {
         //  Statics ---------------------------------------
-        private static readonly int ControllerLocomotionIndex = 1 << 0;
-        private static readonly int ControllerJumpIndex = 1 << 1;
-        private static readonly int ControllerRollIndex = 1 << 2;
-        private static readonly int ControllerFlyIndex = 1 << 3;
 
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
-        public ILocomotionController LocomotionController => _locomotionController;
-        public AiRollController RollController => _rollController;
+        public ILocomotionController LocomotionController
+        {
+            get; set;
+        }
+
+        public AiRollController RollController
+        {
+            get; set;
+        }
+        
         public BaseAgent Model => _model;
         public NavMeshAgent BaseNavMeshAgent => _navMeshAgent;
         public Animator BaseAnimator => _animator;
@@ -50,16 +54,13 @@ namespace Atomic.Character.Module
 
         //  Fields ----------------------------------------
         [FormerlySerializedAs("_config")] [SerializeField]
-        private AgentConfig config;
+        private MotorConfig config;
 
-        private int _controllerBitSequence;
         private bool _isInitialized;
 
         private BaseAgent _model;
         private NavMeshAgent _navMeshAgent;
         private Animator _animator;
-        private ILocomotionController _locomotionController;
-        private AiRollController _rollController;
 
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -72,7 +73,7 @@ namespace Atomic.Character.Module
                 _navMeshAgent = GetComponent<NavMeshAgent>();
                 _animator = GetComponentInChildren<Animator>();
 
-                Assign();
+                config.Assign(this);
                 ResetStateFlag();
             }
         }
@@ -88,33 +89,6 @@ namespace Atomic.Character.Module
         //  Unity Methods   -------------------------------
 
         //  Other Methods ---------------------------------
-        private void Assign()
-        {
-            AssignLocomotionController();
-            AssignRollController();
-        }
-
-        private void AssignLocomotionController()
-        {
-            this.SetController(ref _locomotionController, ControllerLocomotionIndex, ref _controllerBitSequence);
-            if (_locomotionController == null)
-            {
-                return;
-            }
-
-            LocomotionController.RotationSpeed = config.RotateSpeed;
-            LocomotionController.MoveSpeed = config.WalkSpeed;
-            LocomotionController.Acceleration = config.Acceleration;
-            
-            _locomotionController.Initialize(this);
-        }
-
-        private void AssignRollController()
-        {
-            this.SetController(ref _rollController, ControllerRollIndex, ref _controllerBitSequence);
-            _rollController.Initialize(this);
-        }
-
         private void ResetStateFlag()
         {
             IsGrounded = true;
@@ -122,8 +96,16 @@ namespace Atomic.Character.Module
             IsJumping = false;
             IsAttacking = false;
         }
-
+        
         //  Event Handlers --------------------------------
+        public void RegisterActionTrigger(CharacterActionType actionType, Action action)
+        {
+            if (!_actionTriggers.TryAdd(actionType, action))
+            {
+                _actionTriggers[actionType] += action;
+            }
+        }
+        
         public void OnCharacterActionTrigger(CharacterActionType actionType)
         {
             if (_actionTriggers.TryGetValue(actionType, out var trigger))

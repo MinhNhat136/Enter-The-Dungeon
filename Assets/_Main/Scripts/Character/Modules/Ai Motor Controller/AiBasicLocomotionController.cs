@@ -12,7 +12,7 @@ namespace Atomic.Character.Module
     /// Note that the associated Animator component should utilize root motion.
     /// CAUTION: USING THIS CLASS WITH AnimatorEventsListenerWithRootMotion IN CHILD GAME OBJECT CONTAIN ANIMATOR.
     /// </summary>
-    public class AiLocomotionWithRootMotionController : MonoBehaviour, ILocomotionController, IAnimatorMoveReceive
+    public class AiBasicLocomotionController : ILocomotionController
     {
         //  Events ----------------------------------------
 
@@ -52,7 +52,6 @@ namespace Atomic.Character.Module
         }
 
         //  Fields ----------------------------------------
-
         private NavMeshAgent _navMeshAgent;
         private AiMotorController _model;
         private Animator _animator;
@@ -72,8 +71,8 @@ namespace Atomic.Character.Module
                 _navMeshAgent = _model.BaseNavMeshAgent;
                 _animator = _model.BaseAnimator;
 
-                _animator.applyRootMotion = true;
-                _navMeshAgent.updatePosition = false;
+                _animator.applyRootMotion = false;
+                _navMeshAgent.updatePosition = true;
                 _navMeshAgent.updateRotation = false;
 
                 _navMeshAgent.speed = MoveSpeed;
@@ -107,28 +106,20 @@ namespace Atomic.Character.Module
             desiredRotation.x = 0;
             desiredRotation.z = 0;
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);
+            _model.transform.rotation = Quaternion.Slerp(_model.transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);
         }
 
         public void ApplyMovement()
         {
             _model.MoveDirection = new Vector3(MoveInput.x, 0, MoveInput.y);
-            Vector3 destination = transform.position + _model.MoveDirection;
-            _navMeshAgent.destination = destination;
+            Vector3 destination = _model.transform.position + _model.MoveDirection;
+            _navMeshAgent.SetDestination(destination);
         }
 
         public void Stop()
         {
             MoveInput = Vector2.zero;
-            _navMeshAgent.destination = transform.position;
-        }
-
-        public void OnAnimatorMoveEvent()
-        {
-            if (Time.deltaTime > 0)
-            {
-                transform.position = _navMeshAgent.nextPosition;
-            }
+            _navMeshAgent.destination = _model.transform.position;
         }
     }
 

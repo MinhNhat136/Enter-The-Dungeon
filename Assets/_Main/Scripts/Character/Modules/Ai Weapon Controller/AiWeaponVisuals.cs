@@ -116,10 +116,10 @@ namespace Atomic.Character.Module
         }
         private void AttachLeftHand()
         {
-            Transform targetTransform = currentGun.GetComponentInChildren<LeftHandTargetTransform>().transform;
+            /*Transform targetTransform = currentGun.GetComponentInChildren<LeftHandTargetTransform>().transform;
 
             leftHandIK_Target.localPosition = targetTransform.localPosition;
-            leftHandIK_Target.localRotation = targetTransform.localRotation;
+            leftHandIK_Target.localRotation = targetTransform.localRotation;*/
         }
         private void SwitchAnimationLayer(int layerIndex)
         {

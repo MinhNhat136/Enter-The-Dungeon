@@ -9,6 +9,14 @@ namespace  Atomic.Character.Module
     {
         BeginRoll, 
         StopRoll,
+        BeginChargeWeapon,
+        ChargeFull,
+        BeginShoot,
+        BeginMeleeAttack,
+        EndAttack,
+        MoveNextSkill,
+        BeginTrack, 
+        StopTrack,
     }    
     public class AnimatorEventsListener : MonoBehaviour
     {
@@ -32,12 +40,11 @@ namespace  Atomic.Character.Module
                     }
                 };
             }
-            Debug.Log(actionTrigger.Length);
         }
         
-        public void TriggerCharacterAction(int actionType)
+        public void TriggerCharacterAction(string actionType)
         {
-            _onCharacterActionEvent?.Invoke((CharacterActionType)actionType);    
+            _onCharacterActionEvent?.Invoke((CharacterActionType)Enum.Parse(typeof(CharacterActionType), actionType));    
         }
     
     }

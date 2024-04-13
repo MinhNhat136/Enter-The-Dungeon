@@ -25,7 +25,6 @@ namespace Atomic.Character.Model
         //  Initialization  -------------------------------
         public override void Initialize()
         {
-            Debug.Log("run");
             if (!IsInitialized)
             {
                 base.Initialize();
@@ -90,7 +89,6 @@ namespace Atomic.Character.Model
         public void ApplyMovementAnimation() => AgentAnimatorController.ApplyMovementAnimation();
 
         // Roll Behaviour
-        public void ApplyRollMovement() => MotorController.RollController.Roll();
         public void ApplyRollAnimation() => AgentAnimatorController.ApplyRollAnimation();
         
         // Attack Behaviour

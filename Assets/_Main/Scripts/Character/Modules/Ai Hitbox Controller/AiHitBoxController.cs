@@ -3,6 +3,7 @@ using Atomic.Core.Interface;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace Atomic.Character.Module
@@ -14,7 +15,8 @@ namespace Atomic.Character.Module
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class AiHitBoxController : MonoBehaviour, IDamageable, IInitializableWithBaseModel<BaseAgent>, ITickable
+    public class AiHitBoxController : MonoBehaviour, IDamageable, IInitializableWithBaseModel<BaseAgent>, ITickable,
+        ICharacterActionTrigger
     {
         //  Events ----------------------------------------
         public event Action _onReceiveDamage;
@@ -23,74 +25,57 @@ namespace Atomic.Character.Module
         public event Action _onResetDamage;
 
         //  Properties ------------------------------------
-        public Collider[] Colliders
-        {
-            get; set;
-        }
+        public Collider[] Colliders { get; set; }
 
-        public bool IsInvulnerable
-        {
-            get; set;
-        }
+        public bool IsInvulnerable { get; set; }
 
-        public float InvulnerabiltyTime 
-        { 
-            get; set; 
-        }
-        public float HitAngle
-        {
-            get; set; 
-        }
+        public float InvulnerableTime { get; set; }
+        public float HitAngle { get; set; }
 
-        public float HitForwardRotation
-        {
-            get; set;
-        }
+        public float HitForwardRotation { get; set; }
 
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
+        public bool IsInitialized => _isInitialized;
 
-        public BaseAgent Model 
-        { 
-            get { return _model; } 
-        }
+        public BaseAgent Model => _model;
 
-        public Dictionary<PassiveEffect, IPassiveEffect> PassiveEffects => _passiveEffects; 
+        public Dictionary<PassiveEffect, IPassiveEffect> PassiveEffects { get; } = new();
+
+        public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
 
         public event Action OnReceiveDamage
         {
-            add { _onReceiveDamage += value; }
-            remove { _onReceiveDamage -= value; }
+            add => _onReceiveDamage += value;
+            remove => _onReceiveDamage -= value;
         }
 
         public event Action OnHitWhileInvulnerable
         {
-            add { _onHitWhileInvulnerable += value; }
-            remove { _onHitWhileInvulnerable -= value; }
+            add => _onHitWhileInvulnerable += value;
+            remove => _onHitWhileInvulnerable -= value;
         }
 
         public event Action OnBecomeVulnerable
         {
-            add { _onBecomeVulnerable += value; }
-            remove { _onBecomeVulnerable -= value; }
+            add => _onBecomeVulnerable += value;
+            remove => _onBecomeVulnerable -= value;
         }
 
         public event Action OnResetDamage
         {
-            add { _onResetDamage += value; }
-            remove { _onResetDamage -= value; }
+            add => _onResetDamage += value;
+            remove => _onResetDamage -= value;
         }
 
         //  Fields ----------------------------------------
-        [SerializeField] private HitBoxConfig _hitBoxConfig;
-        
-        private AiHealth health;
+        [FormerlySerializedAs("_hitBoxConfig")] [SerializeField]
+        private HitBoxConfig hitBoxConfig;
+
+        private AiHealth _health;
         private BaseAgent _model;
         private bool _isInitialized;
-        protected float _timeSinceLastHit = 0.0f;
-        private Dictionary<PassiveEffect, IPassiveEffect> _passiveEffects = new();
+
+        private float _timeSinceLastHit;
+
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
@@ -99,9 +84,10 @@ namespace Atomic.Character.Module
                 _isInitialized = true;
 
                 _model = model;
-
-                this.health = model.HealthController;
+                _health = model.HealthController;
+                Colliders = GetComponentsInChildren<Collider>();
                 ResetDamage();
+                RegisterCharacterAction();
             }
         }
 
@@ -115,15 +101,16 @@ namespace Atomic.Character.Module
 
         public void AssignHitBoxController()
         {
-            _hitBoxConfig.Assign(this);
+            hitBoxConfig.Assign(this);
         }
+
         //  Unity Methods   -------------------------------
         public void Tick()
         {
             if (IsInvulnerable)
             {
                 _timeSinceLastHit += Time.deltaTime;
-                if (_timeSinceLastHit > InvulnerabiltyTime)
+                if (_timeSinceLastHit > InvulnerableTime)
                 {
                     _timeSinceLastHit = 0.0f;
                     IsInvulnerable = false;
@@ -135,7 +122,7 @@ namespace Atomic.Character.Module
         //  Other Methods ---------------------------------
         public void ApplyDamage(DamageMessage data)
         {
-            if (health.CurrentHealth <= 0)
+            if (_health.CurrentHealth <= 0)
             {
                 return;
             }
@@ -149,24 +136,24 @@ namespace Atomic.Character.Module
             Vector3 forward = transform.forward;
             forward = Quaternion.AngleAxis(HitForwardRotation, transform.up) * forward;
 
-            Vector3 positionToDamager = data.damageSource - transform.position;
-            positionToDamager -= transform.up * Vector3.Dot(transform.up, positionToDamager);
+            Vector3 posDamageSource = data.damageSource - transform.position;
+            posDamageSource -= transform.up * Vector3.Dot(transform.up, posDamageSource);
 
-            if (Vector3.Angle(forward, positionToDamager) > HitAngle * 0.5f)
+            if (Vector3.Angle(forward, posDamageSource) > HitAngle * 0.5f)
                 return;
 
             IsInvulnerable = true;
-            health.Decrease(data.amount);
+            _health.Decrease(data.amount);
 
             _onReceiveDamage.Invoke();
         }
 
         public void ApplyPassiveEffect(PassiveEffect effect)
         {
-            if (!_passiveEffects.ContainsKey(effect)) 
+            if (!PassiveEffects.ContainsKey(effect))
                 return;
 
-            _passiveEffects[effect].ApplyEffect();
+            PassiveEffects[effect].ApplyEffect();
         }
 
         public void ResetDamage()
@@ -176,23 +163,43 @@ namespace Atomic.Character.Module
             _onResetDamage?.Invoke();
         }
 
-        public void SetTriggerState(bool enabled)
+        public void SetTriggerState(bool enable)
         {
-            for (int index = 0; index <= Colliders.Length; index++)
+            foreach (var collider in Colliders)
             {
-                Colliders[index].isTrigger = enabled;
+                collider.isTrigger = enable;
             }
         }
 
-        public void SetColliderState(bool enabled)
+        private void SetColliderState(bool enable)
         {
-            for (int index = 0; index <= Colliders.Length; index++)
+            foreach (var collider in Colliders)
             {
-                Colliders[index].enabled = enabled;
+                collider.enabled = enable;
             }
         }
         //  Event Handlers --------------------------------
-
+        private void RegisterCharacterAction()
+        {
+            RegisterActionTrigger(CharacterActionType.BeginRoll, () => SetColliderState(false));
+            RegisterActionTrigger(CharacterActionType.StopRoll, () => SetColliderState(true));
+            
+        }
+        
+        private void RegisterActionTrigger(CharacterActionType actionType, Action action)
+        {
+            if (!ActionTriggers.TryAdd(actionType, action))
+            {
+                ActionTriggers[actionType] += action;
+            }
+        }
+        
+        public void OnCharacterActionTrigger(CharacterActionType actionType)
+        {
+            if (ActionTriggers.TryGetValue(actionType, out var action))
+            {
+                action?.Invoke();
+            }
+        }
     }
-
 }

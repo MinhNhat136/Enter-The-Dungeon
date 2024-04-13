@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Atomic.Character.Config
 {
     [CreateAssetMenu(menuName = "Ai Module Config/Agent/Ai", fileName ="Ai Config")]
-    public class AiConfig : AgentConfig
+    public class AiConfig : MotorConfig
     {
         [SerializeField]
         public bool canSpawnRandomPosition;

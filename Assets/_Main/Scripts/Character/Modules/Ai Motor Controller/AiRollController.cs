@@ -11,7 +11,7 @@ namespace Atomic.Character.Module
     /// <summary>
     /// TODO: Controls rolling behavior for an AI character, managing initialization, rolling actions, and stopping the roll.
     /// </summary>
-    public sealed class AiRollController : MonoBehaviour, IInitializableWithBaseModel<AiMotorController>
+    public sealed class AiRollController : IInitializableWithBaseModel<AiMotorController>
     {
         //  Events ----------------------------------------
 
@@ -22,15 +22,13 @@ namespace Atomic.Character.Module
         public AiMotorController Model => _model;
 
         //  Fields ----------------------------------------
-        [SerializeField] private float distance;
-        [SerializeField] private LayerMask obstacleLayer;
-        [SerializeField] private Color debugLineColor = Color.red;
-        [SerializeField] private float debugLineDuration = 1f;
+        public float Distance { get; set; }
+        public LayerMask ColliderLayer { get; set; }
 
         private bool _isInitialized;
 
-        private NavMeshAgent _navMeshAgent;
         private AiMotorController _model;
+        private NavMeshAgent _navMeshAgent;
 
         private RaycastHit _rayCastHit;
         private NavMeshHit _navMeshHit;
@@ -43,7 +41,8 @@ namespace Atomic.Character.Module
                 _model = model;
 
                 _navMeshAgent = _model.BaseNavMeshAgent;
-                _model.ActionTriggers.Add(CharacterActionType.StopRoll, OnStopRoll);
+                _model.RegisterActionTrigger(CharacterActionType.BeginRoll, Roll);
+                _model.RegisterActionTrigger(CharacterActionType.StopRoll, OnStopRoll);
             }
         }
 
@@ -58,33 +57,20 @@ namespace Atomic.Character.Module
         //  Other Methods ---------------------------------
         private Vector3 SetDestinationForRoll()
         {
-            Vector3 rollDirection = transform.forward;
+            Vector3 rollDirection = _model.transform.forward;
 
-            if (Physics.Raycast(transform.position, rollDirection, out _rayCastHit, rollDirection
-                    .magnitude * distance, obstacleLayer))
+            if (Physics.Raycast(_model.transform.position, rollDirection, out _rayCastHit, rollDirection
+                    .magnitude * Distance, ColliderLayer))
             {
                 if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 10, NavMesh.AllAreas))
                 {
-#if UNITY_EDITOR
-                    DrawDebugLine(transform.position, _navMeshHit.position);
-#endif
                     return _navMeshHit.position;
                 }
             }
-#if UNITY_EDITOR
-            DrawDebugLine(transform.position, transform.position + rollDirection * distance);
-#endif
-            return transform.position + rollDirection * distance;
+            return _model.transform.position + rollDirection * Distance;
         }
-
-#if UNITY_EDITOR
-        private void DrawDebugLine(Vector3 startPoint, Vector3 endPoint)
-        {
-            Debug.DrawLine(startPoint, endPoint, debugLineColor, debugLineDuration);
-        }
-#endif
-
-        public void Roll()
+        
+        private void Roll()
         {
             _model.IsGrounded = false;
 

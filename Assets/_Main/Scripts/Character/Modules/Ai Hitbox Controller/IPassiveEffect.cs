@@ -1,4 +1,3 @@
-
 using System;
 
 namespace Atomic.Character.Module
