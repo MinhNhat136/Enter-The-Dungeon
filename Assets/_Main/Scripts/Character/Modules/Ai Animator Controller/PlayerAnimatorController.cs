@@ -11,7 +11,7 @@ namespace Atomic.Character.Module
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PlayerAnimatorController : MonoBehaviour, IAgentAnimator
+    public class PlayerAnimatorController : MonoBehaviour, IAgentAnimator, ICharacterActionTrigger, IActionEffectTrigger
     {
 
         //  Events ----------------------------------------
@@ -56,17 +56,33 @@ namespace Atomic.Character.Module
             _animator.SetFloat(AnimatorParameters.InputVertical, zVelocity, .1f, Time.deltaTime);
 
         }
+
+        public void StopMovementAnimation()
+        {
+            _animator.SetFloat(AnimatorParameters.InputHorizontal, 0, .1f, Time.deltaTime);
+            _animator.SetFloat(AnimatorParameters.InputVertical, 0, .1f, Time.deltaTime);
+        }
         
         public void ApplyRollAnimation() => _animator.Play("roll");
 
+        public void ApplyRangedAttack_Charge_Start_Animation()
+        {
+            Debug.Log("play charge");
+            _animator.Play(AnimatorStates.RangedAttack_Charge_Start);
+        }
+
+        public void ApplyRangedAttack_Charge_Release_Animation()
+        {
+            _animator.Play(AnimatorStates.RangedAttack_Charge_Release);
+        }
+
         public void ApplySummonAnimation()
         {
-
         }
 
         public void ApplyBreakAnimation()
         {
-
+            
         }
 
         public void ApplyKnockDownAnimation()
@@ -76,6 +92,13 @@ namespace Atomic.Character.Module
         
         //  Event Handlers --------------------------------
 
+        public void OnCharacterActionTrigger(CharacterActionType actionType)
+        {
+        }
+
+        public void OnActionEffectTrigger(ActionEffectType effectType)
+        {
+        }
     }
 }
 

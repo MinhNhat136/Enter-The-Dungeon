@@ -41,8 +41,6 @@ namespace Atomic.Character.Module
                 _model = model;
 
                 _navMeshAgent = _model.BaseNavMeshAgent;
-                _model.RegisterActionTrigger(CharacterActionType.BeginRoll, Roll);
-                _model.RegisterActionTrigger(CharacterActionType.StopRoll, OnStopRoll);
             }
         }
 
@@ -70,10 +68,9 @@ namespace Atomic.Character.Module
             return _model.transform.position + rollDirection * Distance;
         }
         
-        private void Roll()
+        public void Roll()
         {
-            _model.IsGrounded = false;
-
+            Debug.Log("roll");
             Vector3 targetPosition = SetDestinationForRoll();
             _navMeshAgent.SetDestination(targetPosition);
         }
@@ -81,8 +78,6 @@ namespace Atomic.Character.Module
         //  Event Handlers --------------------------------
         private void OnStopRoll()
         {
-            _model.IsGrounded = true;
-            _model.IsRolling = false;
         }
     }
 }

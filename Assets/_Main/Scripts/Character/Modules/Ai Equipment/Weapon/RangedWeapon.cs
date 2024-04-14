@@ -1,7 +1,17 @@
-using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Weapon
 {
+    //  Namespace Properties ------------------------------
+    public enum ShootType
+    {
+        Automatic,
+        Charge,
+    }
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
     public class RangedWeapon : Weapon
     {
         // Start is called before the first frame update

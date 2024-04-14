@@ -5,40 +5,14 @@ using UnityEngine;
 
 namespace Atomic.Character.Config
 {
-    [CreateAssetMenu(menuName = "Ai Module Config/Motor")]
-    public class MotorConfig : BaseSO
-    {
-        [Header("ABILITIES")] 
-        public bool canWalk;
-        public bool canFly;
-        public bool canRoll;
-        public bool canJump;
-        public bool canMeleeCombat;
-        public bool canRangedCombat; 
-
-        [ShowIf("canWalk")] public LocomotionConfig locomotionConfig = new();
-        [ShowIf("canRoll")] public RollConfig rollConfig = new(); 
-        
-        [Header("NAVMESH")]
-        public int avoidancePriorityNormal;
-        public int avoidancePriorityAttack;
-        public float enemyCloseRange;
-        public float deadDuration;
-
-        public void Assign(AiMotorController motorController)
-        {
-            if(canWalk) locomotionConfig.Assign(motorController);
-            if(canRoll) rollConfig.Assign(motorController);
-        }
-        
-    }
-
+    //  Namespace Properties ------------------------------
     public enum LocomotionType
     {
         Basic,
         RootMotion,
     }
-    
+
+    //  Class Attributes ----------------------------------
     [System.Serializable]
     public class LocomotionConfig
     {
@@ -54,25 +28,24 @@ namespace Atomic.Character.Config
             {
                 case LocomotionType.Basic:
                     motorController.LocomotionController = new AiBasicLocomotionController();
-                    break; 
+                    break;
                 case LocomotionType.RootMotion:
-                    break; 
+                    break;
             }
-            
+
             motorController.LocomotionController.RotationSpeed = rotateSpeed;
             motorController.LocomotionController.MoveSpeed = walkSpeed;
             motorController.LocomotionController.Acceleration = acceleration;
-            
+
             motorController.LocomotionController.Initialize(motorController);
-            Debug.Log(motorController.GetInstanceID());
         }
     }
-    
+
     [System.Serializable]
     public class RollConfig
     {
         public float distance;
-        public LayerMask colliderLayer; 
+        public LayerMask colliderLayer;
 
         public void Assign(AiMotorController motorController)
         {
@@ -83,6 +56,48 @@ namespace Atomic.Character.Config
             };
 
             motorController.RollController.Initialize(motorController);
+        }
+    }
+
+    [System.Serializable]
+    public class JumpConfig
+    {
+        
+    }
+
+    [System.Serializable]
+    public class FlyConfig
+    {
+        
+    }
+    
+    /// <summary>
+    /// Configuration asset defining the motor abilities and behaviors for AI agents.
+    /// </summary>
+    [CreateAssetMenu(menuName = "Ai Module Config/Motor")]
+    public class MotorConfig : BaseSO
+    {
+        [Header("ABILITIES")] 
+        public bool canWalk;
+        public bool canFly;
+        public bool canRoll;
+        public bool canJump;
+        public bool canMeleeCombat;
+        public bool canRangedCombat;
+
+        [ShowIf("canWalk")] public LocomotionConfig locomotionConfig = new();
+        [ShowIf("canRoll")] public RollConfig rollConfig = new();
+
+        [Header("NAVMESH")] 
+        public int avoidancePriorityNormal;
+        public int avoidancePriorityAttack;
+        public float enemyCloseRange;
+        public float deadDuration;
+
+        public void Assign(AiMotorController motorController)
+        {
+            if (canWalk) locomotionConfig.Assign(motorController);
+            if (canRoll) rollConfig.Assign(motorController);
         }
     }
 }

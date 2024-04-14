@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Weapon
 {
     public class Weapon : MonoBehaviour
     {

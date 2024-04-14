@@ -38,19 +38,7 @@ namespace Atomic.Character.Module
         {
             get; set;
         }
-        public bool IsStopped
-        {
-            get => _isStopped;
-            set
-            {
-                _isStopped = value; 
-                if (value)
-                {
-                    Stop();
-                }
-            }
-        }
-
+        
         //  Fields ----------------------------------------
         private NavMeshAgent _navMeshAgent;
         private AiMotorController _model;
@@ -58,7 +46,6 @@ namespace Atomic.Character.Module
 
 
         private bool _isInitialized;
-        private bool _isStopped; 
 
         //  Initialization  -------------------------------
         public void Initialize(AiMotorController model)
@@ -79,7 +66,6 @@ namespace Atomic.Character.Module
                 _navMeshAgent.angularSpeed = RotationSpeed;
                 _navMeshAgent.acceleration = Acceleration;
 
-                IsStopped = false;
             }
         }
 
@@ -119,7 +105,7 @@ namespace Atomic.Character.Module
         public void Stop()
         {
             MoveInput = Vector2.zero;
-            _navMeshAgent.destination = _model.transform.position;
+            _navMeshAgent.isStopped = true;
         }
     }
 

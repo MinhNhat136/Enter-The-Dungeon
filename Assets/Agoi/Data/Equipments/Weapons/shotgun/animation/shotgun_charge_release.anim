@@ -50386,22 +50386,22 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: OnShoot
-    data: 
+    functionName: TriggerCharacterAction
+    data: BeginShoot
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.4
-    functionName: OnEndAttack
-    data: 
+    functionName: TriggerCharacterAction
+    data: EndAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.41666666
-    functionName: OnCanMoveNextSkill
-    data: 
+    functionName: TriggerCharacterAction
+    data: MoveNextSkill
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

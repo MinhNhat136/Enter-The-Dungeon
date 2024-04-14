@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace Atomic.Character.Model
 {
@@ -75,11 +76,20 @@ namespace Atomic.Character.Model
             InputControls.Character.Movement.performed += 
                 context => MotorController.LocomotionController.MoveInput = context.ReadValue<Vector2>();
             InputControls.Character.Movement.canceled +=
-                _ => MotorController.LocomotionController.MoveInput = Vector2.zero;
-            InputControls.Character.Roll.performed += 
+                _ =>
+                {
+                    AgentAnimatorController.StopMovementAnimation();
+                    MotorController.MoveDirection = Vector3.zero;
+                    MotorController.LocomotionController.MoveInput = Vector2.zero;
+                };
+            InputControls.Character.Roll.performed +=
                 _ => MotorController.IsRolling = true;
-            InputControls.Character.Attack.performed +=
-                _ => MotorController.IsAttacking = true;  
+            InputControls.Character.Attack.started +=
+                _ => MotorController.IsAttacking = true; 
+            InputControls.Character.Attack.performed += 
+                _ => MotorController.IsCharging = true;
+            InputControls.Character.Attack.canceled +=
+                _ => MotorController.IsCharging = false;
         }
         //  Event Handlers --------------------------------
 
@@ -87,14 +97,17 @@ namespace Atomic.Character.Model
         public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
         public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
         public void ApplyMovementAnimation() => AgentAnimatorController.ApplyMovementAnimation();
-
-        // Roll Behaviour
-        public void ApplyRollAnimation() => AgentAnimatorController.ApplyRollAnimation();
         
-        // Attack Behaviour
-        public void ApplyAttack()
-        {
-            
-        }
+        // Roll Behaviour 
+        public void ApplyRoll() => MotorController.RollController.Roll();
+        public void ApplyRollAnimation() => AgentAnimatorController.ApplyRollAnimation();
+
+        // Ranged Attack Behaviour
+        public void ApplyRangedAttack_Charging() => AgentAnimatorController.ApplyRangedAttack_Charge_Start_Animation();
+        public void ApplyRangedAttack_Release() => AgentAnimatorController.ApplyRangedAttack_Charge_Release_Animation();
+
+        // Melee Attack Behaviour
+
+
     }
 }

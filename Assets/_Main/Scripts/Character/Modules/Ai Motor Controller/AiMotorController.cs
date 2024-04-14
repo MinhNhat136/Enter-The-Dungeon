@@ -42,10 +42,10 @@ namespace Atomic.Character.Module
         public Vector3 MoveDirection { get; set; }
 
         public bool IsInitialized => _isInitialized;
-        public bool IsGrounded { get; set; }
         public bool IsRolling { get; set; }
         public bool IsAttacking { get; set; }
         public bool IsJumping { get; set; }
+        public bool IsCharging { get; set; }
 
         public Dictionary<CharacterActionType, Action> ActionTriggers => _actionTriggers;
 
@@ -75,6 +75,7 @@ namespace Atomic.Character.Module
 
                 config.Assign(this);
                 ResetStateFlag();
+                
             }
         }
 
@@ -91,7 +92,6 @@ namespace Atomic.Character.Module
         //  Other Methods ---------------------------------
         private void ResetStateFlag()
         {
-            IsGrounded = true;
             IsRolling = false;
             IsJumping = false;
             IsAttacking = false;

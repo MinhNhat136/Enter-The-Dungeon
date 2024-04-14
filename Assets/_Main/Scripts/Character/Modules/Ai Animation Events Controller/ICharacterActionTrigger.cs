@@ -1,6 +1,24 @@
 
 namespace Atomic.Character.Module
 {
+    public enum CharacterActionType
+    {
+        BeginRoll, 
+        Rolling,
+        StopRoll,
+        BeginAttack,
+        BeginCharge,
+        Charge,
+        BeginShoot,
+        BeginMeleeAttack,
+        BeginAttackMove,
+        StopAttackMove,
+        EndAttack,
+        MoveNextSkill,
+        BeginTrack, 
+        StopTrack,
+        CustomAction,
+    }
     
     public interface ICharacterActionTrigger 
     {

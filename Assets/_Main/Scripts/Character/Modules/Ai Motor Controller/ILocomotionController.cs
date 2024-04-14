@@ -6,7 +6,6 @@ namespace Atomic.Character.Module
 {
     public interface ILocomotionController : IInitializableWithBaseModel<AiMotorController>
     {
-        public bool IsStopped { get; set; }
         public Vector2 MoveInput { get; set; }
         public float Acceleration { get; set; }
         public float MoveSpeed { get; set; }
