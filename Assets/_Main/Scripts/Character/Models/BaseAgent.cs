@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Atomic.Character.Module;
 using Atomic.Core;
 using Atomic.Core.Interface;
@@ -15,7 +17,7 @@ namespace Atomic.Character.Model
     /// Base class for defining characters with modular control systems.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class BaseAgent : MonoBehaviour, IInitializable
+    public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Statics ---------------------------------------
 
@@ -66,9 +68,26 @@ namespace Atomic.Character.Model
             protected set => _targetingController = value;
         }
 
+        public virtual AiStateManager StateManager
+        {
+            get => _stateManager;
+            protected set => _stateManager = value; 
+        }
+
+        public virtual AiWeaponVisualsController WeaponVisualsController
+        {
+            get => _weaponVisualsController;
+            set => _weaponVisualsController = value; 
+        }
+        
         public virtual AiHealth HealthController => _healthController;
 
         #endregion
+
+        public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
+
+        //  Collections -----------------------------------
+
 
         //  Fields ----------------------------------------
         [FormerlySerializedAs("_bodyWeakPoint")] 
@@ -84,6 +103,8 @@ namespace Atomic.Character.Model
         private ITargetingController _targetingController;
         private AiHitBoxController _hitBoxController;
         private AiMotorController _motorController;
+        private AiStateManager _stateManager; 
+        private AiWeaponVisualsController _weaponVisualsController;
         #endregion
 
         #region Shared Controller
@@ -131,7 +152,7 @@ namespace Atomic.Character.Model
 
         //  Other Methods ---------------------------------
         public abstract void Assign();
-
+        
         protected virtual void AssignControllers()
         {
             _memoryController = new()
@@ -139,21 +160,31 @@ namespace Atomic.Character.Model
                 MemorySpan = 1
             };
             _healthController = new AiHealth();
-
-            this.SetController(out _agentAnimatorController);
-            this.SetController(out _visionController);
-            this.SetController(out _targetingController);
-            this.SetController(out _motorController);
-            this.SetController(out _hitBoxController);
             
-            _agentAnimatorController.Initialize(this);
-            _visionController.Initialize(this);
-            _targetingController.Initialize(this);
-            _motorController.Initialize(this);
-            _hitBoxController.Initialize(this);
+            this.AttachControllerToModel(out _agentAnimatorController);
+            this.AttachControllerToModel(out _visionController);
+            this.AttachControllerToModel(out _targetingController);
+            this.AttachControllerToModel(out _motorController);
+            this.AttachControllerToModel(out _hitBoxController);
+            this.AttachControllerToModel(out _stateManager);
+            this.AttachControllerToModel(out _weaponVisualsController);
         }
         //  Event Handlers --------------------------------
+        protected void RegisterActionTrigger(CharacterActionType actionType, Action action)
+        {
+            if (!ActionTriggers.TryAdd(actionType, action))
+            {
+                ActionTriggers[actionType] += action;
+            }
+        }
 
+        public void OnCharacterActionTrigger(CharacterActionType actionType)
+        {
+            if (ActionTriggers.TryGetValue(actionType, out var trigger))
+            {
+                trigger.Invoke();
+            }
+        }
     }
 }
 

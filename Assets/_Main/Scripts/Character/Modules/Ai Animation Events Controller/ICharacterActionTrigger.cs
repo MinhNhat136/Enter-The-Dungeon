@@ -3,14 +3,13 @@ namespace Atomic.Character.Module
 {
     public enum CharacterActionType
     {
+        OnFoot,
         BeginRoll, 
-        Rolling,
         StopRoll,
+        PrepareAttack,
+        PrepareAttackCompleted,
+        ChargeFull,
         BeginAttack,
-        BeginCharge,
-        Charge,
-        BeginShoot,
-        BeginMeleeAttack,
         BeginAttackMove,
         StopAttackMove,
         EndAttack,
@@ -27,7 +26,7 @@ namespace Atomic.Character.Module
         /// </summary>
         bool enabled { get; set; }
         /// <summary>
-        /// Method Called from <seealso cref="AnimatorMoveSender"/>
+        /// Method Called from <seealso cref="AnimatorEventsListener"/>
         /// </summary>
         void OnCharacterActionTrigger(CharacterActionType actionType);
 

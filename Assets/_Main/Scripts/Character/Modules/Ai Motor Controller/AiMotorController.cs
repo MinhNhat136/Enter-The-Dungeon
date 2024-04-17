@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using Atomic.Character.Config;
 using Atomic.Character.Model;
-using Atomic.Core;
 using Atomic.Core.Interface;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -18,70 +18,52 @@ namespace Atomic.Character.Module
     /// Controls the behavior of an AI character, including movement, rolling, jumping, attack, and other actions.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public sealed class AiMotorController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>,
-        ICharacterActionTrigger
+    public sealed class AiMotorController : SerializedMonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
-        //  Statics ---------------------------------------
-
         //  Events ----------------------------------------
 
-        //  Properties ------------------------------------
-        public ILocomotionController LocomotionController
-        {
-            get; set;
-        }
-
-        public AiRollController RollController
-        {
-            get; set;
-        }
         
-        public BaseAgent Model => _model;
-        public NavMeshAgent BaseNavMeshAgent => _navMeshAgent;
-        public Animator BaseAnimator => _animator;
+        //  Properties ------------------------------------
+        public ICombatController CombatController { get; set; }
+        public ILocomotionController LocomotionController { get; set;}
+        public AiRollController RollController { get; set; }
+        public BaseAgent Model { get; private set; }
+        
+        public NavMeshAgent BaseNavMeshAgent { get; private set; }
+        public Animator BaseAnimator { get; private set; }
+        public Vector2 MoveInput { get; set; }
         public Vector3 MoveDirection { get; set; }
 
-        public bool IsInitialized => _isInitialized;
-        public bool IsRolling { get; set; }
-        public bool IsAttacking { get; set; }
-        public bool IsJumping { get; set; }
-        public bool IsCharging { get; set; }
-
-        public Dictionary<CharacterActionType, Action> ActionTriggers => _actionTriggers;
-
+        public bool IsInitialized { get; private set; }
+        
         //  Collections -----------------------------------
-        private readonly Dictionary<CharacterActionType, Action> _actionTriggers = new();
-
+        [SerializeField]
+        private Dictionary<CombatMode, ICombatController> combatModes;
+        
+        
         //  Fields ----------------------------------------
         [FormerlySerializedAs("_config")] [SerializeField]
         private MotorConfig config;
-
-        private bool _isInitialized;
-
-        private BaseAgent _model;
-        private NavMeshAgent _navMeshAgent;
-        private Animator _animator;
-
+        
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
-            if (!_isInitialized)
+            if (!IsInitialized)
             {
-                _isInitialized = true;
-                _model = model;
+                IsInitialized = true;
+                Model = model;
 
-                _navMeshAgent = GetComponent<NavMeshAgent>();
-                _animator = GetComponentInChildren<Animator>();
-
-                config.Assign(this);
-                ResetStateFlag();
+                BaseNavMeshAgent = GetComponent<NavMeshAgent>();
+                BaseAnimator = GetComponentInChildren<Animator>();
+                CombatController = GetComponent<ICombatController>();
                 
+                config.Assign(this);
             }
         }
 
         public void RequireIsInitialized()
         {
-            if (!_isInitialized)
+            if (!IsInitialized)
             {
                 throw new Exception("AiMotorController not initialized");
             }
@@ -89,29 +71,27 @@ namespace Atomic.Character.Module
 
         //  Unity Methods   -------------------------------
 
+        
         //  Other Methods ---------------------------------
-        private void ResetStateFlag()
+
+        public void ApplyDirection() => MoveDirection = new Vector3(MoveInput.x, 0, MoveInput.y);
+        public void SetForwardDirection()
         {
-            IsRolling = false;
-            IsJumping = false;
-            IsAttacking = false;
+            if (MoveDirection == Vector3.zero)
+            {
+                return;
+            }
+            transform.rotation = Quaternion.LookRotation(MoveDirection);
+        }
+
+        public void SwitchCombatMode(CombatMode combatMode)
+        {
+            if (combatModes.ContainsKey(combatMode)) CombatController = combatModes[combatMode];
         }
         
         //  Event Handlers --------------------------------
-        public void RegisterActionTrigger(CharacterActionType actionType, Action action)
-        {
-            if (!_actionTriggers.TryAdd(actionType, action))
-            {
-                _actionTriggers[actionType] += action;
-            }
-        }
-        
-        public void OnCharacterActionTrigger(CharacterActionType actionType)
-        {
-            if (_actionTriggers.TryGetValue(actionType, out var trigger))
-            {
-                trigger.Invoke();
-            }
-        }
+
+
+
     }
 }

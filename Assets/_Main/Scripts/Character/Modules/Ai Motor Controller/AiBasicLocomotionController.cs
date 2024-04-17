@@ -18,10 +18,6 @@ namespace Atomic.Character.Module
 
 
         //  Properties ------------------------------------
-        public Vector2 MoveInput
-        {
-            get; set;
-        }
         public float MoveSpeed
         {
             get; set;
@@ -46,7 +42,8 @@ namespace Atomic.Character.Module
 
 
         private bool _isInitialized;
-
+        private bool _isStopped;
+        
         //  Initialization  -------------------------------
         public void Initialize(AiMotorController model)
         {
@@ -79,7 +76,7 @@ namespace Atomic.Character.Module
         }
 
         //  Unity Methods   -------------------------------
-
+        
 
         //  Other Methods ---------------------------------
         public void ApplyRotation()
@@ -97,15 +94,19 @@ namespace Atomic.Character.Module
 
         public void ApplyMovement()
         {
-            _model.MoveDirection = new Vector3(MoveInput.x, 0, MoveInput.y);
+            if (_isStopped) _isStopped = false;
             Vector3 destination = _model.transform.position + _model.MoveDirection;
             _navMeshAgent.SetDestination(destination);
         }
 
-        public void Stop()
+        public void ApplyStop()
         {
-            MoveInput = Vector2.zero;
-            _navMeshAgent.isStopped = true;
+            if (_isStopped) 
+                return;
+            _model.MoveInput = Vector2.zero;
+            _model.MoveDirection = Vector3.zero;
+            _navMeshAgent.destination = _model.transform.position;
+            _isStopped = true;
         }
     }
 

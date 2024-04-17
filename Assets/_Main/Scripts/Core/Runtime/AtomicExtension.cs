@@ -195,30 +195,30 @@ namespace Atomic.Core
             }
         }
 
-        public static void SetController<TModel, TController>(this TModel bhv,ref TController _controller,
+        public static void AttachControllerToModel<TModel, TController>(this TModel bhv,ref TController controller,
             int bitController, ref int bitSequence) 
             where TModel : MonoBehaviour
         {
-            if (!bhv.TryGetComponent<TController>(out TController controller))
+            if (!bhv.TryGetComponent<TController>(out TController controllerValue))
             {
                 return;
             }
-            _controller = controller;
+            controller = controllerValue;
             bitSequence |= bitController;
         }
 
-        public static void SetController<TModel, TController>(this TModel bhv, out TController _controller) 
+        public static void AttachControllerToModel<TModel, TController>(this TModel model, out TController controller) where TController : IInitializableWithBaseModel<TModel>
             where TModel : MonoBehaviour
         {
-            if (!bhv.TryGetComponent<TController>(out TController controller))
+            if (!model.TryGetComponent<TController>(out TController controllerValue))
             {
-                _controller = default;
+                controller = default;
                 return;
             }
-            _controller = controller;
+            controller = controllerValue;
+            controller.Initialize(model);
         }
-
-
+        
         public static bool ContainsLayer(this LayerMask layermask, int layer)
         {
             return layermask == (layermask | (1 << layer));

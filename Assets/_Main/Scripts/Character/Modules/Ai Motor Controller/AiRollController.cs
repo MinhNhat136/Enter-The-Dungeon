@@ -70,7 +70,6 @@ namespace Atomic.Character.Module
         
         public void Roll()
         {
-            Debug.Log("roll");
             Vector3 targetPosition = SetDestinationForRoll();
             _navMeshAgent.SetDestination(targetPosition);
         }
