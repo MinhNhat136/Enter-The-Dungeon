@@ -18,7 +18,6 @@ MonoBehaviour:
   canJump: 1
   canMeleeCombat: 1
   canRangedCombat: 1
-  Title: 
   locomotionConfig:
     walkSpeed: 5
     runSpeed: 8
@@ -30,7 +29,7 @@ MonoBehaviour:
     colliderLayer:
       serializedVersion: 2
       m_Bits: 256
-  AvoidancePriorityNormal: 0
-  AvoidancePriorityAttack: 0
-  EnemyCloseRange: 0
-  DeadDuration: 0
+  avoidancePriorityNormal: 0
+  avoidancePriorityAttack: 0
+  enemyCloseRange: 0
+  deadDuration: 0

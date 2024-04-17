@@ -2,6 +2,7 @@ using Atomic.Models;
 using RMC.Core.Architectures.Mini.Context;
 using RMC.Core.Architectures.Mini.Service;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Events;
 
 // CAUTION: THIS CLASS NOT COMPLETE SIGN IN FUNCTION
