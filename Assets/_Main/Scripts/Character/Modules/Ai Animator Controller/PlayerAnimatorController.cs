@@ -65,12 +65,21 @@ namespace Atomic.Character.Module
 
         public void ApplyRollAnimation()
         {
-            _animator.CrossFade(AnimatorStates.Roll, 0.05f);  
-        } 
+            Debug.Log("play");
+            _animator.CrossFade(AnimatorStates.Roll, 0.05f);
+        }
 
-        public void ApplyRangedAttack_Charge_Start_Animation() => _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Start, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Release_Animation() => _animator.Play(AnimatorStates.RangedAttack_Charge_Release);
+        public void ApplyRangedAttack_Charge_Start_Animation()
+        {
+            _animator.SetBool(AnimatorParameters.IsRangedAttack, true);
+        }
+
+        public void ApplyRangedAttack_Charge_Release_Animation()
+        {
+            _animator.Play(AnimatorStates.RangedAttack_Charge_Release);
+            _animator.SetBool(AnimatorParameters.IsRangedAttack, false);
+        }
 
         public void ApplySummonAnimation()
         {

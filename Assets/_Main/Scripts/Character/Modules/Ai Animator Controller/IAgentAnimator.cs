@@ -14,7 +14,9 @@ namespace Atomic.Character.Module
         
         public static int Dodge_Horizontal      = Animator.StringToHash("Dodge_Horizontal");
         public static int Dodge_Vertical        = Animator.StringToHash("Dodge_Vertical");
-        
+
+        public static int IsRangedAttack        = Animator.StringToHash("IsRangedAttack");
+        public static int IsMeleeAttack         = Animator.StringToHash("IsMeleeAttack");
     }
 
     public static partial class AnimatorStates

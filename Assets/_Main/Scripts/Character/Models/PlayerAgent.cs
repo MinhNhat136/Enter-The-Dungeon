@@ -1,14 +1,15 @@
+using System.Linq;
 using Atomic.Character.Module;
 using Atomic.Equipment;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using Debug = UnityEngine.Debug;
 
 namespace Atomic.Character.Model
 {
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+
 
     /// <summary>
     /// TODO: Replace with comments...
@@ -19,21 +20,20 @@ namespace Atomic.Character.Model
 
         //  Properties ------------------------------------
         private PlayerControls InputControls { get; set; }
-        
+        public bool IsMovement => !Mathf.Approximately(MotorController.MoveInput.sqrMagnitude, 0f);
 
         //  Fields ----------------------------------------
-        private AttachWeaponController _currentAttachWeapon; 
-        
+        private AttachWeaponController _currentAttachWeapon;
+
         //  Initialization  -------------------------------
         public override void Initialize()
         {
             if (!IsInitialized)
             {
                 base.Initialize();
-
                 InputControls = new PlayerControls();
-                
                 Assign();
+                CurrentActionState = CharacterActionState.MoveNextSkill;
             }
         }
 
@@ -66,87 +66,77 @@ namespace Atomic.Character.Model
         }
 
         //  Other Methods ---------------------------------
+
+        #region Assign Controls
+
         public override void Assign()
         {
             AssignInputEvents();
             AssignCharacterActionEvents();
             AssignControllerEvent();
         }
-        
+
         private void AssignInputEvents()
         {
-            InputControls.Character.Roll.performed +=
-                _ =>
-                {
-                    StateManager.IsRolling = true;
-                };
+            InputControls.Character.Roll.started +=
+                _ => ApplyRoll();
             InputControls.Character.Attack.started +=
-                _ => StateManager.IsPreparingAttack = true; 
-            InputControls.Character.Attack.performed += 
-                _ => StateManager.IsPreparingAttack = true;
+                _ => ApplyRangedAttack_ChargingAnimation();
             InputControls.Character.Attack.canceled +=
-                _ =>
-                {
-                    StateManager.IsPreparingAttack = false;
-                    StateManager.IsAttacking = true;
-                };
-            InputControls.Character.Movement.performed += 
+                _ => CommandEvents[Command.Attack] = true;
+            InputControls.Character.Movement.performed +=
                 context => MotorController.MoveInput = context.ReadValue<Vector2>();
             InputControls.Character.Movement.canceled +=
                 _ =>
                 {
-                    AgentAnimatorController.StopMovementAnimation();
                     MotorController.MoveDirection = Vector3.zero;
                     MotorController.MoveInput = Vector2.zero;
                 };
             InputControls.Character.SwapWeapon.started +=
-                _ => StateManager.IsSwapWeapon = true;
+                _ => CommandEvents[Command.SwapWeapon] = true;
         }
+
         private void AssignCharacterActionEvents()
         {
             RegisterActionTrigger(CharacterActionType.BeginRoll, () =>
             {
-                StateManager.CanMoveNextSkill = false;
-                StateManager.CanPrepareAttackAgain = false;
-                StateManager.CanRollAgain = false;
+                CurrentActionState &= ~CharacterActionState.MoveNextSkill;
+                CurrentActionState = CharacterActionState.Rolling;
+                ApplyRoll();
             });
             RegisterActionTrigger(CharacterActionType.StopRoll, () =>
             {
-                StateManager.IsRolling = false;
-                StateManager.CanPrepareAttackAgain = true;
-                StateManager.CanRollAgain = true;
+                CurrentActionState &= ~CharacterActionState.Rolling;
+                CurrentActionState |= CharacterActionState.MoveNextSkill;
+                CancelPerformRollCommand();
             });
             RegisterActionTrigger(CharacterActionType.PrepareAttack, () =>
             {
-                StateManager.CanAttack = false;
-                StateManager.CanMoveNextSkill = false;
+                CurrentActionState &= ~CharacterActionState.MoveNextSkill;
+                CurrentActionState |= CharacterActionState.BeginPrepareAttack;
             });
+
             RegisterActionTrigger(CharacterActionType.PrepareAttackCompleted, () =>
             {
-                StateManager.CanAttack = true;
+                CurrentActionState |= CharacterActionState.EndPrepareAttack;
             });
-            RegisterActionTrigger(CharacterActionType.ChargeFull, () =>
-            {
-                
-            });
+            RegisterActionTrigger(CharacterActionType.ChargeFull, () => { });
+            RegisterActionTrigger(CharacterActionType.BeginAttackMove, () => { });
+            RegisterActionTrigger(CharacterActionType.StopAttackMove, () => { });
             RegisterActionTrigger(CharacterActionType.BeginAttack, () =>
             {
-                StateManager.CanPrepareAttackAgain = false;
+                CurrentActionState &= ~CharacterActionState.EndPrepareAttack;
+                CurrentActionState |= CharacterActionState.Attacking;
             });
-            RegisterActionTrigger(CharacterActionType.BeginAttackMove, () =>
-            {
-                
-            });
-            RegisterActionTrigger(CharacterActionType.StopAttackMove, () =>
-            {
-                
-            });
+            RegisterActionTrigger(CharacterActionType.BeginAttackMove, () => { });
+            RegisterActionTrigger(CharacterActionType.StopAttackMove, () => { });
             RegisterActionTrigger(CharacterActionType.EndAttack, () =>
             {
-                StateManager.CanAttack = false;
-                StateManager.CanPrepareAttackAgain = true;
+                CurrentActionState &= ~CharacterActionState.Attacking;
+                CurrentActionState |= CharacterActionState.EndAttack;
+                CurrentActionState |= CharacterActionState.MoveNextSkill;
+                CancelPerformAttackCommand();
             });
-            RegisterActionTrigger(CharacterActionType.MoveNextSkill, () => StateManager.CanMoveNextSkill = true);
         }
 
         private void AssignControllerEvent()
@@ -154,42 +144,110 @@ namespace Atomic.Character.Model
             WeaponVisualsController.OnSwapWeapon += (combatMode) =>
             {
                 MotorController.SwitchCombatMode(combatMode);
-                StateManager.CurrentCombatMode = combatMode;
+                CurrentCombatMode = combatMode;
             };
         }
-        
-        
-        //  Event Handlers --------------------------------
 
-        // Movement Behaviour
+        #endregion
+
+        #region Behaviours
+
+        // Shared
         public void SetForwardDirection() => MotorController.SetForwardDirection();
         public void ApplyDirection() => MotorController.ApplyDirection();
+
+        // Movement Behaviour
+        public void ApplyStop() => MotorController.LocomotionController.ApplyStop();
         public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
         public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
-        public void ApplyStop() => MotorController.LocomotionController.ApplyStop();
         public void ApplyMovementAnimation() => AgentAnimatorController.ApplyMovementAnimation();
-        
+        public void StopMovementAnimation() => AgentAnimatorController.StopMovementAnimation();
+
         // Roll Behaviour 
-        public void ApplyRoll() => MotorController.RollController.Roll();
+        private void ApplyRoll() => MotorController.RollController.Roll();
         public void ApplyRollAnimation() => AgentAnimatorController.ApplyRollAnimation();
-        public void CancelRoll() => StateManager.IsRolling = false;
 
         // Ranged Attack Behaviour
+        public void BeginPrepareAttack()
+        {
+            MotorController.LocomotionController.ApplyStop();
+        }
+
+        public void ApplyPreparingAttack()
+        {
+            if (!CurrentActionState.HasFlag(CharacterActionState.PreparingAttack))
+            {
+                CurrentActionState &= ~CharacterActionState.BeginPrepareAttack;
+                CurrentActionState |= CharacterActionState.PreparingAttack;
+            }
+        }
+
+
+        public void ApplyRangedAttack_ChargingAnimation() =>
+            AgentAnimatorController.ApplyRangedAttack_Charge_Start_Animation();
+
+        public void ApplyRangedAttack_ReleaseAnimation() =>
+            AgentAnimatorController.ApplyRangedAttack_Charge_Release_Animation();
+
         public void BeginAttack() => MotorController.CombatController.BeginAttack();
-        public void ApplyRangedAttack_ChargingAnimation() => AgentAnimatorController.ApplyRangedAttack_Charge_Start_Animation();
-        public void ApplyRangedAttack_ReleaseAnimation() => AgentAnimatorController.ApplyRangedAttack_Charge_Release_Animation();
         public void EndAttack() => MotorController.CombatController.EndAttack();
-        
+
         // Swap weapon
         public void SwapWeapon() => WeaponVisualsController.SwapWeapon();
+        public void OnSwapWeaponCompleted() => CommandEvents[Command.SwapWeapon] = false;
 
         public void SwitchCombatMode()
         {
             Debug.Log("combat mode");
         }
 
-        // Attack Behaviour
+        // Return Command 
+        private void CancelAllCommand()
+        {
+            CurrentActionState = CharacterActionState.None;
+            CommandEvents.Keys.ToList().ForEach(command => CommandEvents[command] = false);
+        }
+
+        private void CancelPerformRollCommand() => CommandEvents[Command.Roll] = false;
+
+        private void CancelPerformAttackCommand()
+        {
+            CommandEvents[Command.PrepareAttack] = false;
+            CommandEvents[Command.Attack] = false;
+        }
+
+        #endregion
+
+        #region PreConditions
+
+        public bool CanPerformRollAction => CommandEvents[Command.Roll] &&
+                                            !CurrentActionState.HasFlag(CharacterActionState.Rolling);
+
+        public bool CanPerformBeginPrepareAttackAction => CommandEvents[Command.PrepareAttack] &&
+                                                          !CurrentActionState.HasFlag(CharacterActionState.Rolling) &&
+                                                          !CurrentActionState.HasFlag(CharacterActionState.BeginPrepareAttack);
+
+        public bool CanPerformPreparingAttackAction => CurrentActionState.HasFlag(CharacterActionState.BeginPrepareAttack);
+        public bool CanPerformEndPrepareAttack => CurrentActionState.HasFlag(CharacterActionState.PreparingAttack);
+
+        public bool CanPerformAttackMoveAction = false;
+
+        public bool CanPerformAttack => CommandEvents[Command.Attack] &&
+                                        !CurrentActionState.HasFlag(CharacterActionState.Rolling) &&
+                                        CurrentActionState.HasFlag(CharacterActionState.EndPrepareAttack);
+
+        public bool CanEndAttack = false;
+
+        public bool CanPerformSwapWeaponAction => CommandEvents[Command.SwapWeapon] &&
+                                                  CurrentActionState.HasFlag(CharacterActionState.MoveNextSkill) &&
+                                                  !CurrentActionState.HasFlag(CharacterActionState.Attacking) &&
+                                                  !CurrentActionState.HasFlag(CharacterActionState.EndPrepareAttack);
+
+        public bool CanMoveNextSkill => CurrentActionState.HasFlag(CharacterActionState.MoveNextSkill);
+
+        #endregion
 
 
+        //  Event Handlers --------------------------------
     }
 }

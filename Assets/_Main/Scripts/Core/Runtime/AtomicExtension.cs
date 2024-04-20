@@ -1,7 +1,10 @@
 using Atomic.Core.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Atomic.Character.Model;
+using Atomic.Character.Module;
 using UnityEngine;
 
 namespace Atomic.Core

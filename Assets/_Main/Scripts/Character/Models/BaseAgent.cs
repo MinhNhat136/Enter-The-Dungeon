@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Atomic.Character.Module;
 using Atomic.Core;
 using Atomic.Core.Interface;
+using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -12,12 +14,60 @@ namespace Atomic.Character.Model
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+    [Flags]
+    public enum CharacterActionState : short
+    {
+        None = 0,
+        MoveNextSkill = 1 << 0,
+        Idle = 1 << 1,
+        SwappingWeapon = 1 << 2,
+        Rolling = 1 << 3,
+        BeginPrepareAttack = 1 << 4,
+        PreparingAttack = 1 << 5, 
+        EndPrepareAttack = 1 << 6,
+        BeginAttackMove = 1 << 7,
+        AttackMoving = 1 << 8,
+        EndAttackMove = 1 << 9,
+        BeginAttack = 1 << 10,
+        Attacking = 1 << 11,
+        EndAttack = 1 << 12,
+    }
+    
+    public enum Command : byte
+    {
+        Move,
+        Roll,
+        PrepareAttack,
+        Attack,
+        SwapWeapon,
+    }
+    
+    public class EnumFlagsAttribute : PropertyAttribute
+    {
+        public EnumFlagsAttribute() { }
+    }
 
+#if UNITY_EDITOR
+    [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
+    public class EnumFlagsAttributeDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginChangeCheck();
+            int newValue = EditorGUI.MaskField(position, label, property.intValue, property.enumDisplayNames);
+            if (EditorGUI.EndChangeCheck())
+            {
+                property.intValue = newValue;
+            }
+        }
+    }
+#endif
+    
     /// <summary>
     /// Base class for defining characters with modular control systems.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
+    public abstract class BaseAgent : SerializedMonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Statics ---------------------------------------
 
@@ -67,13 +117,6 @@ namespace Atomic.Character.Model
             get => _targetingController;
             protected set => _targetingController = value;
         }
-
-        public virtual AiStateManager StateManager
-        {
-            get => _stateManager;
-            protected set => _stateManager = value; 
-        }
-
         public virtual AiWeaponVisualsController WeaponVisualsController
         {
             get => _weaponVisualsController;
@@ -84,8 +127,16 @@ namespace Atomic.Character.Model
 
         #endregion
 
-        public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
 
+        [field: SerializeField]
+        [field: EnumFlags]
+        public CharacterActionState CurrentActionState { get; set; }
+        public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
+        
+        [field: SerializeField]
+        public Dictionary<Command, bool> CommandEvents { get; } = new(8);
+        public CombatMode CurrentCombatMode { get; set; }
+        
         //  Collections -----------------------------------
 
 
@@ -103,7 +154,6 @@ namespace Atomic.Character.Model
         private ITargetingController _targetingController;
         private AiHitBoxController _hitBoxController;
         private AiMotorController _motorController;
-        private AiStateManager _stateManager; 
         private AiWeaponVisualsController _weaponVisualsController;
         #endregion
 
@@ -166,9 +216,11 @@ namespace Atomic.Character.Model
             this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _motorController);
             this.AttachControllerToModel(out _hitBoxController);
-            this.AttachControllerToModel(out _stateManager);
             this.AttachControllerToModel(out _weaponVisualsController);
         }
+        
+        
+        
         //  Event Handlers --------------------------------
         protected void RegisterActionTrigger(CharacterActionType actionType, Action action)
         {
