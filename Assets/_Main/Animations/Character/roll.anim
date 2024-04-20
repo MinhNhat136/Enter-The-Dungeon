@@ -85888,14 +85888,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0333333
+  - time: 0.06666667
     functionName: TriggerCharacterAction
-    data: StopRoll
+    data: Rolling
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.0333333
+  - time: 1
+    functionName: TriggerCharacterAction
+    data: EndRoll
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.0666667
     functionName: TriggerCharacterAction
     data: MoveNextSkill
     objectReferenceParameter: {fileID: 0}

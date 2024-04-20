@@ -50392,9 +50392,23 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.016666668
+    functionName: TriggerCharacterAction
+    data: Attacking
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.4
     functionName: TriggerCharacterAction
     data: EndAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.41666666
+    functionName: TriggerCharacterAction
+    data: MoveNextSkill
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

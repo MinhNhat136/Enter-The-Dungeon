@@ -17,20 +17,18 @@ namespace Atomic.Character.Model
     [Flags]
     public enum CharacterActionState : short
     {
-        None = 0,
         MoveNextSkill = 1 << 0,
         Idle = 1 << 1,
-        SwappingWeapon = 1 << 2,
-        Rolling = 1 << 3,
-        BeginPrepareAttack = 1 << 4,
-        PreparingAttack = 1 << 5, 
-        EndPrepareAttack = 1 << 6,
-        BeginAttackMove = 1 << 7,
-        AttackMoving = 1 << 8,
-        EndAttackMove = 1 << 9,
-        BeginAttack = 1 << 10,
-        Attacking = 1 << 11,
-        EndAttack = 1 << 12,
+        Rolling = 1 << 2,
+        BeginPrepareAttack = 1 << 3,
+        PreparingAttack = 1 << 4, 
+        EndPrepareAttack = 1 << 5,
+        BeginAttackMove = 1 << 6,
+        AttackMoving = 1 << 7,
+        EndAttackMove = 1 << 8,
+        BeginAttack = 1 << 9,
+        Attacking = 1 << 10,
+        EndAttack = 1 << 11,
     }
     
     public enum Command : byte
@@ -38,6 +36,7 @@ namespace Atomic.Character.Model
         Move,
         Roll,
         PrepareAttack,
+        AttackMove,
         Attack,
         SwapWeapon,
     }
@@ -130,7 +129,7 @@ namespace Atomic.Character.Model
 
         [field: SerializeField]
         [field: EnumFlags]
-        public CharacterActionState CurrentActionState { get; set; }
+        public CharacterActionType CurrentActionState { get; set; }
         public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
         
         [field: SerializeField]
@@ -209,6 +208,10 @@ namespace Atomic.Character.Model
             {
                 MemorySpan = 1
             };
+            CurrentActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
+                                  CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
+                                  CharacterActionType.MoveNextSkill;
+            
             _healthController = new AiHealth();
             
             this.AttachControllerToModel(out _agentAnimatorController);

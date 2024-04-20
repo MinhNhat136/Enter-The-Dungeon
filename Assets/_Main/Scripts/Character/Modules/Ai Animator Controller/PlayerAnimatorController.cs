@@ -65,7 +65,6 @@ namespace Atomic.Character.Module
 
         public void ApplyRollAnimation()
         {
-            Debug.Log("play");
             _animator.CrossFade(AnimatorStates.Roll, 0.05f);
         }
 

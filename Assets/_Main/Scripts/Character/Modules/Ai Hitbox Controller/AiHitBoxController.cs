@@ -182,7 +182,7 @@ namespace Atomic.Character.Module
         private void RegisterCharacterAction()
         {
             RegisterActionTrigger(CharacterActionType.BeginRoll, () => SetColliderState(false));
-            RegisterActionTrigger(CharacterActionType.StopRoll, () => SetColliderState(true));
+            RegisterActionTrigger(CharacterActionType.EndRoll, () => SetColliderState(true));
             
         }
         

@@ -9023,14 +9023,21 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: TriggerCharacterAction
-    data: PrepareAttack
+    data: BeginPrepareAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.016666668
     functionName: TriggerCharacterAction
-    data: PrepareAttackCompleted
+    data: PreparingAttack
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.033333335
+    functionName: TriggerCharacterAction
+    data: EndPrepareAttack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
