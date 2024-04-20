@@ -71,8 +71,7 @@ namespace Atomic.Character.Module
 
         public void ApplyRangedAttack_Charge_Start_Animation()
         {
-            _animator.SetBool(AnimatorParameters.IsRangedAttack, true);
-        }
+            _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Start, 0.05f); }
 
         public void ApplyRangedAttack_Charge_Release_Animation()
         {

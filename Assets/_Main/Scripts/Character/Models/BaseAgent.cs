@@ -14,23 +14,8 @@ namespace Atomic.Character.Model
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-    [Flags]
-    public enum CharacterActionState : short
-    {
-        MoveNextSkill = 1 << 0,
-        Idle = 1 << 1,
-        Rolling = 1 << 2,
-        BeginPrepareAttack = 1 << 3,
-        PreparingAttack = 1 << 4, 
-        EndPrepareAttack = 1 << 5,
-        BeginAttackMove = 1 << 6,
-        AttackMoving = 1 << 7,
-        EndAttackMove = 1 << 8,
-        BeginAttack = 1 << 9,
-        Attacking = 1 << 10,
-        EndAttack = 1 << 11,
-    }
     
+    [Flags]
     public enum Command : byte
     {
         Move,
@@ -40,27 +25,6 @@ namespace Atomic.Character.Model
         Attack,
         SwapWeapon,
     }
-    
-    public class EnumFlagsAttribute : PropertyAttribute
-    {
-        public EnumFlagsAttribute() { }
-    }
-
-#if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
-    public class EnumFlagsAttributeDrawer : PropertyDrawer
-    {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.BeginChangeCheck();
-            int newValue = EditorGUI.MaskField(position, label, property.intValue, property.enumDisplayNames);
-            if (EditorGUI.EndChangeCheck())
-            {
-                property.intValue = newValue;
-            }
-        }
-    }
-#endif
     
     /// <summary>
     /// Base class for defining characters with modular control systems.
@@ -128,12 +92,12 @@ namespace Atomic.Character.Model
 
 
         [field: SerializeField]
-        [field: EnumFlags]
         public CharacterActionType CurrentActionState { get; set; }
+        public virtual CharacterActionType DefaultActionState { get; set; } 
         public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
         
         [field: SerializeField]
-        public Dictionary<Command, bool> CommandEvents { get; } = new(8);
+        public Command Command { get; set; }
         public CombatMode CurrentCombatMode { get; set; }
         
         //  Collections -----------------------------------
@@ -170,6 +134,12 @@ namespace Atomic.Character.Model
                 _agentManager = FindObjectOfType<AgentsManager>();
                 _agentManager.RegisterAgent(this);
 
+                DefaultActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
+                                      CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
+                                      CharacterActionType.MoveNextSkill;
+
+                CurrentActionState = DefaultActionState;
+                
                 AssignControllers();
             }
         }
@@ -208,9 +178,7 @@ namespace Atomic.Character.Model
             {
                 MemorySpan = 1
             };
-            CurrentActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
-                                  CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
-                                  CharacterActionType.MoveNextSkill;
+            
             
             _healthController = new AiHealth();
             
@@ -221,8 +189,6 @@ namespace Atomic.Character.Model
             this.AttachControllerToModel(out _hitBoxController);
             this.AttachControllerToModel(out _weaponVisualsController);
         }
-        
-        
         
         //  Event Handlers --------------------------------
         protected void RegisterActionTrigger(CharacterActionType actionType, Action action)

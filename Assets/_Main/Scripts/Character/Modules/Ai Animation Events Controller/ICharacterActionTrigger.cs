@@ -26,11 +26,14 @@ namespace Atomic.Character.Module
         Attacking = 1 << 12,
         EndAttack = 1 << 13,
         
-        MoveNextSkill = 1 << 14,
+        BeginHitDamage = 1 << 14,
+        EndHitDamage = 1 << 15,
         
-        BeginTrack = 1 << 15,
-        StopTrack = 1 << 16,
-        CustomAction = 1 << 17,
+        MoveNextSkill = 1 << 16,
+        
+        BeginTrack = 1 << 17,
+        StopTrack = 1 << 18,
+        CustomAction = 1 << 19,
     }
     
     public interface ICharacterActionTrigger 
