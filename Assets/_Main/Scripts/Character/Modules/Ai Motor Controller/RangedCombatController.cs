@@ -7,15 +7,45 @@ namespace Atomic.Character.Module
     public class RangedCombatController : MonoBehaviour, ICombatController, IInitializable
     {
         public RangedWeapon RangedWeapon;
-        
+
+        public void BeginPrepareAttack()
+        {
+        }
+
+        public void PreparingAttack()
+        {
+        }
+
+        public void EndPrepareAttack()
+        {
+        }
+
+        public void BeginAttackMove()
+        {
+        }
+
+        public void AttackMoving()
+        {
+        }
+
+        public void EndAttackMove()
+        {
+        }
+
         public void BeginAttack()
         {
-            Debug.Log("Begin ranged attack");
+        }
+
+        public void Attacking()
+        {
         }
 
         public void EndAttack()
         {
-            Debug.Log("end ranged attack");
+        }
+
+        public void CustomAction()
+        {
         }
 
         public bool IsInitialized { get; }

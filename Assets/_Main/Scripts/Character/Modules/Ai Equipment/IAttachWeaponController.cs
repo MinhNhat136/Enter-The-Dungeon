@@ -11,7 +11,8 @@ namespace  Atomic.Equipment
     public struct AttachPoint
     {
         public Vector3 Position;
-        public Quaternion Rotation; 
+        public Quaternion Rotation;
+        public Vector3 Scale;
     }
     
     public interface IAttachWeaponController : IInitializable

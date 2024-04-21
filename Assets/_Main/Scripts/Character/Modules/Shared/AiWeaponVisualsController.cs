@@ -70,7 +70,7 @@ namespace Atomic.Character.Module
         //  Other Methods ---------------------------------
         private void AttachDefaultWeapons()
         {
-            var bowSlot = GetAttachSlot(AttachWeaponType.Bow);
+            var bowSlot = GetAttachSlot(AttachWeaponType.Spear);
             var shotgunSlot = GetAttachSlot(AttachWeaponType.Shotgun);
 
             if (bowSlot != null)

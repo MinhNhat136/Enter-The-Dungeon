@@ -82,6 +82,7 @@ namespace Atomic.Character.Model
             InputControls.Character.Roll.started +=
                 _ =>
                 {
+                    if (Command.HasFlag(Command.Roll)) return;
                     Command |= Command.Roll;
                 };
             InputControls.Character.Attack.started +=
@@ -134,7 +135,6 @@ namespace Atomic.Character.Model
             {
                 CurrentActionState |= CharacterActionType.BeginPrepareAttack;
                 CurrentActionState &= ~CharacterActionType.EndPrepareAttack;
-                CurrentActionState &= ~CharacterActionType.MoveNextSkill;
             });
             RegisterActionTrigger(CharacterActionType.PreparingAttack, () =>
             {
@@ -159,7 +159,6 @@ namespace Atomic.Character.Model
             RegisterActionTrigger(CharacterActionType.BeginAttackMove, () =>
             {
                 CurrentActionState |= CharacterActionType.BeginAttackMove;
-                CurrentActionState &= ~CharacterActionType.MoveNextSkill;
             });
             RegisterActionTrigger(CharacterActionType.AttackMoving, () =>
             {
@@ -177,7 +176,6 @@ namespace Atomic.Character.Model
             RegisterActionTrigger(CharacterActionType.BeginAttack, () =>
             {
                 CurrentActionState |= CharacterActionType.BeginAttack;
-                CurrentActionState &= ~CharacterActionType.MoveNextSkill;
             });
             RegisterActionTrigger(CharacterActionType.Attacking, () =>
             {
@@ -228,18 +226,19 @@ namespace Atomic.Character.Model
         public void ApplyRoll() => MotorController.RollController.Roll();
 
         // Ranged Attack Behaviour
-        public void BeginPrepareAttack()
-        {
-            MotorController.LocomotionController.ApplyStop();
-        }
-
-        public void ApplyPreparingAttack()
-        {
-            
-        }
-
+        public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
+        public void PreparingAttack() => MotorController.CombatController.PreparingAttack();
+        public void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
+        
         public void BeginAttack() => MotorController.CombatController.BeginAttack();
+        public void Attacking() => MotorController.CombatController.Attacking();
         public void EndAttack() => MotorController.CombatController.EndAttack();
+
+        public void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
+        public void AttackMoving() => MotorController.CombatController.Attacking();
+        public void EndAttackMove() => MotorController.CombatController.EndAttackMove();
+
+        public void CustomActionAttack() => MotorController.CombatController.CustomAction();
 
         // Swap weapon
         public void SwapWeapon() => WeaponVisualsController.SwapWeapon();

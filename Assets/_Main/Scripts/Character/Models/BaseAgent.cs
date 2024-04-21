@@ -18,12 +18,12 @@ namespace Atomic.Character.Model
     [Flags]
     public enum Command : byte
     {
-        Move,
-        Roll,
-        PrepareAttack,
-        AttackMove,
-        Attack,
-        SwapWeapon,
+        Move = 1 << 0,
+        Roll = 1 << 1,
+        PrepareAttack = 1 << 2,
+        AttackMove = 1 << 3,
+        Attack = 1 << 4,
+        SwapWeapon = 1 << 5,
     }
     
     /// <summary>
@@ -139,6 +139,7 @@ namespace Atomic.Character.Model
                                       CharacterActionType.MoveNextSkill;
 
                 CurrentActionState = DefaultActionState;
+                Command |= Command.Move;
                 
                 AssignControllers();
             }
