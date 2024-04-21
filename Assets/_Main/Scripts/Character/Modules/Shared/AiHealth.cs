@@ -1,9 +1,8 @@
-﻿using Atomic.Character.Model;
-using Atomic.Core.Interface;
+﻿using Atomic.Core.Interface;
 using System;
 using UnityEngine.Events;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     [Serializable]
     public class AiHealth : IInitializableWithBaseModel<BaseAgent>

@@ -1,6 +1,6 @@
 using System;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
     public enum PassiveEffect

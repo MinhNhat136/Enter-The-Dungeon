@@ -1,4 +1,4 @@
-namespace StickManFight.Equipments
+namespace Atomic.Equipment
 {
     public enum SlotIndex
     {

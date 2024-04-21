@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using Atomic.Character.Model;
 using Atomic.Core.Interface;
-using ParadoxNotion.Serialization.FullSerializer;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 

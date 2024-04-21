@@ -1,11 +1,7 @@
-using System;
-using System.Linq;
-using Atomic.Character.Module;
 using Atomic.Equipment;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Atomic.Character.Model
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 
@@ -22,7 +18,29 @@ namespace Atomic.Character.Model
         //  Properties ------------------------------------
         private PlayerControls InputControls { get; set; }
         public bool IsMovement => !Mathf.Approximately(MotorController.MoveInput.sqrMagnitude, 0f);
-        public event Action Interrupt;
+        
+        #region PreConditions
+
+        public bool NeedInterruptAction => !CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
+                                           !CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack) &&
+                                           !CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
+        
+        public bool CanMoveAgain => CurrentActionState.HasFlag(CharacterActionType.MoveNextSkill);
+        
+        public bool CanPerformRollAgain => Command.HasFlag(Command.Roll);
+        
+        public bool CanPerformPrepareAttackAgain =>Command.HasFlag(Command.PrepareAttack);
+        
+        public bool CanPerformAttackMoveAgain => CurrentActionState.HasFlag(CharacterActionType.BeginAttackMove) &&
+                                                 CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack);
+
+        public bool CanPerformAttackAgain => Command.HasFlag(Command.Attack);
+        
+        public bool CanPerformSwapWeaponAgain => Command.HasFlag(Command.SwapWeapon) &&
+                                                 CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
+                                                 CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack) &&
+                                                 CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
+        #endregion
         
         //  Fields ----------------------------------------
         private AttachWeaponController _currentAttachWeapon;
@@ -68,7 +86,7 @@ namespace Atomic.Character.Model
 
         //  Other Methods ---------------------------------
 
-        #region Assign Controls
+        #region Assign
 
         public override void Assign()
         {
@@ -79,26 +97,10 @@ namespace Atomic.Character.Model
 
         private void AssignInputEvents()
         {
-            InputControls.Character.Roll.started +=
-                _ =>
-                {
-                    if (Command.HasFlag(Command.Roll)) return;
-                    Command |= Command.Roll;
-                };
-            InputControls.Character.Attack.started +=
-                _ =>
-                {
-                    Command |= Command.PrepareAttack;
-                };
-            InputControls.Character.Attack.canceled +=
-                _ =>
-                {
-                    if (!Command.HasFlag(Command.PrepareAttack)) return;
-                    Command &= ~Command.PrepareAttack;
-                    Command |= Command.Attack;
-                };
-            InputControls.Character.Movement.performed +=
-                context => MotorController.MoveInput = context.ReadValue<Vector2>();
+            InputControls.Character.Roll.started += _ => ApplyRollCommand();
+            InputControls.Character.Attack.started += _ => ApplyPrepareAttackCommand();
+            InputControls.Character.Attack.canceled += _ => ApplyAttackCommand();
+            InputControls.Character.Movement.performed += context => MotorController.MoveInput = context.ReadValue<Vector2>();
             InputControls.Character.Movement.canceled +=
                 _ =>
                 {
@@ -106,8 +108,11 @@ namespace Atomic.Character.Model
                     MotorController.MoveInput = Vector2.zero;
                 };
             InputControls.Character.SwapWeapon.started +=
-                _ => Command |= Command.SwapWeapon;
+                _ => ApplySwapWeaponCommand();
         }
+
+        
+
 
         private void AssignCharacterActionEvents()
         {
@@ -200,17 +205,17 @@ namespace Atomic.Character.Model
 
         private void AssignControllerEvent()
         {
-            WeaponVisualsController.OnSwapWeapon += (combatMode) =>
+            WeaponVisualsController.OnSwapWeapon += (combatMode, weapon) =>
             {
                 MotorController.SwitchCombatMode(combatMode);
-                CurrentCombatMode = combatMode;
+                Debug.Log(weapon);
+                MotorController.CombatController.CurrentWeapon = weapon;
             };
         }
 
         #endregion
 
         #region Behaviours
-
         // Shared
         public void SetForwardDirection() => MotorController.SetForwardDirection();
         public void ApplyDirection() => MotorController.ApplyDirection();
@@ -224,6 +229,9 @@ namespace Atomic.Character.Model
 
         // Roll Behaviour 
         public void ApplyRoll() => MotorController.RollController.Roll();
+
+        public void SetWeaponVisible(bool value) =>
+            MotorController.CombatController.CurrentWeapon.WeaponRoot.SetActive(value);
 
         // Ranged Attack Behaviour
         public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
@@ -242,26 +250,33 @@ namespace Atomic.Character.Model
 
         // Swap weapon
         public void SwapWeapon() => WeaponVisualsController.SwapWeapon();
-
-        public void SwitchCombatMode()
-        {
-            Debug.Log("combat mode");
-        }
-
-        // Return Command 
+        #endregion
+        
+        #region Command
+        // Command 
         public void ApplyPerformMovementCommand() => Command |= Command.Move;
-        public void ApplyPerformRollCommand()
+        public void ApplySwapWeaponCommand() => Command |= Command.SwapWeapon;
+        public void ApplyRollCommand()
         {
+            if (Command.HasFlag(Command.Roll)) return;
             Command |= Command.Roll;
+        }
+        public void ApplyPrepareAttackCommand()
+        {
+            if (Command.HasFlag(Command.PrepareAttack)) return;
+            Command |= Command.PrepareAttack;
+        }
+        public void ApplyAttackCommand()
+        {
+            if (!Command.HasFlag(Command.PrepareAttack)) return;
+            Command &= ~Command.PrepareAttack;
+            Command |= Command.Attack;
         }
 
         public void CancelPerformSwapWeaponCommand() => Command &= ~Command.SwapWeapon;
         public void CancelPerformRollCommand() => Command &= ~Command.Roll;
         public void CancelPerformPrepareAttackCommand() => Command &= ~Command.PrepareAttack;
-        public void CancelPerformAttackCommand()
-        {
-            Command &= ~Command.Attack;
-        }
+        public void CancelPerformAttackCommand() => Command &= ~Command.Attack;
 
         public void ResetPerformCommandExcept(Command command)
         {
@@ -270,33 +285,7 @@ namespace Atomic.Character.Model
         }
 
         public void ResetState() => CurrentActionState = DefaultActionState;
-
         #endregion
-
-        #region PreConditions
-
-        public bool NeedInterruptAction => !CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
-                                           !CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack) &&
-                                           !CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
-        public bool CanMoveAgain => CurrentActionState.HasFlag(CharacterActionType.MoveNextSkill);
-
-        public bool CanPerformRollAgain => Command.HasFlag(Command.Roll);
-
-
-        public bool CanPerformPrepareAttackAgain =>Command.HasFlag(Command.PrepareAttack);
-
-        public bool CanPerformAttackMoveAgain => CurrentActionState.HasFlag(CharacterActionType.BeginAttackMove) &&
-                                                 CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack);
-
-        public bool CanPerformAttackAgain => Command.HasFlag(Command.Attack);
-                                             
-
-        public bool CanPerformSwapWeaponAgain => Command.HasFlag(Command.SwapWeapon) &&
-                                                 CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
-                                                 CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack) &&
-                                                 CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
-        #endregion
-
 
         //  Event Handlers --------------------------------
     }

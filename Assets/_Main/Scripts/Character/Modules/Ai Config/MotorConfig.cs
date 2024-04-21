@@ -1,9 +1,8 @@
-using Atomic.Character.Module;
 using Atomic.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Atomic.Character.Config
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
     public enum LocomotionType

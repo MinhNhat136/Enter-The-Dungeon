@@ -1,5 +1,5 @@
 using System;
-using Atomic.Character.Module;
+using Atomic.Character;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -15,24 +15,10 @@ namespace Atomic.Equipment
     public class AttachWeaponController : MonoBehaviour, IAttachWeaponController
     {
         //  Events ----------------------------------------
-        private event Action _onAttach;
-        private event Action _onDetach;
-        private event Action<CombatMode> _onActivate;
+        private event Action<CombatMode, Weapon> _onActivate;
 
         //  Properties ------------------------------------
-        public event Action OnAttach
-        {
-            add => _onAttach += value;
-            remove => _onAttach -= value;
-        }
-
-        public event Action OnDetach
-        {
-            add => _onDetach += value;
-            remove => _onDetach -= value;
-        }
-        
-        public event Action<CombatMode> OnActivate
+        public event Action<CombatMode, Weapon> OnActivate
         {
             add => _onActivate += value;
             remove => _onActivate -= value;
@@ -41,10 +27,10 @@ namespace Atomic.Equipment
         public AttachWeaponType WeaponType => weaponType;
         
         [field: SerializeField]
-        public bool IsAttach { get; set; } = false; 
+        public bool IsAttach { get; set; }
         
         [field: SerializeField]
-        public bool IsActivated { get; set; } = false;
+        public bool IsActivated { get; set; }
         
         public bool IsInitialized { get; set; }
         
@@ -57,7 +43,6 @@ namespace Atomic.Equipment
         [SerializeField] private RuntimeAnimatorController runtimeAnimatorController;
         [SerializeField] private AttachPoint attachPoint;
         
-        private Animator animator;
         private Weapon _weapon;
         
         //  Initialization  -------------------------------
@@ -66,7 +51,6 @@ namespace Atomic.Equipment
             if (!IsInitialized)
             {
                 IsInitialized = true;
-                animator = GetComponentInParent<Animator>();
                 
                 transformParent.gameObject.SetActive(false);
             }
@@ -89,8 +73,7 @@ namespace Atomic.Equipment
                 _weapon = Instantiate(weaponPrefab, transformParent, true);
                 _weapon.transform.localPosition = attachPoint.Position;
                 _weapon.transform.localRotation = attachPoint.Rotation;
-                animator.runtimeAnimatorController = runtimeAnimatorController;
-                _onAttach?.Invoke();
+                _weapon.WeaponRoot = transformParent.gameObject;
             }
         }
 
@@ -102,15 +85,17 @@ namespace Atomic.Equipment
                 Activate(false);
                 Destroy(_weapon.gameObject);
                 _weapon = null;
-                _onDetach?.Invoke();
             }
         }
 
-        public void Activate(bool value)
+        public void Activate(bool value, Animator animator = null)
         {
             IsActivated = value;
             transformParent.gameObject.SetActive(value);
-            animator.runtimeAnimatorController = value ? runtimeAnimatorController : null;
+            if (!value) return;
+            
+            animator.runtimeAnimatorController = runtimeAnimatorController;
+            _onActivate?.Invoke(combatMode, _weapon);
         }
 
         //  Event Handlers --------------------------------

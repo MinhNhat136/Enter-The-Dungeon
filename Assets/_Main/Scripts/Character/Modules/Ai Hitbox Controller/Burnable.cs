@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public class Burnable : IPassiveEffect
     {

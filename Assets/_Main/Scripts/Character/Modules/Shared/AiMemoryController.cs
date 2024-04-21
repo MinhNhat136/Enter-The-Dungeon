@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 

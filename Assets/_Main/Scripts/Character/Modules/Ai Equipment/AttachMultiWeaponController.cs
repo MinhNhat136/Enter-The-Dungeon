@@ -1,5 +1,5 @@
 using System;
-using Atomic.Character.Module;
+using Atomic.Character;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -57,7 +57,6 @@ namespace Atomic.Equipment
         [SerializeField] private RuntimeAnimatorController runtimeAnimatorController;
         [SerializeField] private AttachPoint attachPoint;
         
-        private Animator animator;
         private Weapon _weapon;
         
         //  Initialization  -------------------------------
@@ -66,7 +65,6 @@ namespace Atomic.Equipment
             if (!IsInitialized)
             {
                 IsInitialized = true;
-                animator = GetComponentInParent<Animator>();
                 
                 transformParent.gameObject.SetActive(false);
             }
@@ -89,7 +87,6 @@ namespace Atomic.Equipment
                 _weapon = Instantiate(weaponPrefab, transformParent, true);
                 _weapon.transform.localPosition = attachPoint.Position;
                 _weapon.transform.localRotation = attachPoint.Rotation;
-                animator.runtimeAnimatorController = runtimeAnimatorController;
                 _onAttach?.Invoke();
             }
         }
@@ -106,7 +103,7 @@ namespace Atomic.Equipment
             }
         }
 
-        public void Activate(bool value)
+        public void Activate(bool value, Animator animator = null)
         {
             IsActivated = value;
             transformParent.gameObject.SetActive(value);

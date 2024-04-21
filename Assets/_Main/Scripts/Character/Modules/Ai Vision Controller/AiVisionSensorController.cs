@@ -1,10 +1,8 @@
 using System;
-using Atomic.Character.Model;
 using System.Collections.Generic;
-using Atomic.Character.Config;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 

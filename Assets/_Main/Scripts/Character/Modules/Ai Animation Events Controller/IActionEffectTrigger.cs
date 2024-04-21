@@ -1,4 +1,4 @@
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public enum ActionEffectType
     {

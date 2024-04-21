@@ -1,7 +1,7 @@
 using System;
-using System.Numerics;
-using Atomic.Character.Module;
+using Atomic.Character;
 using Atomic.Core.Interface;
+using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
@@ -17,19 +17,7 @@ namespace  Atomic.Equipment
     
     public interface IAttachWeaponController : IInitializable
     {
-        public event Action OnAttach 
-        { 
-            add{}
-            remove {}
-        }
-
-        public event Action OnDetach
-        {
-            add {}
-            remove {}
-        }
-        
-        public event Action<CombatMode> OnActivate
+        public event Action<CombatMode, Weapon> OnActivate
         {
             add{}
             remove{}
@@ -42,6 +30,6 @@ namespace  Atomic.Equipment
         
         public void Attach();
         public void Detach();
-        public void Activate(bool value);
+        public void Activate(bool value, Animator animator = null);
     }
 }

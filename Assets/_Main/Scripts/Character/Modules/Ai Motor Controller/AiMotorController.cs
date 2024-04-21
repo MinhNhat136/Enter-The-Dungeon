@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
-using Atomic.Character.Config;
-using Atomic.Character.Model;
 using Atomic.Core.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 
@@ -24,6 +22,7 @@ namespace Atomic.Character.Module
 
         
         //  Properties ------------------------------------
+        [field: SerializeField]
         public ICombatController CombatController { get; set; }
         public ILocomotionController LocomotionController { get; set;}
         public AiRollController RollController { get; set; }

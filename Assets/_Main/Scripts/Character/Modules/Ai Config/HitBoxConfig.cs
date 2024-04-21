@@ -1,11 +1,10 @@
 ﻿using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     [CreateAssetMenu(menuName = "Ai Module Config /Hitbox")]
     public class HitBoxConfig : SerializedScriptableObject

@@ -1,7 +1,6 @@
-using Atomic.Character.Module;
 using UnityEngine;
 
-namespace Atomic.Character.Config
+namespace Atomic.Character
 {
     [CreateAssetMenu(menuName = "Ai Module Config/Vision/Default")]
     public class VisionConfig : ScriptableObject

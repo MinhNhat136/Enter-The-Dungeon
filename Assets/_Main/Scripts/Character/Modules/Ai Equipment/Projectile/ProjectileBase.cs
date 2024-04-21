@@ -1,4 +1,4 @@
-using Atomic.Character.Model;
+using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Events;
 

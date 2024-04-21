@@ -1,9 +1,8 @@
-using Atomic.Character.Model;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
     public struct DamageMessage

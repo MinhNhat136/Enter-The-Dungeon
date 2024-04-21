@@ -1,8 +1,7 @@
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     /// <summary>
     /// OnAnimatorMove Event Sender 

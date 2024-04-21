@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using Atomic.Character.Module;
 using Atomic.Core;
 using Atomic.Core.Interface;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-namespace Atomic.Character.Model
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-    
     [Flags]
     public enum Command : byte
     {
@@ -43,6 +40,14 @@ namespace Atomic.Character.Model
         public bool IsInitialized => _isInitialized;
         public Transform BodyWeakPoint => bodyWeakPoint;
         public BaseAgent TargetAgent { get; set; }
+
+        protected virtual CharacterActionType DefaultActionState { get; set; }
+        private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
+
+        [field: SerializeField]
+        public CharacterActionType CurrentActionState { get; set; }
+        [field: SerializeField]
+        public Command Command { get; set; }
 
         #endregion
 
@@ -89,16 +94,6 @@ namespace Atomic.Character.Model
         public virtual AiHealth HealthController => _healthController;
 
         #endregion
-
-
-        [field: SerializeField]
-        public CharacterActionType CurrentActionState { get; set; }
-        public virtual CharacterActionType DefaultActionState { get; set; } 
-        public Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
-        
-        [field: SerializeField]
-        public Command Command { get; set; }
-        public CombatMode CurrentCombatMode { get; set; }
         
         //  Collections -----------------------------------
 
@@ -106,11 +101,9 @@ namespace Atomic.Character.Model
         //  Fields ----------------------------------------
         [FormerlySerializedAs("_bodyWeakPoint")] 
         [SerializeField] private Transform bodyWeakPoint;
-
         private bool _isInitialized;
-
         private AgentsManager _agentManager;
-
+        
         #region Controller
         private IAgentAnimator _agentAnimatorController;
         private IVisionController _visionController;
@@ -118,13 +111,11 @@ namespace Atomic.Character.Model
         private AiHitBoxController _hitBoxController;
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
-        #endregion
-
-        #region Shared Controller
+        
         private AiHealth _healthController;
         private AiMemoryController _memoryController;
         #endregion
-
+        
         //  Initialization  -------------------------------
         public virtual void Initialize()
         {
@@ -179,7 +170,6 @@ namespace Atomic.Character.Model
             {
                 MemorySpan = 1
             };
-            
             
             _healthController = new AiHealth();
             

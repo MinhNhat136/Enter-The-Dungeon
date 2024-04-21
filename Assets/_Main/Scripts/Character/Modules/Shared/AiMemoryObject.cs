@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 

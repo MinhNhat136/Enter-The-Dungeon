@@ -1,7 +1,7 @@
 using Atomic.Equipment;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public class MeleeCombatController : MonoBehaviour, ICombatController
     {

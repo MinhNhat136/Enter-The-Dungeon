@@ -1,9 +1,7 @@
-using Atomic.Character.Model;
 using System.Linq;
-using Atomic.Character.Config;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 

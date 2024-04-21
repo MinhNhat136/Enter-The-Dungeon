@@ -1,4 +1,4 @@
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     /// <summary>
     /// Interface to receive events from <seealso cref="AnimatorEventsListenerWithRootMotion"/>

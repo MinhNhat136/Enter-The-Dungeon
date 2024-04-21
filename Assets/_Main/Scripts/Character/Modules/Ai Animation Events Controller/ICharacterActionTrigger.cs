@@ -1,7 +1,7 @@
 
 using System;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     [Flags]
     public enum CharacterActionType

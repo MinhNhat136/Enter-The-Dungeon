@@ -1,6 +1,6 @@
 using Atomic.Equipment;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public enum CombatMode
     {
@@ -10,6 +10,8 @@ namespace Atomic.Character.Module
     
     public interface ICombatController
     {
+        public Weapon CurrentWeapon { get; set; }
+        
         public void BeginPrepareAttack();
         public void PreparingAttack(); 
         public void EndPrepareAttack();

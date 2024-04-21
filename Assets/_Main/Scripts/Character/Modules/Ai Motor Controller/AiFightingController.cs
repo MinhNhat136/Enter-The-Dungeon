@@ -1,8 +1,7 @@
-using Atomic.Character.Model;
 using Atomic.Core.Interface;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public class AiFightingController : MonoBehaviour, ITickable
     {

@@ -1,4 +1,4 @@
-using Atomic.Character.Model;
+using Atomic.Character;
 using Atomic.Core.Interface;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 

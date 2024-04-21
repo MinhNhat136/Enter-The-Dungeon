@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Atomic.Character.Model;
 using Atomic.Core.Interface;
 using Atomic.Equipment;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
    
     //  Namespace Properties ------------------------------
@@ -18,11 +17,12 @@ namespace Atomic.Character.Module
     public class AiWeaponVisualsController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
         //  Events ----------------------------------------
-        public event Action<CombatMode> OnSwapWeapon;
+        public event Action<CombatMode, Weapon> OnSwapWeapon;
 
         //  Properties ------------------------------------
         public bool IsInitialized { get; private set; }
         public BaseAgent Model { get; private set; }
+        public CombatMode CombatMode { get; private set; }
         public List<IAttachWeaponController> WeaponSlots { get; set; }
         public List<IAttachWeaponController> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.IsAttach).ToList();
         public IAttachWeaponController CurrentActivatedSlot => WeaponSlots.First(slot => slot.IsActivated);
@@ -32,7 +32,7 @@ namespace Atomic.Character.Module
         
         
         //  Fields ----------------------------------------
-
+        private Animator _animator; 
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -42,13 +42,14 @@ namespace Atomic.Character.Module
                 IsInitialized = true;
                 Model = model;
 
+                _animator = GetComponentInChildren<Animator>();
                 WeaponSlots = GetComponentsInChildren<IAttachWeaponController>().ToList();
                 foreach (var weaponSlot in WeaponSlots)
                 {
                     weaponSlot.Initialize();
-                    weaponSlot.OnActivate += (combatMode) =>
+                    weaponSlot.OnActivate += (combatMode, weapon) =>
                     {
-                        OnSwapWeapon?.Invoke(combatMode);
+                        OnSwapWeapon?.Invoke(combatMode, weapon);
                     };
                 }    
                 AttachDefaultWeapons();
@@ -76,13 +77,13 @@ namespace Atomic.Character.Module
             if (bowSlot != null)
             {
                 bowSlot.Attach();
-                bowSlot.Activate(false);
+                bowSlot.Activate(false, _animator);
             }
 
             if (shotgunSlot != null)
             {
                 shotgunSlot.Attach();
-                shotgunSlot.Activate(true);
+                shotgunSlot.Activate(true, _animator);
             }
         }
         
@@ -97,10 +98,10 @@ namespace Atomic.Character.Module
             }
             int indexUsedSlot = CurrentAttachedSlot.IndexOf(CurrentActivatedSlot);
             
-            CurrentActivatedSlot.Activate(false);
+            CurrentActivatedSlot.Activate(false, _animator);
             indexUsedSlot++;
             if (indexUsedSlot == CurrentAttachedSlot.Count) indexUsedSlot = 0;
-            CurrentAttachedSlot[indexUsedSlot].Activate(true);
+            CurrentAttachedSlot[indexUsedSlot].Activate(true, _animator);
         }
 
         

@@ -1,7 +1,6 @@
-using Atomic.Character.Model;
 using Atomic.Core.Interface;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public interface ITargetingController : IInitializableWithBaseModel<BaseAgent>
     {

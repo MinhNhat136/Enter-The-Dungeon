@@ -1,4 +1,4 @@
-namespace Atomic.Character.Model
+namespace Atomic.Character
 {
 
     public class TestAgent : BaseAgent

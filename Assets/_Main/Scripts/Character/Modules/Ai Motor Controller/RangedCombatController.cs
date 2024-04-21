@@ -1,12 +1,29 @@
+using System;
 using Atomic.Core.Interface;
 using Atomic.Equipment;
 using UnityEngine;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public class RangedCombatController : MonoBehaviour, ICombatController, IInitializable
     {
         public RangedWeapon RangedWeapon;
+
+        public Weapon CurrentWeapon
+        {
+            get => RangedWeapon;
+            set
+            {
+                if (value is RangedWeapon weapon)
+                {
+                    RangedWeapon = weapon;
+                }
+                else
+                {
+                    throw new Exception("Ranged weapon invalid");
+                }
+            }
+        }
 
         public void BeginPrepareAttack()
         {

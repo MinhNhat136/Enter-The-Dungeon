@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Atomic.Character.Model;
-using Atomic.Character.Module;
+using Atomic.Character;
 using Atomic.Core.Interface;
 using UnityEngine;
 
@@ -24,7 +23,12 @@ namespace Atomic.Equipment
         public BaseAgent Owner { get; set; }
         public string WeaponName { get; set; }
         public Sprite WeaponIcon { get; set; }
-        public GameObject WeaponRoot => weaponRoot;
+        public GameObject WeaponRoot
+        {
+            get => weaponRoot;
+            set => weaponRoot = value;
+        }
+
         public bool IsWeaponActive { get; set; }
         public bool IsInitialized { get; private set; }
         

@@ -1,6 +1,6 @@
 using System;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     public class Freezeable : IPassiveEffect
     {

@@ -2,7 +2,7 @@ using Atomic.Core.Interface;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Atomic.Character.Module
+namespace Atomic.Character
 {
     //  Namespace Properties ------------------------------
 
