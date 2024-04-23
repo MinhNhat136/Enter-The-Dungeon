@@ -7,29 +7,36 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace  Atomic.Equipment
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
     [Serializable]
     public struct AttachPoint
     {
         public Vector3 Position;
         public Quaternion Rotation;
-        public Vector3 Scale;
     }
-    
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
     public interface IAttachWeaponController : IInitializable
     {
+
+        //  Properties ------------------------------------
         public event Action<CombatMode, Weapon> OnActivate
         {
             add{}
             remove{}
         }
-        
+        public Weapon WeaponPrefab { get; }
+
         public bool IsAttach { get; set; }
         public bool IsActivated { get; set; }
         
-        public AttachWeaponType WeaponType { get; }
-        
+        //  Other Methods ---------------------------------
         public void Attach();
         public void Detach();
-        public void Activate(bool value, Animator animator = null);
-    }
+        public void Activate(bool value);
+    
+        }
 }

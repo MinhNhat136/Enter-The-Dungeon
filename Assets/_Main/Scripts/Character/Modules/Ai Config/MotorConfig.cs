@@ -74,7 +74,7 @@ namespace Atomic.Character
     /// Configuration asset defining the motor abilities and behaviors for AI agents.
     /// </summary>
     [CreateAssetMenu(menuName = "Ai Module Config/Motor")]
-    public class MotorConfig : BaseSO
+    public class MotorConfig : SerializedScriptableObject
     {
         [Header("ABILITIES")] 
         public bool canWalk;

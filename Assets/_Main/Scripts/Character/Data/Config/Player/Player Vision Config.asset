@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Vision Config
   m_EditorClassIdentifier: 
   Distance: 10
-  Angle: 30
+  Angle: 180
   Height: 3
   ScanFrequency: 30
   MaxObjectRemember: 16

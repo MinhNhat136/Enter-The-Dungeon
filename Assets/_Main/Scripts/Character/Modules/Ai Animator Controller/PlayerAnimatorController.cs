@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Atomic.Equipment;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -10,7 +13,7 @@ namespace Atomic.Character
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PlayerAnimatorController : MonoBehaviour, IAgentAnimator, ICharacterActionTrigger, IActionEffectTrigger
+    public class PlayerAnimatorController : SerializedMonoBehaviour, IAgentAnimator
     {
 
         //  Events ----------------------------------------
@@ -25,6 +28,9 @@ namespace Atomic.Character
         private Animator _animator;
 
         private bool _isInitialized;
+
+        [field: SerializeField]
+        private Dictionary<AttachWeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
 
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -62,20 +68,15 @@ namespace Atomic.Character
             _animator.SetFloat(AnimatorParameters.InputVertical, 0, .1f, Time.deltaTime);
         }
 
-        public void ApplyRollAnimation()
-        {
-            _animator.CrossFade(AnimatorStates.Roll, 0.05f);
-        }
+        public void ApplyRollAnimation() => _animator.CrossFade(AnimatorStates.Roll, 0.05f);
 
+        public void ApplyRangedAttack_Charge_Start_Animation() => _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Start, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Start_Animation()
-        {
-            _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Start, 0.05f); }
+        public void ApplyRangedAttack_Charge_Release_Animation() => _animator.Play(AnimatorStates.RangedAttack_Charge_Release);
 
-        public void ApplyRangedAttack_Charge_Release_Animation()
+        public void ApplyMeleeAttack(int combo)
         {
-            _animator.Play(AnimatorStates.RangedAttack_Charge_Release);
-            _animator.SetBool(AnimatorParameters.IsRangedAttack, false);
+            _animator.Play(AnimatorStates.GetMeleeAttackComboHash(1));
         }
 
         public void ApplySummonAnimation()
@@ -91,16 +92,17 @@ namespace Atomic.Character
         {
 
         }
+
+        public void SwitchAnimator(AttachWeaponType weaponType)
+        {
+            if (_animatorMatchWithWeapons.TryGetValue(weaponType,
+                    out RuntimeAnimatorController runtimeAnimatorController))
+            {
+                _animator.runtimeAnimatorController = runtimeAnimatorController;
+            }
+        }
         
         //  Event Handlers --------------------------------
-
-        public void OnCharacterActionTrigger(CharacterActionType actionType)
-        {
-        }
-
-        public void OnActionEffectTrigger(ActionEffectType effectType)
-        {
-        }
     }
 }
 

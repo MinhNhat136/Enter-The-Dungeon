@@ -17,7 +17,6 @@ namespace Atomic.Character
     public class AiWeaponVisualsController : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
         //  Events ----------------------------------------
-        public event Action<CombatMode, Weapon> OnSwapWeapon;
 
         //  Properties ------------------------------------
         public bool IsInitialized { get; private set; }
@@ -32,7 +31,6 @@ namespace Atomic.Character
         
         
         //  Fields ----------------------------------------
-        private Animator _animator; 
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -42,17 +40,16 @@ namespace Atomic.Character
                 IsInitialized = true;
                 Model = model;
 
-                _animator = GetComponentInChildren<Animator>();
                 WeaponSlots = GetComponentsInChildren<IAttachWeaponController>().ToList();
                 foreach (var weaponSlot in WeaponSlots)
                 {
                     weaponSlot.Initialize();
                     weaponSlot.OnActivate += (combatMode, weapon) =>
                     {
-                        OnSwapWeapon?.Invoke(combatMode, weapon);
+                        Model.CurrentWeapon = weapon;
+                        Model.CurrentCombatMode = combatMode;
                     };
                 }    
-                AttachDefaultWeapons();
             }
         }
 
@@ -69,7 +66,7 @@ namespace Atomic.Character
 
 
         //  Other Methods ---------------------------------
-        private void AttachDefaultWeapons()
+        public void AttachDefaultWeapons()
         {
             var bowSlot = GetAttachSlot(AttachWeaponType.Spear);
             var shotgunSlot = GetAttachSlot(AttachWeaponType.Shotgun);
@@ -77,20 +74,20 @@ namespace Atomic.Character
             if (bowSlot != null)
             {
                 bowSlot.Attach();
-                bowSlot.Activate(false, _animator);
+                bowSlot.Activate(false);
             }
 
             if (shotgunSlot != null)
             {
                 shotgunSlot.Attach();
-                shotgunSlot.Activate(true, _animator);
+                shotgunSlot.Activate(true);
             }
         }
         
-        public IAttachWeaponController GetAttachSlot(AttachWeaponType weapon) => WeaponSlots.Find(attachSlots => attachSlots.WeaponType == weapon);
+        public IAttachWeaponController GetAttachSlot(AttachWeaponType weaponType) => WeaponSlots.Find(attachSlots => attachSlots.WeaponPrefab.WeaponType == weaponType);
         
 
-        public void SwapWeapon()
+        public void ActivateOtherWeapon()
         {
             if (CurrentAttachedSlot.Count <= 1)
             {
@@ -98,10 +95,10 @@ namespace Atomic.Character
             }
             int indexUsedSlot = CurrentAttachedSlot.IndexOf(CurrentActivatedSlot);
             
-            CurrentActivatedSlot.Activate(false, _animator);
+            CurrentActivatedSlot.Activate(false);
             indexUsedSlot++;
             if (indexUsedSlot == CurrentAttachedSlot.Count) indexUsedSlot = 0;
-            CurrentAttachedSlot[indexUsedSlot].Activate(true, _animator);
+            CurrentAttachedSlot[indexUsedSlot].Activate(true);
         }
 
         

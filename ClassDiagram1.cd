@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Atomic.Character.BaseAgent" Collapsed="true">
+    <Position X="18.25" Y="2.75" Width="1.5" />
+    <AssociationLine Name="_agentAnimatorController" Type="Atomic.Character.IAgentAnimator" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.25" Y="3.125" />
+        <Point X="14.5" Y="3.125" />
+        <Point X="14.5" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_visionController" Type="Atomic.Character.IVisionController" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.25" Y="3.312" />
+        <Point X="16.5" Y="3.312" />
+        <Point X="16.5" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_hitBoxController" Type="Atomic.Character.AiHitBoxController" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.75" Y="3.125" />
+        <Point X="23.5" Y="3.125" />
+        <Point X="23.5" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_weaponVisualsController" Type="Atomic.Character.AiWeaponVisualsController" ManuallyRouted="true">
+      <Path>
+        <Point X="18.25" Y="3" />
+        <Point X="13.062" Y="3" />
+        <Point X="13.062" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_healthController" Type="Atomic.Character.AiHealth" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.75" Y="3" />
+        <Point X="25.25" Y="3" />
+        <Point X="25.25" Y="6" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_memoryController" Type="Atomic.Character.AiMemoryController" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.75" Y="3.312" />
+        <Point X="21.75" Y="3.312" />
+        <Point X="21.75" Y="6" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>CCIBAAQwASALIQAAAgAABAgSAUgAACAgEQIiBAIwAEA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Models\BaseAgent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_agentManager" />
+      <Field Name="_agentAnimatorController" />
+      <Field Name="_visionController" />
+      <Field Name="_targetingController" />
+      <Field Name="_hitBoxController" />
+      <Field Name="_motorController" />
+      <Field Name="_weaponVisualsController" />
+      <Field Name="_healthController" />
+      <Field Name="_memoryController" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Character.PlayerAgent" Collapsed="true">
+    <Position X="15.25" Y="1" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="Atomic.Character.BaseAgent" FixedFromPoint="true">
+      <Path>
+        <Point X="18.5" Y="2.75" />
+        <Point X="18.5" Y="2.066" />
+        <Point X="16" Y="2.066" />
+        <Point X="16" Y="1.691" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>CAEYAASGDIIQYRABp6BEEgMCAACAAAEuCAYAAgBAKEA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Models\PlayerAgent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AgentsManager" Collapsed="true">
+    <Position X="18.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAABAAAAAAAAAAAAAgEAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\AgentsManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.Character.AiHealth" Collapsed="true">
+    <Position X="24.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEEAAQAEABCQAAAhAAAAQAAAgAAAAAAAgABAAAABA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Shared\AiHealth.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Character.AiHitBoxController" Collapsed="true">
+    <Position X="22.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAUChsBAQAAAgQCAAACAUgpCCJQIAgABAoAQAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Hitbox Controller\AiHitBoxController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Character.AiMemoryController" Collapsed="true">
+    <Position X="21" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAIgAAAgABAUIAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Shared\AiMemoryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.Character.AiMotorController" Collapsed="true">
+    <Position X="19.25" Y="6" Width="1.5" />
+    <AssociationLine Name="LocomotionController" Type="Atomic.Character.ILocomotionController" FixedFromPoint="true">
+      <Path>
+        <Point X="20" Y="6.691" />
+        <Point X="20" Y="8" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="RollController" Type="Atomic.Character.AiRollController" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="19.594" Y="6.691" />
+        <Point X="19.594" Y="7.299" />
+        <Point X="17.938" Y="7.299" />
+        <Point X="17.938" Y="8" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.118" Y="0.081" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="CombatController" Type="Atomic.Character.ICombatController" ManuallyRouted="true">
+      <Path>
+        <Point X="20.438" Y="6.691" />
+        <Point X="20.438" Y="7.376" />
+        <Point X="22.062" Y="7.376" />
+        <Point X="22.062" Y="8" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAACAIAAAQAAIAAAAAZAAAgAgAAEAAgCBAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Motor Controller\AiMotorController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CombatController" />
+      <Property Name="LocomotionController" />
+      <Property Name="RollController" />
+      <Property Name="Model" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Character.AiWeaponVisualsController" Collapsed="true">
+    <Position X="12" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAABAAQAAAAAUAAAKAAwAAAAAoAgAFAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Shared\AiWeaponVisualsController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Model" />
+      <Property Name="CurrentActivatedSlot" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Character.AiRollController" Collapsed="true">
+    <Position X="17.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAQACAAAQAAAiAAAAgAAAgAAABAAAgBBAADAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Motor Controller\AiRollController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Equipment.AttachWeaponController" Collapsed="true">
+    <Position X="12" Y="9.5" Width="1.5" />
+    <AssociationLine Name="weaponPrefab" Type="Atomic.Equipment.Weapon" FixedToPoint="true">
+      <Path>
+        <Point X="13.5" Y="9.688" />
+        <Point X="21.25" Y="9.688" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="_weapon" Type="Atomic.Equipment.Weapon" FixedToPoint="true">
+      <Path>
+        <Point X="13.5" Y="9.938" />
+        <Point X="21.25" Y="9.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AgAAAAEAAAABAQrAAACAAQIAAIgAAAEAAAAABAIBAEA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Equipment\AttachWeaponController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="weaponPrefab" />
+      <Field Name="_weapon" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Equipment.Weapon" Collapsed="true">
+    <Position X="21.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UIAAAAGAAggBAQAAAgAAAAACAAgAAAAAAAAAhBQAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Equipment\Weapon\Weapon.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Atomic.Equipment.MeleeWeapon" Collapsed="true">
+    <Position X="22.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Equipment\Weapon\MeleeWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.Equipment.RangedWeapon" Collapsed="true">
+    <Position X="20" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAQQgAAAQgAAIQAAAggAAAAAAACSAAAAAQAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Equipment\Weapon\RangedWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Atomic.Character.IAgentAnimator" Collapsed="true">
+    <Position X="14" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAACAACAAAAAACAAAAAAAAAAAAABAAAAAQBBAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Animator Controller\IAgentAnimator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Atomic.Character.ITargetingController" Collapsed="true">
+    <Position X="17.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAACAAIAAAAAAAAAmBAAAAAQAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Targeting Agent Controller\ITargetingController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Atomic.Character.IVisionController" Collapsed="true">
+    <Position X="15.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAgAAAAAAAAAAAAAAAIAABAgAAEAAAAgAAAAAgA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Vision Controller\IVisionController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Atomic.Character.ICombatController" Collapsed="true">
+    <Position X="21.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQAAAAgAAAQAACgQAEAgACAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Motor Controller\ICombatController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CurrentWeapon" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="Atomic.Character.ILocomotionController" Collapsed="true">
+    <Position X="19.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAABAAgAAAAAAAAAAAAAAAAAAEAAAAYAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Motor Controller\ILocomotionController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Atomic.Equipment.IAttachWeaponController" Collapsed="true">
+    <Position X="12" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAArAAAAAAAAAAIAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character\Modules\Ai Equipment\IAttachWeaponController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Atomic.Core;
 using Atomic.Core.Interface;
+using Atomic.Equipment;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,9 +30,6 @@ namespace Atomic.Character
     [RequireComponent(typeof(NavMeshAgent))]
     public abstract class BaseAgent : SerializedMonoBehaviour, IInitializable, ICharacterActionTrigger
     {
-        //  Statics ---------------------------------------
-
-
         //  Events ----------------------------------------
 
 
@@ -40,6 +38,10 @@ namespace Atomic.Character
         public bool IsInitialized => _isInitialized;
         public Transform BodyWeakPoint => bodyWeakPoint;
         public BaseAgent TargetAgent { get; set; }
+
+        [field: SerializeField]
+        public Weapon CurrentWeapon { get; set; }
+        public CombatMode CurrentCombatMode { get; set; }
 
         protected virtual CharacterActionType DefaultActionState { get; set; }
         private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
@@ -103,7 +105,7 @@ namespace Atomic.Character
         [SerializeField] private Transform bodyWeakPoint;
         private bool _isInitialized;
         private AgentsManager _agentManager;
-        
+
         #region Controller
         private IAgentAnimator _agentAnimatorController;
         private IVisionController _visionController;
@@ -175,10 +177,10 @@ namespace Atomic.Character
             
             this.AttachControllerToModel(out _agentAnimatorController);
             this.AttachControllerToModel(out _visionController);
-            this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _motorController);
-            this.AttachControllerToModel(out _hitBoxController);
+            this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _weaponVisualsController);
+            this.AttachControllerToModel(out _hitBoxController);
         }
         
         //  Event Handlers --------------------------------
@@ -197,6 +199,7 @@ namespace Atomic.Character
                 trigger.Invoke();
             }
         }
+        
     }
 }
 

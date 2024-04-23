@@ -3,58 +3,134 @@ using UnityEngine;
 
 namespace Atomic.Character
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// Controller for melee combat actions.
+    /// </summary>
     public class MeleeCombatController : MonoBehaviour, ICombatController
     {
-        public Weapon CurrentWeapon { get; set; }
+        //  Events ----------------------------------------
+
+
+        //  Properties ------------------------------------
+        public Weapon CurrentWeapon
+        {
+            get => _meleeWeapon;
+            set
+            {
+                if (value is MeleeWeapon weapon)
+                {
+                    _meleeWeapon = weapon;
+                }
+                else
+                {
+                    throw new System.Exception("weapon for combatMode invalid");
+                }
+            }
+        }
+
+
+        public bool IsInitialized { get; set; }
+        public BaseAgent Model { get; set; }
+        
+        //  Fields ----------------------------------------
+        private MeleeWeapon _meleeWeapon;
+        
+        //  Initialization  -------------------------------
+        public void Initialize(BaseAgent model)
+        {
+            if (!IsInitialized)
+            {
+                IsInitialized = true;
+                Model = model;
+            }
+        }
+
+        public void RequireIsInitialized()
+        {
+            if (!IsInitialized)
+            {
+                throw new System.Exception("MeleeCombatController not initialized");
+            }
+        }
+        
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
+        public void RegisterWeapon()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void AimTarget()
+        {
+            
+        }
 
         public void BeginPrepareAttack()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("BeginPrepareAttack");
         }
 
         public void PreparingAttack()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("PreparingAttack");
+
         }
 
         public void EndPrepareAttack()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("EndPrepareAttack");
+
         }
 
         public void BeginAttackMove()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("BeginAttackMove");
+
         }
 
         public void AttackMoving()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("AttackMoving");
+
         }
 
         public void EndAttackMove()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("EndAttackMove");
+
         }
 
         public void BeginAttack()
         {
-            Debug.Log("begin melee combat");
+            Debug.Log("BeginAttack");
+
         }
 
         public void Attacking()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("Attacking");
+
         }
 
         public void EndAttack()
         {
-            Debug.Log("end melee combat");
+            Debug.Log("EndAttack");
+
         }
 
         public void CustomAction()
         {
-            throw new System.NotImplementedException();
+            Debug.Log("CustomAction");
+
         }
+
+        //  Event Handlers --------------------------------
+        
     }
 }

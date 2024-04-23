@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetLayer: Enemy
   MemorySpan: 3
-  DistanceWeight: 1
+  DistanceWeight: 0.1
   AngleWeight: 1
   AgeWeight: 1
   MaxNumberTarget: 16

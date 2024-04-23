@@ -57,6 +57,10 @@ namespace Atomic.Character
                 CombatController = GetComponent<ICombatController>();
                 
                 config.Assign(this);
+                foreach (var key in combatModes.Keys)
+                {
+                    combatModes[key].Initialize(model);
+                }
             }
         }
 

@@ -13,5 +13,7 @@ namespace Atomic.Character
         public void FindTarget();
         public void UpdateTarget();
         public void EvaluateTargetScores();
+        
+        
     }
 }

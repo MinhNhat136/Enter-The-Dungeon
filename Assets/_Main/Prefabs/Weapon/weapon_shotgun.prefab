@@ -107,14 +107,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373716643105541126}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000029802322, y: -0, z: 0.000000029802322, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.5740793, y: 0.52931637, z: 0.3485835, w: 0.5184078}
+  m_LocalPosition: {x: 0.03109286, y: 0.05682477, z: -0.04074237}
   m_LocalScale: {x: 0.93210554, y: 0.932106, z: 0.93210566}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3019590659458570068}
   m_Father: {fileID: 490382489259551006}
-  m_LocalEulerAnglesHint: {x: 102.82399, y: -8.544951, z: -78.531006}
+  m_LocalEulerAnglesHint: {x: 166.927, y: -76.978, z: -95.76501}
 --- !u!1 &1333464088525783045
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,3 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRoot: {fileID: 7672193872389757284}
+  weaponType: 5
+  <ProjectilePrefab>k__BackingField: {fileID: 0}
+  <MaxChargeDuration>k__BackingField: 2

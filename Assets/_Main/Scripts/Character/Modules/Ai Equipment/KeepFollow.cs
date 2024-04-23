@@ -1,19 +1,32 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace  Atomic.Equipment
+namespace Atomic.Equipment
 {
     public class KeepFollow : MonoBehaviour
     {
         [SerializeField]
         private Transform target;
+        
+
+        [SerializeField]
+        private bool flatRotation;
 
         public void Update()
         {
-            this.transform.position = target.transform.position;
+            Follow();
         }
-    }    
-}
 
+        public void Follow()
+        {
+            if (target == null)
+                return;
+
+            transform.position = target.position;
+
+            if (flatRotation)
+            {
+                transform.rotation = target.rotation;
+            }
+        }
+    }
+}

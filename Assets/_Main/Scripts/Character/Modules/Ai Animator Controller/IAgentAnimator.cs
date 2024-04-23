@@ -1,4 +1,5 @@
 using Atomic.Core.Interface;
+using Atomic.Equipment;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -13,9 +14,6 @@ namespace Atomic.Character
         
         public static int Dodge_Horizontal      = Animator.StringToHash("Dodge_Horizontal");
         public static int Dodge_Vertical        = Animator.StringToHash("Dodge_Vertical");
-
-        public static int IsRangedAttack        = Animator.StringToHash("IsRangedAttack");
-        public static int IsMeleeAttack         = Animator.StringToHash("IsMeleeAttack");
     }
 
     public static partial class AnimatorStates
@@ -28,6 +26,11 @@ namespace Atomic.Character
         
         public static int RangedAttack_Charge_Start   = Animator.StringToHash("rangeAttack_charge_start");
         public static int RangedAttack_Charge_Release = Animator.StringToHash("rangeAttack_charge_release");
+        
+        public static int GetMeleeAttackComboHash(int combo)
+        {
+            return Animator.StringToHash("meleeAttack_" + combo.ToString());
+        }
     }
 
     public interface IAgentAnimator : IInitializableWithBaseModel<BaseAgent>
@@ -50,6 +53,16 @@ namespace Atomic.Character
         }
         
         public virtual void ApplyRangedAttack_Charge_Release_Animation()
+        {
+            
+        }
+
+        public virtual void ApplyMeleeAttack(int combo)
+        {
+            
+        }
+
+        public virtual void ApplyMeleeAttackAnimation()
         {
             
         }
@@ -78,6 +91,8 @@ namespace Atomic.Character
         {
             
         }
+
+        public void SwitchAnimator(AttachWeaponType weaponType);
 
     }
 }

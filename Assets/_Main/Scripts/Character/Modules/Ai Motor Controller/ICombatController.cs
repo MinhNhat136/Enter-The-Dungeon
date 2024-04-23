@@ -1,4 +1,6 @@
+using Atomic.Core.Interface;
 using Atomic.Equipment;
+using UnityEngine;
 
 namespace Atomic.Character
 {
@@ -8,14 +10,28 @@ namespace Atomic.Character
         Melee,
     }
     
-    public interface ICombatController
+    public interface ICombatController : IInitializableWithBaseModel<BaseAgent>
     {
         public Weapon CurrentWeapon { get; set; }
-        
-        public void BeginPrepareAttack();
-        public void PreparingAttack(); 
-        public void EndPrepareAttack();
 
+        public void RegisterWeapon();
+        public void AimTarget();
+        
+        public virtual void BeginPrepareAttack()
+        {
+            
+        }
+
+        public virtual void PreparingAttack()
+        {
+            
+        }
+
+        public virtual void EndPrepareAttack()
+        {
+            
+        }
+        
         public virtual void BeginAttackMove()
         {
             
@@ -29,11 +45,22 @@ namespace Atomic.Character
         public virtual void EndAttackMove()
         {
             
-        } 
+        }
+
+        public virtual void BeginAttack()
+        {
+            
+        }
+
+        public virtual void Attacking()
+        {
+            
+        }
         
-        public void BeginAttack();
-        public void Attacking(); 
-        public void EndAttack();
+        public virtual void EndAttack()
+        {
+            
+        }
 
         public virtual void CustomAction()
         {

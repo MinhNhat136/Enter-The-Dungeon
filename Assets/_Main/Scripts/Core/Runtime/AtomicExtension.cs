@@ -466,6 +466,12 @@ namespace Atomic.Core
         {
             return (T)Enum.Parse(typeof(T), value, ignoreCase);
         }
+        
+        public static float Normalize(this float value, float maxValue)
+        {
+            return 1.0f - (value / maxValue);
+        }
+        
         public static bool TryGetField(this object obj, string name, out FieldInfo info)
         {
             Type t = obj.GetType();

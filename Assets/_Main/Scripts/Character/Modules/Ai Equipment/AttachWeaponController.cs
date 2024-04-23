@@ -23,8 +23,6 @@ namespace Atomic.Equipment
             add => _onActivate += value;
             remove => _onActivate -= value;
         }
-
-        public AttachWeaponType WeaponType => weaponType;
         
         [field: SerializeField]
         public bool IsAttach { get; set; }
@@ -33,15 +31,14 @@ namespace Atomic.Equipment
         public bool IsActivated { get; set; }
         
         public bool IsInitialized { get; set; }
+
+        public Weapon WeaponPrefab => weaponPrefab;
         
         //  Fields ----------------------------------------
         [Header("DATA")]
-        [SerializeField] private AttachWeaponType weaponType;
         [SerializeReference] private Weapon weaponPrefab;
         [SerializeField] private Transform transformParent;
         [SerializeField] private CombatMode combatMode;
-        [SerializeField] private RuntimeAnimatorController runtimeAnimatorController;
-        [SerializeField] private AttachPoint attachPoint;
         
         private Weapon _weapon;
         
@@ -60,7 +57,7 @@ namespace Atomic.Equipment
         {
             if (!IsInitialized)
             {
-                throw new Exception($"{typeof(AttachWeaponController)} of {this.weaponType} not initialized yet");
+                throw new Exception(" not initialized yet");
             }
         }
         
@@ -71,9 +68,8 @@ namespace Atomic.Equipment
             {
                 IsAttach = true;
                 _weapon = Instantiate(weaponPrefab, transformParent, true);
-                _weapon.transform.localPosition = attachPoint.Position;
-                _weapon.transform.localRotation = attachPoint.Rotation;
                 _weapon.WeaponRoot = transformParent.gameObject;
+                _weapon.transform.localPosition = Vector3.zero;
             }
         }
 
@@ -88,13 +84,12 @@ namespace Atomic.Equipment
             }
         }
 
-        public void Activate(bool value, Animator animator = null)
+        public void Activate(bool value)
         {
             IsActivated = value;
             transformParent.gameObject.SetActive(value);
             if (!value) return;
             
-            animator.runtimeAnimatorController = runtimeAnimatorController;
             _onActivate?.Invoke(combatMode, _weapon);
         }
 

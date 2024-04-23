@@ -1,3 +1,4 @@
+using System;
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Events;

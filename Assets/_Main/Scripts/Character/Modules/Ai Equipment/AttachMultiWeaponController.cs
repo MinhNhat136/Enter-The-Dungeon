@@ -39,7 +39,9 @@ namespace Atomic.Equipment
         }
 
         public AttachWeaponType WeaponType => weaponType;
-        
+
+        public Weapon WeaponPrefab { get; }
+
         [field: SerializeField]
         public bool IsAttach { get; set; } = false; 
         
@@ -103,11 +105,10 @@ namespace Atomic.Equipment
             }
         }
 
-        public void Activate(bool value, Animator animator = null)
+        public void Activate(bool value)
         {
             IsActivated = value;
             transformParent.gameObject.SetActive(value);
-            animator.runtimeAnimatorController = value ? runtimeAnimatorController : null;
         }
 
         //  Event Handlers --------------------------------

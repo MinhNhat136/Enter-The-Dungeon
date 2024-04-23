@@ -43,7 +43,6 @@ namespace Atomic.Character
         #endregion
         
         //  Fields ----------------------------------------
-        private AttachWeaponController _currentAttachWeapon;
 
         //  Initialization  -------------------------------
         public override void Initialize()
@@ -53,6 +52,10 @@ namespace Atomic.Character
                 base.Initialize();
                 InputControls = new PlayerControls();
                 Assign();
+
+                WeaponVisualsController.AttachDefaultWeapons();
+                SwitchCombatMode();
+                SwitchAnimatorMatchWithWeapon();
             }
         }
 
@@ -92,7 +95,6 @@ namespace Atomic.Character
         {
             AssignInputEvents();
             AssignCharacterActionEvents();
-            AssignControllerEvent();
         }
 
         private void AssignInputEvents()
@@ -107,12 +109,8 @@ namespace Atomic.Character
                     MotorController.MoveDirection = Vector3.zero;
                     MotorController.MoveInput = Vector2.zero;
                 };
-            InputControls.Character.SwapWeapon.started +=
-                _ => ApplySwapWeaponCommand();
+            InputControls.Character.SwapWeapon.started += _ => ApplySwapWeaponCommand();
         }
-
-        
-
 
         private void AssignCharacterActionEvents()
         {
@@ -164,6 +162,8 @@ namespace Atomic.Character
             RegisterActionTrigger(CharacterActionType.BeginAttackMove, () =>
             {
                 CurrentActionState |= CharacterActionType.BeginAttackMove;
+                CurrentActionState &= ~CharacterActionType.EndAttackMove;
+
             });
             RegisterActionTrigger(CharacterActionType.AttackMoving, () =>
             {
@@ -180,7 +180,9 @@ namespace Atomic.Character
             #region Attack
             RegisterActionTrigger(CharacterActionType.BeginAttack, () =>
             {
+                CurrentActionState &= ~CharacterActionType.EndAttack;
                 CurrentActionState |= CharacterActionType.BeginAttack;
+                
             });
             RegisterActionTrigger(CharacterActionType.Attacking, () =>
             {
@@ -203,16 +205,6 @@ namespace Atomic.Character
             #endregion
         }
 
-        private void AssignControllerEvent()
-        {
-            WeaponVisualsController.OnSwapWeapon += (combatMode, weapon) =>
-            {
-                MotorController.SwitchCombatMode(combatMode);
-                Debug.Log(weapon);
-                MotorController.CombatController.CurrentWeapon = weapon;
-            };
-        }
-
         #endregion
 
         #region Behaviours
@@ -233,7 +225,8 @@ namespace Atomic.Character
         public void SetWeaponVisible(bool value) =>
             MotorController.CombatController.CurrentWeapon.WeaponRoot.SetActive(value);
 
-        // Ranged Attack Behaviour
+        // Attack Behaviour
+        public void AimTarget() => MotorController.CombatController.AimTarget();
         public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
         public void PreparingAttack() => MotorController.CombatController.PreparingAttack();
         public void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
@@ -249,7 +242,17 @@ namespace Atomic.Character
         public void CustomActionAttack() => MotorController.CombatController.CustomAction();
 
         // Swap weapon
-        public void SwapWeapon() => WeaponVisualsController.SwapWeapon();
+        public void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
+
+        public void SwitchCombatMode()
+        {
+            MotorController.SwitchCombatMode(CurrentCombatMode);
+            MotorController.CombatController.CurrentWeapon = CurrentWeapon;
+        }
+
+        public void SwitchAnimatorMatchWithWeapon() =>
+            AgentAnimatorController.SwitchAnimator(CurrentWeapon.WeaponType); 
+        
         #endregion
         
         #region Command
