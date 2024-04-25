@@ -59,12 +59,6 @@ namespace Atomic.Character
 
 
         //  Other Methods ---------------------------------
-        public void RegisterWeapon()
-        {
-            // _rangedWeapon.RegisterOwner(Model);
-            // _rangedWeapon.OnChargeFull += OnChargeFull;
-        }
-
         public void AimTarget()
         {
             if (!Model.TargetAgent)
@@ -87,6 +81,7 @@ namespace Atomic.Character
 
         public void EndPrepareAttack()
         {
+            
         }
         
         public void BeginAttack()
@@ -94,6 +89,11 @@ namespace Atomic.Character
             _rangedWeapon.Shoot();
         }
 
+        public void Attacking()
+        {
+            
+        }
+        
         public void EndAttack()
         {
             
@@ -101,6 +101,12 @@ namespace Atomic.Character
 
         public void CustomAction()
         {
+            
+        }
+
+        public void InterruptAction()
+        {
+            _rangedWeapon.CancelCharge();
         }
 
         //  Event Handlers --------------------------------

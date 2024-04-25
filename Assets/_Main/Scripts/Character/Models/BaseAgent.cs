@@ -16,12 +16,13 @@ namespace Atomic.Character
     [Flags]
     public enum Command : byte
     {
-        Move = 1 << 0,
-        Roll = 1 << 1,
-        PrepareAttack = 1 << 2,
-        AttackMove = 1 << 3,
-        Attack = 1 << 4,
-        SwapWeapon = 1 << 5,
+        Interrupt = 1 << 0,
+        Move = 1 << 1,
+        Roll = 1 << 2,
+        PrepareAttack = 1 << 4,
+        AttackMove = 1 << 5,
+        Attack = 1 << 6,
+        SwapWeapon = 1 << 7,
     }
     
     /// <summary>

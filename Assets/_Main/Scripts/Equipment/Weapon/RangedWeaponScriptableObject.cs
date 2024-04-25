@@ -1,3 +1,4 @@
+using System;
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -30,10 +31,10 @@ namespace Atomic.Equipment
     {
         //  Events ----------------------------------------
 
-
+        
         //  Properties ------------------------------------
-
-
+        
+        
         //  Fields ----------------------------------------
         [Header("RANGED ENUM", order = 0)]
         public ShootModeEnum shootMode;
@@ -51,7 +52,6 @@ namespace Atomic.Equipment
         [Header("PARAMETER", order = 4)] 
         public MinMaxSlider rangeAttack;
         public float criticalChance;
-
         
         private ObjectPool<ProjectileBase> _projectilePool;
         private IProjectileTrajectoryController _trajectoryController;
@@ -59,6 +59,7 @@ namespace Atomic.Equipment
         private ParticleSystem _shootSystem;
         private GameObject _indicator;
 
+        private Vector3 _shootPoint; 
         
         //  Initialization  -------------------------------
 
@@ -90,8 +91,8 @@ namespace Atomic.Equipment
 
             _trajectoryController = null;
             _trajectoryIndicator = null;
-            _indicator = null;
             _shootSystem = null;
+            _indicator = null;
         }
 
         private void SetTrajectoryController()
@@ -131,10 +132,25 @@ namespace Atomic.Equipment
         public void UpdateCharge()
         {
             _trajectoryIndicator.Indicate();
+            _shootPoint = _shootSystem.transform.forward;
+            Debug.Log(_shootPoint);
+        }
+
+        public void EndCharge()
+        {
+            
+        }
+
+        public void CancelCharge()
+        {
+            _trajectoryIndicator.TurnOff();
         }
 
         public void Shoot()
         {
+            Debug.Log("shoot");
+            Debug.Log(_shootPoint);
+
             _trajectoryIndicator.TurnOff();
             
             _shootSystem.Play();
@@ -145,8 +161,7 @@ namespace Atomic.Equipment
             bullet.gameObject.SetActive(true);
 
             bullet.Spawn(_shootSystem.transform.position, _trajectoryController);
-
-            bullet.Shoot(Owner, _shootSystem.transform.forward);
+            bullet.Shoot(Owner, _shootPoint);
         }
 
         private ProjectileBase CreateProjectile()

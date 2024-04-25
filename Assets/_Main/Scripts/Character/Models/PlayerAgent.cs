@@ -212,6 +212,8 @@ namespace Atomic.Character
         public void SetForwardDirection() => MotorController.SetForwardDirection();
         public void ApplyDirection() => MotorController.ApplyDirection();
 
+        // Interrupt Behaviour 
+        
         // Movement Behaviour
         public void ApplyStop() => MotorController.LocomotionController.ApplyStop();
         public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
@@ -247,6 +249,7 @@ namespace Atomic.Character
         public void EndAttackMove() => MotorController.CombatController.EndAttackMove();
 
         public void CustomActionAttack() => MotorController.CombatController.CustomAction();
+        public void InterruptAttack() => MotorController.CombatController.InterruptAction();
 
         // Swap weapon
         public void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
@@ -269,6 +272,7 @@ namespace Atomic.Character
         public void ApplyRollCommand()
         {
             if (Command.HasFlag(Command.Roll)) return;
+            Command |= Command.Interrupt;
             Command |= Command.Roll;
         }
         public void ApplyPrepareAttackCommand()
@@ -287,6 +291,7 @@ namespace Atomic.Character
         public void CancelPerformRollCommand() => Command &= ~Command.Roll;
         public void CancelPerformPrepareAttackCommand() => Command &= ~Command.PrepareAttack;
         public void CancelPerformAttackCommand() => Command &= ~Command.Attack;
+        public void CompletedInterrupt() => Command &= ~Command.Interrupt;
 
         public void ResetPerformCommandExcept(Command command)
         {

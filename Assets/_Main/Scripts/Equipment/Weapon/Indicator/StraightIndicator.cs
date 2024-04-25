@@ -2,8 +2,20 @@ using UnityEngine;
 
 namespace Atomic.Equipment
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// TODO: Replace with comments...
+    /// </summary>
     public class StraightIndicator : MonoBehaviour, ITrajectoryIndicator
     {
+        
+        //  Events ----------------------------------------
+
+
+        //  Properties ------------------------------------
         public Vector3 Position { get; set; }
         public Vector3 LaunchPosition { get; set; }
         public Vector3 TargetPosition { get; set; }
@@ -12,6 +24,7 @@ namespace Atomic.Equipment
         public float SpreadAngle { get; set; }
         public float MaxRadius { get; set; }
         
+        //  Fields ----------------------------------------
         [Header("MAIN")] 
         [SerializeField] private float targetIndicatorLength;
         [SerializeField] private SpriteRenderer directionIndicator;
@@ -24,7 +37,15 @@ namespace Atomic.Equipment
 
         [Header("PARAMETER")]
         [SerializeField] private float speedIndicate;
+
         
+        //  Initialization  -------------------------------
+
+        
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
         public void Indicate()
         {
             SpreadEdgeLine(left, false);
@@ -68,6 +89,9 @@ namespace Atomic.Equipment
             
             directionIndicator.size = new Vector2(16, directionIndicator.size.y);
         }
+        
+        //  Event Handlers --------------------------------
+        
     }
     
 }

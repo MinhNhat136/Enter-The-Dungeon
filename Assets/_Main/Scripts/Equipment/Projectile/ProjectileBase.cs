@@ -18,7 +18,6 @@ namespace Atomic.Equipment
         public Vector3 InitialPosition { get; private set; }
         public Vector3 InitialDirection { get; private set; }
         public Vector3 InitialVelocity { get; set;  }
-        public Vector3 TargetDestination { get; set; }
         public IProjectileTrajectoryController TrajectoryController { get; set; }
         public Rigidbody Rigidbody {get; private set; }
 
@@ -33,7 +32,7 @@ namespace Atomic.Equipment
         public void Shoot(BaseAgent owner, Vector3 SpawnForce)
         {
             Owner = owner;
-            InitialPosition = transform.position;
+            transform.position = InitialPosition;
             InitialDirection = SpawnForce.normalized;
             transform.forward = SpawnForce.normalized;
 
@@ -48,6 +47,7 @@ namespace Atomic.Equipment
         public void Spawn(Vector3 spawnPoint, IProjectileTrajectoryController trajectoryController)
         {
             // Init something here
+            InitialPosition = spawnPoint;
             TrajectoryController = trajectoryController;
             _waitForSeconds = new WaitForSeconds(DelayedDisableTime);
             StartCoroutine(DelayedDisable(DelayedDisableTime));

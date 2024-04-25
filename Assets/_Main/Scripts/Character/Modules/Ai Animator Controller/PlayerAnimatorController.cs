@@ -72,7 +72,7 @@ namespace Atomic.Character
 
         public void ApplyRangedAttack_Charge_Start_Animation() => _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Start, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Release_Animation() => _animator.Play(AnimatorStates.RangedAttack_Charge_Release);
+        public void ApplyRangedAttack_Charge_Release_Animation() => _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Release, 0.5f);
 
         public void ApplyMeleeAttack(int combo)
         {

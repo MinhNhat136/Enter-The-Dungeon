@@ -12,6 +12,21 @@ namespace Atomic.Equipment
         public float SpreadAngle { get; set; }
         public float MaxRadius { get; set; }
         
+        [SerializeField]
+        private Transform aoeIndicator;
+
+        [SerializeField]
+        private Transform aoeOriginalIndicator;
+
+        [SerializeField]
+        private LineRenderer line;
+
+        [SerializeField]
+        private float angle;
+
+        [SerializeField]
+        private float gravity;
+        
         public void Indicate()
         {
             

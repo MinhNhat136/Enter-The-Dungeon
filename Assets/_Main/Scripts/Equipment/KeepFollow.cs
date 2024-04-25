@@ -11,7 +11,7 @@ namespace Atomic.Equipment
         [SerializeField]
         private bool flatRotation;
 
-        public void Update()
+        public void LateUpdate()
         {
             Follow();
         }

@@ -120,6 +120,11 @@ namespace Atomic.Character
 
         }
 
+        public void InterruptAction()
+        {
+            
+        }
+
         //  Event Handlers --------------------------------
         
     }

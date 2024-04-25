@@ -14,7 +14,6 @@ namespace Atomic.Character
     {
         public WeaponScriptableObject CurrentWeapon { get; set; }
 
-        public void RegisterWeapon();
         public void AimTarget();
         
         public virtual void BeginPrepareAttack()
@@ -66,5 +65,7 @@ namespace Atomic.Character
         {
             
         }
+
+        public void InterruptAction();
     }
 }
