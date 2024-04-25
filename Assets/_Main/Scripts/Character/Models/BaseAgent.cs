@@ -40,7 +40,7 @@ namespace Atomic.Character
         public BaseAgent TargetAgent { get; set; }
 
         [field: SerializeField]
-        public Weapon CurrentWeapon { get; set; }
+        public WeaponScriptableObject CurrentWeapon { get; set; }
         public CombatMode CurrentCombatMode { get; set; }
 
         protected virtual CharacterActionType DefaultActionState { get; set; }

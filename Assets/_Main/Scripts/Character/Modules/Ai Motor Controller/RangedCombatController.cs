@@ -20,20 +20,14 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public Weapon CurrentWeapon
+        public WeaponScriptableObject CurrentWeapon
         {
             get => _rangedWeapon;
             set
             {
-                if (value is RangedWeapon weapon)
-                {
-                    _rangedWeapon = weapon;
-                    RegisterWeapon();
-                }
-                else
-                {
-                    throw new Exception("weapon for combatMode invalid");
-                }
+                if (value is RangedWeaponScriptableObject rangedWeapon)
+                    _rangedWeapon = rangedWeapon;
+                else throw new Exception("Ranged weapon invalid");
             }
         }
 
@@ -43,7 +37,8 @@ namespace Atomic.Character
         
 
         //  Fields ----------------------------------------
-        private RangedWeapon _rangedWeapon;
+        // private RangedWeapon _rangedWeapon;
+        private RangedWeaponScriptableObject _rangedWeapon;
 
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -52,7 +47,6 @@ namespace Atomic.Character
             {
                 IsInitialized = true;
                 Model = model;
-
             }
         }
 
@@ -67,8 +61,8 @@ namespace Atomic.Character
         //  Other Methods ---------------------------------
         public void RegisterWeapon()
         {
-            _rangedWeapon.RegisterOwner(Model);
-            _rangedWeapon.OnChargeFull += OnChargeFull;
+            // _rangedWeapon.RegisterOwner(Model);
+            // _rangedWeapon.OnChargeFull += OnChargeFull;
         }
 
         public void AimTarget()
@@ -78,17 +72,17 @@ namespace Atomic.Character
             Vector3 targetDirection = Model.TargetAgent.transform.position - transform.position;
             targetDirection.y = 0;
             Quaternion dir = Quaternion.LookRotation(targetDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, dir, 1f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, dir, 10f * Time.deltaTime);
         }
 
         public void BeginPrepareAttack()
         {
-            _rangedWeapon.TryBeginCharge();
+            
         }
 
         public void PreparingAttack()
         {
-            _rangedWeapon.UpdateCharge();
+            _rangedWeapon.PrepareShoot();
         }
 
         public void EndPrepareAttack()
@@ -97,8 +91,7 @@ namespace Atomic.Character
         
         public void BeginAttack()
         {
-            _rangedWeapon.ReleaseCharge();
-            _rangedWeapon.HandleShoot();
+            _rangedWeapon.DoProjectileShoot();
         }
 
         public void EndAttack()

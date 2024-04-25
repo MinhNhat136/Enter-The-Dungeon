@@ -12,7 +12,7 @@ namespace Atomic.Character
     
     public interface ICombatController : IInitializableWithBaseModel<BaseAgent>
     {
-        public Weapon CurrentWeapon { get; set; }
+        public WeaponScriptableObject CurrentWeapon { get; set; }
 
         public void RegisterWeapon();
         public void AimTarget();

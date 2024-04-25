@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a80ad5e416b4b1468928286b99d0738, type: 3}
+  m_Name: Spear
+  m_EditorClassIdentifier: 
+  WeaponType: 2
+  CombatMode: 1
+  Name: Spear
+  ModelPrefab: {fileID: 1317118864596191, guid: f6d40959d8450ca45b0e8537d5bcea72, type: 3}
+  SpawnPoint: {x: 0, y: 0, z: 0}
+  SpawnRotation: {x: 0, y: 0, z: 0}
+  IsAttach: 1
+  IsActivated: 0
+  DamageConfig: {fileID: 0}

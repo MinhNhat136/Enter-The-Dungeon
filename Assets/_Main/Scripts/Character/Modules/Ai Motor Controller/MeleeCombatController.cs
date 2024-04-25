@@ -16,20 +16,10 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public Weapon CurrentWeapon
+        public WeaponScriptableObject CurrentWeapon
         {
-            get => _meleeWeapon;
-            set
-            {
-                if (value is MeleeWeapon weapon)
-                {
-                    _meleeWeapon = weapon;
-                }
-                else
-                {
-                    throw new System.Exception("weapon for combatMode invalid");
-                }
-            }
+            get;
+            set;
         }
 
 
@@ -37,7 +27,7 @@ namespace Atomic.Character
         public BaseAgent Model { get; set; }
         
         //  Fields ----------------------------------------
-        private MeleeWeapon _meleeWeapon;
+        // private MeleeWeapon _meleeWeapon;
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)

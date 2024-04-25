@@ -11,6 +11,12 @@ namespace Atomic.Character
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
+    [Serializable]
+    public struct AttachParent
+    {
+        public WeaponType WeaponType;
+        public Transform ParentTransform; 
+    }
     /// <summary>
     /// Handles visual representation of AI weapons.
     /// </summary>
@@ -21,11 +27,9 @@ namespace Atomic.Character
         //  Properties ------------------------------------
         public bool IsInitialized { get; private set; }
         public BaseAgent Model { get; private set; }
-        public CombatMode CombatMode { get; private set; }
-        public List<IAttachWeaponController> WeaponSlots { get; set; }
-        public List<IAttachWeaponController> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.IsAttach).ToList();
-        public IAttachWeaponController CurrentActivatedSlot => WeaponSlots.First(slot => slot.IsActivated);
-        public int CurrentActivatedSlotIndex => WeaponSlots.IndexOf(CurrentActivatedSlot);
+        public List<WeaponScriptableObject> WeaponSlots;
+        private List<WeaponScriptableObject> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.IsAttach).ToList();
+        public AttachParent[] AttachParents;
        
         //  Collections -----------------------------------
         
@@ -40,13 +44,11 @@ namespace Atomic.Character
                 IsInitialized = true;
                 Model = model;
 
-                WeaponSlots = GetComponentsInChildren<IAttachWeaponController>().ToList();
                 foreach (var weaponSlot in WeaponSlots)
                 {
-                    weaponSlot.Initialize();
-                    weaponSlot.OnActivate += (combatMode, weapon) =>
+                    weaponSlot.OnActivated += (combatMode) =>
                     {
-                        Model.CurrentWeapon = weapon;
+                        Model.CurrentWeapon = WeaponSlots.First(slot => slot.IsActivated);
                         Model.CurrentCombatMode = combatMode;
                     };
                 }    
@@ -63,29 +65,40 @@ namespace Atomic.Character
 
         
         //  Unity Methods   -------------------------------
-
+        public void OnDestroy()
+        {
+            DetachAllWeapons();
+        }
 
         //  Other Methods ---------------------------------
         public void AttachDefaultWeapons()
         {
-            var bowSlot = GetAttachSlot(AttachWeaponType.Spear);
-            var shotgunSlot = GetAttachSlot(AttachWeaponType.Shotgun);
+            AttachWeapon(WeaponType.Shotgun);
+            AttachWeapon(WeaponType.Bow);
+            
+            ActivateOtherWeapon();
+        }
 
-            if (bowSlot != null)
+        public void DetachAllWeapons()
+        {
+            foreach (var weapon in WeaponSlots)
             {
-                bowSlot.Attach();
-                bowSlot.Activate(false);
-            }
-
-            if (shotgunSlot != null)
-            {
-                shotgunSlot.Attach();
-                shotgunSlot.Activate(true);
+                weapon.Detach();
             }
         }
         
-        public IAttachWeaponController GetAttachSlot(AttachWeaponType weaponType) => WeaponSlots.Find(attachSlots => attachSlots.WeaponPrefab.WeaponType == weaponType);
-        
+        public WeaponScriptableObject GetAttachSlot(WeaponType weaponType)
+        {
+            return WeaponSlots.Find(attachSlots => attachSlots.WeaponType == weaponType);
+        }
+
+        public void AttachWeapon(WeaponType weaponType)
+        {
+            var weapon = GetAttachSlot(weaponType);
+            if (!weapon) return; 
+            weapon.Attach(AttachParents.First(attachPoint => attachPoint.WeaponType == weapon.WeaponType).ParentTransform,
+                Model);
+        }
 
         public void ActivateOtherWeapon()
         {
@@ -93,15 +106,21 @@ namespace Atomic.Character
             {
                 return;
             }
-            int indexUsedSlot = CurrentAttachedSlot.IndexOf(CurrentActivatedSlot);
-            
-            CurrentActivatedSlot.Activate(false);
-            indexUsedSlot++;
-            if (indexUsedSlot == CurrentAttachedSlot.Count) indexUsedSlot = 0;
-            CurrentAttachedSlot[indexUsedSlot].Activate(true);
+            var activatedSlot = WeaponSlots.FirstOrDefault(slot => slot.IsActivated);
+    
+            if (activatedSlot != null)
+            {
+                int indexUsedSlot = CurrentAttachedSlot.IndexOf(activatedSlot);
+                activatedSlot.DeActivate();
+                indexUsedSlot++;
+                if (indexUsedSlot == CurrentAttachedSlot.Count) indexUsedSlot = 0;
+                CurrentAttachedSlot[indexUsedSlot]?.Activate();
+            }
+            else
+            {
+                CurrentAttachedSlot[0]?.Activate();
+            }
         }
-
-        
         
         //  Event Handlers --------------------------------
     }

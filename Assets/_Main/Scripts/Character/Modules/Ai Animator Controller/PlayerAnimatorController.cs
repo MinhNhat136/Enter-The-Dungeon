@@ -30,7 +30,7 @@ namespace Atomic.Character
         private bool _isInitialized;
 
         [field: SerializeField]
-        private Dictionary<AttachWeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
+        private Dictionary<WeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
 
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -93,7 +93,7 @@ namespace Atomic.Character
 
         }
 
-        public void SwitchAnimator(AttachWeaponType weaponType)
+        public void SwitchAnimator(WeaponType weaponType)
         {
             if (_animatorMatchWithWeapons.TryGetValue(weaponType,
                     out RuntimeAnimatorController runtimeAnimatorController))

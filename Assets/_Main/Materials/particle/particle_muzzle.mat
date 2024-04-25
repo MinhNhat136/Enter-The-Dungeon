@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: particle_muzzle
+  m_Shader: {fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 2bffd9e5a18046743b4acc8ee0e2f7fc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: {}
+    m_Floats:
+    - _Cull: 2
+    - _Cutoff: 0.5
+    - _DirectIntensityOutline: 1
+    - _EmissionChannel: 4
+    - _FresnelMin: 0
+    - _Glossiness: 0.5
+    - _IndirectIntensity: 1
+    - _MatCapMaskChannel: 0
+    - _Metallic: 0
+    - _NormalsSource: 0
+    - _OcclusionChannel: 0
+    - _OutlineLightingType: 0
+    - _OutlineMaxWidth: 1
+    - _OutlinePixelSizeType: 0
+    - _OutlineTextureType: 0
+    - _Parallax: 0.02
+    - _RampBandsSmoothing: 0.1
+    - _RampScale: 1
+    - _RampThreshold: 0.75
+    - _ReceiveShadowsOff: 1
+    - _ReflectionSmoothness: 0.5
+    - _RimMax: 1
+    - _ShadowColorLightAtten: 1
+    - _SmoothnessTextureChannel: 0
+    - _SpecularMapType: 0
+    - _SpecularToonSize: 0.25
+    - _SpecularType: 0
+    - _UVSec: 0
+    - _UseEmission: 0
+    - _UseMatCap: 0
+    - _UseMobileMode: 0
+    - _UseOcclusion: 0
+    - _UseReflections: 0
+    - _UseRimLightMask: 1
+    - _UseSpecular: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+    - _HColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 0.8, g: 0.8, b: 0.8, a: 0.5}
+    - _SpecularColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+  m_BuildTextureStacks: []

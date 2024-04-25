@@ -23,7 +23,7 @@ namespace Atomic.Character
 
         
        //  Collections -----------------------------------
-       public Dictionary<AttachWeaponType, RuntimeAnimatorController> AnimatorOverriders { get; } = new();
+       public Dictionary<WeaponType, RuntimeAnimatorController> AnimatorOverriders { get; } = new();
        
        //  Fields ----------------------------------------
        [SerializeField] 

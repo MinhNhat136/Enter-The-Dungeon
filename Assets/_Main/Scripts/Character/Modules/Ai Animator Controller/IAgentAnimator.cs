@@ -92,7 +92,7 @@ namespace Atomic.Character
             
         }
 
-        public void SwitchAnimator(AttachWeaponType weaponType);
+        public void SwitchAnimator(WeaponType weaponType);
 
     }
 }

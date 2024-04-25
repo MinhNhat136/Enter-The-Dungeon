@@ -222,8 +222,15 @@ namespace Atomic.Character
         // Roll Behaviour 
         public void ApplyRoll() => MotorController.RollController.Roll();
 
-        public void SetWeaponVisible(bool value) =>
-            MotorController.CombatController.CurrentWeapon.WeaponRoot.SetActive(value);
+        
+        /// <summary>
+        /// TODO: Fix this
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetWeaponVisible(bool value) {
+            
+            // MotorController.CombatController.CurrentWeapon.WeaponRoot.SetActive(value);
+        }
 
         // Attack Behaviour
         public void AimTarget() => MotorController.CombatController.AimTarget();
