@@ -77,12 +77,12 @@ namespace Atomic.Character
 
         public void BeginPrepareAttack()
         {
-            
+            _rangedWeapon.BeginCharge();
         }
 
         public void PreparingAttack()
         {
-            _rangedWeapon.PrepareShoot();
+            _rangedWeapon.UpdateCharge();
         }
 
         public void EndPrepareAttack()
@@ -91,7 +91,7 @@ namespace Atomic.Character
         
         public void BeginAttack()
         {
-            _rangedWeapon.DoProjectileShoot();
+            _rangedWeapon.Shoot();
         }
 
         public void EndAttack()

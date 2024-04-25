@@ -72,11 +72,7 @@ namespace Atomic.Equipment
             base.Attach(parent, owner);
             _shootSystem = Model.GetComponentInChildren<ParticleSystem>();
             _projectilePool = new ObjectPool<ProjectileBase>(CreateProjectile);
-            _indicator = Instantiate(indicatorPrefab);
-            _indicator.transform.SetParent(Owner.transform);
-            _indicator.SetActive(false);
-
-            _trajectoryIndicator = _indicator.GetComponent<ITrajectoryIndicator>();
+           
 
             Model.transform.SetParent(parent);
 
@@ -119,15 +115,28 @@ namespace Atomic.Equipment
 
         private void SetIndicator()
         {
+            _indicator = Instantiate(indicatorPrefab, Owner.transform, true);
+            _indicator.transform.localPosition = indicatorPosition;
+            _indicator.transform.localRotation = Quaternion.Euler(indicatorRotation);
+            _indicator.SetActive(false);
+
+            _trajectoryIndicator = _indicator.GetComponent<ITrajectoryIndicator>();
+        }
+
+        public void BeginCharge()
+        {
+            _trajectoryIndicator.TurnOn();
+        }
+
+        public void UpdateCharge()
+        {
+            _trajectoryIndicator.Indicate();
+        }
+
+        public void Shoot()
+        {
+            _trajectoryIndicator.TurnOff();
             
-        }
-
-        public void PrepareShoot()
-        {
-        }
-
-        public void DoProjectileShoot()
-        {
             _shootSystem.Play();
             Vector3 shootDirection = _shootSystem.transform.forward;
             shootDirection.Normalize();
