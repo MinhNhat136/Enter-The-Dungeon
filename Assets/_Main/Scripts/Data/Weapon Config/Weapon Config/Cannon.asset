@@ -20,11 +20,7 @@ MonoBehaviour:
   WeaponPrefab: {fileID: 1999505514590121, guid: 71779f01bbc72154cb08249b1dbe3475, type: 3}
   WeaponSpawnPoint: {x: 0, y: 0, z: 0}
   WeaponSpawnRotation: {x: 0, y: 0, z: 0}
-  shootMode: 0
-  trajectoryType: 1
-  indicatorParent: 0
-  projectileConfig: {fileID: 11400000, guid: 1fa400c9b6894b04981fe3f27df18004, type: 2}
-  indicatorPrefab: {fileID: 1588341369436605, guid: 3924ebcfe34c7ae4e8ab9faee823328a, type: 3}
-  indicatorPosition: {x: 0, y: 0, z: 0}
-  indicatorRotation: {x: 0, y: 0, z: 0}
-  criticalChance: 0
+  indicatorBuilder: {fileID: 11400000, guid: 2f397b7537f1b9e4bb816d4699d9f74d, type: 2}
+  shootBuilder: {fileID: 11400000, guid: 1fa400c9b6894b04981fe3f27df18004, type: 2}
+  damageConfig: {fileID: 11400000, guid: 4ad9bbb2e89bf124c9b0ad0464dbc673, type: 2}
+  hitConfig: {fileID: 0}

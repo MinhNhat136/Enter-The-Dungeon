@@ -17,7 +17,6 @@ namespace  Atomic.Equipment
 
         public void Shoot(ProjectileBase projectile)
         {
-            Debug.Log(Time.time);
             projectile.Rigidbody.AddForce(projectile.ShootVelocity, ForceMode.VelocityChange);
         }
 

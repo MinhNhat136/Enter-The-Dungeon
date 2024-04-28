@@ -6,7 +6,7 @@ namespace Atomic.Equipment
     public interface ITrajectoryIndicator
     {
         public float DelayActivateTime { get; set; }
-        
+        public float IndicateValue { get; set; }
         // Position and Rotation ----------------------------------------
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {

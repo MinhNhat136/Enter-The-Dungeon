@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38adacdc1d37d3c4aa08c8296b267bfd, type: 3}
   m_Name: Cannon Projectile Config
   m_EditorClassIdentifier: 
+  trajectoryType: 0
   HitMask:
     serializedVersion: 2
-    m_Bits: 0
-  bulletPrefab: {fileID: 0}
-  projectileSpeed: 0
-  lifeCycle: 0
-  hitEffects: []
-  damageConfig: {fileID: 0}
+    m_Bits: 64
+  bulletPrefab: {fileID: 5063074877441595056, guid: 2f857efcb466f844094e717c19206f24, type: 3}
+  shootVelocity: 10

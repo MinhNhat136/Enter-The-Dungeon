@@ -8,8 +8,9 @@ namespace Atomic.Equipment
     {
         
         public float DelayActivateTime { get; set; }
+        public float IndicateValue { get; set; }
 
-        
+
         [SerializeField] 
         private Transform aoeIndicator;
         [SerializeField] 

@@ -31,7 +31,6 @@ namespace Atomic.Equipment
         public void Destroy()
         {
             _indicator = null;
-            Debug.Log("hello");
             trajectoryIndicator = null; 
         }
         

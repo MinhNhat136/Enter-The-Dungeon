@@ -18,8 +18,9 @@ namespace Atomic.Equipment
 
         //  Properties ------------------------------------
         public float DelayActivateTime { get; set; }
+        public float IndicateValue { get; set; }
 
-        
+
         //  Fields ----------------------------------------
         [Header("DIRECTION-ARROW")] 
         [SerializeField] private float directionLengthScale;
@@ -104,12 +105,14 @@ namespace Atomic.Equipment
 
         private void ScaleEdgeLineLength(Transform edgeTransform)
         {
-            edgeTransform.localScale = Vector3.Slerp(edgeTransform.localScale, new Vector3(1, 1 , _maxDistance - EdgeLengthOffset), speedIndicate * Time.deltaTime);
+            edgeTransform.localScale = new Vector3(1, 1, IndicateValue - EdgeLengthOffset);
         }
 
         private void ScaleSpriteLength()
         {
-            directionIndicator.size = Vector2.Lerp(directionIndicator.size, _directionTargetSize, speedIndicate * Time.deltaTime);
+            directionIndicator
+                    .size = /*Vector2.Lerp(directionIndicator.size, _directionTargetSize, speedIndicate * Time.deltaTime);*/
+                new Vector2(IndicateValue * directionLengthScale, directionIndicator.size.y);
         }
         
         public void Activate()

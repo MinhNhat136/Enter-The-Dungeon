@@ -1,4 +1,5 @@
 using Atomic.Equipment;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -28,8 +29,9 @@ namespace Atomic.Character
         public bool CanMoveAgain => CurrentActionState.HasFlag(CharacterActionType.MoveNextSkill);
         
         public bool CanPerformRollAgain => Command.HasFlag(Command.Roll);
-        
-        public bool CanPerformPrepareAttackAgain =>Command.HasFlag(Command.PrepareAttack);
+
+        public bool CanPerformPrepareAttackAgain => Command.HasFlag(Command.PrepareAttack) &&
+                                                    CurrentActionState.HasFlag(CharacterActionType.EndAttack);
         
         public bool CanPerformAttackMoveAgain => CurrentActionState.HasFlag(CharacterActionType.BeginAttackMove) &&
                                                  CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack);

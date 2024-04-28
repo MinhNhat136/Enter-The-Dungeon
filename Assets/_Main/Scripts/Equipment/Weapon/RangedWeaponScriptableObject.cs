@@ -31,6 +31,10 @@ namespace Atomic.Equipment
         
         private ObjectPool<ProjectileBase> _projectilePool;
         private ParticleSystem _shootSystem;
+
+        private float _energyValue;
+
+        public float speedCharge; 
         //  Initialization  -------------------------------
 
 
@@ -65,17 +69,22 @@ namespace Atomic.Equipment
         public void BeginCharge()
         {
             indicatorBuilder.trajectoryIndicator.Activate();
+            _energyValue = indicatorBuilder.minDistance;
+
         }
         
         public void UpdateCharge()
         {
+            ChargeEnergy();
             indicatorBuilder.trajectoryIndicator.SetLaunchPosition(_shootSystem.transform.position);
             indicatorBuilder.trajectoryIndicator.SetTarget(Owner.TargetAgent ? Owner.TargetAgent.transform : null);
+            indicatorBuilder.trajectoryIndicator.IndicateValue = _energyValue;
             indicatorBuilder.trajectoryIndicator.Indicate();
         }
 
-        public void EndCharge()
+        public void ChargeEnergy()
         {
+            _energyValue = Mathf.Lerp(_energyValue, indicatorBuilder.maxDistance, speedCharge * Time.deltaTime);
         }
 
         public void CancelCharge()
@@ -93,19 +102,19 @@ namespace Atomic.Equipment
 
             ProjectileBase bullet = _projectilePool.Get();
             bullet.gameObject.SetActive(true);
-            bullet.Load(_shootSystem.transform.position, new Vector3(Owner.transform.forward.x, _shootSystem.transform.forward.y, Owner.transform.forward.z), shootBuilder.shootVelocity);
+            bullet.Load(_shootSystem.transform.position, new Vector3(Owner.transform.forward.x, _shootSystem.transform.forward.y, Owner.transform.forward.z), shootBuilder.shootVelocity, delayedDisableTime: _energyValue/shootBuilder.shootVelocity);
             
             shootBuilder.TrajectoryController.Shoot(bullet);
         }
 
-        private void HandleBulletCollision(ProjectileBase projectile, Collision collision)
+        private void HandleBulletTrigger(ProjectileBase projectile, Collider collider)
         {
-            if (collision == null)
+            if (collider == null)
             {
                 DisableProjectile(projectile);
                 return;
             };
-            if (collision.gameObject.TryGetComponent(out BaseAgent agent) && collision.gameObject.layer == shootBuilder.HitMask)
+            if (collider.gameObject.TryGetComponent(out BaseAgent agent) && collider.gameObject.layer == shootBuilder.HitMask)
             {
                 agent.HitBoxController.ApplyDamage(new DamageMessage()
                 {
@@ -117,7 +126,6 @@ namespace Atomic.Equipment
         
         private void DisableProjectile(ProjectileBase Bullet)
         {
-            Debug.Log("disable");
             Bullet.gameObject.SetActive(false);
             _projectilePool.Release(Bullet);
         }
@@ -131,8 +139,8 @@ namespace Atomic.Equipment
         {
             ProjectileBase instance = Instantiate(shootBuilder.bulletPrefab);
             instance.gameObject.SetActive(false);
-            instance.Spawn(owner: Owner, delayedDisableTime: indicatorBuilder.maxDistance/shootBuilder.shootVelocity);
-            instance.OnCollision += HandleBulletCollision;
+            instance.Spawn(owner: Owner);
+            instance.OnTrigger += HandleBulletTrigger;
 
             return instance;
         }
