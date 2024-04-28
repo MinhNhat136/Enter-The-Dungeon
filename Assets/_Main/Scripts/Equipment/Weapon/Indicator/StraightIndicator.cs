@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -7,7 +8,7 @@ namespace Atomic.Equipment
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// Represents a straight trajectory indicator.
     /// </summary>
     public class StraightIndicator : MonoBehaviour, ITrajectoryIndicator
     {
@@ -16,29 +17,27 @@ namespace Atomic.Equipment
 
 
         //  Properties ------------------------------------
-        public Vector3 Position { get; set; }
-        public Vector3 LaunchPosition { get; set; }
-        public Vector3 TargetPosition { get; set; }
-        public Vector3 ForwardDirection { get; set; }
-        public float MaxDistance { get; set; }
-        public float SpreadAngle { get; set; }
-        public float MaxRadius { get; set; }
+        
         
         //  Fields ----------------------------------------
-        [Header("MAIN")] 
-        [SerializeField] private float targetIndicatorLength;
+        [Header("DIRECTION-ARROW")] 
+        [SerializeField] private float directionLengthScale;
         [SerializeField] private SpriteRenderer directionIndicator;
 
         [Header("EDGE-LINE")]
         [SerializeField] private Transform left;
         [SerializeField] private Transform right;
-        [SerializeField] private Vector3 targetEdgePosition; 
-        [SerializeField] private Vector3 targetEdgeScale; 
+        [SerializeField] private Vector3 edgeTargetPosition; 
 
         [Header("PARAMETER")]
         [SerializeField] private float speedIndicate;
 
-        
+        private Vector3 _position;
+        private Vector3 _forwardDirection;
+        private float _launchDistance;
+        private float _maxDistance;
+        private Vector2 _directionTargetSize;
+        private const float EdgeLengthOffset = 0.5f; 
         //  Initialization  -------------------------------
 
         
@@ -46,6 +45,44 @@ namespace Atomic.Equipment
 
 
         //  Other Methods ---------------------------------
+        public ITrajectoryIndicator SetPosition(Vector3 position)
+        {
+            _position = position;
+            return this; 
+        }
+        
+        public ITrajectoryIndicator SetForwardDirection(Vector3 forwardDirection)
+        {
+            _forwardDirection = forwardDirection;
+            return this;
+        }
+        
+        public ITrajectoryIndicator SetLaunchDistance(float distance)
+        {
+            _launchDistance = distance;
+            return this;
+        }
+        
+        public  ITrajectoryIndicator SetMaxDistance(float value)
+        {
+            _maxDistance = value;
+            return this;
+        }
+        
+        public void Set()
+        {
+            transform.localPosition = _position;
+            transform.localRotation = Quaternion.LookRotation(_forwardDirection);
+
+            directionIndicator.size = new Vector2(directionLengthScale * _launchDistance, directionIndicator.size.y);
+            
+            left.transform.localScale =
+                new Vector3(left.transform.localScale.x, left.transform.localScale.y, _launchDistance - EdgeLengthOffset);
+            right.transform.localScale =
+                new Vector3(right.transform.localScale.x, right.transform.localScale.y, _launchDistance - EdgeLengthOffset);
+            _directionTargetSize = new Vector2(_maxDistance * directionLengthScale, directionIndicator.size.y);
+        }
+
         public void Indicate()
         {
             SpreadEdgeLine(left, false);
@@ -54,42 +91,46 @@ namespace Atomic.Equipment
             ScaleEdgeLineLength(left);
             ScaleEdgeLineLength(right);
 
-            ScaleSprite();
+            ScaleSpriteLength();
         }
 
-        private void SpreadEdgeLine(Transform transform, bool reverse = false)
+        private void SpreadEdgeLine(Transform edgeTransform, bool reverse = false)
         {
-            transform.localPosition = Vector3.Slerp(transform.localPosition, reverse ? targetEdgePosition : - targetEdgePosition, speedIndicate * Time.deltaTime);
+            edgeTransform.localPosition = Vector3.Slerp(edgeTransform.localPosition, reverse ? edgeTargetPosition : - edgeTargetPosition, speedIndicate * Time.deltaTime);
         }
 
-        private void ScaleEdgeLineLength(Transform transform)
+        private void ScaleEdgeLineLength(Transform edgeTransform)
         {
-            transform.localScale = Vector3.Slerp(transform.localScale, targetEdgeScale, speedIndicate * Time.deltaTime);
+            edgeTransform.localScale = Vector3.Slerp(edgeTransform.localScale, new Vector3(1, 1 , _maxDistance - EdgeLengthOffset), speedIndicate * Time.deltaTime);
         }
 
-        private void ScaleSprite()
+        private void ScaleSpriteLength()
         {
-            Vector2 targetSize = new Vector2(targetIndicatorLength, directionIndicator.size.y);
-            directionIndicator.size = Vector2.Lerp(directionIndicator.size, targetSize, speedIndicate * Time.deltaTime);
+            directionIndicator.size = Vector2.Lerp(directionIndicator.size, _directionTargetSize, speedIndicate * Time.deltaTime);
         }
         
-        public void TurnOn()
+        public void Activate(float delayTime)
         {
             transform.gameObject.SetActive(true);
         }
 
-        public void TurnOff()
+        public void DeActivate()
         {
             transform.gameObject.SetActive(false);
+            Reset();
+        }
+
+        private void Reset()
+        {
             left.transform.localPosition = Vector3.zero;
             right.transform.localPosition = Vector3.zero;
 
-            left.transform.localScale = new Vector3(1, 1, 3.5f);
-            right.transform.localScale = new Vector3(1, 1, 3.5f);
+            left.transform.localScale = new Vector3(1, 1, _launchDistance- EdgeLengthOffset);
+            right.transform.localScale = new Vector3(1, 1, _launchDistance - EdgeLengthOffset);
             
-            directionIndicator.size = new Vector2(16, directionIndicator.size.y);
+            directionIndicator.size = new Vector2(_launchDistance * directionLengthScale, directionIndicator.size.y);
         }
-        
+
         //  Event Handlers --------------------------------
         
     }

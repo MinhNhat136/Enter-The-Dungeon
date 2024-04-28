@@ -15,8 +15,7 @@ namespace Atomic.Character
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class AiHitBoxController : MonoBehaviour, IDamageable, IInitializableWithBaseModel<BaseAgent>, ITickable,
-        ICharacterActionTrigger
+    public class AiHitBoxController : MonoBehaviour, IDamageable, IInitializableWithBaseModel<BaseAgent>
     {
         //  Events ----------------------------------------
         public event Action _onReceiveDamage;
@@ -87,7 +86,6 @@ namespace Atomic.Character
                 _health = model.HealthController;
                 Colliders = GetComponentsInChildren<Collider>();
                 ResetDamage();
-                RegisterCharacterAction();
             }
         }
 
@@ -136,14 +134,14 @@ namespace Atomic.Character
             Vector3 forward = transform.forward;
             forward = Quaternion.AngleAxis(HitForwardRotation, transform.up) * forward;
 
-            Vector3 posDamageSource = data.damageSource - transform.position;
+            Vector3 posDamageSource = data.DamageSource - transform.position;
             posDamageSource -= transform.up * Vector3.Dot(transform.up, posDamageSource);
 
             if (Vector3.Angle(forward, posDamageSource) > HitAngle * 0.5f)
                 return;
 
             IsInvulnerable = true;
-            _health.Decrease(data.amount);
+            _health.Decrease(data.Amount);
 
             _onReceiveDamage.Invoke();
         }
@@ -179,27 +177,5 @@ namespace Atomic.Character
             }
         }
         //  Event Handlers --------------------------------
-        private void RegisterCharacterAction()
-        {
-            RegisterActionTrigger(CharacterActionType.BeginRoll, () => SetColliderState(false));
-            RegisterActionTrigger(CharacterActionType.EndRoll, () => SetColliderState(true));
-            
-        }
-        
-        private void RegisterActionTrigger(CharacterActionType actionType, Action action)
-        {
-            if (!ActionTriggers.TryAdd(actionType, action))
-            {
-                ActionTriggers[actionType] += action;
-            }
-        }
-        
-        public void OnCharacterActionTrigger(CharacterActionType actionType)
-        {
-            if (ActionTriggers.TryGetValue(actionType, out var action))
-            {
-                action?.Invoke();
-            }
-        }
     }
 }

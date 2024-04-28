@@ -157,6 +157,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4104292244374916}
+  - component: {fileID: 3076184700451548773}
   m_Layer: 0
   m_Name: cannon_indicator
   m_TagString: Untagged
@@ -182,6 +183,22 @@ Transform:
   - {fileID: 4295490508484818}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &3076184700451548773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588341369436605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24b58c794af04f5a9114d497d5bc5dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aoeIndicator: {fileID: 4757707644409887}
+  aoeOriginalIndicator: {fileID: 4985726964303581}
+  line: {fileID: 120288930182247589}
+  lineSegment: 100
 --- !u!1 &1590616673237936
 GameObject:
   m_ObjectHideFlags: 0

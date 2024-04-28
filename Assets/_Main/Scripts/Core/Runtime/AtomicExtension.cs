@@ -180,7 +180,7 @@ namespace Atomic.Core
             }
             catch
             {
-                newPts = pts.vToArray();
+                newPts = pts.ToArray();
             }
             return newPts;
         }
@@ -224,6 +224,15 @@ namespace Atomic.Core
             return layermask == (layermask | (1 << layer));
         }
 
+        public static void CopyValues<T>(T Base, T Copy)
+        {
+            Type type = Base.GetType();
+            foreach (var field in type.GetFields())
+            {
+                field.SetValue(Copy, field.GetValue(Base));
+            }
+        }
+        
         public static string LongToBitString(long num)
         {
             int numBits = sizeof(long) * 8;
@@ -390,7 +399,7 @@ namespace Atomic.Core
             return ret;
         }
 
-        public static List<T> vCopy<T>(this List<T> list)
+        public static List<T> Copy<T>(this List<T> list)
         {
             List<T> _list = new List<T>();
             if (list == null || list.Count == 0)
@@ -420,7 +429,7 @@ namespace Atomic.Core
             return list;
         }
 
-        public static T[] vToArray<T>(this List<T> list)
+        public static T[] ToArray<T>(this List<T> list)
         {
             T[] array = new T[list.Count];
             if (list == null || list.Count == 0)

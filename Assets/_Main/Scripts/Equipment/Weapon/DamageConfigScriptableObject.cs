@@ -3,7 +3,8 @@ using static UnityEngine.ParticleSystem;
 
 namespace Atomic.Equipment
 {
-    public class DamageConfigScriptableObject : MonoBehaviour, System.ICloneable
+    [CreateAssetMenu(fileName = "Gun", menuName = "Weapons/DamageConfig", order = 3)]
+    public class DamageConfigScriptableObject : ScriptableObject, System.ICloneable
     {
         public MinMaxCurve DamageCurse;
 

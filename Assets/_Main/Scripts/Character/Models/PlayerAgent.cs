@@ -50,6 +50,7 @@ namespace Atomic.Character
             if (!IsInitialized)
             {
                 base.Initialize();
+                IsPlayer = true;
                 InputControls = new PlayerControls();
                 Assign();
 

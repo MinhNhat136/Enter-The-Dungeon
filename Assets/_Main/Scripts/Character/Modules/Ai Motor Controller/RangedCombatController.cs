@@ -27,7 +27,10 @@ namespace Atomic.Character
             {
                 if (value is RangedWeaponScriptableObject rangedWeapon)
                     _rangedWeapon = rangedWeapon;
-                else throw new Exception("Ranged weapon invalid");
+                else
+                {
+                    throw new Exception("Ranged weapon invalid");
+                }
             }
         }
 
@@ -86,7 +89,7 @@ namespace Atomic.Character
         
         public void BeginAttack()
         {
-            _rangedWeapon.Shoot();
+            _rangedWeapon.DoProjectileShoot();
         }
 
         public void Attacking()

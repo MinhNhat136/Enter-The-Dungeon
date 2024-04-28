@@ -27,6 +27,7 @@ namespace Atomic.Equipment
         protected BaseAgent Owner;
         protected GameObject Model;
 
+
         public virtual void Attach(Transform parent, BaseAgent owner)
         {
             IsAttach = true;

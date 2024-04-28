@@ -1,3 +1,5 @@
+using System;
+
 namespace Atomic.Character
 {
 
@@ -6,6 +8,11 @@ namespace Atomic.Character
         public override void Assign()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Awake()
+        {
+            base.Initialize();
         }
     }
 }

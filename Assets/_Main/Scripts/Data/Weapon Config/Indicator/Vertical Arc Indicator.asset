@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38adacdc1d37d3c4aa08c8296b267bfd, type: 3}
-  m_Name: Bow Projectile Config
+  m_Script: {fileID: 11500000, guid: aefbd721d14d56743b9a2d682204e1bd, type: 3}
+  m_Name: Vertical Arc Indicator
   m_EditorClassIdentifier: 
-  HitMask:
-    serializedVersion: 2
-    m_Bits: 64
-  BulletPrefab: {fileID: -362398150397319881, guid: 34031283e21a0a5468467d38ea201c07, type: 3}
+  delayTurnOnTime: 0.5
+  indicatorPrefab: {fileID: 1588341369436605, guid: 3924ebcfe34c7ae4e8ab9faee823328a, type: 3}
+  indicatorPosition: {x: 0, y: 1, z: 0}
+  MaxDistance: 15

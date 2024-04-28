@@ -73,8 +73,9 @@ namespace Atomic.Character
         //  Other Methods ---------------------------------
         public void AttachDefaultWeapons()
         {
-            AttachWeapon(WeaponType.Shotgun);
             AttachWeapon(WeaponType.Bow);
+            AttachWeapon(WeaponType.Shotgun);
+
             
             ActivateOtherWeapon();
         }

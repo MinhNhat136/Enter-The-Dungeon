@@ -1,8 +1,6 @@
-using System;
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace Atomic.Equipment
@@ -10,18 +8,6 @@ namespace Atomic.Equipment
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-    public enum ShootModeEnum
-    {
-        Single,
-        Spread,
-        Continuous,
-    }
-
-    public enum IndicatorParent
-    {
-        Character, 
-        ShootPoint,
-    }
     
     /// <summary>
     /// TODO: Replace with comments...
@@ -37,29 +23,24 @@ namespace Atomic.Equipment
         
         //  Fields ----------------------------------------
         [Header("RANGED ENUM", order = 0)]
-        public ShootModeEnum shootMode;
         public ProjectileTrajectoryEnum trajectoryType;
-        public IndicatorParent indicatorParent; 
-        
+
         [Header("CONFIG", order = 2)]
-        public ProjectileConfigScriptableObject projectileConfig;
-        
-        [Header("INDICATOR", order = 3)]
-        public GameObject indicatorPrefab;
-        public Vector3 indicatorPosition;
-        public Vector3 indicatorRotation;
+        public ShootConfigScriptableObject shootConfig;
+        public DamageConfigScriptableObject damageConfig;
+        public HitEffectConfigScriptableObject hitConfig;
+        public IndicatorConfigScriptableObject indicatorConfig; 
 
         [Header("PARAMETER", order = 4)] 
+        public float velocity;
         public MinMaxSlider rangeAttack;
         public float criticalChance;
         
         private ObjectPool<ProjectileBase> _projectilePool;
         private IProjectileTrajectoryController _trajectoryController;
-        private ITrajectoryIndicator _trajectoryIndicator;
         private ParticleSystem _shootSystem;
         private GameObject _indicator;
 
-        private Vector3 _shootPoint; 
         
         //  Initialization  -------------------------------
 
@@ -73,12 +54,10 @@ namespace Atomic.Equipment
             base.Attach(parent, owner);
             _shootSystem = Model.GetComponentInChildren<ParticleSystem>();
             _projectilePool = new ObjectPool<ProjectileBase>(CreateProjectile);
-           
-
             Model.transform.SetParent(parent);
 
             SetTrajectoryController();
-            SetIndicator();
+            indicatorConfig.Initialize(owner);
         }
 
         public override void Detach()
@@ -89,8 +68,9 @@ namespace Atomic.Equipment
                 _projectilePool.Clear();
             }
 
+            indicatorConfig.Destroy();
+            
             _trajectoryController = null;
-            _trajectoryIndicator = null;
             _shootSystem = null;
             _indicator = null;
         }
@@ -114,44 +94,37 @@ namespace Atomic.Equipment
             }
         }
 
-        private void SetIndicator()
-        {
-            _indicator = Instantiate(indicatorPrefab, Owner.transform, true);
-            _indicator.transform.localPosition = indicatorPosition;
-            _indicator.transform.localRotation = Quaternion.Euler(indicatorRotation);
-            _indicator.SetActive(false);
-
-            _trajectoryIndicator = _indicator.GetComponent<ITrajectoryIndicator>();
-        }
-
         public void BeginCharge()
         {
-            _trajectoryIndicator.TurnOn();
+            indicatorConfig.TurnOn();
         }
-
+        
         public void UpdateCharge()
         {
-            _trajectoryIndicator.Indicate();
-            _shootPoint = _shootSystem.transform.forward;
-            Debug.Log(_shootPoint);
+            indicatorConfig.trajectoryIndicator.SetLaunchPosition(_shootSystem.transform.position);
+            if(Owner.TargetAgent) 
+                indicatorConfig.trajectoryIndicator.SetTarget(Owner.TargetAgent.transform);
+            else
+            {
+                indicatorConfig.trajectoryIndicator.SetTarget(null);
+            }
+            indicatorConfig.Indicate();
+            // Owner.StartCoroutine(indicatorConfig.Indicate());
+
         }
 
         public void EndCharge()
         {
-            
         }
 
         public void CancelCharge()
         {
-            _trajectoryIndicator.TurnOff();
+            indicatorConfig.TurnOff();
         }
 
-        public void Shoot()
+        public void DoProjectileShoot()
         {
-            Debug.Log("shoot");
-            Debug.Log(_shootPoint);
-
-            _trajectoryIndicator.TurnOff();
+            indicatorConfig.trajectoryIndicator.DeActivate();
             
             _shootSystem.Play();
             Vector3 shootDirection = _shootSystem.transform.forward;
@@ -160,14 +133,48 @@ namespace Atomic.Equipment
             ProjectileBase bullet = _projectilePool.Get();
             bullet.gameObject.SetActive(true);
 
-            bullet.Spawn(_shootSystem.transform.position, _trajectoryController);
-            bullet.Shoot(Owner, _shootPoint);
+            bullet.Shoot(_shootSystem.transform.position, new Vector3(Owner.transform.forward.x, _shootSystem.transform.forward.y, Owner.transform.forward.z), velocity);
+        }
+
+        private void HandleBulletCollision(ProjectileBase projectile, Collision collision)
+        {
+            if (collision == null)
+            {
+                DisableProjectile(projectile);
+                return;
+            };
+            if (collision.gameObject.TryGetComponent(out BaseAgent agent) && collision.gameObject.layer == shootConfig.HitMask)
+            {
+                agent.HitBoxController.ApplyDamage(new DamageMessage()
+                {
+                    Damager = this.Owner,
+                    Amount = 10,
+                });
+            }
+        }
+        
+        private void DisableProjectile(ProjectileBase Bullet)
+        {
+            Bullet.gameObject.SetActive(false);
+            _projectilePool.Release(Bullet);
+        }
+        
+        private void HandleBulletImpact(
+            float DistanceTravelled,
+            Vector3 HitLocation,
+            Vector3 HitNormal,
+            Collider HitCollider,
+            int ObjectsPenetrated = 0)
+        {
+           
         }
 
         private ProjectileBase CreateProjectile()
         {
-            ProjectileBase instance = Instantiate(projectileConfig.bulletPrefab);
+            ProjectileBase instance = Instantiate(shootConfig.bulletPrefab);
             instance.gameObject.SetActive(false);
+            instance.Spawn(Owner, _trajectoryController.Clone(), shootConfig.delayDisableTime);
+            instance.OnCollision += HandleBulletCollision;
 
             return instance;
         }
@@ -178,8 +185,11 @@ namespace Atomic.Equipment
 
             config.WeaponType = WeaponType;
             config.name = name;
-            config.projectileConfig = projectileConfig.Clone() as ProjectileConfigScriptableObject;
-
+            
+            config.shootConfig = shootConfig.Clone() as ShootConfigScriptableObject;
+            config.indicatorConfig = indicatorConfig.Clone() as IndicatorConfigScriptableObject;
+            config.damageConfig = damageConfig.Clone() as DamageConfigScriptableObject;
+            
             config.WeaponPrefab = WeaponPrefab;
             config.WeaponSpawnPoint = WeaponSpawnPoint;
             config.WeaponSpawnRotation = WeaponSpawnRotation;

@@ -7,34 +7,22 @@ namespace Atomic.Character
     [Serializable]
     public class AiHealth : IInitializableWithBaseModel<BaseAgent>
     {
-        public float MaxHealth = 10f;
+        public float MaxHealth;
 
         public UnityAction OnZero;
 
         public float CurrentHealth { get; set; }
-
-        public bool IsInitialized
-        {
-            get {  return _isInitialized; }
-        }
-
-
-
-        public BaseAgent Model 
-        { 
-            get { return _model;  } 
-        }
+        public bool IsInitialized { get; private set; }
+        public BaseAgent Model { get; private set; }
 
         bool m_IsDead;
-        bool _isInitialized;
-        BaseAgent _model; 
 
         public void Initialize(BaseAgent model)
         {
-            if (!_isInitialized)
+            if (!IsInitialized)
             {
-                _isInitialized = true;
-                _model = model;
+                IsInitialized = true;
+                Model = model;
                 CurrentHealth = MaxHealth;
                 m_IsDead = false;
             }

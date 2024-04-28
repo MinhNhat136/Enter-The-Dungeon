@@ -29,7 +29,7 @@ namespace Atomic.Character
     /// Base class for defining characters with modular control systems.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class BaseAgent : SerializedMonoBehaviour, IInitializable, ICharacterActionTrigger
+    public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Events ----------------------------------------
 
@@ -39,8 +39,10 @@ namespace Atomic.Character
         public bool IsInitialized => _isInitialized;
         public Transform BodyWeakPoint => bodyWeakPoint;
         public BaseAgent TargetAgent { get; set; }
-
+        
         [field: SerializeField]
+        public bool IsPlayer { get; protected set; }
+        
         public WeaponScriptableObject CurrentWeapon { get; set; }
         public CombatMode CurrentCombatMode { get; set; }
 
@@ -102,10 +104,9 @@ namespace Atomic.Character
 
 
         //  Fields ----------------------------------------
-        [FormerlySerializedAs("_bodyWeakPoint")] 
-        [SerializeField] private Transform bodyWeakPoint;
+        [SerializeField] 
+        private Transform bodyWeakPoint;
         private bool _isInitialized;
-        private AgentsManager _agentManager;
 
         #region Controller
         private IAgentAnimator _agentAnimatorController;
@@ -115,6 +116,7 @@ namespace Atomic.Character
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
         
+        [SerializeField]
         private AiHealth _healthController;
         private AiMemoryController _memoryController;
         #endregion
@@ -125,8 +127,6 @@ namespace Atomic.Character
             if (!_isInitialized)
             {
                 _isInitialized = true;
-                _agentManager = FindObjectOfType<AgentsManager>();
-                _agentManager.RegisterAgent(this);
 
                 DefaultActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
                                       CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
@@ -161,7 +161,6 @@ namespace Atomic.Character
         //  Unity Methods   -------------------------------
         void OnDestroy()
         {
-            _agentManager.UnRegisterAgent(this);
         }
 
         //  Other Methods ---------------------------------
@@ -176,12 +175,15 @@ namespace Atomic.Character
             
             _healthController = new AiHealth();
             
+            _healthController.Initialize(this);
             this.AttachControllerToModel(out _agentAnimatorController);
             this.AttachControllerToModel(out _visionController);
             this.AttachControllerToModel(out _motorController);
             this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _weaponVisualsController);
             this.AttachControllerToModel(out _hitBoxController);
+            
+            
         }
         
         //  Event Handlers --------------------------------

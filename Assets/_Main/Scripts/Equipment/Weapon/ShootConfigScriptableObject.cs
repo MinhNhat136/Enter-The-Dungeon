@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,19 +12,20 @@ namespace Atomic.Equipment
     }
     
     [CreateAssetMenu(fileName = "Shoot Config", menuName = "Weapons/Ranged/Shoot Config", order = 2)]
-    public class ProjectileConfigScriptableObject : ScriptableObject, System.ICloneable
+    public class ShootConfigScriptableObject : ScriptableObject, System.ICloneable
     {
         public LayerMask HitMask;
         [FormerlySerializedAs("BulletPrefab")] public ProjectileBase bulletPrefab;
-        public float projectileSpeed;
-        public float lifeCycle;
+        [FormerlySerializedAs("projectileSpeed")] public float projectileShootForce;
+        [FormerlySerializedAs("lifeCycle")] public float delayDisableTime;
 
         public List<HitEffectConfigScriptableObject> hitEffects;
-        public DamageConfigScriptableObject damageConfig; 
         
         public object Clone()
         {
             throw new System.NotImplementedException();
         }
+        
+        
     }
 }

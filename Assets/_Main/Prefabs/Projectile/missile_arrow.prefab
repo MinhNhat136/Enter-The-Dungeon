@@ -158,6 +158,7 @@ GameObject:
   - component: {fileID: 8112391521822722171}
   - component: {fileID: 4407445366980474149}
   - component: {fileID: -362398150397319881}
+  - component: {fileID: 3272837342136504145}
   m_Layer: 0
   m_Name: missile_arrow
   m_TagString: Untagged
@@ -220,4 +221,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4db0355f2bd83488598b82df5ce848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DelayedDisableTime: 2
+--- !u!135 &3272837342136504145
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8987939846278491663}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}

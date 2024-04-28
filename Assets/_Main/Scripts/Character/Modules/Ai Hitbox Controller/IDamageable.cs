@@ -7,11 +7,11 @@ namespace Atomic.Character
     //  Namespace Properties ------------------------------
     public struct DamageMessage
     {
-        public BaseAgent damager;
-        public readonly int amount;
-        public Vector3 direction;
-        public Vector3 damageSource;
-        public PassiveEffect passiveEffect;
+        public BaseAgent Damager { get; set; }
+        public int Amount { get; set; }
+        public Vector3 Direction { get; set; }
+        public Vector3 DamageSource { get; set; }
+        public PassiveEffect PassiveEffect { get; set; }
     }
     //  Class Attributes ----------------------------------
 

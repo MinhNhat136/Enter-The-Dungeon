@@ -47,12 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9dd823ae934cbf4ba11c6c75f3b160e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetIndicatorLength: 40
+  directionLengthScale: 4
+  directionWidthScale: 1
   directionIndicator: {fileID: 212535515230801127}
   left: {fileID: 4522253086576143}
   right: {fileID: 4548799116474643}
-  targetEdgePosition: {x: 0.25, y: 0, z: 0}
-  targetEdgeScale: {x: 1, y: 1, z: 9.5}
+  edgeTargetPosition: {x: 0.25, y: 0, z: 0}
   speedIndicate: 3
 --- !u!1 &1068140372960079
 GameObject:

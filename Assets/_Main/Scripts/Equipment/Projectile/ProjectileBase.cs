@@ -10,50 +10,48 @@ namespace Atomic.Equipment
     [RequireComponent(typeof(Rigidbody))]
     public class ProjectileBase : MonoBehaviour
     {
-        public float DelayedDisableTime = 2f; 
         public delegate void CollisionEvent(ProjectileBase projectile, Collision collision);
 
         public event CollisionEvent OnCollision;
         public BaseAgent Owner { get; private set; }
-        public Vector3 InitialPosition { get; private set; }
-        public Vector3 InitialDirection { get; private set; }
-        public Vector3 InitialVelocity { get; set;  }
+        public Vector3 ShootPosition { get; private set; }
+        public Vector3 ShootForce { get; set; }
         public IProjectileTrajectoryController TrajectoryController { get; set; }
         public Rigidbody Rigidbody {get; private set; }
 
         private WaitForSeconds _waitForSeconds;
-        public UnityAction OnShoot ;
 
         public void Awake()
         {
             Rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void Shoot(BaseAgent owner, Vector3 SpawnForce)
+        public void Spawn(BaseAgent owner, IProjectileTrajectoryController trajectoryController, float delayedDisableTime)
         {
             Owner = owner;
-            transform.position = InitialPosition;
-            InitialDirection = SpawnForce.normalized;
-            transform.forward = SpawnForce.normalized;
-
-            OnShoot?.Invoke();
-        }
-
-        public void Update()
-        {
-            TrajectoryController.ApplyTrajectory(this);
-        }
-
-        public void Spawn(Vector3 spawnPoint, IProjectileTrajectoryController trajectoryController)
-        {
-            // Init something here
-            InitialPosition = spawnPoint;
             TrajectoryController = trajectoryController;
-            _waitForSeconds = new WaitForSeconds(DelayedDisableTime);
-            StartCoroutine(DelayedDisable(DelayedDisableTime));
+            _waitForSeconds = new WaitForSeconds(delayedDisableTime);
+
+            gameObject.SetActive(false);
+        }
+        
+        public void Shoot(Vector3 shootPosition, Vector3 shootDirection, float velocity)
+        {
+            ShootPosition = shootPosition;
+            transform.position = shootPosition;
+            transform.forward = shootDirection;
+
+            if (Owner.TargetAgent)
+            {
+                transform.forward = (Owner.TargetAgent.BodyWeakPoint.transform.position - transform.position).normalized;
+            }
+
+            ShootForce = transform.forward * velocity;
+            TrajectoryController.ApplyTrajectory(this);
+            StartCoroutine(DelayedDisable());
         }
 
-        public IEnumerator DelayedDisable(float time)
+        public IEnumerator DelayedDisable()
         {
             yield return _waitForSeconds;
             OnCollisionEnter(null);
@@ -67,6 +65,8 @@ namespace Atomic.Equipment
         private void OnDisable()
         {
             StopAllCoroutines();
+            Rigidbody.velocity = Vector3.zero;
+            Rigidbody.angularVelocity = Vector3.zero;
             OnCollision = null;
         }
     }
