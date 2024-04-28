@@ -15,8 +15,7 @@ namespace Atomic.Equipment
         public event CollisionEvent OnCollision;
         public BaseAgent Owner { get; private set; }
         public Vector3 ShootPosition { get; private set; }
-        public Vector3 ShootForce { get; set; }
-        public IProjectileTrajectoryController TrajectoryController { get; set; }
+        public Vector3 ShootVelocity { get; set; }
         public Rigidbody Rigidbody {get; private set; }
 
         private WaitForSeconds _waitForSeconds;
@@ -26,33 +25,25 @@ namespace Atomic.Equipment
             Rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void Spawn(BaseAgent owner, IProjectileTrajectoryController trajectoryController, float delayedDisableTime)
+        public void Spawn(BaseAgent owner, float delayedDisableTime)
         {
             Owner = owner;
-            TrajectoryController = trajectoryController;
             _waitForSeconds = new WaitForSeconds(delayedDisableTime);
-
             gameObject.SetActive(false);
         }
         
-        public void Shoot(Vector3 shootPosition, Vector3 shootDirection, float velocity)
+        public void Load(Vector3 shootPosition, Vector3 shootDirection, float velocity)
         {
             ShootPosition = shootPosition;
             transform.position = shootPosition;
             transform.forward = shootDirection;
-
-            if (Owner.TargetAgent)
-            {
-                transform.forward = (Owner.TargetAgent.BodyWeakPoint.transform.position - transform.position).normalized;
-            }
-
-            ShootForce = transform.forward * velocity;
-            TrajectoryController.ApplyTrajectory(this);
+            ShootVelocity = transform.forward * velocity;
             StartCoroutine(DelayedDisable());
         }
 
         public IEnumerator DelayedDisable()
         {
+            Debug.Log(gameObject.GetInstanceID() + " turnoff");
             yield return _waitForSeconds;
             OnCollisionEnter(null);
         }
@@ -64,10 +55,9 @@ namespace Atomic.Equipment
 
         private void OnDisable()
         {
-            StopAllCoroutines();
+            StopCoroutine(DelayedDisable());
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.angularVelocity = Vector3.zero;
-            OnCollision = null;
         }
     }
 }

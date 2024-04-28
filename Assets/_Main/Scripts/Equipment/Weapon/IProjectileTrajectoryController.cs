@@ -1,20 +1,24 @@
 using System;
+using Atomic.Character;
 using UnityEngine;
 
 namespace  Atomic.Equipment
 {
     public interface IProjectileTrajectoryController
     {
-        public void ApplyTrajectory(ProjectileBase projectile);
+        public BaseAgent Target { get; set; }
+        public void Shoot(ProjectileBase projectile);
         public IProjectileTrajectoryController Clone();
     }
-
     
     public class StraightTrajectory : IProjectileTrajectoryController
     {
-        public void ApplyTrajectory(ProjectileBase projectile)
+        public BaseAgent Target { get; set; }
+
+        public void Shoot(ProjectileBase projectile)
         {
-            projectile.Rigidbody.AddForce(projectile.ShootForce, ForceMode.VelocityChange);
+            Debug.Log(Time.time);
+            projectile.Rigidbody.AddForce(projectile.ShootVelocity, ForceMode.VelocityChange);
         }
 
         public IProjectileTrajectoryController Clone()
@@ -31,7 +35,9 @@ namespace  Atomic.Equipment
        private float gravityMagnitude;
        private float maxDistance;
 
-    public void ApplyTrajectory(ProjectileBase projectile)
+       public BaseAgent Target { get; set; }
+
+       public void Shoot(ProjectileBase projectile)
     {
         // if (initialSpeed == 0f)
         // {
@@ -66,7 +72,9 @@ namespace  Atomic.Equipment
     
     public class HorizontalArcTrajectory : IProjectileTrajectoryController
     {
-        public void ApplyTrajectory(ProjectileBase projectile)
+        public BaseAgent Target { get; set; }
+
+        public void Shoot(ProjectileBase projectile)
         {
             Debug.Log("spread");
         }

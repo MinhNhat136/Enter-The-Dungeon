@@ -5,13 +5,15 @@ namespace Atomic.Equipment
 {
     public interface ITrajectoryIndicator
     {
+        public float DelayActivateTime { get; set; }
+        
         // Position and Rotation ----------------------------------------
-        public virtual ITrajectoryIndicator SetPosition(Vector3 position)
+        public ITrajectoryIndicator SetPosition(Vector3 position)
         {
             return this; 
         }
         
-        public virtual ITrajectoryIndicator SetLaunchPosition(Vector3 launchPosition)
+        public ITrajectoryIndicator SetLaunchPosition(Vector3 launchPosition)
         {
             return this;
         }
@@ -21,31 +23,31 @@ namespace Atomic.Equipment
             return this;
         }
 
-        public virtual ITrajectoryIndicator SetForwardDirection(Vector3 forwardDirection)
+        public ITrajectoryIndicator SetForwardDirection(Vector3 forwardDirection)
         {
             return this;
         }
         
         // Distance ----------------------------------------
-        public virtual ITrajectoryIndicator SetLaunchDistance(float distance)
+        public ITrajectoryIndicator SetLaunchDistance(float distance)
         {
             return this;
         }
         
-        public virtual ITrajectoryIndicator SetMaxDistance(float value)
+        public ITrajectoryIndicator SetMaxDistance(float value)
         {
             return this;
         }
         
         // Angle ----------------------------------------
-        public virtual ITrajectoryIndicator SetSpreadAngle(float spreadAngle)
+        public ITrajectoryIndicator SetSpreadAngle(float spreadAngle)
         {
             return this;
         }
 
         public void Set();
         public void Indicate();
-        public void Activate(float delayTime = 0);
+        public void Activate();
         public void DeActivate(); 
     }
 }

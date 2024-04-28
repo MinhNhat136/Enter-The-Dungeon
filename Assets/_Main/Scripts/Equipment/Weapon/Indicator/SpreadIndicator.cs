@@ -1,3 +1,6 @@
+using System;
+using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -13,14 +16,22 @@ namespace Atomic.Equipment
         public float SpreadAngle { get; set; }
         public float MaxRadius { get; set; }
 
+        public float DelayActivateTime { get; set; }
+
         public void Set()
         {
             throw new System.NotImplementedException();
         }
 
+        [Button]
         public void Indicate()
         {
-            
+            OnDrawGizmos();
+        }
+
+        public void Activate()
+        {
+            throw new NotImplementedException();
         }
 
         public void Activate(float delayTime = 0)
@@ -32,6 +43,12 @@ namespace Atomic.Equipment
         public void DeActivate()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void OnDrawGizmos()
+        {
+            Handles.color = new Color(0, 1, 0, 0.3f);
+            Handles.DrawSolidArc(transform.position, transform.up, transform.forward, 60, 10);
         }
     }
 }

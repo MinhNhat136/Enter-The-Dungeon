@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aefbd721d14d56743b9a2d682204e1bd, type: 3}
   m_Name: Vertical Arc Indicator
   m_EditorClassIdentifier: 
-  delayTurnOnTime: 0.5
   indicatorPrefab: {fileID: 1588341369436605, guid: 3924ebcfe34c7ae4e8ab9faee823328a, type: 3}
   indicatorPosition: {x: 0, y: 1, z: 0}
-  MaxDistance: 15
+  delayActivateTime: 0.5

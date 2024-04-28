@@ -17,7 +17,8 @@ namespace Atomic.Equipment
 
 
         //  Properties ------------------------------------
-        
+        public float DelayActivateTime { get; set; }
+
         
         //  Fields ----------------------------------------
         [Header("DIRECTION-ARROW")] 
@@ -45,6 +46,7 @@ namespace Atomic.Equipment
 
 
         //  Other Methods ---------------------------------
+
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {
             _position = position;
@@ -85,6 +87,7 @@ namespace Atomic.Equipment
 
         public void Indicate()
         {
+            if (!gameObject.activeSelf) return;
             SpreadEdgeLine(left, false);
             SpreadEdgeLine(right, true);
             
@@ -109,13 +112,19 @@ namespace Atomic.Equipment
             directionIndicator.size = Vector2.Lerp(directionIndicator.size, _directionTargetSize, speedIndicate * Time.deltaTime);
         }
         
-        public void Activate(float delayTime)
+        public void Activate()
+        {
+            Invoke("DelayActivate", DelayActivateTime);
+        }
+
+        private void DelayActivate()
         {
             transform.gameObject.SetActive(true);
         }
 
         public void DeActivate()
         {
+            CancelInvoke("DelayActivate");
             transform.gameObject.SetActive(false);
             Reset();
         }

@@ -6,6 +6,10 @@ namespace Atomic.Equipment
 {
     public sealed class VerticalArcIndicator : MonoBehaviour, ITrajectoryIndicator
     {
+        
+        public float DelayActivateTime { get; set; }
+
+        
         [SerializeField] 
         private Transform aoeIndicator;
         [SerializeField] 
@@ -19,7 +23,8 @@ namespace Atomic.Equipment
         private Vector3 _targetPosition;
         private float _maxDistance;
         private bool IsActive = false;
-        
+
+
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {
             transform.localPosition = Vector3.zero;
@@ -67,10 +72,11 @@ namespace Atomic.Equipment
             IncreaseAoERadius();
             DrawTrajectoryLine();
         }
+        
 
-        public void Activate(float delayTime)
+        public void Activate()
         {
-            Invoke(nameof(ActiveGameObject), delayTime);
+            Invoke(nameof(ActiveGameObject), DelayActivateTime);
         }
 
         public void ActiveGameObject() => gameObject.SetActive(true);
