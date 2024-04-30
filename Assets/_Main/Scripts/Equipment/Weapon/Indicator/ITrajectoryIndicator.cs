@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -7,18 +6,38 @@ namespace Atomic.Equipment
     {
         public float DelayActivateTime { get; set; }
         public float IndicateValue { get; set; }
-        // Position and Rotation ----------------------------------------
+
+        public ITrajectoryIndicator SetDistanceWeight(float distanceWeight)
+        {
+            return this;
+        }
+
+        public ITrajectoryIndicator SetTimeWeight(float timeWeight)
+        {
+            return this;
+        }
+
+        public ITrajectoryIndicator SetScaleWeight(float scaleWeight)
+        {
+            return this;
+        }
+
+        public ITrajectoryIndicator SetRadiusWeight(float radiusWeight)
+        {
+            return this;
+        }
+        
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {
             return this; 
         }
         
-        public ITrajectoryIndicator SetLaunchPosition(Vector3 launchPosition)
+        public ITrajectoryIndicator SetLaunchTransform(Transform launchTransform)
         {
             return this;
         }
 
-        public ITrajectoryIndicator SetTarget([CanBeNull] Transform targetPosition)
+        public ITrajectoryIndicator SetTarget(Vector3 targetPosition)
         {
             return this;
         }
@@ -27,25 +46,12 @@ namespace Atomic.Equipment
         {
             return this;
         }
-        
-        // Distance ----------------------------------------
-        public ITrajectoryIndicator SetLaunchDistance(float distance)
-        {
-            return this;
-        }
-        
-        public ITrajectoryIndicator SetMaxDistance(float value)
-        {
-            return this;
-        }
-        
-        // Angle ----------------------------------------
-        public ITrajectoryIndicator SetSpreadAngle(float spreadAngle)
-        {
-            return this;
-        }
 
-        public void Set();
+        public virtual void Set()
+        {
+            
+        }
+        
         public void Indicate();
         public void Activate();
         public void DeActivate(); 

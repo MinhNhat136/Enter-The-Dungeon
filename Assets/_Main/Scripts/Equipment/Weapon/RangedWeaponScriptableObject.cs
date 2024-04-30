@@ -1,8 +1,6 @@
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 namespace Atomic.Equipment
 {
@@ -23,24 +21,38 @@ namespace Atomic.Equipment
         
         
         //  Fields ----------------------------------------
-        [Header("CONFIG", order = 2)]
-        public IndicatorBuilderScriptableObject indicatorBuilder; 
+        [Header("CONFIG", order = 0)]
         public ShootBuilderScriptableObject shootBuilder;
         public DamageConfigScriptableObject damageConfig;
         public HitEffectConfigScriptableObject hitConfig;
         
-        private ObjectPool<ProjectileBase> _projectilePool;
-        private ParticleSystem _shootSystem;
-
+        [Header("PARAMETER", order = 1)] 
+        public float minEnergy;
+        public float maxEnergy;
+        public float speedCharge;
+        
+        public float timeWeight;
+        public float distanceWeight;
+        public float radiusWeight;
+        public float scaleWeight; 
+        
+        [Header("INDICATOR", order = 2)] 
+        public GameObject indicatorPrefab;
+        public Vector3 indicatorPosition;
+        public float delayActivateTime;
+        
         private float _energyValue;
+        private ParticleSystem _shootSystem;
+        private GameObject _indicator;
+        public  ITrajectoryIndicator trajectoryIndicator;
+        private ObjectPool<ProjectileBase> _projectilePool;
 
-        public float speedCharge; 
         //  Initialization  -------------------------------
 
 
         //  Unity Methods   -------------------------------
 
-
+        
         //  Other Methods ---------------------------------
         public override void Attach(Transform parent, BaseAgent owner)
         {
@@ -48,9 +60,23 @@ namespace Atomic.Equipment
             _shootSystem = Model.GetComponentInChildren<ParticleSystem>();
             _projectilePool = new ObjectPool<ProjectileBase>(CreateProjectile);
             Model.transform.SetParent(parent);
-
-            indicatorBuilder.Initialize(owner);
+            
             shootBuilder.Initialize(owner);
+            
+            _indicator = Instantiate(indicatorPrefab, owner.transform, false);
+
+            trajectoryIndicator = _indicator.GetComponent<ITrajectoryIndicator>();
+            trajectoryIndicator.DelayActivateTime = delayActivateTime;
+            trajectoryIndicator
+                .SetPosition(Owner.transform.position)
+                .SetLaunchTransform(_shootSystem.transform)
+                .SetForwardDirection(owner.transform.forward)
+                .SetDistanceWeight(distanceWeight)
+                .SetRadiusWeight(radiusWeight)
+                .SetScaleWeight(scaleWeight)
+                .SetTimeWeight(timeWeight)
+                .Set();
+            trajectoryIndicator.DeActivate();
         }
 
         public override void Detach()
@@ -62,39 +88,40 @@ namespace Atomic.Equipment
                 _projectilePool.Clear();
             }
 
-            indicatorBuilder.Destroy();
+            _indicator = null;
+            trajectoryIndicator = null; 
+            
             shootBuilder.Destroy();
         }
 
         public void BeginCharge()
         {
-            indicatorBuilder.trajectoryIndicator.Activate();
-            _energyValue = indicatorBuilder.minDistance;
+            trajectoryIndicator.Activate();
+            _energyValue = minEnergy;
 
         }
         
         public void UpdateCharge()
         {
-            ChargeEnergy();
-            indicatorBuilder.trajectoryIndicator.SetLaunchPosition(_shootSystem.transform.position);
-            indicatorBuilder.trajectoryIndicator.SetTarget(Owner.TargetAgent ? Owner.TargetAgent.transform : null);
-            indicatorBuilder.trajectoryIndicator.IndicateValue = _energyValue;
-            indicatorBuilder.trajectoryIndicator.Indicate();
-        }
-
-        public void ChargeEnergy()
-        {
-            _energyValue = Mathf.Lerp(_energyValue, indicatorBuilder.maxDistance, speedCharge * Time.deltaTime);
+            _energyValue = Mathf.Lerp(_energyValue, maxEnergy, speedCharge * Time.deltaTime);
+            Vector3 targetPosition = Vector3.zero;
+            if (Owner.TargetAgent != null)
+            {
+                targetPosition = Owner.TargetAgent.transform.position;
+            }
+            trajectoryIndicator.SetTarget(targetPosition);
+            trajectoryIndicator.IndicateValue = _energyValue;
+            trajectoryIndicator.Indicate();
         }
 
         public void CancelCharge()
         {
-            indicatorBuilder.trajectoryIndicator.DeActivate();
+            trajectoryIndicator.DeActivate();
         }
 
         public void DoProjectileShoot()
         {
-            indicatorBuilder.trajectoryIndicator.DeActivate();
+            trajectoryIndicator.DeActivate();
             
             _shootSystem.Play();
             Vector3 shootDirection = _shootSystem.transform.forward;
@@ -152,7 +179,6 @@ namespace Atomic.Equipment
             config.WeaponType = WeaponType;
             config.name = name;
             
-            config.indicatorBuilder = indicatorBuilder.Clone() as IndicatorBuilderScriptableObject;
             config.shootBuilder = shootBuilder.Clone() as ShootBuilderScriptableObject;
             config.damageConfig = damageConfig.Clone() as DamageConfigScriptableObject;
             

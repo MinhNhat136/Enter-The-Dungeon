@@ -275,6 +275,7 @@ namespace Atomic.Character
         public void ApplyRollCommand()
         {
             if (Command.HasFlag(Command.Roll)) return;
+            Command &= 0;
             Command |= Command.Interrupt;
             Command |= Command.Roll;
         }
@@ -295,13 +296,7 @@ namespace Atomic.Character
         public void CancelPerformPrepareAttackCommand() => Command &= ~Command.PrepareAttack;
         public void CancelPerformAttackCommand() => Command &= ~Command.Attack;
         public void CompletedInterrupt() => Command &= ~Command.Interrupt;
-
-        public void ResetPerformCommandExcept(Command command)
-        {
-            Command &= 0;
-            Command |= command;
-        }
-
+        
         public void ResetState() => CurrentActionState = DefaultActionState;
         #endregion
 

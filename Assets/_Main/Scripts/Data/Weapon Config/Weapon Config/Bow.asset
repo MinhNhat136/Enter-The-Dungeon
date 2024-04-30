@@ -20,9 +20,18 @@ MonoBehaviour:
   WeaponPrefab: {fileID: 1097033006214147, guid: c04af5fa005a5df46b463435169fc082, type: 3}
   WeaponSpawnPoint: {x: 0, y: 0, z: 0}
   WeaponSpawnRotation: {x: 0, y: 0, z: 0}
-  indicatorBuilder: {fileID: 11400000, guid: 584751339f7744e44a441298b6c773bc, type: 2}
   shootBuilder: {fileID: 11400000, guid: b7cffc5613230bf4aa04b85c74fb429e, type: 2}
   damageConfig: {fileID: 11400000, guid: 4ad9bbb2e89bf124c9b0ad0464dbc673, type: 2}
   hitConfig: {fileID: 0}
-  velocity: 50
-  criticalChance: 0
+  energyDescription: This type of energy represents the distance the projectile can
+    travel.
+  minEnergy: 1
+  maxEnergy: 2
+  speedCharge: 1
+  timeWeight: 1
+  distanceWeight: 5
+  radiusWeight: 1
+  scaleWeight: 1
+  indicatorPrefab: {fileID: 1056145699921089, guid: 80dd8c8a607654d4696eac7543a892e4, type: 3}
+  indicatorPosition: {x: 0, y: 0, z: 0}
+  delayActivateTime: 0.5
