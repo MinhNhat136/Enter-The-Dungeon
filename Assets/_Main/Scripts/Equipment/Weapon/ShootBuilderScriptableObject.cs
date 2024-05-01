@@ -19,13 +19,10 @@ namespace Atomic.Equipment
 
         public LayerMask HitMask;
         public ProjectileBase bulletPrefab;
-        [FormerlySerializedAs("projectileShootForce")] public float shootVelocity;
-
         
         public IProjectileTrajectoryController TrajectoryController { get; private set; }
-
-
-        public void Initialize(BaseAgent owner)
+        
+        public void Initialize()
         {
             SetTrajectoryController();
         }

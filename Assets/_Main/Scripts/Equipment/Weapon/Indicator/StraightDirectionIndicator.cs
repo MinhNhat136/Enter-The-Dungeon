@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+
 
 namespace Atomic.Equipment
 {
@@ -8,7 +8,8 @@ namespace Atomic.Equipment
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// Represents a straight trajectory indicator.
+    /// The StraightDirectionIndicator class represents a straight trajectory indicator in a game.
+    /// It provides methods for setting its position, forward direction, and distance weight.
     /// </summary>
     public class StraightDirectionIndicator : MonoBehaviour, ITrajectoryIndicator
     {
@@ -18,7 +19,9 @@ namespace Atomic.Equipment
 
         //  Properties ------------------------------------
         public float DelayActivateTime { get; set; }
-        public float IndicateValue { get; set; }
+        public float EnergyValue { get; set; }
+        public float MinEnergyValue { get; set; }
+        public float MaxEnergyValue { get; set; }
 
         //  Fields ----------------------------------------
         [Header("DIRECTION-ARROW")] 
@@ -26,23 +29,15 @@ namespace Atomic.Equipment
         [SerializeField] private SpriteRenderer directionIndicator;
 
         [Header("EDGE-LINE")]
-        [SerializeField] private Transform left;
-        [SerializeField] private Transform right;
-        [SerializeField] private Vector3 edgeTargetPosition; 
-
-        [Header("PARAMETER")]
-        [SerializeField] private float speedIndicate;
-
+        [SerializeField] private Transform leftSideEdge;
+        [SerializeField] private Transform rightSideEdge;
+        [SerializeField] private Vector3 defaultEdgePosition;
+        [SerializeField] private float edgeDistanceScale;
+        
         private float _distanceWeight;
         private const float EdgeLengthOffset = 0.5f;
         
         //  Initialization  -------------------------------
-
-        
-        //  Unity Methods   -------------------------------
-
-
-        //  Other Methods ---------------------------------
         public ITrajectoryIndicator SetDistanceWeight(float distanceWeight)
         {
             _distanceWeight = distanceWeight; 
@@ -54,11 +49,6 @@ namespace Atomic.Equipment
             transform.position = position;
             return this; 
         }
-
-        public ITrajectoryIndicator SetLaunchTransform(Transform launchTransform)
-        {
-            return this;
-        }
         
         public ITrajectoryIndicator SetForwardDirection(Vector3 forwardDirection)
         {
@@ -66,55 +56,53 @@ namespace Atomic.Equipment
             return this;
         }
         
+        //  Unity Methods   -------------------------------
+
+        
+        //  Other Methods ---------------------------------
         public void Indicate()
         {
             if (!gameObject.activeSelf) return;
-            SpreadEdgeLine(left);
-            SpreadEdgeLine(right, true);
+            SpreadEdgeLine(leftSideEdge);
+            SpreadEdgeLine(rightSideEdge, true);
             
-            ScaleEdgeLineLength(left);
-            ScaleEdgeLineLength(right);
+            ScaleEdgeLineLength(leftSideEdge);
+            ScaleEdgeLineLength(rightSideEdge);
 
             ScaleSpriteLength();
         }
 
         private void SpreadEdgeLine(Transform edgeTransform, bool reverse = false)
         {
-            edgeTransform.localPosition = 
-                Vector3.Slerp(edgeTransform.localPosition, reverse ? edgeTargetPosition : - edgeTargetPosition, speedIndicate * Time.deltaTime);
+            float distance = EnergyValue * _distanceWeight * (reverse ? edgeDistanceScale : -edgeDistanceScale);
+            edgeTransform.localPosition = new Vector3(distance, 0, 0);
         }
 
         private void ScaleEdgeLineLength(Transform edgeTransform)
         {
-            edgeTransform.localScale = new Vector3(1, 1, _distanceWeight * IndicateValue - EdgeLengthOffset);
+            edgeTransform.localScale = new Vector3(1, 1, _distanceWeight * EnergyValue - EdgeLengthOffset);
         }
 
         private void ScaleSpriteLength()
         {
-            directionIndicator.size = new Vector2( _distanceWeight * IndicateValue * directionLengthScale, directionIndicator.size.y);
+            directionIndicator.size = new Vector2(_distanceWeight * EnergyValue * directionLengthScale,
+                directionIndicator.size.y);
         }
         
         public void Activate()
         {
-            Invoke("DelayActivate", DelayActivateTime);
+            Invoke(nameof(ActiveGameObject), DelayActivateTime);
         }
 
-        private void DelayActivate()
+        private void ActiveGameObject()
         {
             transform.gameObject.SetActive(true);
         }
 
         public void DeActivate()
         {
-            CancelInvoke("DelayActivate");
+            CancelInvoke(nameof(ActiveGameObject));
             transform.gameObject.SetActive(false);
-            Reset();
-        }
-
-        private void Reset()
-        {
-            left.transform.localPosition = Vector3.zero;
-            right.transform.localPosition = Vector3.zero;
         }
 
         //  Event Handlers --------------------------------

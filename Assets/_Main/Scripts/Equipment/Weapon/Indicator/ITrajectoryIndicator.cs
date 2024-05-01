@@ -1,31 +1,9 @@
 using UnityEngine;
-
 namespace Atomic.Equipment
 {
-    public interface ITrajectoryIndicator
+    public interface ITrajectoryIndicator : IEnergyConsumer
     {
         public float DelayActivateTime { get; set; }
-        public float IndicateValue { get; set; }
-
-        public ITrajectoryIndicator SetDistanceWeight(float distanceWeight)
-        {
-            return this;
-        }
-
-        public ITrajectoryIndicator SetTimeWeight(float timeWeight)
-        {
-            return this;
-        }
-
-        public ITrajectoryIndicator SetScaleWeight(float scaleWeight)
-        {
-            return this;
-        }
-
-        public ITrajectoryIndicator SetRadiusWeight(float radiusWeight)
-        {
-            return this;
-        }
         
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {
@@ -42,11 +20,11 @@ namespace Atomic.Equipment
             return this;
         }
 
-        public ITrajectoryIndicator SetForwardDirection(Vector3 forwardDirection)
+        public ITrajectoryIndicator SetForwardDirection(Transform forwardDirection)
         {
             return this;
         }
-
+        
         public virtual void Set()
         {
             

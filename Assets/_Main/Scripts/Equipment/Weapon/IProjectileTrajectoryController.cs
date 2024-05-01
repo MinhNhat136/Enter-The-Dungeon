@@ -6,20 +6,17 @@ namespace  Atomic.Equipment
 {
     public interface IProjectileTrajectoryController
     {
-        public BaseAgent Target { get; set; }
         public void Shoot(ProjectileBase projectile);
         public IProjectileTrajectoryController Clone();
     }
     
     public class StraightTrajectory : IProjectileTrajectoryController
     {
-        public BaseAgent Target { get; set; }
 
         public void Shoot(ProjectileBase projectile)
         {
-            projectile.Rigidbody.AddForce(projectile.ShootVelocity, ForceMode.VelocityChange);
         }
-
+        
         public IProjectileTrajectoryController Clone()
         {
             return new StraightTrajectory();
@@ -63,6 +60,11 @@ namespace  Atomic.Equipment
         // projectile.transform.position += velocity * Time.deltaTime;
     }
 
+    public float CalculateTimeLife(ProjectileBase projectile)
+    {
+        throw new NotImplementedException();
+    }
+
     public IProjectileTrajectoryController Clone()
     {
         throw new NotImplementedException();
@@ -76,6 +78,11 @@ namespace  Atomic.Equipment
         public void Shoot(ProjectileBase projectile)
         {
             Debug.Log("spread");
+        }
+
+        public float CalculateTimeLife(ProjectileBase projectile)
+        {
+            throw new NotImplementedException();
         }
 
         public IProjectileTrajectoryController Clone()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
@@ -7,16 +8,19 @@ namespace Atomic.Equipment
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// The AoEIndicator class represents an Area of Effect (AoE) indicator in a game.
+    /// It is responsible for showing the AoE visually in the game world,
+    /// and providing methods for setting its position, launch transform, and target.
     /// </summary>
     public sealed class AoEIndicator : MonoBehaviour, ITrajectoryIndicator
     {
         //  Events ----------------------------------------
 
-
         //  Properties ------------------------------------
         public float DelayActivateTime { get; set; }
-        public float IndicateValue { get; set; }
+        public float EnergyValue { get; set; }
+        public float MinEnergyValue { get; set; }
+        public float MaxEnergyValue { get; set; }
 
         //  Fields ----------------------------------------
         [SerializeField] private Transform aoeIndicator;
@@ -26,17 +30,25 @@ namespace Atomic.Equipment
 
         private Vector3 _targetPosition;
         private Transform _launchTransform;
-        
-        private float _maxDistance  = 10f;
-        public float _maxTime = 0.7f; 
-        
+
+        public float _time = 0.7f;
+        private float _scaleWeight;
+        private float _distanceWeight; 
+        private Transform _forwardDirection;
+
         //  Initialization  -------------------------------
+        public ITrajectoryIndicator SetDistanceWeight(float distanceWeight)
+        {
+            _distanceWeight = distanceWeight;
+            return this;
+        }
+        
+        public ITrajectoryIndicator SetScaleWeight(float scaleWeight)
+        {
+            _scaleWeight = scaleWeight;
+            return this;
+        }
 
-
-        //  Unity Methods   -------------------------------
-
-
-        //  Other Methods ---------------------------------
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {
             transform.localPosition = Vector3.zero;
@@ -50,26 +62,38 @@ namespace Atomic.Equipment
             _launchTransform = launchTransform;
             return this;
         }
-
-
-        public ITrajectoryIndicator SetTarget(Vector3 targetPosition)
+        
+        public ITrajectoryIndicator SetForwardDirection(Transform forwardDirection)
         {
-            if (targetPosition == Vector3.zero)
-            {
-                Vector3 maxDistance = transform.position + transform.forward * _maxDistance;
-                _targetPosition = maxDistance;
-            }
-            else
-            {
-                _targetPosition = targetPosition;
-                _targetPosition.y = 0.5f;
-            }
+            _forwardDirection = forwardDirection;
             return this;
         }
 
+        public ITrajectoryIndicator SetTarget(Vector3 targetPosition)
+        {
+            if (targetPosition != Vector3.zero)
+            {
+                _targetPosition = targetPosition;
+            }
+            else
+            {
+                _targetPosition = _launchTransform.position +
+                                  _forwardDirection.forward * MaxEnergyValue * _distanceWeight;
+            }
+            _targetPosition.y = 0.1f;    
+            return this;
+        }
+
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
+
+
         public void Set()
         {
-            line.positionCount = lineSegment + 1;
+            line.positionCount = lineSegment;
+            aoeOriginalIndicator.localScale = Vector3.one * MaxEnergyValue * _scaleWeight;
         }
 
         public void Indicate()
@@ -102,12 +126,12 @@ namespace Atomic.Equipment
 
         private void IncreaseAoERadius()
         {
-            aoeIndicator.transform.localScale = new Vector3(IndicateValue, IndicateValue, IndicateValue);
+            aoeIndicator.transform.localScale = new Vector3(_scaleWeight * EnergyValue, _scaleWeight * EnergyValue, _scaleWeight * EnergyValue);
         }
 
         private void DrawTrajectoryLine()
         {
-            Vector3 velocity = CalculateVelocity(_targetPosition, _launchTransform.position, _maxTime);
+            Vector3 velocity = _forwardDirection.forward * _time/CalculateDistancePercent(_launchTransform.position, _targetPosition);
             Visualize(velocity);
         }
 
@@ -119,24 +143,13 @@ namespace Atomic.Equipment
                 line.SetPosition(index, pos);
             }
 
-            line.SetPosition(lineSegment, _targetPosition);
         }
 
-        Vector3 CalculateVelocity(Vector3 target, Vector3 origin, float time)
+        float CalculateDistancePercent(Vector3 target, Vector3 origin)
         {
-            Vector3 distance = target - origin;
-            Vector3 distanceXz = distance;
-            distanceXz.y = 0f;
+            return Vector3.Distance(origin, target)/
+                   Vector3.Distance(origin,(origin + _forwardDirection.forward * MaxEnergyValue * _distanceWeight));
 
-            float xzVelocity = distanceXz.magnitude / time;
-            float yVelocity = (distance.y / time) + (0.5f * Mathf.Abs(Physics.gravity.y) * time);
-            
-
-            Vector3 resultVelocity = distanceXz.normalized;
-            resultVelocity *= xzVelocity;
-            resultVelocity.y = yVelocity;
-
-            return resultVelocity;
         }
 
         Vector3 CalculatePosAtTn(Vector3 velocity, float time)

@@ -17,7 +17,9 @@ namespace Atomic.Equipment
         public float MaxRadius { get; set; }
 
         public float DelayActivateTime { get; set; }
-        public float IndicateValue { get; set; }
+        public float EnergyValue { get; set; }
+        public float MinEnergyValue { get; set; }
+        public float MaxEnergyValue { get; set; }
 
         public void Set()
         {

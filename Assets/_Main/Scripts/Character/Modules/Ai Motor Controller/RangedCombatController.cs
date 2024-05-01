@@ -1,9 +1,6 @@
 using System;
 using Atomic.Equipment;
-using NodeCanvas.Tasks.Actions;
-using Unity.Mathematics;
 using UnityEngine;
-using Object = System.Object;
 
 namespace Atomic.Character
 {
@@ -71,7 +68,7 @@ namespace Atomic.Character
             Quaternion dir = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, dir, 10f * Time.deltaTime);
         }
-
+        
         public void BeginPrepareAttack()
         {
             _rangedWeapon.BeginCharge();

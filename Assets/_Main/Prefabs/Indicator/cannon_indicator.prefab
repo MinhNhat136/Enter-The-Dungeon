@@ -198,7 +198,8 @@ MonoBehaviour:
   aoeIndicator: {fileID: 4757707644409887}
   aoeOriginalIndicator: {fileID: 4985726964303581}
   line: {fileID: 120288930182247589}
-  lineSegment: 100
+  lineSegment: 20
+  _time: 14
 --- !u!1 &1590616673237936
 GameObject:
   m_ObjectHideFlags: 0

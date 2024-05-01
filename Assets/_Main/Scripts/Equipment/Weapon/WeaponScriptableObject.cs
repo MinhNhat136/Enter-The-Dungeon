@@ -1,8 +1,6 @@
 using System;
 using Atomic.Character;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
