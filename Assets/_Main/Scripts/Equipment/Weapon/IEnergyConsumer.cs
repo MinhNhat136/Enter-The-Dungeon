@@ -6,20 +6,33 @@ namespace Atomic.Equipment
     public interface IEnergyConsumer<out Self> where Self : IEnergyConsumer<Self> 
     {
         public float EnergyValue { set; }
-        public float MinEnergyValue { set; }
-        public float MaxEnergyValue { set; }
+
+        public Self SetDamageWeight(MinMaxFloat damageWeight)
+        {
+            return (Self)this;
+        }
         
         public Self SetDistanceWeight(MinMaxFloat distanceWeight)
         {
             return (Self)this;
         }
 
-        public Self SetVelocityWeight(MinMaxFloat velocity)
+        public Self SetSpeedWeight(MinMaxFloat speedWeight)
+        {
+            return (Self)this;
+        }
+        
+        public Self SetRadiusWeight(MinMaxFloat radiusWeight)
         {
             return (Self)this;
         }
 
-        public Self SetScaleWeight(MinMaxFloat scaleWeight)
+        public Self SetAoEWeight(MinMaxFloat aoEWeight)
+        {
+            return (Self)this;
+        }
+
+        public Self SetGravityDownAcceleration(MinMaxFloat gravityDownAccelerationWeight)
         {
             return (Self)this;
         }

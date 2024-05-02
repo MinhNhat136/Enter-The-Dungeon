@@ -28,12 +28,22 @@ MonoBehaviour:
     m_Bits: 64
   damageConfig: {fileID: 11400000, guid: 4ad9bbb2e89bf124c9b0ad0464dbc673, type: 2}
   hitConfig: {fileID: 0}
-  minEnergy: 1
-  maxEnergy: 2
-  speedCharge: 1
-  damageWeight: 0
-  speedWeight: 0
-  distanceWeight: 5
-  radiusWeight: 0
-  areaOfEffectDistance: 0
-  gravityDownAcceleration: 0
+  speedCharge: 0.8
+  damageWeight:
+    min: 5
+    max: 0
+  speedWeight:
+    min: 0
+    max: 0
+  distanceWeight:
+    min: 5
+    max: 10
+  radiusWeight:
+    min: 0
+    max: 0
+  areaOfEffectDistance:
+    min: 0
+    max: 0
+  gravityDownAcceleration:
+    min: 0
+    max: 0

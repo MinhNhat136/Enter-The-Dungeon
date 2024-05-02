@@ -1,5 +1,5 @@
+using Atomic.Core;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
@@ -19,8 +19,6 @@ namespace Atomic.Equipment
         //  Properties ------------------------------------
         public float DelayActivateTime { get; set; }
         public float EnergyValue { get; set; }
-        public float MinEnergyValue { get; set; }
-        public float MaxEnergyValue { get; set; }
 
         //  Fields ----------------------------------------
         [SerializeField] private Transform aoeIndicator;
@@ -31,21 +29,21 @@ namespace Atomic.Equipment
         private Vector3 _targetPosition;
         private Transform _launchTransform;
 
-        public float _time = 0.7f;
-        private float _scaleWeight;
-        private float _distanceWeight; 
+        private MinMaxFloat _aoEWeight;
+        private MinMaxFloat _speedWeight;
+        private MinMaxFloat _distanceWeight;
         private Transform _forwardDirection;
 
         //  Initialization  -------------------------------
-        public ITrajectoryIndicator SetDistanceWeight(float distanceWeight)
+        public ITrajectoryIndicator SetDistanceWeight(MinMaxFloat distanceWeight)
         {
             _distanceWeight = distanceWeight;
             return this;
         }
         
-        public ITrajectoryIndicator SetScaleWeight(float scaleWeight)
+        public ITrajectoryIndicator SetAoEWeight(MinMaxFloat aoEWeight)
         {
-            _scaleWeight = scaleWeight;
+            _aoEWeight = aoEWeight;
             return this;
         }
 
@@ -78,7 +76,7 @@ namespace Atomic.Equipment
             else
             {
                 _targetPosition = _launchTransform.position +
-                                  _forwardDirection.forward * MaxEnergyValue * _distanceWeight;
+                                  _forwardDirection.forward * _distanceWeight.GetValueFromRatio(EnergyValue);
             }
             _targetPosition.y = 0.1f;    
             return this;
@@ -93,7 +91,7 @@ namespace Atomic.Equipment
         public void Set()
         {
             line.positionCount = lineSegment;
-            aoeOriginalIndicator.localScale = Vector3.one * MaxEnergyValue * _scaleWeight;
+            aoeOriginalIndicator.localScale = Vector3.one  * _aoEWeight.GetValueFromRatio(EnergyValue);
         }
 
         public void Indicate()
@@ -126,12 +124,16 @@ namespace Atomic.Equipment
 
         private void IncreaseAoERadius()
         {
-            aoeIndicator.transform.localScale = new Vector3(_scaleWeight * EnergyValue, _scaleWeight * EnergyValue, _scaleWeight * EnergyValue);
+            aoeIndicator.transform.localScale = new Vector3(_aoEWeight.GetValueFromRatio(EnergyValue), _aoEWeight.GetValueFromRatio(EnergyValue), _aoEWeight.GetValueFromRatio(EnergyValue));
         }
 
         private void DrawTrajectoryLine()
         {
-            Vector3 velocity = _forwardDirection.forward * _time/CalculateDistancePercent(_launchTransform.position, _targetPosition);
+            Debug.Log(Vector3.Distance(_launchTransform.position,
+                _targetPosition) / _distanceWeight.max);
+            Vector3 velocity = _forwardDirection.forward *
+                               _speedWeight.GetValueFromRatio(Vector3.Distance(_launchTransform.position,
+                                   _targetPosition) / _distanceWeight.max);
             Visualize(velocity);
         }
 
@@ -142,13 +144,12 @@ namespace Atomic.Equipment
                 Vector3 pos = CalculatePosAtTn(velocity, index / (float)(lineSegment));
                 line.SetPosition(index, pos);
             }
-
         }
 
         float CalculateDistancePercent(Vector3 target, Vector3 origin)
         {
             return Vector3.Distance(origin, target)/
-                   Vector3.Distance(origin,(origin + _forwardDirection.forward * MaxEnergyValue * _distanceWeight));
+                   Vector3.Distance(origin,(origin + _forwardDirection.forward  * _distanceWeight.GetValueFromRatio(EnergyValue)));
 
         }
 

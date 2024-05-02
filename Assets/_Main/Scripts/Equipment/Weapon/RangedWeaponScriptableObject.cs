@@ -75,7 +75,7 @@ namespace Atomic.Equipment
             projectileInstance.Spawn(owner: Owner);
             projectileInstance
                 .SetDistanceWeight(distanceWeight)
-                .SetVelocityWeight(speedWeight);
+                .SetSpeedWeight(speedWeight);
             projectileInstance.OnTrigger += HandleBulletTrigger;
 
             return projectileInstance;
@@ -92,8 +92,11 @@ namespace Atomic.Equipment
                 .SetLaunchTransform(_shootSystem.transform)
                 .SetForwardDirection(_shootSystem.transform)
                 .SetDistanceWeight(distanceWeight)
-                .SetScaleWeight(areaOfEffectDistance)
-                .SetVelocityWeight(speedWeight);
+                .SetRadiusWeight(radiusWeight)
+                .SetAoEWeight(areaOfEffectDistance)
+                .SetGravityDownAcceleration(gravityDownAcceleration)
+                .SetDamageWeight(damageWeight)
+                .SetSpeedWeight(speedWeight);
             _trajectoryIndicator.Set();
             _trajectoryIndicator.DeActivate();
         }
@@ -118,11 +121,13 @@ namespace Atomic.Equipment
         public void BeginCharge()
         {
             _trajectoryIndicator.Activate();
+            _energyValue =  0;
         }
 
         public void UpdateCharge()
         {
-            // _energyValue = Mathf.Lerp(_energyValue, maxEnergy, speedCharge * Time.deltaTime);
+            if (_energyValue < 1) _energyValue += speedCharge * Time.deltaTime;
+            if (_energyValue > 1) _energyValue = 1;
             if (Owner.TargetAgent != null)
             {
                 _targetPosition = Owner.TargetAgent.transform.position;
@@ -149,7 +154,7 @@ namespace Atomic.Equipment
             bullet.gameObject.SetActive(true);
             bullet.Shoot(_shootSystem.transform.position, _shootSystem.transform.forward, _targetPosition, _energyValue);
 
-            // _energyValue = minEnergy;
+            _energyValue = 0;
             _trajectoryIndicator.EnergyValue = _energyValue;
             _trajectoryIndicator.Indicate();
             _trajectoryIndicator.DeActivate();

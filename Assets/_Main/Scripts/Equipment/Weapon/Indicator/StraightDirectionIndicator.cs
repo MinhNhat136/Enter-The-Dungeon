@@ -21,8 +21,6 @@ namespace Atomic.Equipment
         //  Properties ------------------------------------
         public float DelayActivateTime { get; set; }
         public float EnergyValue { get; set; }
-        public float MinEnergyValue { get; set; }
-        public float MaxEnergyValue { get; set; }
 
         //  Fields ----------------------------------------
         [Header("DIRECTION-ARROW")] 
@@ -33,14 +31,12 @@ namespace Atomic.Equipment
         [SerializeField] private Transform leftSideEdge;
         [SerializeField] private Transform rightSideEdge;
         [SerializeField] private float edgeDistanceScale;
-
-        [SerializeField] private MinMaxFloat distanceIndicate; 
-            
-        private float _distanceWeight;
+        
+        private MinMaxFloat _distanceWeight;
         private const float EdgeLengthOffset = 0.5f;
         
         //  Initialization  -------------------------------
-        public ITrajectoryIndicator SetDistanceWeight(float distanceWeight)
+        public ITrajectoryIndicator SetDistanceWeight(MinMaxFloat distanceWeight)
         {
             _distanceWeight = distanceWeight; 
             return this;
@@ -50,12 +46,6 @@ namespace Atomic.Equipment
         {
             transform.position = position;
             return this; 
-        }
-        
-        public ITrajectoryIndicator SetForwardDirection(Vector3 forwardDirection)
-        {
-            transform.localRotation = Quaternion.LookRotation(forwardDirection);
-            return this;
         }
         
         //  Unity Methods   -------------------------------
@@ -76,18 +66,18 @@ namespace Atomic.Equipment
 
         private void SpreadEdgeLine(Transform edgeTransform, bool reverse = false)
         {
-            float distance = EnergyValue * _distanceWeight * (reverse ? edgeDistanceScale : -edgeDistanceScale);
+            float distance = _distanceWeight.GetValueFromRatio(EnergyValue) * (reverse ? edgeDistanceScale : -edgeDistanceScale);
             edgeTransform.localPosition = new Vector3(distance, 0, 0);
         }
 
         private void ScaleEdgeLineLength(Transform edgeTransform)
         {
-            edgeTransform.localScale = new Vector3(1, 1, _distanceWeight * EnergyValue - EdgeLengthOffset);
+            edgeTransform.localScale = new Vector3(1, 1, _distanceWeight.GetValueFromRatio(EnergyValue) - EdgeLengthOffset);
         }
 
         private void ScaleSpriteLength()
         {
-            directionIndicator.size = new Vector2(_distanceWeight * EnergyValue * directionLengthScale,
+            directionIndicator.size = new Vector2(_distanceWeight.GetValueFromRatio(EnergyValue) * directionLengthScale,
                 directionIndicator.size.y);
         }
         

@@ -46,9 +46,9 @@ namespace Atomic.Equipment
             return this;
         }
 
-        public ProjectileBase SetVelocityWeight(MinMaxFloat velocityWeight)
+        public ProjectileBase SetSpeedWeight(MinMaxFloat speedWeight)
         {
-            _velocityWeight = velocityWeight;
+            _velocityWeight = speedWeight;
             return this;
         }
         
