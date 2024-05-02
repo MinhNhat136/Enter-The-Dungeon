@@ -1,3 +1,4 @@
+using Atomic.Core;
 using UnityEngine;
 
 
@@ -31,9 +32,10 @@ namespace Atomic.Equipment
         [Header("EDGE-LINE")]
         [SerializeField] private Transform leftSideEdge;
         [SerializeField] private Transform rightSideEdge;
-        [SerializeField] private Vector3 defaultEdgePosition;
         [SerializeField] private float edgeDistanceScale;
-        
+
+        [SerializeField] private MinMaxFloat distanceIndicate; 
+            
         private float _distanceWeight;
         private const float EdgeLengthOffset = 0.5f;
         

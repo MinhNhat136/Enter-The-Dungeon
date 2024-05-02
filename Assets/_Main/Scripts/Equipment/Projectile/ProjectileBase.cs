@@ -1,5 +1,6 @@
 using System;
 using Atomic.Character;
+using Atomic.Core;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -12,7 +13,7 @@ namespace Atomic.Equipment
     /// TODO: Replace with comments...
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public class ProjectileBase : MonoBehaviour, IEnergyConsumer
+    public class ProjectileBase : MonoBehaviour, IEnergyConsumer<ProjectileBase>
     {
         //  Events ----------------------------------------
         public delegate void TriggerEvent(ProjectileBase projectile, Collider collider);
@@ -29,8 +30,9 @@ namespace Atomic.Equipment
         public Rigidbody RigidBody {get; private set; }
 
         //  Fields ----------------------------------------
-        private float _distanceWeight;
-
+        private MinMaxFloat _distanceWeight;
+        private MinMaxFloat _velocityWeight;
+            
         //  Initialization  -------------------------------
         public void Spawn(BaseAgent owner)
         {
@@ -38,9 +40,15 @@ namespace Atomic.Equipment
             gameObject.SetActive(false);
         }
 
-        public IEnergyConsumer SetDistanceWeight(float distanceWeight)
+        public ProjectileBase SetDistanceWeight(MinMaxFloat distanceWeight)
         {
             _distanceWeight = distanceWeight;
+            return this;
+        }
+
+        public ProjectileBase SetVelocityWeight(MinMaxFloat velocityWeight)
+        {
+            _velocityWeight = velocityWeight;
             return this;
         }
         
@@ -69,10 +77,11 @@ namespace Atomic.Equipment
 
         public void Update()
         {
+            /*transform.position += transform.forward * (MaxEnergyValue * _velocityWeight) * Time.deltaTime;
             if (Vector3.Distance(transform.position, ShootPosition) >= _distanceWeight * EnergyValue)
             {
                 OnTriggerEnter(null);
-            }
+            }*/
         }
 
         private void OnTriggerEnter(Collider other)

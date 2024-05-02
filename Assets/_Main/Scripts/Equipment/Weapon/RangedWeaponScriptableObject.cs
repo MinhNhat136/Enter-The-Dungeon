@@ -1,6 +1,8 @@
 using Atomic.Character;
+using Atomic.Core;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
@@ -33,17 +35,15 @@ namespace Atomic.Equipment
         public DamageConfigScriptableObject damageConfig;
         public HitEffectConfigScriptableObject hitConfig;
 
-        [Header("ENERGY", order = 3)] 
-        public float minEnergy;
-        public float maxEnergy;
+        [Header("METABOLISM WEIGHT", order = 3)]
         public float speedCharge;
-
-        [Header("METABOLISM WEIGHT", order = 4)] 
-        public float velocityWeight;
-        public float distanceWeight;
-        public float timeLifeWeight;
-        public float scaleWeight;
-
+        public MinMaxFloat damageWeight;
+        public MinMaxFloat speedWeight;
+        public MinMaxFloat distanceWeight;
+        public MinMaxFloat radiusWeight;
+        public MinMaxFloat areaOfEffectDistance;
+        public MinMaxFloat gravityDownAcceleration;
+        
         private ITrajectoryIndicator _trajectoryIndicator;
         private ObjectPool<ProjectileBase> _projectilePool;
 
@@ -70,12 +70,15 @@ namespace Atomic.Equipment
         
         private ProjectileBase CreateProjectile()
         {
-            ProjectileBase instance = Instantiate(bulletPrefab);
-            instance.gameObject.SetActive(false);
-            instance.Spawn(owner: Owner);
-            instance.OnTrigger += HandleBulletTrigger;
+            ProjectileBase projectileInstance = Instantiate(bulletPrefab);
+            projectileInstance.gameObject.SetActive(false);
+            projectileInstance.Spawn(owner: Owner);
+            projectileInstance
+                .SetDistanceWeight(distanceWeight)
+                .SetVelocityWeight(speedWeight);
+            projectileInstance.OnTrigger += HandleBulletTrigger;
 
-            return instance;
+            return projectileInstance;
         }
 
         private void CreateIndicator()
@@ -84,16 +87,13 @@ namespace Atomic.Equipment
 
             _trajectoryIndicator = _indicator.GetComponent<ITrajectoryIndicator>();
             _trajectoryIndicator.DelayActivateTime = delayActivateTime;
-            _trajectoryIndicator.MinEnergyValue = minEnergy;
-            _trajectoryIndicator.MaxEnergyValue = maxEnergy;
             _trajectoryIndicator
                 .SetPosition(Owner.transform.position)
                 .SetLaunchTransform(_shootSystem.transform)
                 .SetForwardDirection(_shootSystem.transform)
                 .SetDistanceWeight(distanceWeight)
-                .SetScaleWeight(scaleWeight)
-                .SetVelocityWeight(velocityWeight)
-                .SetTimeLifeWeight(timeLifeWeight);
+                .SetScaleWeight(areaOfEffectDistance)
+                .SetVelocityWeight(speedWeight);
             _trajectoryIndicator.Set();
             _trajectoryIndicator.DeActivate();
         }
@@ -118,12 +118,11 @@ namespace Atomic.Equipment
         public void BeginCharge()
         {
             _trajectoryIndicator.Activate();
-            _energyValue = minEnergy;
         }
 
         public void UpdateCharge()
         {
-            _energyValue = Mathf.Lerp(_energyValue, maxEnergy, speedCharge * Time.deltaTime);
+            // _energyValue = Mathf.Lerp(_energyValue, maxEnergy, speedCharge * Time.deltaTime);
             if (Owner.TargetAgent != null)
             {
                 _targetPosition = Owner.TargetAgent.transform.position;
@@ -150,7 +149,7 @@ namespace Atomic.Equipment
             bullet.gameObject.SetActive(true);
             bullet.Shoot(_shootSystem.transform.position, _shootSystem.transform.forward, _targetPosition, _energyValue);
 
-            _energyValue = minEnergy;
+            // _energyValue = minEnergy;
             _trajectoryIndicator.EnergyValue = _energyValue;
             _trajectoryIndicator.Indicate();
             _trajectoryIndicator.DeActivate();

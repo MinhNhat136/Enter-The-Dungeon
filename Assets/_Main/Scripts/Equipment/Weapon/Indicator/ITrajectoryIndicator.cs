@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Atomic.Equipment
 {
-    public interface ITrajectoryIndicator : IEnergyConsumer
+    public interface ITrajectoryIndicator : IEnergyConsumer<ITrajectoryIndicator>
     {
         public float DelayActivateTime { get; set; }
         
