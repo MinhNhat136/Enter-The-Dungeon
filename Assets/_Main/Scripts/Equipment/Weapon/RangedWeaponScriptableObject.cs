@@ -89,15 +89,14 @@ namespace Atomic.Equipment
             _trajectoryIndicator.DelayActivateTime = delayActivateTime;
             _trajectoryIndicator
                 .SetPosition(Owner.transform.position)
-                .SetLaunchTransform(_shootSystem.transform)
-                .SetForwardDirection(_shootSystem.transform)
+                .SetStartPosition(_shootSystem.transform)
                 .SetDistanceWeight(distanceWeight)
                 .SetRadiusWeight(radiusWeight)
                 .SetAoEWeight(areaOfEffectDistance)
                 .SetGravityDownAcceleration(gravityDownAcceleration)
                 .SetDamageWeight(damageWeight)
-                .SetSpeedWeight(speedWeight);
-            _trajectoryIndicator.Set();
+                .SetSpeedWeight(speedWeight)
+                .Initialize();
             _trajectoryIndicator.DeActivate();
         }
 
@@ -134,7 +133,7 @@ namespace Atomic.Equipment
                 _targetPosition.y = 0;
             }
             else _targetPosition = Vector3.zero;
-            _trajectoryIndicator.SetTarget(_targetPosition);
+            _trajectoryIndicator.SetEndPosition(_targetPosition);
             _trajectoryIndicator.EnergyValue = _energyValue;
             _trajectoryIndicator.Indicate();
         }

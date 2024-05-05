@@ -21,7 +21,7 @@ namespace Atomic.Equipment
         public float MinEnergyValue { get; set; }
         public float MaxEnergyValue { get; set; }
 
-        public void Set()
+        public void Initialize()
         {
             throw new System.NotImplementedException();
         }

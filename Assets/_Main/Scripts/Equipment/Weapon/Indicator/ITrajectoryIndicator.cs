@@ -10,22 +10,17 @@ namespace Atomic.Equipment
             return this; 
         }
         
-        public ITrajectoryIndicator SetLaunchTransform(Transform launchTransform)
-        {
-            return this;
-        }
-
-        public ITrajectoryIndicator SetTarget(Vector3 targetPosition)
-        {
-            return this;
-        }
-
-        public ITrajectoryIndicator SetForwardDirection(Transform forwardDirection)
+        public ITrajectoryIndicator SetStartPosition(Transform startPosition)
         {
             return this;
         }
         
-        public virtual void Set()
+        public ITrajectoryIndicator SetEndPosition(Vector3 endPosition)
+        {
+            return this;
+        }
+        
+        public virtual void Initialize()
         {
             
         }

@@ -1,4 +1,3 @@
-using Atomic.Core;
 using UnityEngine;
 
 namespace Atomic.Character
