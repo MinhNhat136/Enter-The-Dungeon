@@ -264,7 +264,7 @@ namespace Atomic.Character
         }
 
         public void SwitchAnimatorMatchWithWeapon() =>
-            AgentAnimatorController.SwitchAnimator(CurrentWeapon.WeaponType); 
+            AgentAnimatorController.SwitchAnimator(CurrentWeapon.weaponType); 
         
         #endregion
         

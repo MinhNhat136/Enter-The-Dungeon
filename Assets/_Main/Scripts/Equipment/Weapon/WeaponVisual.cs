@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class WeaponVisual : MonoBehaviour
+namespace  Atomic.Equipment
 {
-    // Start is called before the first frame update
-    void Start()
+    [Serializable]
+    public class WeaponVisual
     {
+        private event Action onChangedEvent;
         
-    }
+        [SerializeField]
+        private GameObject[] visuals;
 
-    // Update is called once per frame
-    void Update()
-    {
+        public bool IsShow => false;
+
+        public event Action OnChangedEvent
+        {
+            add => onChangedEvent += value;
+            remove => onChangedEvent -= value;
+        }
         
     }
+    
 }

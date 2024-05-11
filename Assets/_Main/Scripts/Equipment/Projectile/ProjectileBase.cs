@@ -1,4 +1,3 @@
-using System;
 using Atomic.Character;
 using Atomic.Core;
 using UnityEngine;
@@ -13,82 +12,61 @@ namespace Atomic.Equipment
     /// TODO: Replace with comments...
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public class ProjectileBase : MonoBehaviour, IEnergyConsumer<ProjectileBase>
+    public abstract class ProjectileBase : MonoBehaviour, IEnergyConsumer<ProjectileBase>
     {
         //  Events ----------------------------------------
-        public delegate void TriggerEvent(ProjectileBase projectile, Collider collider);
-        public event TriggerEvent OnTrigger;
-
+        public delegate void OnTrigger(ProjectileBase projectile, Collider other);
+        public OnTrigger OnProjectileTrigger;
+        
         //  Properties ------------------------------------
         public float EnergyValue { get; set; }
-        public float MinEnergyValue { get; set; }
-        public float MaxEnergyValue { get; set; }
-
-        public BaseAgent Owner { get; private set; }
-        public Vector3 ShootPosition { get; private set; }
+        
+        public BaseAgent Owner { get; protected set; }
+        public Vector3 ShootPosition { get; protected set; }
         public Vector3 ShootTarget { get; set; }
-        public Rigidbody RigidBody {get; private set; }
+        public LayerMask HitMask { get; set; }
 
         //  Fields ----------------------------------------
-        private MinMaxFloat _distanceWeight;
-        private MinMaxFloat _velocityWeight;
+        protected MinMaxFloat DistanceWeight { get; private set; }
+        protected MinMaxFloat SpeedWeight { get; private set; }
             
         //  Initialization  -------------------------------
-        public void Spawn(BaseAgent owner)
+        public virtual ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
         {
             Owner = owner;
-            gameObject.SetActive(false);
+            HitMask = hitMask;
+
+            return this;
         }
 
         public ProjectileBase SetDistanceWeight(MinMaxFloat distanceWeight)
         {
-            _distanceWeight = distanceWeight;
+            DistanceWeight = distanceWeight;
             return this;
         }
 
         public ProjectileBase SetSpeedWeight(MinMaxFloat speedWeight)
         {
-            _velocityWeight = speedWeight;
+            SpeedWeight = speedWeight;
             return this;
         }
         
-        //  Unity Methods   -------------------------------
-        public void Awake()
-        {
-            RigidBody = GetComponent<Rigidbody>();
-        }
-        
-        private void OnDisable()
-        {
-            RigidBody.velocity = Vector3.zero;
-            RigidBody.angularVelocity = Vector3.zero;
-        }
-
         //  Other Methods ---------------------------------
-        public void Shoot(Vector3 shootPosition, Vector3 shootDirection, Vector3 shootTarget, float energyValue)
+        public virtual void Load(Vector3 shootPosition, Vector3 shootDirection, Vector3 shootTarget, float energyValue)
         {
             ShootPosition = shootPosition;
             ShootTarget = shootTarget;
             EnergyValue = energyValue;
-            
-            transform.position = shootPosition;
-            transform.forward = shootDirection;
+
+            var projectileTransform = transform;
+            projectileTransform.position = shootPosition;
+            projectileTransform.forward = shootDirection;
         }
 
-        public void Update()
-        {
-            /*transform.position += transform.forward * (MaxEnergyValue * _velocityWeight) * Time.deltaTime;
-            if (Vector3.Distance(transform.position, ShootPosition) >= _distanceWeight * EnergyValue)
-            {
-                OnTriggerEnter(null);
-            }*/
-        }
+        public abstract void Shoot();
+        public abstract void OnHit(Vector3 point, Vector3 normal, Collider collide);
+        protected abstract void TriggerOnCollisionAfterDelay();
 
-        private void OnTriggerEnter(Collider other)
-        {
-            OnTrigger?.Invoke(this, other);
-        }
-        
         //  Event Handlers --------------------------------
         
     }

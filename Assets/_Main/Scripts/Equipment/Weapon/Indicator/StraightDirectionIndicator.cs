@@ -66,7 +66,7 @@ namespace Atomic.Equipment
 
         private void SpreadEdgeLine(Transform edgeTransform, bool reverse = false)
         {
-            float distance = _distanceWeight.GetValueFromRatio(EnergyValue) * (reverse ? edgeDistanceScale : -edgeDistanceScale);
+            var distance = _distanceWeight.GetValueFromRatio(EnergyValue) * (reverse ? edgeDistanceScale : -edgeDistanceScale);
             edgeTransform.localPosition = new Vector3(distance, 0, 0);
         }
 

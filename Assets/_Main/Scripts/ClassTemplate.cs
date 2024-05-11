@@ -20,6 +20,7 @@ namespace Atomic.Template
 
         //  Fields ----------------------------------------
 
+        
         //  Initialization  -------------------------------
 
         

@@ -157,8 +157,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8112391521822722171}
   - component: {fileID: 4407445366980474149}
-  - component: {fileID: -362398150397319881}
   - component: {fileID: 3272837342136504145}
+  - component: {fileID: 6155444322339666320}
   m_Layer: 0
   m_Name: missile_arrow
   m_TagString: Untagged
@@ -205,22 +205,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-362398150397319881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8987939846278491663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b4db0355f2bd83488598b82df5ce848, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &3272837342136504145
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -242,3 +230,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6155444322339666320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8987939846278491663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7e56c909daa1c4e9bc056209e898fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

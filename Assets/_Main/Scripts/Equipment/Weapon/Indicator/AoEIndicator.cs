@@ -28,25 +28,16 @@ namespace Atomic.Equipment
         
         private Vector3 _endPosition;
         private MinMaxFloat _aoEWeight;
-        private MinMaxFloat _distanceWeight;
         private Transform _startPosition;
 
         private float _angle;
         private float _distance;
-        private float _gravity;
         private float _tanAlpha;
-        private float _height;
         private float _timeToReachTarget;
         private Vector3 _initialVelocity;
 
 
         //  Initialization  -------------------------------
-        public ITrajectoryIndicator SetDistanceWeight(MinMaxFloat distanceWeight)
-        {
-            _distanceWeight = distanceWeight;
-            return this;
-        }
-
         public ITrajectoryIndicator SetAoEWeight(MinMaxFloat aoEWeight)
         {
             _aoEWeight = aoEWeight;
@@ -56,32 +47,23 @@ namespace Atomic.Equipment
         public ITrajectoryIndicator SetPosition(Vector3 position)
         {
             transform.localPosition = Vector3.zero;
-            aoeIndicator.localPosition = position;
-            aoeOriginalIndicator.localPosition = position;
             return this;
         }
 
         public ITrajectoryIndicator SetStartPosition(Transform startPosition)
         {
             _startPosition = startPosition;
+            _angle = Vector3.Angle(_startPosition.forward, transform.forward);
             return this;
         }
 
         public ITrajectoryIndicator SetEndPosition(Vector3 endPosition)
         {
-            if (endPosition != Vector3.zero)
-            {
-                _endPosition = endPosition;
-            }
-            else
-            {
-                Quaternion forwardTarget = Quaternion.LookRotation(_startPosition.forward, Vector3.up);
-                _endPosition = _startPosition.position +
-                                  forwardTarget * Vector3.forward * _distanceWeight.GetValueFromRatio(EnergyValue);
-            }
-            _endPosition.y = 0;
-            _initialVelocity = CalculateInitialVelocity(_startPosition.transform.position, _endPosition, _startPosition.forward);
-            _timeToReachTarget = TimeToReachTarget();
+            _endPosition = endPosition;
+            _endPosition.y = 0.1f;
+            _distance = Vector3.Distance(_startPosition.position, endPosition);
+            _initialVelocity = ProjectileMotionExtension.CalculateInitialVelocity(_startPosition, _endPosition, _angle);
+            _timeToReachTarget = ProjectileMotionExtension.TimeToReachTarget(_distance, _initialVelocity);
             return this;
         }
 
@@ -91,19 +73,13 @@ namespace Atomic.Equipment
         //  Other Methods ---------------------------------
         public void Initialize()
         {
-            line.positionCount = lineSegment + 1;
-            _gravity = Physics.gravity.y;
-            
             aoeOriginalIndicator.localScale = Vector3.one * _aoEWeight.GetValueFromRatio(EnergyValue);
+            line.positionCount = lineSegment;
         }
 
         public void Indicate()
         {
-
             if (!gameObject.activeSelf) return;
-            Debug.DrawRay(_startPosition.position, _startPosition.forward, Color.red, 10);
-            Debug.DrawRay(_startPosition.position, transform.forward, Color.blue, 10);
-
             SetAoEIndicatorPos();
             IncreaseAoERadius();
             Visualize();
@@ -125,8 +101,10 @@ namespace Atomic.Equipment
 
         private void SetAoEIndicatorPos()
         {
-            aoeIndicator.transform.position = line.GetPosition(lineSegment - 1 ) + new Vector3(0, 0.1f, 0);
-            aoeOriginalIndicator.transform.position = line.GetPosition(lineSegment - 1 )  + new Vector3(0, 0.1f, 0);
+            var position = line.GetPosition(lineSegment - 1);
+            position.y = 0.1f; 
+            aoeIndicator.transform.position = position;
+            aoeOriginalIndicator.transform.position = position;
         }
 
         private void IncreaseAoERadius()
@@ -139,49 +117,9 @@ namespace Atomic.Equipment
         {
             for (int index = 0; index < lineSegment; index++)
             {
-                Vector3 pos = CalculatePosition(_startPosition.transform.position, _endPosition, _initialVelocity, _timeToReachTarget*index/lineSegment);
+                var pos = ProjectileMotionExtension.CalculatePosition(_startPosition.transform.position, _endPosition, _initialVelocity, _timeToReachTarget*index/(lineSegment-1));
                 line.SetPosition(index, pos);
             }
-            var posFinal = CalculatePosition(_startPosition.transform.position, _endPosition, _initialVelocity, _timeToReachTarget);
-            line.SetPosition(lineSegment, posFinal);
-        }
-        
-        private Vector3 CalculateInitialVelocity(Vector3 startPosition, Vector3 endPosition, Vector3 direction)
-        {
-            _angle = Vector3.Angle(_startPosition.forward, transform.forward);
-            _tanAlpha = Mathf.Tan(_angle * Mathf.Deg2Rad);
-            _distance = Vector3.Distance(startPosition, endPosition);
-            _height =  endPosition.y - startPosition.y ;
-            
-            var velocityXZ = Mathf.Sqrt(
-                _gravity * _distance * _distance
-                / (2.0f * (_height - _distance * _tanAlpha))
-                );
-            var velocityY = _tanAlpha * velocityXZ ;
-
-            var forwardAngle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
-            
-            var velocityX = velocityXZ * Mathf.Cos(forwardAngle * Mathf.Deg2Rad);
-            var velocityZ = velocityXZ * Mathf.Sin(forwardAngle * Mathf.Deg2Rad);
-
-            var velocity = new Vector3(velocityX, velocityY, velocityZ);
-            return velocity;
-        }
-        
-        private Vector3 CalculateVelocityAtTime(Vector3 velocity, float time)
-        {
-            float Vy  = velocity.y + _gravity * time;
-            return new Vector3(velocity.x, Vy, velocity.z);
-        }
-
-        private float TimeToReachTarget() => _distance / Mathf.Sqrt(Mathf.Pow(_initialVelocity.z, 2) + Mathf.Pow(_initialVelocity.x, 2));
-
-        Vector3 CalculatePosition(Vector3 startPosition, Vector3 endPosition, Vector3 velocity, float time)
-        {
-            var result = startPosition + velocity * time;
-            result.y = 0.5f * Physics.gravity.y * time * time +
-                       velocity.y * time + (startPosition.y - endPosition.y);
-            return result;
         }
         //  Event Handlers --------------------------------
     }

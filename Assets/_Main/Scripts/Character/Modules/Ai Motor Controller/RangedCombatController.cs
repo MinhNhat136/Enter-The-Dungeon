@@ -7,7 +7,8 @@ namespace Atomic.Character
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-
+    
+    
     /// <summary>
     /// Controller for ranged combat actions.
     /// </summary>
@@ -26,6 +27,7 @@ namespace Atomic.Character
                     _rangedWeapon = rangedWeapon;
                 else
                 {
+                    Debug.Log(_rangedWeapon);
                     throw new Exception("Ranged weapon invalid");
                 }
             }
@@ -86,7 +88,7 @@ namespace Atomic.Character
         
         public void BeginAttack()
         {
-            _rangedWeapon.DoProjectileShoot();
+            _rangedWeapon.Shoot();
         }
 
         public void Attacking()
@@ -96,7 +98,7 @@ namespace Atomic.Character
         
         public void EndAttack()
         {
-            
+            _rangedWeapon.EndShoot();
         }
 
         public void CustomAction()

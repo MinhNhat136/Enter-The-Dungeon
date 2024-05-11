@@ -28,7 +28,7 @@ namespace Atomic.Character
         public bool IsInitialized { get; private set; }
         public BaseAgent Model { get; private set; }
         public List<WeaponScriptableObject> WeaponSlots;
-        private List<WeaponScriptableObject> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.IsAttach).ToList();
+        private List<WeaponScriptableObject> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.isAttach).ToList();
         public AttachParent[] AttachParents;
        
         //  Collections -----------------------------------
@@ -48,7 +48,7 @@ namespace Atomic.Character
                 {
                     weaponSlot.OnActivated += (combatMode) =>
                     {
-                        Model.CurrentWeapon = WeaponSlots.First(slot => slot.IsActivated);
+                        Model.CurrentWeapon = WeaponSlots.First(slot => slot.isActivated);
                         Model.CurrentCombatMode = combatMode;
                     };
                 }    
@@ -89,14 +89,14 @@ namespace Atomic.Character
         
         public WeaponScriptableObject GetAttachSlot(WeaponType weaponType)
         {
-            return WeaponSlots.Find(attachSlots => attachSlots.WeaponType == weaponType);
+            return WeaponSlots.Find(attachSlots => attachSlots.weaponType == weaponType);
         }
 
         public void AttachWeapon(WeaponType weaponType)
         {
             var weapon = GetAttachSlot(weaponType);
             if (!weapon) return; 
-            weapon.Attach(AttachParents.First(attachPoint => attachPoint.WeaponType == weapon.WeaponType).ParentTransform,
+            weapon.Attach(AttachParents.First(attachPoint => attachPoint.WeaponType == weapon.weaponType).ParentTransform,
                 Model);
         }
 
@@ -106,7 +106,7 @@ namespace Atomic.Character
             {
                 return;
             }
-            var activatedSlot = WeaponSlots.FirstOrDefault(slot => slot.IsActivated);
+            var activatedSlot = WeaponSlots.FirstOrDefault(slot => slot.isActivated);
     
             if (activatedSlot != null)
             {

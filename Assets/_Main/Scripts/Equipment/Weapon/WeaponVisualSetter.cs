@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponVisualSetter : MonoBehaviour
+namespace Atomic.Equipment
 {
-    // Start is called before the first frame update
-    void Start()
+    public class WeaponVisualSetter : MonoBehaviour
     {
-        
-    }
+        [SerializeField]
+        private WeaponVisual defaultVisual;
 
-    // Update is called once per frame
-    void Update()
-    {
+        [SerializeField]
+        private WeaponVisual[] weaponVisuals;
         
+        private void OnChanged()
+        {
+            
+        }
+
     }
+    
 }
