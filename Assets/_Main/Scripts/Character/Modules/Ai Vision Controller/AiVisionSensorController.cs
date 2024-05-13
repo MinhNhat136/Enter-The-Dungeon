@@ -14,7 +14,7 @@ namespace Atomic.Character
     /// determine if they are within the sensor's field of view, 
     /// and filter objects based on their layers.
     /// </summary>
-    public class AiVisionSensorController : MonoBehaviour, IVisionController
+    public class AiVisionSensorController : MonoBehaviour, ISensorController
     {
         //  Events ----------------------------------------
 

@@ -57,15 +57,15 @@ namespace Atomic.Equipment
             }
             else
             {
-                Invoke(nameof(TriggerOnCollisionAfterDelay), 0);
+                Invoke(nameof(ReleaseAfterDelay), 0);
             }
         }
 
-        public override void OnHit(Vector3 point, Vector3 normal, Collider collide)
+        public override void OnHit(Vector3 point, Vector3 normal)
         {
         }
 
-        protected override void TriggerOnCollisionAfterDelay()
+        protected override void ReleaseAfterDelay()
         {
             OnTriggerEnter(null);
         }
@@ -76,7 +76,7 @@ namespace Atomic.Equipment
             {
                 return;
             }
-            OnProjectileTrigger?.Invoke(this, other);
+            Release?.Invoke(this);
         }
     }
 }

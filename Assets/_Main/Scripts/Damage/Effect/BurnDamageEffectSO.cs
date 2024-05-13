@@ -4,22 +4,17 @@ using UnityEngine;
 namespace Atomic.Damage
 {
     [CreateAssetMenu(menuName = "Damage/Effect/Burn",fileName = "Burn Damage", order = 1)]
-    public class BurnDamageEffectSo : DamagePassiveEffect
+    public class BurnDamageEffectSo : DamagePassiveEffectSo
     {
-        public override bool CanApplyDamage()
+        public override PassiveEffect CreatePassiveEffect()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ApplyEffect(BaseAgent target)
-        {
-            Debug.Log("Burn");
-        }
-
-        public override void RemoveEffect(BaseAgent target)
-        {
-            Debug.Log("stop burn");
+            return new Burn()
+            {
+                EffectType = StatusEffectType.Burn,
+                Tick = tick + tickBonus,
+                Interval = interval + intervalBonus,
+                Damage = damagePerTick + damagePerTickBonus,
+            };
         }
     }
-    
 }

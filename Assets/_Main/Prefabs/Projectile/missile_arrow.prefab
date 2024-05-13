@@ -224,7 +224,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -242,3 +242,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7e56c909daa1c4e9bc056209e898fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVfxPrefab: {fileID: 198409772387570034, guid: 6f8068e2c99ffb04b932ec74e5773db5, type: 3}

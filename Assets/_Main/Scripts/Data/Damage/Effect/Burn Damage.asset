@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7c9dcbf0b5eb640a4ad783954b390c, type: 3}
   m_Name: Burn Damage
   m_EditorClassIdentifier: 
-  chance: 0
-  chanceBonus: 0
-  duration: 0
-  durationBonus: 0
-  damage: 0
-  damageBonus: 0
+  chance: 5
+  chanceBonus: 5
+  interval: 0.5
+  intervalBonus: 0.5
+  damagePerTick: 5
+  damagePerTickBonus: 5
+  tick: 10
+  tickBonus: 10
+  popupPrefab: {fileID: 3133341796764705591, guid: 699c909cdc8bd34458043e66598c9252, type: 3}

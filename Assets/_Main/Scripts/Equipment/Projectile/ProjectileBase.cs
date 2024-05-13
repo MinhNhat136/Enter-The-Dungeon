@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using Atomic.Character;
 using Atomic.Core;
+using Atomic.Damage;
 using UnityEngine;
 
 namespace Atomic.Equipment
@@ -15,16 +18,18 @@ namespace Atomic.Equipment
     public abstract class ProjectileBase : MonoBehaviour, IEnergyConsumer<ProjectileBase>
     {
         //  Events ----------------------------------------
-        public delegate void OnTrigger(ProjectileBase projectile, Collider other);
-        public OnTrigger OnProjectileTrigger;
+        public delegate void ReleaseProjectile(ProjectileBase projectile);
+        public ReleaseProjectile Release;
+
         
         //  Properties ------------------------------------
         public float EnergyValue { get; set; }
-        
-        public BaseAgent Owner { get; protected set; }
-        public Vector3 ShootPosition { get; protected set; }
-        public Vector3 ShootTarget { get; set; }
-        public LayerMask HitMask { get; set; }
+
+        protected BaseAgent Owner { get; set; }
+        protected Vector3 ShootPosition { get; set; }
+        protected Vector3 ShootTarget { get; set; }
+        protected LayerMask HitMask { get; set; }
+        public List<PassiveEffect> PassiveEffect { get; set; } = new(8);
 
         //  Fields ----------------------------------------
         protected MinMaxFloat DistanceWeight { get; private set; }
@@ -61,11 +66,12 @@ namespace Atomic.Equipment
             var projectileTransform = transform;
             projectileTransform.position = shootPosition;
             projectileTransform.forward = shootDirection;
+
         }
 
         public abstract void Shoot();
-        public abstract void OnHit(Vector3 point, Vector3 normal, Collider collide);
-        protected abstract void TriggerOnCollisionAfterDelay();
+        public abstract void OnHit(Vector3 point, Vector3 normal);
+        protected abstract void ReleaseAfterDelay();
 
         //  Event Handlers --------------------------------
         

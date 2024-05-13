@@ -1,5 +1,3 @@
-using Atomic.Equipment;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Atomic.Character

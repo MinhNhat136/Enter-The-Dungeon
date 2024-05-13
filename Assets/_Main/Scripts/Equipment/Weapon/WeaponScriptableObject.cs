@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Atomic.Character;
+using Atomic.Core;
 using Atomic.Damage;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
-    public class WeaponScriptableObject : ScriptableObject, ICloneable
+    public class WeaponScriptableObject : SerializedScriptableObject, ICloneable
     {
         public event Action<CombatMode> OnActivated; 
         
@@ -25,10 +26,19 @@ namespace Atomic.Equipment
         public Vector3 weaponSpawnRotation;
 
         [Header("DAMAGE HIT EFFECT", order = 2)]
-        public List<DamagePassiveEffect> damagePassiveEffects;
-
+        public List<DamagePassiveEffectSo> effectBuilders = new(8);
+        
         [Header("DAMAGE HIT FORCE", order = 3)]
         public DamageForce damageForce;
+        
+        [Header("METABOLISM WEIGHT", order = 5)]
+        public MinMaxFloat damageWeight;
+        public MinMaxFloat chanceCriticalWeight;
+        public MinMaxFloat speedWeight;
+        public MinMaxFloat distanceWeight;
+        public MinMaxFloat radiusWeight;
+        public MinMaxFloat areaOfEffectDistance;
+        public MinMaxFloat gravityDownAcceleration;
         
         protected BaseAgent Owner;
         protected GameObject Model;
@@ -40,6 +50,7 @@ namespace Atomic.Equipment
             Model = Instantiate(weaponPrefab, parent, true);
             Model.transform.localPosition = weaponSpawnPoint;
             Model.transform.localRotation = Quaternion.Euler(weaponSpawnRotation);
+            CreatePopupEffect();
             DeActivate();
         }
 
@@ -49,6 +60,14 @@ namespace Atomic.Equipment
             isActivated = false;
             Owner = null;
             Destroy(Model);
+        }
+
+        public void CreatePopupEffect()
+        {
+            foreach (var builder in effectBuilders)
+            {
+                builder.CreatePopupPool();
+            }
         }
 
         public void Activate()

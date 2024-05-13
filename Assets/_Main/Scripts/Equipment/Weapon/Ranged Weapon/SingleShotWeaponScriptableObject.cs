@@ -1,6 +1,5 @@
 using Atomic.Character;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 namespace  Atomic.Equipment
 {
@@ -61,7 +60,10 @@ namespace  Atomic.Equipment
             projectile.Load(barrelController.shootSystem.transform.position, 
                 barrelController.transform.forward,
                 _targetPosition, energyValue);
-                
+            foreach (var effect in effectBuilders)
+            {
+                projectile.PassiveEffect.Add(effect.CreatePassiveEffect());
+            }
             barrelController.Shoot(projectile);
         }
 
@@ -74,20 +76,20 @@ namespace  Atomic.Equipment
         }
         
         //  Event Handlers --------------------------------
-        protected override void OnProjectileCollide(ProjectileBase projectile, Collider other)
+        protected override void OnProjectileRelease(ProjectileBase projectile)
         {
             projectilePool.Release(projectile);
         }
 
         protected override void OnGetProjectile(ProjectileBase projectile)
         {
-            projectile.OnProjectileTrigger += OnProjectileCollide;
+            projectile.Release += OnProjectileRelease;
             projectile.gameObject.SetActive(true);
         }
 
         protected override void OnReclaimProjectile(ProjectileBase projectile)
         {
-            projectile.OnProjectileTrigger -= OnProjectileCollide;
+            projectile.Release -= OnProjectileRelease;
             projectile.gameObject.SetActive(false);
         }
 

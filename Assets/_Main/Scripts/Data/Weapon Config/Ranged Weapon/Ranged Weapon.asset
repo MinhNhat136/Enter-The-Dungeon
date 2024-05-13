@@ -34,8 +34,8 @@ MonoBehaviour:
   barrelPrefab: {fileID: 9140318129920562506, guid: 07e29bee77c8c1c459e41ce376442be3, type: 3}
   speedCharge: 0.8
   damageWeight:
-    min: 0
-    max: 0
+    min: 50
+    max: 100
   speedWeight:
     min: 50
     max: 50

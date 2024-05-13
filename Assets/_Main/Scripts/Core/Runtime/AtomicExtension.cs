@@ -210,7 +210,7 @@ namespace Atomic.Core
         public static void AttachControllerToModel<TModel, TController>(this TModel model, out TController controller) where TController : IInitializableWithBaseModel<TModel>
             where TModel : MonoBehaviour
         {
-            if (!model.TryGetComponent<TController>(out TController controllerValue))
+            if (!model.TryGetComponent(out TController controllerValue))
             {
                 controller = default;
                 return;

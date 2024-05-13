@@ -37,14 +37,8 @@ namespace Atomic.Equipment
         [FormerlySerializedAs("barrel")] [Header("BARREL", order = 2)] 
         public BarrelController barrelPrefab;
         
-        [Header("METABOLISM WEIGHT", order = 5)]
+        [Header("ENERGY", order = 5)]
         public float speedCharge;
-        public MinMaxFloat damageWeight;
-        public MinMaxFloat speedWeight;
-        public MinMaxFloat distanceWeight;
-        public MinMaxFloat radiusWeight;
-        public MinMaxFloat areaOfEffectDistance;
-        public MinMaxFloat gravityDownAcceleration;
         
         protected float energyValue;
         protected ObjectPool<ProjectileBase> projectilePool;
@@ -111,7 +105,6 @@ namespace Atomic.Equipment
                 .Spawn(owner: Owner, hitMask: projectileHitMask)
                 .SetDistanceWeight(distanceWeight)
                 .SetSpeedWeight(speedWeight);
-            
             return projectileInstance;
         }
         
@@ -176,7 +169,7 @@ namespace Atomic.Equipment
         }
 
         //  Event Handlers --------------------------------
-        protected abstract void OnProjectileCollide(ProjectileBase projectile, Collider other);
+        protected abstract void OnProjectileRelease(ProjectileBase projectile);
 
         protected abstract void OnGetProjectile(ProjectileBase projectile);
 

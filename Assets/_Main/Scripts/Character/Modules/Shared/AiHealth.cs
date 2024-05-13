@@ -1,30 +1,39 @@
 ﻿using Atomic.Core.Interface;
 using System;
-using UnityEngine.Events;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
-    [Serializable]
-    public class AiHealth : IInitializableWithBaseModel<BaseAgent>
+    public class AiHealth : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
-        public float MaxHealth;
-
-        public UnityAction OnZero;
-
+        //  Events ----------------------------------------
+        public event Action onDied;
+        public event Action onDamaged;
+        public event Action onHealed;
+        
+        //  Properties ------------------------------------
         public float CurrentHealth { get; set; }
         public bool IsInitialized { get; private set; }
+        public bool IsInvincible { get; set; }
+        public bool IsDead { get; set; }
+        
         public BaseAgent Model { get; private set; }
+       
 
-        bool m_IsDead;
+        //  Fields ----------------------------------------
+        public float maxHealth;
 
+        
+        //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
             if (!IsInitialized)
             {
                 IsInitialized = true;
                 Model = model;
-                CurrentHealth = MaxHealth;
-                m_IsDead = false;
+                CurrentHealth = maxHealth;
+                IsDead = false;
             }
         }
 
@@ -33,14 +42,21 @@ namespace Atomic.Character
             throw new System.NotImplementedException();
         }
 
+        
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
         public void Increase(float healAmount)
         {
             CurrentHealth += healAmount;
+            onHealed?.Invoke();
         }
 
         public void Decrease(float damage)
         {
             CurrentHealth -= damage;
+            onDamaged?.Invoke();
         }
 
         public void Kill()
@@ -51,16 +67,19 @@ namespace Atomic.Character
 
         void HandleDeath()
         {
-            if (m_IsDead)
+            if (IsDead)
                 return;
 
             if (CurrentHealth <= 0f)
             {
-                m_IsDead = true;
-                OnZero?.Invoke();
+                IsDead = true;
+                onDied?.Invoke();
             }
         }
 
-       
+
+        //  Event Handlers --------------------------------
+        
+        
     }
 }

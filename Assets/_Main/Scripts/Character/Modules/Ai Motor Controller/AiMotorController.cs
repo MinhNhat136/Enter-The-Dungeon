@@ -89,7 +89,7 @@ namespace Atomic.Character
 
         public void SwitchCombatMode(CombatMode combatMode)
         {
-            if (combatModes.ContainsKey(combatMode)) CombatController = combatModes[combatMode];
+            if (combatModes.TryGetValue(combatMode, out var mode)) CombatController = mode;
         }
         
         //  Event Handlers --------------------------------

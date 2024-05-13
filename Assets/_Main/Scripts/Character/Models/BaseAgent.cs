@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Atomic.Core;
 using Atomic.Core.Interface;
 using Atomic.Equipment;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
@@ -28,7 +26,10 @@ namespace Atomic.Character
     /// <summary>
     /// Base class for defining characters with modular control systems.
     /// </summary>
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(
+        typeof(NavMeshAgent), 
+        typeof(AiHealth), 
+        typeof(AiPassiveStateController))]
     public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Events ----------------------------------------
@@ -56,47 +57,20 @@ namespace Atomic.Character
 
         #endregion
 
-        #region Module Controllers 
-        public virtual IAgentAnimator AgentAnimatorController
-        {
-            get => _agentAnimatorController;
-            protected set => _agentAnimatorController = value;
-        }
-        public virtual AiMotorController MotorController
-        {
-            get => _motorController;
-            protected set => _motorController = value;
-        }
+        #region Module Controllers
 
-        public virtual AiHitBoxController HitBoxController
-        {
-            get => _hitBoxController;
-            protected set => _hitBoxController = value;
-        }
-
-        public virtual AiMemoryController MemoryController
-        {
-            get => _memoryController;
-            protected set => _memoryController = value;
-        }
-
-        public virtual IVisionController VisionController
-        {
-            get => _visionController;
-            protected set => _visionController = value;
-        }
-        public virtual ITargetingController TargetingController
+        protected IAgentAnimator AgentAnimatorController => _agentAnimatorController;
+        public AiMotorController MotorController => _motorController;
+        public AiMemoryController MemoryController => _memoryController;
+        public AiVisionSensorController VisionController => _visionController;
+        public ITargetingController TargetingController
         {
             get => _targetingController;
             protected set => _targetingController = value;
         }
-        public virtual AiWeaponVisualsController WeaponVisualsController
-        {
-            get => _weaponVisualsController;
-            set => _weaponVisualsController = value; 
-        }
-        
-        public virtual AiHealth HealthController => _healthController;
+        protected AiWeaponVisualsController WeaponVisualsController => _weaponVisualsController;
+        public AiPassiveStateController PassiveStateController => _passiveStateController;
+        public AiHealth HealthController => _healthController;
 
         #endregion
         
@@ -110,11 +84,11 @@ namespace Atomic.Character
 
         #region Controller
         private IAgentAnimator _agentAnimatorController;
-        private IVisionController _visionController;
+        private AiVisionSensorController _visionController;
         private ITargetingController _targetingController;
-        private AiHitBoxController _hitBoxController;
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
+        private AiPassiveStateController _passiveStateController;
         
         [SerializeField]
         private AiHealth _healthController;
@@ -165,25 +139,20 @@ namespace Atomic.Character
 
         //  Other Methods ---------------------------------
         public abstract void Assign();
-        
-        protected virtual void AssignControllers()
+
+        private void AssignControllers()
         {
             _memoryController = new()
             {
                 MemorySpan = 1
             };
-            
-            _healthController = new AiHealth();
-            
-            _healthController.Initialize(this);
+            this.AttachControllerToModel(out _healthController);
             this.AttachControllerToModel(out _agentAnimatorController);
             this.AttachControllerToModel(out _visionController);
             this.AttachControllerToModel(out _motorController);
             this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _weaponVisualsController);
-            this.AttachControllerToModel(out _hitBoxController);
-            
-            
+            this.AttachControllerToModel(out _passiveStateController);
         }
         
         //  Event Handlers --------------------------------

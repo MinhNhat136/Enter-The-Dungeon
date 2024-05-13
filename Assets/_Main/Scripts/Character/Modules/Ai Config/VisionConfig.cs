@@ -30,7 +30,7 @@ namespace Atomic.Character
         [SerializeField]
         public Color MeshVisionColor = Color.red;
 
-        public void Assign(IVisionController visionController)
+        public void Assign(AiVisionSensorController visionController)
         {
             visionController.VisionDistance = Distance;
             visionController.VisionHeight = Height;

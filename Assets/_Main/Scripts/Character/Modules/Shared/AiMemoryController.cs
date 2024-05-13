@@ -36,7 +36,7 @@ namespace Atomic.Character
 
 
         //  Other Methods ---------------------------------
-        public void UpdateSenses(IVisionController sensor, GameObject unit, string layerName, GameObject[] objects)
+        public void UpdateSenses(ISensorController sensor, GameObject unit, string layerName, GameObject[] objects)
         {
             int targets = sensor.Filter(objects, layerName);
 

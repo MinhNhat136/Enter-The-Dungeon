@@ -23,7 +23,7 @@ namespace Atomic.Character
         public float AngleWeight { get; set; }
         public float AgeWeight { get; set; }
         public int MaxNumberTarget { get; set; }
-        public IVisionController Sensor => _sensor;
+        public ISensorController Sensor => _sensor;
 
         public GameObject Target => _bestMemory.gameObject;
 
@@ -44,7 +44,7 @@ namespace Atomic.Character
         [SerializeField] private TargetingConfig _targetingConfig;
 
         private AiMemoryController _memoryController;
-        private IVisionController _sensor;
+        private AiVisionSensorController _sensor;
         private BaseAgent _model;
         private bool _isInitialized;
 
