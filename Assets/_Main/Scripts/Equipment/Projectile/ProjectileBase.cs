@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Atomic.Character;
 using Atomic.Core;
 using Atomic.Damage;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Atomic.Equipment
 {
@@ -25,22 +25,26 @@ namespace Atomic.Equipment
         //  Properties ------------------------------------
         public float EnergyValue { get; set; }
 
-        protected BaseAgent Owner { get; set; }
+        public BaseAgent Owner { get; set; }
         protected Vector3 ShootPosition { get; set; }
         protected Vector3 ShootTarget { get; set; }
         protected LayerMask HitMask { get; set; }
         public List<PassiveEffect> PassiveEffect { get; set; } = new(8);
+        public ObjectPool<ParticleSystem> HitVfx;
+
 
         //  Fields ----------------------------------------
         protected MinMaxFloat DistanceWeight { get; private set; }
         protected MinMaxFloat SpeedWeight { get; private set; }
+        protected ActionOnHit actionOnHit;
             
         //  Initialization  -------------------------------
         public virtual ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
         {
             Owner = owner;
             HitMask = hitMask;
-
+            actionOnHit = GetComponent<ActionOnHit>();
+            actionOnHit.projectile = this;
             return this;
         }
 
@@ -70,7 +74,6 @@ namespace Atomic.Equipment
         }
 
         public abstract void Shoot();
-        public abstract void OnHit(Vector3 point, Vector3 normal);
         protected abstract void ReleaseAfterDelay();
 
         //  Event Handlers --------------------------------

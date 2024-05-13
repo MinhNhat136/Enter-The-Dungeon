@@ -61,10 +61,6 @@ namespace Atomic.Equipment
             }
         }
 
-        public override void OnHit(Vector3 point, Vector3 normal)
-        {
-        }
-
         protected override void ReleaseAfterDelay()
         {
             OnTriggerEnter(null);

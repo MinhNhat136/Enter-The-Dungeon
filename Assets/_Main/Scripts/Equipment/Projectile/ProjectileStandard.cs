@@ -25,7 +25,6 @@ namespace Atomic.Equipment
         private float _speed;
         private float _distance;
 
-        private ObjectPool<ParticleSystem> _hitVfxs;
 
         private Transform _mTransform;
         
@@ -34,7 +33,7 @@ namespace Atomic.Equipment
         {
             base.Spawn(owner, hitMask);
             _mTransform = transform;
-            _hitVfxs = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
+            HitVfx = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
             return this;
         }
 
@@ -45,17 +44,14 @@ namespace Atomic.Equipment
         }
 
         //  Other Methods ---------------------------------
+        
         public override void Shoot()
         {
             _speed = SpeedWeight.GetValueFromRatio(EnergyValue);
             _distance = DistanceWeight.GetValueFromRatio(EnergyValue);
+            actionOnHit.Initialize();
 
             Invoke(nameof(ReleaseAfterDelay), _distance / _speed);
-        }
-
-        public override void OnHit(Vector3 point, Vector3 normal)
-        {
-            
         }
 
         private ParticleSystem CreateVFX()
@@ -70,7 +66,7 @@ namespace Atomic.Equipment
             vfx.gameObject.SetActive(true);
             vfx.Play();
             
-            vfx.GetComponent<SelfPoolRelease>().Release(_hitVfxs, vfx);
+            vfx.GetComponent<SelfPoolRelease>().Release(HitVfx, vfx);
         }
         
         private void OnReleaseVFX(ParticleSystem vfx)
@@ -93,26 +89,7 @@ namespace Atomic.Equipment
                 return;
             }
             
-            if (other.TryGetComponent(out BaseAgent agent))
-            {
-                foreach (var effect in PassiveEffect)
-                {
-                    var effectApply = effect.Clone();
-                    effectApply.Target = agent;
-                    effectApply.Source = Owner;
-                    
-                    effectApply.Apply();
-                }
-                
-                var vfx = _hitVfxs.Get();
-                
-                var vfxObject = vfx.gameObject;
-                vfxObject.transform.position = _mTransform.position;
-                vfxObject.transform.forward = -_mTransform.forward;
-                
-                PassiveEffect.Clear();
-                Release?.Invoke(this);
-            }
+            actionOnHit.OnHit(_mTransform.position, _mTransform.forward, other);
         }
 
         //  Event Handlers --------------------------------
