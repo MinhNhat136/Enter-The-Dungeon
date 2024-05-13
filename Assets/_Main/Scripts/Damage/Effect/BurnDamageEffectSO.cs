@@ -13,7 +13,7 @@ namespace Atomic.Damage
                 EffectType = StatusEffectType.Burn,
                 Tick = tick + tickBonus,
                 Interval = interval + intervalBonus,
-                Damage = damagePerTick + damagePerTickBonus,
+                Damage = damage + damageBonus,
             };
         }
     }

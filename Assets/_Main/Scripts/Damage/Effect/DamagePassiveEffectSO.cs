@@ -1,6 +1,7 @@
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 namespace Atomic.Damage
 {
@@ -12,8 +13,8 @@ namespace Atomic.Damage
         public float interval;
         public float intervalBonus;
 
-        public float damagePerTick;
-        public float damagePerTickBonus;
+        [FormerlySerializedAs("damagePerTick")] public float damage;
+        [FormerlySerializedAs("damagePerTickBonus")] public float damageBonus;
 
         public float tick;
         public float tickBonus;

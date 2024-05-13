@@ -13,7 +13,7 @@ namespace Atomic.Damage
                 Source = Damager,
                 effectPool = popupPool,
                 EffectType = StatusEffectType.Normal,
-                Damage = damagePerTick,
+                Damage = damage,
             };
         }
     }
