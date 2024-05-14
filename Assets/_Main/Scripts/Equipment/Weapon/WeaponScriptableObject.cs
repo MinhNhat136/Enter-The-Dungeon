@@ -5,6 +5,8 @@ using Atomic.Core;
 using Atomic.Damage;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Pool;
+using Object = System.Object;
 
 namespace Atomic.Equipment
 {
@@ -42,6 +44,7 @@ namespace Atomic.Equipment
         
         protected BaseAgent Owner;
         protected GameObject Model;
+        private ObjectPool<EffectPopupAnimation> _effectPopupPool; 
         
         public virtual void Attach(Transform parent, BaseAgent owner)
         {
@@ -62,7 +65,7 @@ namespace Atomic.Equipment
             Destroy(Model);
         }
 
-        public void CreatePopupEffect()
+        private void CreatePopupEffect()
         {
             foreach (var builder in effectBuilders)
             {

@@ -1,7 +1,6 @@
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 
 namespace Atomic.Damage
 {
@@ -13,14 +12,14 @@ namespace Atomic.Damage
         public float interval;
         public float intervalBonus;
 
-        [FormerlySerializedAs("damagePerTick")] public float damage;
-        [FormerlySerializedAs("damagePerTickBonus")] public float damageBonus;
+        public float damage;
+        public float damageBonus;
 
         public float tick;
         public float tickBonus;
 
         public EffectPopupAnimation popupPrefab;
-        public ObjectPool<EffectPopupAnimation> popupPool; 
+        protected ObjectPool<EffectPopupAnimation> popupPool; 
 
         public BaseAgent Damager { get; set; }
         public abstract PassiveEffect CreatePassiveEffect();
@@ -33,6 +32,7 @@ namespace Atomic.Damage
         private EffectPopupAnimation CreateInstance()
         {
             EffectPopupAnimation popupInstance = Instantiate(popupPrefab);
+            popupInstance.myPool = popupPool;
             return popupInstance;
         }
             
@@ -43,7 +43,6 @@ namespace Atomic.Damage
         private void OnReleasePopup(EffectPopupAnimation popup)
         {
             popup.gameObject.SetActive(false);
-            popup.EndAnimation();
         }
 
         private void OnDestroyPopup(EffectPopupAnimation popup)

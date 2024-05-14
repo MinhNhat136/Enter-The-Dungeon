@@ -30,17 +30,20 @@ namespace Atomic.Equipment
         protected Vector3 ShootTarget { get; set; }
         protected LayerMask HitMask { get; set; }
         public List<PassiveEffect> PassiveEffect { get; set; } = new(8);
-        public ObjectPool<ParticleSystem> HitVfx;
-
+        [HideInInspector] public ObjectPool<ParticleSystem> HitVfx;
+        [SerializeField] protected ParticleSystem hitVfxPrefab;
 
         //  Fields ----------------------------------------
         protected MinMaxFloat DistanceWeight { get; private set; }
         protected MinMaxFloat SpeedWeight { get; private set; }
         protected ActionOnHit actionOnHit;
-            
+        
+        protected Transform MyTransform;
+        
         //  Initialization  -------------------------------
         public virtual ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
         {
+            MyTransform = transform;
             Owner = owner;
             HitMask = hitMask;
             actionOnHit = GetComponent<ActionOnHit>();
@@ -71,6 +74,35 @@ namespace Atomic.Equipment
             projectileTransform.position = shootPosition;
             projectileTransform.forward = shootDirection;
 
+        }
+        
+        protected ParticleSystem CreateVFX()
+        {
+            ParticleSystem vfxInstance = Instantiate(hitVfxPrefab);
+            vfxInstance.gameObject.SetActive(false);
+            return vfxInstance;
+        }
+
+        protected void OnGetVFX(ParticleSystem vfx)
+        {
+            vfx.gameObject.SetActive(true);
+            vfx.Play();
+
+            var autoRelease = vfx.GetComponent<AutoReleaseParticleSystem>();
+            autoRelease.myPool = HitVfx;
+            autoRelease.AutoRelease();
+        }
+        
+        protected void OnReleaseVFX(ParticleSystem vfx)
+        {
+            vfx.gameObject.SetActive(false);
+            vfx.Stop();
+        }
+
+
+        protected void OnDestroyVFX(ParticleSystem vfx)
+        {
+            Destroy(vfx.gameObject);
         }
 
         public abstract void Shoot();

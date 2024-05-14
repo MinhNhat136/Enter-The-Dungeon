@@ -90,7 +90,7 @@ namespace Atomic.Equipment
             (
                 CreateProjectile, 
                 OnGetProjectile, 
-                OnReclaimProjectile, 
+                OnReleaseProjectile, 
                 OnDestroyProjectile, 
                 true, 
                 (int)projectileContains.min, 
@@ -169,11 +169,11 @@ namespace Atomic.Equipment
         }
 
         //  Event Handlers --------------------------------
-        protected abstract void OnProjectileRelease(ProjectileBase projectile);
+        protected abstract void ReleaseProjectile(ProjectileBase projectile);
 
         protected abstract void OnGetProjectile(ProjectileBase projectile);
 
-        protected abstract void OnReclaimProjectile(ProjectileBase projectile);
+        protected abstract void OnReleaseProjectile(ProjectileBase projectile);
 
         protected abstract void OnDestroyProjectile(ProjectileBase projectile);
         

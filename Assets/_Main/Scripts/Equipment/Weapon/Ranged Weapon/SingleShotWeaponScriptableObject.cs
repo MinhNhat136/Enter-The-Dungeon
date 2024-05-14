@@ -76,20 +76,21 @@ namespace  Atomic.Equipment
         }
         
         //  Event Handlers --------------------------------
-        protected override void OnProjectileRelease(ProjectileBase projectile)
+        protected override void ReleaseProjectile(ProjectileBase projectile)
         {
+            projectile.PassiveEffect.Clear();
             projectilePool.Release(projectile);
         }
 
         protected override void OnGetProjectile(ProjectileBase projectile)
         {
-            projectile.Release += OnProjectileRelease;
+            projectile.Release += ReleaseProjectile;
             projectile.gameObject.SetActive(true);
         }
 
-        protected override void OnReclaimProjectile(ProjectileBase projectile)
+        protected override void OnReleaseProjectile(ProjectileBase projectile)
         {
-            projectile.Release -= OnProjectileRelease;
+            projectile.Release -= ReleaseProjectile;
             projectile.gameObject.SetActive(false);
         }
 

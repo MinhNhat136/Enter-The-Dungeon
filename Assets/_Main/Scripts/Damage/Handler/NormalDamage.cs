@@ -1,5 +1,3 @@
-
-using Doozy.Runtime.Reactor.Ticker;
 using UnityEngine;
 
 namespace Atomic.Damage
@@ -38,7 +36,6 @@ namespace Atomic.Damage
             popup.transform.position = Target.transform.position;
             popup.value = Damage;
             popup.StartAnimation();
-            popup.GetComponent<SelfPoolRelease>().Release(effectPool, popup);
             Remove();
         }
 

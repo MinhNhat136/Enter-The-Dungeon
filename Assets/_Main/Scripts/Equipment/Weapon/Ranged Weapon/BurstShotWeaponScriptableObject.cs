@@ -24,7 +24,7 @@ namespace Atomic.Equipment
         {
         }
 
-        protected override void OnProjectileRelease(ProjectileBase projectile)
+        protected override void ReleaseProjectile(ProjectileBase projectile)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Atomic.Equipment
         {
         }
 
-        protected override void OnReclaimProjectile(ProjectileBase projectile)
+        protected override void OnReleaseProjectile(ProjectileBase projectile)
         {
         }
 

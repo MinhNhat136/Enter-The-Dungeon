@@ -7,7 +7,7 @@ namespace Atomic.Equipment
     {
         [SerializeField]
         private float chancePenetratePercentage;
-
+        
         private bool _canPenetrate;
 
         public override void Initialize()

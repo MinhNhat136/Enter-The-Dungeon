@@ -1,6 +1,7 @@
 using Atomic.Character;
 using Atomic.Core;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace Atomic.Equipment
 {
@@ -13,7 +14,6 @@ namespace Atomic.Equipment
 
 
         //  Fields ----------------------------------------
-        private float _speed;
         private float _distance;
         private float _time;
         private float _currentFlyTime;
@@ -23,6 +23,7 @@ namespace Atomic.Equipment
         public override ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
         {
             base.Spawn(owner, hitMask);
+            HitVfx = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 5);
             return this;
         }
 
@@ -30,6 +31,8 @@ namespace Atomic.Equipment
 
 
         //  Other Methods ---------------------------------
+        
+        
         public override void Load(Vector3 shootPosition, Vector3 shootDirection, Vector3 shootTarget, float energyValue)
         {
             base.Load(shootPosition, shootDirection, shootTarget, energyValue);
@@ -38,8 +41,8 @@ namespace Atomic.Equipment
 
         public override void Shoot()
         {
-            _speed = SpeedWeight.GetValueFromRatio(EnergyValue);
             _distance = Vector3.Distance(ShootPosition, ShootTarget);
+            actionOnHit.Initialize();
             _initializeVelocity =
                 ProjectileMotionExtension.CalculateInitialVelocity(transform, ShootTarget,
                     Vector3.Angle(transform.forward, Owner.transform.forward));
@@ -60,18 +63,21 @@ namespace Atomic.Equipment
                 Invoke(nameof(ReleaseAfterDelay), 0);
             }
         }
-
+        
         protected override void ReleaseAfterDelay()
         {
-            OnTriggerEnter(null);
+            actionOnHit.OnHit(MyTransform.position, MyTransform.forward, null);
+            Release?.Invoke(this);   
         }
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other != null && !HitMask.ContainsLayer(other.gameObject.layer))
+            if (!HitMask.ContainsLayer(other.gameObject.layer))
             {
                 return;
             }
+            
+            actionOnHit.OnHit(MyTransform.position, MyTransform.forward, other);
             Release?.Invoke(this);
         }
     }

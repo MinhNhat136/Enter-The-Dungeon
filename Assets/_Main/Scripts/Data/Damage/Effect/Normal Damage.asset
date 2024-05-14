@@ -16,8 +16,8 @@ MonoBehaviour:
   chanceBonus: 0
   interval: 0
   intervalBonus: 0
-  damagePerTick: 200
-  damagePerTickBonus: 0
+  damage: 200
+  damageBonus: 0
   tick: 0
   tickBonus: 0
   popupPrefab: {fileID: 3133341796764705591, guid: 699c909cdc8bd34458043e66598c9252, type: 3}

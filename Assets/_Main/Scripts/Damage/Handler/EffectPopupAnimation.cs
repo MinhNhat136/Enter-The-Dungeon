@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.Serialization;
 
 namespace  Atomic.Damage
@@ -48,6 +49,7 @@ namespace  Atomic.Damage
         private Transform _transform;
 
         private Camera _camera;
+        [HideInInspector] public ObjectPool<EffectPopupAnimation> myPool;
 
         //  Initialization  -------------------------------
 
@@ -59,8 +61,6 @@ namespace  Atomic.Damage
             gameObject.SetActive(false);
             _transform = transform;
             _textRenderer = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-
-           
         }
 
         public void Update()
@@ -70,7 +70,6 @@ namespace  Atomic.Damage
         
         public void StartAnimation()
         {
-            
             _time = 0; 
             _originPosition = _transform.position;
             _originScale = _transform.localScale;
@@ -99,6 +98,7 @@ namespace  Atomic.Damage
             _transform.position = _originPosition;
             _transform.localScale = _originScale;
             _textRenderer.color = _originColor;
+            myPool.Release(this);
         }
 
         //  Other Methods ---------------------------------

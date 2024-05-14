@@ -21,18 +21,15 @@ namespace Atomic.Equipment
 
 
         //  Fields ----------------------------------------
-        [SerializeField] private ParticleSystem hitVfxPrefab;
         private float _speed;
         private float _distance;
 
 
-        private Transform _mTransform;
         
         //  Initialization  -------------------------------
         public override ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
         {
             base.Spawn(owner, hitMask);
-            _mTransform = transform;
             HitVfx = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
             return this;
         }
@@ -40,7 +37,7 @@ namespace Atomic.Equipment
         //  Unity Methods   -------------------------------
         public void Update()
         {
-            _mTransform.position += _speed * Time.deltaTime * _mTransform.forward;
+            MyTransform.position += _speed * Time.deltaTime * MyTransform.forward;
         }
 
         //  Other Methods ---------------------------------
@@ -49,37 +46,11 @@ namespace Atomic.Equipment
         {
             _speed = SpeedWeight.GetValueFromRatio(EnergyValue);
             _distance = DistanceWeight.GetValueFromRatio(EnergyValue);
-            actionOnHit.Initialize();
+            actionOnHit?.Initialize();
 
             Invoke(nameof(ReleaseAfterDelay), _distance / _speed);
         }
-
-        private ParticleSystem CreateVFX()
-        {
-            ParticleSystem vfxInstance = Instantiate(hitVfxPrefab);
-            vfxInstance.gameObject.SetActive(false);
-            return vfxInstance;
-        }
-
-        private void OnGetVFX(ParticleSystem vfx)
-        {
-            vfx.gameObject.SetActive(true);
-            vfx.Play();
-            
-            vfx.GetComponent<SelfPoolRelease>().Release(HitVfx, vfx);
-        }
         
-        private void OnReleaseVFX(ParticleSystem vfx)
-        {
-            vfx.gameObject.SetActive(false);
-            vfx.Stop();
-        }
-
-        private void OnDestroyVFX(ParticleSystem vfx)
-        {
-            Destroy(vfx.gameObject);
-        }
-
         protected override void ReleaseAfterDelay() => Release?.Invoke(this);
 
         public void OnTriggerEnter(Collider other)
@@ -88,8 +59,12 @@ namespace Atomic.Equipment
             {
                 return;
             }
-            
-            actionOnHit.OnHit(_mTransform.position, _mTransform.forward, other);
+
+            if (!actionOnHit)
+            {
+                Release?.Invoke(this);
+            }
+            actionOnHit.OnHit(MyTransform.position, MyTransform.forward, other);
         }
 
         //  Event Handlers --------------------------------
