@@ -12,31 +12,18 @@ namespace Atomic.Character
         OnFeedBack = 1 << 2,
         
         BeginRoll = 1 << 3,
-        Rolling = 1 << 4,
-        EndRoll = 1 << 5,
+        EndRoll = 1 << 4,
         
-        BeginPrepareAttack = 1 << 6,
-        PreparingAttack = 1 << 7,
-        EndPrepareAttack = 1 << 8,
+        BeginPrepareAttack = 1 << 5,
+        EndPrepareAttack = 1 << 6,
         
-        ChargeFull = 1 << 9,
+        ChargeFull = 1 << 7,
         
-        BeginAttackMove = 1 << 10,
-        AttackMoving = 1 << 11,
-        EndAttackMove = 1 << 12,
+        BeginAttackMove = 1 << 8,
+        EndAttackMove = 1 << 9,
         
-        BeginAttack = 1 << 13,
-        Attacking = 1 << 14,
-        EndAttack = 1 << 15,
-        
-        BeginHitDamage = 1 << 16,
-        EndHitDamage = 1 << 17,
-        
-        BeginTrack = 1 << 18,
-        StopTrack = 1 << 19,
-        
-        BeginTrail = 1 << 20, 
-        StopTrail = 1 << 21,
+        BeginAttack = 1 << 10,
+        EndAttack = 1 << 11,
         
         CustomAction = 1 << 22,
     }

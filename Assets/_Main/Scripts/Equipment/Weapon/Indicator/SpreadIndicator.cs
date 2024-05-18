@@ -26,11 +26,11 @@ namespace Atomic.Equipment
             throw new System.NotImplementedException();
         }
 
-        [Button]
         public void Indicate()
         {
-            OnDrawGizmos();
+            throw new NotImplementedException();
         }
+
 
         public void Activate()
         {
@@ -48,10 +48,6 @@ namespace Atomic.Equipment
             throw new System.NotImplementedException();
         }
 
-        public void OnDrawGizmos()
-        {
-            Handles.color = new Color(0, 1, 0, 0.3f);
-            Handles.DrawSolidArc(transform.position, transform.up, transform.forward, 60, 10);
-        }
+        
     }
 }

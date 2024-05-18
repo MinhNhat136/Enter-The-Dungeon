@@ -2,7 +2,6 @@ using Atomic.Character;
 using Atomic.Core;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
@@ -31,10 +30,9 @@ namespace Atomic.Equipment
         
         [Header("BULLET", order = 1)] 
         public ProjectileBase bulletPrefab;
-        public LayerMask projectileHitMask;
         public MinMaxFloat projectileContains;
 
-        [FormerlySerializedAs("barrel")] [Header("BARREL", order = 2)] 
+        [Header("BARREL", order = 2)] 
         public BarrelController barrelPrefab;
         
         [Header("ENERGY", order = 5)]
@@ -46,13 +44,13 @@ namespace Atomic.Equipment
         protected ITrajectoryIndicator trajectoryIndicator;
         protected BarrelController barrelController;
         
-        private RangedWeaponAssembler _weaponAssembler; 
+        private RangedWeaponObject _weaponObject; 
 
         //  Initialization  -------------------------------
         public override void Attach(Transform parent, BaseAgent owner)
         {
             base.Attach(parent, owner);
-            _weaponAssembler = Model.GetComponent<RangedWeaponAssembler>();
+            _weaponObject = Model.GetComponent<RangedWeaponObject>();
             Model.transform.SetParent(parent);
             
             CreatePool();
@@ -74,6 +72,7 @@ namespace Atomic.Equipment
                 .SetGravityDownAcceleration(gravityDownAcceleration)
                 .SetDamageWeight(damageWeight)
                 .SetSpeedWeight(speedWeight)
+                .SetForceWeight(forceWeight)
                 .Initialize();
             trajectoryIndicator.DeActivate();
         }
@@ -81,7 +80,7 @@ namespace Atomic.Equipment
         private void CreateBarrel()
         {
             barrelController = Instantiate(barrelPrefab,
-                _weaponAssembler.GetAttachTransform(WeaponComponentEnum.Barrel), false);
+                _weaponObject.GetAttachTransform(WeaponComponentEnum.Barrel), false);
         }
 
         private void CreatePool()
@@ -102,9 +101,10 @@ namespace Atomic.Equipment
             ProjectileBase projectileInstance = Instantiate(bulletPrefab);
             projectileInstance.gameObject.SetActive(false);
             projectileInstance
-                .Spawn(owner: Owner, hitMask: projectileHitMask)
+                .Spawn(owner: Owner)
                 .SetDistanceWeight(distanceWeight)
-                .SetSpeedWeight(speedWeight);
+                .SetSpeedWeight(speedWeight)
+                .SetForceWeight(forceWeight);
             return projectileInstance;
         }
         

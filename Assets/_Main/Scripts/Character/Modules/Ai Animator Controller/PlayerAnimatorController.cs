@@ -13,36 +13,23 @@ namespace Atomic.Character
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    public class PlayerAnimatorController : SerializedMonoBehaviour, IAgentAnimator
+    public class PlayerAnimatorController : AgentAnimator
     {
 
         //  Events ----------------------------------------
 
 
         //  Properties ------------------------------------
-        public bool IsInitialized => _isInitialized;
-        public BaseAgent Model => _model;
 
         //  Fields ----------------------------------------
-        private BaseAgent _model;
-        private Animator _animator;
-
-        private bool _isInitialized;
-
+        public int currentMeleeCombo;
+        
         [field: SerializeField]
         private Dictionary<WeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
 
+        private MeleeCombatController _meleeCombatController;
+        
         //  Initialization  -------------------------------
-        public void Initialize(BaseAgent model)
-        {
-            if (!_isInitialized)
-            {
-                _isInitialized = true;
-                _model = model;
-                _animator = GetComponentInChildren<Animator>();
-            }
-        }
-
         public void RequireIsInitialized()
         {
             throw new System.NotImplementedException();
@@ -52,35 +39,54 @@ namespace Atomic.Character
         //  Unity Methods   -------------------------------
 
         //  Other Methods ---------------------------------
+
         public void ApplyMovementAnimation()
         {
-            float xVelocity = Vector3.Dot(_model.MotorController.MoveDirection.normalized, transform.right);
-            float zVelocity = Vector3.Dot(_model.MotorController.MoveDirection.normalized, transform.forward);
+            float xVelocity = Vector3.Dot(Model.MotorController.MoveDirection.normalized, transform.right);
+            float zVelocity = Vector3.Dot(Model.MotorController.MoveDirection.normalized, transform.forward);
 
-            _animator.SetFloat(AnimatorParameters.InputHorizontal, xVelocity, .1f, Time.deltaTime);
-            _animator.SetFloat(AnimatorParameters.InputVertical, zVelocity, .1f, Time.deltaTime);
+            Animator.SetFloat(AnimatorParameters.InputHorizontal, xVelocity, .1f, Time.deltaTime);
+            Animator.SetFloat(AnimatorParameters.InputVertical, zVelocity, .1f, Time.deltaTime);
 
         }
 
         public void StopMovementAnimation()
         {
-            _animator.SetFloat(AnimatorParameters.InputHorizontal, 0, .1f, Time.deltaTime);
-            _animator.SetFloat(AnimatorParameters.InputVertical, 0, .1f, Time.deltaTime);
+            Animator.SetFloat(AnimatorParameters.InputHorizontal, 0, .1f, Time.deltaTime);
+            Animator.SetFloat(AnimatorParameters.InputVertical, 0, .1f, Time.deltaTime);
         }
 
-        public void ApplyRollAnimation() => _animator.CrossFade(AnimatorStates.Roll, 0.05f);
+        public void ApplyRollAnimation() => Animator.CrossFade(AnimatorStates.Roll, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Start_Animation() => _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Start, 0.05f);
+        public void ApplyRangedAttack_Charge_Start_Animation() => Animator.CrossFade(AnimatorStates.RangedAttackChargeStart, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Release_Animation() => _animator.CrossFade(AnimatorStates.RangedAttack_Charge_Release, 0.5f);
+        public void ApplyRangedAttack_Charge_Release_Animation() => Animator.CrossFade(AnimatorStates.RangedAttackChargeRelease, 0.5f);
 
-        public void ApplyMeleeAttack(int combo)
+        public bool ApplyMeleeAttack(int combo)
         {
-            _animator.Play(AnimatorStates.GetMeleeAttackComboHash(1));
+            int targetAnimationHash = AnimatorStates.GetMeleeAttackComboHash(combo);
+
+            AnimatorStateInfo currentState = Animator.GetCurrentAnimatorStateInfo(0);
+            bool isInTransition = Animator.IsInTransition(0);
+
+            if (currentState.shortNameHash == targetAnimationHash || isInTransition)
+            {
+                return false;
+            }
+
+            Animator.Play(targetAnimationHash);
+            return true;
+        }
+        
+        
+        private void ResetCurrentMeleeCombo()
+        {
+            currentMeleeCombo = 0;
         }
 
         public void ApplySummonAnimation()
         {
+            
         }
 
         public void ApplyBreakAnimation()
@@ -98,7 +104,7 @@ namespace Atomic.Character
             if (_animatorMatchWithWeapons.TryGetValue(weaponType,
                     out RuntimeAnimatorController runtimeAnimatorController))
             {
-                _animator.runtimeAnimatorController = runtimeAnimatorController;
+                Animator.runtimeAnimatorController = runtimeAnimatorController;
             }
         }
         

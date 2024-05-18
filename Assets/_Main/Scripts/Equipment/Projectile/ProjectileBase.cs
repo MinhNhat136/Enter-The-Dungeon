@@ -26,9 +26,8 @@ namespace Atomic.Equipment
         public float EnergyValue { get; set; }
 
         public BaseAgent Owner { get; set; }
-        protected Vector3 ShootPosition { get; set; }
+        public Vector3 ShootPosition { get; protected set; }
         protected Vector3 ShootTarget { get; set; }
-        protected LayerMask HitMask { get; set; }
         public List<PassiveEffect> PassiveEffect { get; set; } = new(8);
         [HideInInspector] public ObjectPool<ParticleSystem> HitVfx;
         [SerializeField] protected ParticleSystem hitVfxPrefab;
@@ -36,16 +35,16 @@ namespace Atomic.Equipment
         //  Fields ----------------------------------------
         protected MinMaxFloat DistanceWeight { get; private set; }
         protected MinMaxFloat SpeedWeight { get; private set; }
+        public MinMaxFloat ForceWeight { get; private set; }
         protected ActionOnHit actionOnHit;
         
-        protected Transform MyTransform;
+        public Transform MyTransform;
         
         //  Initialization  -------------------------------
-        public virtual ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
+        public virtual ProjectileBase Spawn(BaseAgent owner)
         {
             MyTransform = transform;
             Owner = owner;
-            HitMask = hitMask;
             actionOnHit = GetComponent<ActionOnHit>();
             actionOnHit.projectile = this;
             return this;
@@ -61,6 +60,12 @@ namespace Atomic.Equipment
         {
             SpeedWeight = speedWeight;
             return this;
+        }
+
+        public ProjectileBase SetForceWeight(MinMaxFloat forceWeight)
+        {
+            ForceWeight = forceWeight;
+            return this; 
         }
         
         //  Other Methods ---------------------------------

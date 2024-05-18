@@ -1,3 +1,4 @@
+using System.Linq;
 using Atomic.Character;
 using UnityEngine;
 
@@ -34,7 +35,8 @@ namespace Atomic.Equipment
             {
                 if(!coll) continue;
                 if (coll.gameObject == projectile.Owner.gameObject) continue;
-                if (coll.TryGetComponent(out BaseAgent agent) && currentAgentIndex < _affectedAgents.Length)
+                var agent = coll.GetComponentInParent<BaseAgent>();
+                if (agent && !_affectedAgents.Contains(agent) && currentAgentIndex < _affectedAgents.Length)
                 {
                     _affectedAgents[currentAgentIndex] = agent;
                     currentAgentIndex++;

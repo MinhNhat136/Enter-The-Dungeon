@@ -49,12 +49,21 @@ namespace Atomic.Character
         //  Other Methods ---------------------------------
         public void Increase(float healAmount)
         {
+            if (CurrentHealth >= maxHealth)
+            {
+                CurrentHealth = maxHealth;
+                return;
+            }
             CurrentHealth += healAmount;
             onHealed?.Invoke();
         }
 
         public void Decrease(float damage)
         {
+            if (CurrentHealth <= 0)
+            {
+                return;
+            }
             CurrentHealth -= damage;
             onDamaged?.Invoke();
         }
@@ -77,6 +86,7 @@ namespace Atomic.Character
             }
         }
 
+        
 
         //  Event Handlers --------------------------------
         

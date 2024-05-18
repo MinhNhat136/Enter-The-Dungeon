@@ -1,3 +1,4 @@
+using Atomic.Core;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -11,14 +12,17 @@ namespace Atomic.Character
     /// </summary>
     public class PlayerTargetingAgentController : BaseTargetingAgentController
     {
-        public override float CalculateScore(AiMemoryObject memory)
+        protected override float CalculateScore(AiMemoryObject memory)
         {
             Vector3 aimDirection = Model.MotorController.MoveDirection.normalized;
-            Vector3 targetDirection = (memory.gameObject.transform.position - transform.position).normalized;
+            Vector3 direction = memory.gameObject.transform.position - transform.position;
+            
+            Vector3 targetDirection = direction.normalized;
+            
             aimDirection.y = 0;
             targetDirection.y = 0;
             
-            return  Vector3.Dot(aimDirection,targetDirection) * AngleWeight;
+            return memory.distance.Normalize(visionSensor.VisionDistance) + Vector3.Dot(aimDirection,targetDirection) * AngleWeight ;
         }
     }
 }

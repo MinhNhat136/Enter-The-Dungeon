@@ -46,7 +46,7 @@ namespace Atomic.Character
             }
         }
 
-        public void RefreshMemory(GameObject target, GameObject unit)
+        private void RefreshMemory(GameObject target, GameObject unit)
         {
             AiMemoryObject memory = FetchMemory(target);
             memory.gameObject = target;
@@ -58,7 +58,7 @@ namespace Atomic.Character
             memory.lastTime = Time.time;
         }
 
-        public AiMemoryObject FetchMemory(GameObject gameObject)
+        private AiMemoryObject FetchMemory(GameObject gameObject)
         {
             AiMemoryObject memory = memories.Find(x => x.gameObject == gameObject);
             if (memory == null)

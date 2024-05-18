@@ -12,19 +12,19 @@ TagManager:
   - 
   - Water
   - UI
-  - Enemy
-  - Player
-  - Obstacle
   - Ground
-  - Cursor
-  - Projectile
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Hurtbox_1
+  - Hurtbox_2
+  - Hitbox_1
+  - Hitbox_2
+  - WorldSpace_UI
+  - Obstacle
+  - Ragdoll
+  - Dynamic
+  - Mine
+  - Trap
+  - Agent
+  - Player
   - 
   - 
   - 

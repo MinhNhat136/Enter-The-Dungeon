@@ -30,6 +30,11 @@ namespace Atomic.Character
         {
             
         }
+
+        public virtual void InterruptPrepareAttack()
+        {
+            
+        }
         
         public virtual void BeginAttackMove()
         {
@@ -42,6 +47,11 @@ namespace Atomic.Character
         }
 
         public virtual void EndAttackMove()
+        {
+            
+        }
+
+        public virtual void InterruptAttackMove()
         {
             
         }
@@ -61,11 +71,19 @@ namespace Atomic.Character
             
         }
 
+        public virtual void InterruptAttack()
+        {
+            
+        }
+
         public virtual void CustomAction()
         {
             
         }
 
-        public void InterruptAction();
+        public virtual void InterruptAction()
+        {
+            
+        }
     }
 }

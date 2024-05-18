@@ -26,11 +26,14 @@ namespace Atomic.Equipment
         public GameObject weaponPrefab;
         public Vector3 weaponSpawnPoint;
         public Vector3 weaponSpawnRotation;
+        
+        [Header("PARAMETER", order = 2)]
+        public float range;
 
-        [Header("DAMAGE HIT EFFECT", order = 2)]
+        [Header("DAMAGE HIT EFFECT", order = 3)]
         public List<DamagePassiveEffectSo> effectBuilders = new(8);
         
-        [Header("DAMAGE HIT FORCE", order = 3)]
+        [Header("DAMAGE HIT FORCE", order = 4)]
         public DamageForce damageForce;
         
         [Header("METABOLISM WEIGHT", order = 5)]
@@ -41,6 +44,7 @@ namespace Atomic.Equipment
         public MinMaxFloat radiusWeight;
         public MinMaxFloat areaOfEffectDistance;
         public MinMaxFloat gravityDownAcceleration;
+        public MinMaxFloat forceWeight;
         
         protected BaseAgent Owner;
         protected GameObject Model;

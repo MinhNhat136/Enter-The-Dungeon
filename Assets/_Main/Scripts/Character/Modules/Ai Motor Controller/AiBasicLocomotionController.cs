@@ -34,7 +34,7 @@ namespace Atomic.Character
         {
             get; set;
         }
-        
+        public bool IsNavMeshRotate { get; set; }
         //  Fields ----------------------------------------
         private NavMeshAgent _navMeshAgent;
         private AiMotorController _model;
@@ -43,6 +43,7 @@ namespace Atomic.Character
 
         private bool _isInitialized;
         private bool _isStopped;
+        
         
         //  Initialization  -------------------------------
         public void Initialize(AiMotorController model)
@@ -57,6 +58,10 @@ namespace Atomic.Character
 
                 _animator.applyRootMotion = false;
                 _navMeshAgent.updatePosition = true;
+                if (IsNavMeshRotate)
+                {
+                    _navMeshAgent.updateRotation = true;
+                }
                 _navMeshAgent.updateRotation = false;
 
                 _navMeshAgent.speed = MoveSpeed;
@@ -81,6 +86,10 @@ namespace Atomic.Character
         //  Other Methods ---------------------------------
         public void ApplyRotation()
         {
+            if (IsNavMeshRotate)
+            {
+                return;
+            }
             if (_model.MoveDirection == Vector3.zero)
                 return;
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4565383891958854}
   - component: {fileID: 33527237931251991}
   - component: {fileID: 23169963255552181}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: cannon_bomb_normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4446514140749082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4656787698659157}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 54358028639854080}
   - component: {fileID: 7164851932993948953}
   - component: {fileID: 6926649376661264927}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: missile_cannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitVfxPrefab: {fileID: 198805344971955384, guid: cd5def2bb4f6b4e4ab15ba0b6f35b29d, type: 3}
+  MyTransform: {fileID: 0}
 --- !u!114 &6926649376661264927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,4 +261,4 @@ MonoBehaviour:
   areaOfEffectDistance: 5
   impactLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 576

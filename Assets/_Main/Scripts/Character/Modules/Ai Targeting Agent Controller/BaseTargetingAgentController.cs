@@ -8,8 +8,10 @@ namespace Atomic.Character
 
     //  Class Attributes ----------------------------------
 
-    /// <summary>, 
-    /// TODO: Replace with comments...
+    /// <summary>
+    /// The BaseTargetingAgentController class provides a base implementation for targeting systems in agents.
+    /// This class handles the initialization of targeting components, finding and updating targets based on
+    /// sensor data, and evaluating potential targets using configurable weights for distance, angle, and age.
     /// </summary>
     public class BaseTargetingAgentController : MonoBehaviour, ITargetingController
     {
@@ -23,7 +25,7 @@ namespace Atomic.Character
         public float AngleWeight { get; set; }
         public float AgeWeight { get; set; }
         public int MaxNumberTarget { get; set; }
-        public ISensorController Sensor => _sensor;
+        public ISensorController VisionSensor => visionSensor;
 
         public GameObject Target => _bestMemory.gameObject;
 
@@ -44,7 +46,7 @@ namespace Atomic.Character
         [SerializeField] private TargetingConfig _targetingConfig;
 
         private AiMemoryController _memoryController;
-        private AiVisionSensorController _sensor;
+        protected AiVisionSensorController visionSensor;
         private BaseAgent _model;
         private bool _isInitialized;
 
@@ -58,7 +60,7 @@ namespace Atomic.Character
                 _isInitialized = true;
 
                 _model = model;
-                _sensor = _model.VisionController;
+                visionSensor = _model.VisionController;
                 _memoryController = _model.MemoryController;
 
                 _targetingConfig.Assign(this);
@@ -78,7 +80,7 @@ namespace Atomic.Character
 
         public virtual void FindTarget()
         {
-            _memoryController.UpdateSenses(_sensor, gameObject,TargetLayer, _targets);
+            _memoryController.UpdateSenses(visionSensor, gameObject,TargetLayer, _targets);
             _memoryController.ForgetMemory();
 
             EvaluateTargetScores();
@@ -123,10 +125,10 @@ namespace Atomic.Character
             }
         }
 
-        public virtual float CalculateScore(AiMemoryObject memory)
+        protected virtual float CalculateScore(AiMemoryObject memory)
         {
-            float distanceScore = memory.distance.Normalize(_sensor.VisionDistance) * DistanceWeight;
-            float angleScore = memory.angle.Normalize(_sensor.VisionAngle) * AngleWeight;
+            float distanceScore = memory.distance.Normalize(visionSensor.VisionDistance) * DistanceWeight;
+            float angleScore = memory.angle.Normalize(visionSensor.VisionAngle) * AngleWeight;
             float ageScore = memory.Age.Normalize(MemorySpan) * AgeWeight;
             return distanceScore + angleScore + ageScore;
         }

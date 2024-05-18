@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8685972094193773411}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: arrow_visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 2351882444174169703}
   - component: {fileID: 8359089788126473550}
   - component: {fileID: 451756216140403427}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114490853556823489}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: normal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 3272837342136504145}
   - component: {fileID: 6155444322339666320}
   - component: {fileID: 6407814892643004740}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: missile_arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitVfxPrefab: {fileID: 198409772387570034, guid: 6f8068e2c99ffb04b932ec74e5773db5, type: 3}
+  MyTransform: {fileID: 0}
 --- !u!114 &6407814892643004740
 MonoBehaviour:
   m_ObjectHideFlags: 0

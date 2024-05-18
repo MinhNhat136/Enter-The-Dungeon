@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -27,7 +28,6 @@ namespace Atomic.Character
         public int MaxObjectRemember { get; set; }
         public LayerMask VisionLayer { get; set; }
         public LayerMask OcclusionLayer { get; set; }
-        public Color MeshVisionColor { get; set; }
 
 
         public List<GameObject> Objects => _objects;
@@ -72,8 +72,6 @@ namespace Atomic.Character
         }
 
         //  Unity Methods   -------------------------------
-
-
         public void VisionScan()
         {
             _scanTimer -= Time.deltaTime;
@@ -88,13 +86,12 @@ namespace Atomic.Character
 
         public void Scan()
         {
-            _count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, _colliders, VisionLayer,
-                QueryTriggerInteraction.Collide);
+            _count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, _colliders, VisionLayer);
             Objects.Clear();
             for (int i = 0; i < _count; i++)
             {
                 GameObject obj = _colliders[i].gameObject;
-                if (IsInSight(obj))
+                if (IsInSight(obj) && !Objects.Contains(obj))
                 {
                     Objects.Add(obj);
                 }

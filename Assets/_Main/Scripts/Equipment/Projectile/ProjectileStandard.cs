@@ -23,13 +23,11 @@ namespace Atomic.Equipment
         //  Fields ----------------------------------------
         private float _speed;
         private float _distance;
-
-
         
         //  Initialization  -------------------------------
-        public override ProjectileBase Spawn(BaseAgent owner, LayerMask hitMask)
+        public override ProjectileBase Spawn(BaseAgent owner)
         {
-            base.Spawn(owner, hitMask);
+            base.Spawn(owner);
             HitVfx = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
             return this;
         }
@@ -55,11 +53,6 @@ namespace Atomic.Equipment
 
         public void OnTriggerEnter(Collider other)
         {
-            if (!HitMask.ContainsLayer(other.gameObject.layer))
-            {
-                return;
-            }
-
             if (!actionOnHit)
             {
                 Release?.Invoke(this);

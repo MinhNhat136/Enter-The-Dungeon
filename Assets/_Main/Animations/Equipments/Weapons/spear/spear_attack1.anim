@@ -92788,20 +92788,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0
-    functionName: TriggerCharacterAction
-    data: BeginHitDamage
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: TriggerCharacterAction
-    data: BeginTrack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.21666667
     functionName: TriggerCharacterAction
     data: BeginAttackMove
@@ -92809,30 +92795,9 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.21666667
-    functionName: TriggerCharacterAction
-    data: StopTrack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.26666668
-    functionName: TriggerCharacterAction
-    data: BeginTrail
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.31666666
     functionName: TriggerCharacterAction
     data: EndAttackMove
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.31666666
-    functionName: TriggerCharacterAction
-    data: StopTrail
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
@@ -92851,7 +92816,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.35
+  - time: 0.68333334
     functionName: TriggerCharacterAction
     data: MoveNextSkill
     objectReferenceParameter: {fileID: 0}

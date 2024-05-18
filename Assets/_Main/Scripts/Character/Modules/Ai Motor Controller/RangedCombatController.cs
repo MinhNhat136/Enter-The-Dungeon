@@ -39,7 +39,6 @@ namespace Atomic.Character
         
 
         //  Fields ----------------------------------------
-        // private RangedWeapon _rangedWeapon;
         private RangedWeaponScriptableObject _rangedWeapon;
 
         //  Initialization  -------------------------------
@@ -106,7 +105,7 @@ namespace Atomic.Character
             
         }
 
-        public void InterruptAction()
+        public void InterruptPrepareAttack()
         {
             _rangedWeapon.CancelCharge();
         }

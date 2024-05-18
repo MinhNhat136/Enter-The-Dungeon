@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Atomic.Core.Interface;
@@ -44,6 +45,11 @@ namespace Atomic.Character
         }
 
         //  Other Methods -------------------------------
+        public void Update()
+        {
+            HandleEffect();
+        }
+
         public void HandleEffect()
         {
             if (EffectHandlers.Count == 0) return;

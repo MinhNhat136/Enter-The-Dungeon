@@ -26,6 +26,7 @@ namespace Atomic.Character
         public ICombatController CombatController { get; set; }
         public ILocomotionController LocomotionController { get; set;}
         public AiRollController RollController { get; set; }
+        public AiDashController DashController { get; set; }
         public BaseAgent Model { get; private set; }
         
         public NavMeshAgent BaseNavMeshAgent { get; private set; }
@@ -54,7 +55,6 @@ namespace Atomic.Character
 
                 BaseNavMeshAgent = GetComponent<NavMeshAgent>();
                 BaseAnimator = GetComponentInChildren<Animator>();
-                CombatController = GetComponent<ICombatController>();
                 
                 config.Assign(this);
                 foreach (var key in combatModes.Keys)

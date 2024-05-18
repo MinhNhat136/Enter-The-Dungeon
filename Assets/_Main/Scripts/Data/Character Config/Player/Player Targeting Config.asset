@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ee8c26c9152434eac959e156a3e33c, type: 3}
   m_Name: Player Targeting Config
   m_EditorClassIdentifier: 
-  TargetLayer: Enemy
+  TargetLayer: Agent
   MemorySpan: 3
   DistanceWeight: 0.1
   AngleWeight: 1

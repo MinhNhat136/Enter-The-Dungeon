@@ -16,6 +16,8 @@ namespace Atomic.Character
         public float AgeWeight = 1.0f;
 
         public int MaxNumberTarget = 16;
+        
+        
 
         public void Assign(ITargetingController targetingController)
         {

@@ -17,6 +17,11 @@ namespace Atomic.Equipment
             return (Self)this;
         }
 
+        public Self SetForceWeight(MinMaxFloat forceWeight)
+        {
+            return (Self)this;
+        }
+
         public Self SetSpeedWeight(MinMaxFloat speedWeight)
         {
             return (Self)this;

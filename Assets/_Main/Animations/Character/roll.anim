@@ -85888,13 +85888,6 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.06666667
-    functionName: TriggerCharacterAction
-    data: Rolling
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 1
     functionName: TriggerCharacterAction
     data: EndRoll

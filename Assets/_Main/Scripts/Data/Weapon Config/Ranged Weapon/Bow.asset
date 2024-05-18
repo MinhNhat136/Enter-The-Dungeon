@@ -29,6 +29,7 @@ MonoBehaviour:
   weaponPrefab: {fileID: 1097033006214147, guid: c04af5fa005a5df46b463435169fc082, type: 3}
   weaponSpawnPoint: {x: 0, y: 0, z: 0}
   weaponSpawnRotation: {x: 0, y: 0, z: 0}
+  range: 12
   effectBuilders:
   - {fileID: 11400000, guid: c72719180a6506e4ea4ed8c772c9bed4, type: 2}
   damageForce: {fileID: 11400000, guid: 66f40aa90cf8ab848a8db8658a80510b, type: 2}
@@ -53,12 +54,12 @@ MonoBehaviour:
   gravityDownAcceleration:
     min: 0
     max: 0
+  forceWeight:
+    min: 0
+    max: 4
   indicatorPrefab: {fileID: 1056145699921089, guid: 80dd8c8a607654d4696eac7543a892e4, type: 3}
   delayActivateTime: 0.5
   bulletPrefab: {fileID: 6155444322339666320, guid: 34031283e21a0a5468467d38ea201c07, type: 3}
-  projectileHitMask:
-    serializedVersion: 2
-    m_Bits: 320
   projectileContains:
     min: 3
     max: 5

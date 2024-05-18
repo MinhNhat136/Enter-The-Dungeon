@@ -125111,21 +125111,7 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: TriggerCharacterAction
-    data: BeginHitDamage
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: TriggerCharacterAction
     data: BeginAttack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.25
-    functionName: TriggerCharacterAction
-    data: BeginTrack
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
@@ -125137,30 +125123,9 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.45
-    functionName: TriggerCharacterAction
-    data: StopTrack
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.46666667
-    functionName: TriggerCharacterAction
-    data: BeginTrail
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.55
     functionName: TriggerCharacterAction
-    data: StopAttackMove
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.55
-    functionName: TriggerCharacterAction
-    data: StopTrail
+    data: EndAttackMove
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
