@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e3ca9025d1fc9409dacd7db27b7b62, type: 3}
+  m_Name: Player Melee Attack 1
+  m_EditorClassIdentifier: 
+  <AnimationName>k__BackingField: meleeAttack_1
+  <EnergyValue>k__BackingField: 0
+  <AttackMoveDistance>k__BackingField: 0
+  <AttackMoveSpeedWeight>k__BackingField: 0
+  <AttackMoveAccelerationWeight>k__BackingField: 0
+  <DelayResetCombo>k__BackingField: 1

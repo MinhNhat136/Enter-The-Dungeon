@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Atomic.Character;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
@@ -21,10 +22,10 @@ namespace Atomic.Equipment
        
 
         //  Fields ----------------------------------------
-        public List<MeleeAttackData> AttackDatas;
+        public List<MeleeAttackData> attackData;
         private MeleeWeaponObject _meleeWeaponObject;
         
-        private List<BaseAgent> _hitAgent = new(8);
+        private readonly List<BaseAgent> _hitAgent = new(8);
 
         //  Initialization  -------------------------------
 

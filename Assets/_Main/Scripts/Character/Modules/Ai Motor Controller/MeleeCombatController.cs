@@ -25,7 +25,7 @@ namespace Atomic.Character
                 if (value is MeleeWeaponScriptableObject meleeWeapon)
                 {
                     _meleeWeapon = meleeWeapon;
-                    NextAnimationName = _meleeWeapon.AttackDatas[0].AnimationName;
+                    NextAnimationName = _meleeWeapon.attackData[0].AnimationName;
                 }
                 else
                 {
@@ -101,11 +101,11 @@ namespace Atomic.Character
         public void EndAttack()
         {
             _meleeWeapon.EndAttack();
-            Invoke(nameof(ResetCombo), _meleeWeapon.AttackDatas[_currentCombo].DelayResetCombo);
-            if (_currentCombo < _meleeWeapon.AttackDatas.Count - 1)
+            Invoke(nameof(ResetCombo), _meleeWeapon.attackData[_currentCombo].DelayResetCombo);
+            if (_currentCombo < _meleeWeapon.attackData.Count - 1)
             {
                 _currentCombo++;
-                NextAnimationName = _meleeWeapon.AttackDatas[_currentCombo].AnimationName;
+                NextAnimationName = _meleeWeapon.attackData[_currentCombo].AnimationName;
             }
             else ResetCombo();
         }
@@ -118,16 +118,16 @@ namespace Atomic.Character
         public void ResetCombo()
         {
             _currentCombo = 0;
-            NextAnimationName = _meleeWeapon.AttackDatas[_currentCombo].AnimationName;
+            NextAnimationName = _meleeWeapon.attackData[_currentCombo].AnimationName;
         }
         
         private Vector3 SetDestinationForAttackMove()
         {
             Vector3 attackMoveDirection = Model.modelTransform.forward;
-            Vector3 targetPosition = Model.modelTransform.position + attackMoveDirection * _meleeWeapon.AttackDatas[_currentCombo].AttackMoveDistance;
+            Vector3 targetPosition = Model.modelTransform.position + attackMoveDirection * _meleeWeapon.attackData[_currentCombo].AttackMoveDistance;
 
             if (Physics.Raycast(Model.modelTransform.position, attackMoveDirection, out _rayCastHit,
-                    _meleeWeapon.AttackDatas[_currentCombo].AttackMoveDistance, ColliderObstacleLayer))
+                    _meleeWeapon.attackData[_currentCombo].AttackMoveDistance, ColliderObstacleLayer))
             {
                 if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 10, NavMesh.AllAreas))
                 {

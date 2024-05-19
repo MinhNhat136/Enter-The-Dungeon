@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1749eaac4529f47881bec94cffe8e9, type: 3}
+  m_Name: Ranged Weapon
+  m_EditorClassIdentifier: 
+  isAttach: 0
+  isActivated: 0
+  combatMode: 0
+  weaponType: 4
+  Name: Triple Bow
+  weaponPrefab: {fileID: 1097033006214147, guid: c04af5fa005a5df46b463435169fc082, type: 3}
+  weaponSpawnPoint: {x: 0, y: 0, z: 0}
+  weaponSpawnRotation: {x: 0, y: 0, z: 0}
+  damagePassiveEffects: []
+  damageForce: {fileID: 0}
+  indicatorPrefab: {fileID: 1056145699921089, guid: 80dd8c8a607654d4696eac7543a892e4, type: 3}
+  delayActivateTime: 0.5
+  bulletPrefab: {fileID: 6155444322339666320, guid: 34031283e21a0a5468467d38ea201c07, type: 3}
+  projectileHitMask:
+    serializedVersion: 2
+    m_Bits: 320
+  projectileContains:
+    min: 3
+    max: 9
+  barrelPrefab: {fileID: 9140318129920562506, guid: 07e29bee77c8c1c459e41ce376442be3, type: 3}
+  speedCharge: 0.8
+  damageWeight:
+    min: 50
+    max: 100
+  speedWeight:
+    min: 50
+    max: 50
+  distanceWeight:
+    min: 12
+    max: 12
+  radiusWeight:
+    min: 0
+    max: 0
+  areaOfEffectDistance:
+    min: 0
+    max: 0
+  gravityDownAcceleration:
+    min: 0
+    max: 0
+  angleBetweenShots: 10

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c7c9dcbf0b5eb640a4ad783954b390c, type: 3}
+  m_Name: Burn Damage
+  m_EditorClassIdentifier: 
+  chance: 5
+  chanceBonus: 5
+  interval: 0.5
+  intervalBonus: 0.5
+  damagePerTick: 5
+  damagePerTickBonus: 5
+  tick: 10
+  tickBonus: 10
+  popupPrefab: {fileID: 3133341796764705591, guid: 699c909cdc8bd34458043e66598c9252, type: 3}

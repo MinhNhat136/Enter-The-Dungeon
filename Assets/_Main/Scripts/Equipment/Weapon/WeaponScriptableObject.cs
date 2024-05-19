@@ -6,17 +6,28 @@ using Atomic.Damage;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Pool;
-using Object = System.Object;
 
 namespace Atomic.Equipment
 {
+    //  Namespace Properties ------------------------------
+
+    //  Class Attributes ----------------------------------
+
+    /// <summary>
+    /// The WeaponScriptableObject class defines a weapon's configuration and behavior in the game.
+    /// It includes properties for weapon attributes, methods for attaching/detaching the weapon to/from a character,
+    /// and handles activation/deactivation of the weapon. It also manages damage effects and pop-up animations.
+    /// </summary>
     public class WeaponScriptableObject : SerializedScriptableObject, ICloneable
     {
+        //  Events ----------------------------------------
         public event Action<CombatMode> OnActivated; 
-        
-        [HideInInspector] public bool isAttach;
-        [HideInInspector] public bool isActivated; 
-        
+
+
+        //  Properties ------------------------------------
+       
+
+        //  Fields ----------------------------------------
         [Header("ENUM", order = 0)]
         public CombatMode combatMode; 
         public WeaponType weaponType;
@@ -47,6 +58,11 @@ namespace Atomic.Equipment
         protected GameObject Model;
         private ObjectPool<EffectPopupAnimation> _effectPopupPool; 
         
+        [HideInInspector] public bool isAttach;
+        [HideInInspector] public bool isActivated; 
+
+        
+        //  Initialization  -------------------------------
         public virtual void Attach(Transform parent, BaseAgent owner)
         {
             isAttach = true;
@@ -65,15 +81,7 @@ namespace Atomic.Equipment
             Owner = null;
             Destroy(Model);
         }
-
-        private void CreatePopupEffect()
-        {
-            foreach (var builder in effectBuilders)
-            {
-                builder.CreatePopupPool();
-            }
-        }
-
+        
         public void Activate()
         {
             isActivated = true;
@@ -87,10 +95,25 @@ namespace Atomic.Equipment
             Model.SetActive(false);
         }
 
+        
+        //  Unity Methods   -------------------------------
+
+
+        //  Other Methods ---------------------------------
+        private void CreatePopupEffect()
+        {
+            foreach (var builder in effectBuilders)
+            {
+                builder.CreatePopupPool();
+            }
+        }
+        
         public object Clone()
         {
             throw new NotImplementedException();
         }
+        //  Event Handlers --------------------------------
+
     }
     
 }
