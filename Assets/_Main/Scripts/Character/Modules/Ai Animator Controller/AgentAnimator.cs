@@ -38,11 +38,6 @@ namespace Atomic.Character
         public static readonly int Die = Animator.StringToHash("die");
         public static readonly int RangedAttackChargeStart = Animator.StringToHash("rangeAttack_charge_start");
         public static readonly int RangedAttackChargeRelease = Animator.StringToHash("rangeAttack_charge_release");
-
-        public static int GetMeleeAttackComboHash(int combo)
-        {
-            return Animator.StringToHash("meleeAttack_" + combo.ToString());
-        }
     }
 
     public abstract class AgentAnimator : SerializedMonoBehaviour, IInitializableWithBaseModel<BaseAgent>

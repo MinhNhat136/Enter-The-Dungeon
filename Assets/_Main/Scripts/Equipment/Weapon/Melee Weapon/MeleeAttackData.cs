@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -10,13 +8,19 @@ namespace Atomic.Character
         [field: SerializeField] 
         public string AnimationName { get; private set; }
 
-        public float energy;
-        public float attackMoveDistance;
-        public float attackMoveSpeedWeight;
-        public float attackMoveAccelerationWeight;
+        [field: SerializeField]
+        public float EnergyValue { get; private set; }
         
-        public float delayResetCombo;
+        [field: SerializeField]
+        public float AttackMoveDistance { get; private set; }
+
+        [field: SerializeField]
+        public float AttackMoveSpeedWeight{ get; private set; }
         
+        [field: SerializeField]
+        public float AttackMoveAccelerationWeight{ get; private set; }
+        
+        [field: SerializeField]
+        public float DelayResetCombo{ get; private set; }
     }
-    
 }

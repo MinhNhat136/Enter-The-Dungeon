@@ -1,5 +1,6 @@
 ﻿using Atomic.Core.Interface;
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -68,6 +69,7 @@ namespace Atomic.Character
             onDamaged?.Invoke();
         }
 
+        [Button]
         public void Kill()
         {
             CurrentHealth = 0f;

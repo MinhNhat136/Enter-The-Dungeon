@@ -14,6 +14,10 @@ namespace Atomic.Equipment
         Shotgun = 5,
         Cannon = 6,
         Boomerang = 7,
-        KnifeR = 8
+        KnifeR = 8,
+        Hand = 9, 
+        Head = 10, 
+        Body = 11, 
+        Leg = 12, 
     }
 }

@@ -8,40 +8,33 @@ namespace Atomic.Character
     //  Namespace Properties ------------------------------
 
     //  Class Attributes ----------------------------------
-    
+
 
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
     public class PlayerAnimatorController : AgentAnimator
     {
-
         //  Events ----------------------------------------
 
 
         //  Properties ------------------------------------
 
-        //  Fields ----------------------------------------
-        public int currentMeleeCombo;
         
+        //  Fields ----------------------------------------
+
         [field: SerializeField]
         private Dictionary<WeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
 
         private MeleeCombatController _meleeCombatController;
-        
-        //  Initialization  -------------------------------
-        public void RequireIsInitialized()
-        {
-            throw new System.NotImplementedException();
-        }
-        
 
+        //  Initialization  -------------------------------
+        
         //  Unity Methods   -------------------------------
 
         //  Other Methods ---------------------------------
         public void ApplyLocomotionAnimation()
         {
-            
         }
 
         public void ApplyMovementAnimation()
@@ -51,7 +44,6 @@ namespace Atomic.Character
 
             Animator.SetFloat(AnimatorParameters.InputHorizontal, xVelocity, .1f, Time.deltaTime);
             Animator.SetFloat(AnimatorParameters.InputVertical, zVelocity, .1f, Time.deltaTime);
-
         }
 
         public void StopMovementAnimation()
@@ -62,13 +54,15 @@ namespace Atomic.Character
 
         public void ApplyRollAnimation() => Animator.CrossFade(AnimatorStates.Roll, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Start_Animation() => Animator.CrossFade(AnimatorStates.RangedAttackChargeStart, 0.05f);
+        public void ApplyRangedAttack_Charge_Start_Animation() =>
+            Animator.CrossFade(AnimatorStates.RangedAttackChargeStart, 0.05f);
 
-        public void ApplyRangedAttack_Charge_Release_Animation() => Animator.CrossFade(AnimatorStates.RangedAttackChargeRelease, 0.5f);
+        public void ApplyRangedAttack_Charge_Release_Animation() =>
+            Animator.CrossFade(AnimatorStates.RangedAttackChargeRelease, 0.5f);
 
-        public bool ApplyMeleeAttack(int combo)
+        public bool ApplyMeleeAttack(string animationName)
         {
-            int targetAnimationHash = AnimatorStates.GetMeleeAttackComboHash(combo);
+            int targetAnimationHash = Animator.StringToHash(animationName);
 
             AnimatorStateInfo currentState = Animator.GetCurrentAnimatorStateInfo(0);
             bool isInTransition = Animator.IsInTransition(0);
@@ -78,45 +72,42 @@ namespace Atomic.Character
                 return false;
             }
 
-            Animator.Play(targetAnimationHash);
+            Animator.CrossFade(targetAnimationHash, 0.25f);
             return true;
         }
 
         public void ApplyRiseAnimation()
         {
-            
         }
         
-        
-        private void ResetCurrentMeleeCombo()
-        {
-            currentMeleeCombo = 0;
-        }
 
         public void ApplySummonAnimation()
         {
-            
         }
 
         public void ApplyHitAnimation()
         {
-            
         }
-        
+
 
         public void ApplyBreakAnimation()
         {
-            
         }
 
         public void ApplyStunAnimation()
         {
-            
         }
 
         public void ApplyKnockDownAnimation()
         {
+        }
 
+        public void ApplyDieAnimation()
+        {
+            if (Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != AnimatorStates.Die)
+            {
+                Animator.Play(AnimatorStates.Die);
+            }
         }
 
         public void SwitchAnimator(WeaponType weaponType)
@@ -127,8 +118,7 @@ namespace Atomic.Character
                 Animator.runtimeAnimatorController = runtimeAnimatorController;
             }
         }
-        
+
         //  Event Handlers --------------------------------
     }
 }
-

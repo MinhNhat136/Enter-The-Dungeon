@@ -23,7 +23,10 @@ namespace Atomic.Character
             set
             {
                 if (value is MeleeWeaponScriptableObject meleeWeapon)
+                {
                     _meleeWeapon = meleeWeapon;
+                    NextAnimationName = _meleeWeapon.AttackDatas[0].AnimationName;
+                }
                 else
                 {
                     Debug.Log(_meleeWeapon);
@@ -32,18 +35,19 @@ namespace Atomic.Character
             }
         }
 
-
         public bool IsInitialized { get; set; }
         public BaseAgent Model { get; set; }
-        public float currentCombo = 1;
-
-        private float _defaultSpeed;
-        private float _defaultAcceleration;
-
-        private RaycastHit _rayCastHit;
-        private NavMeshHit _navMeshHit;
+        
+        [field: SerializeField]
+        public LayerMask ColliderObstacleLayer { get; private set; }
+        
+        [field: SerializeField]
+        public string NextAnimationName{ get; private set; }
 
         //  Fields ----------------------------------------
+        private int _currentCombo = 0;
+        private RaycastHit _rayCastHit;
+        private NavMeshHit _navMeshHit;
         private MeleeWeaponScriptableObject _meleeWeapon;
 
         //  Initialization  -------------------------------
@@ -53,9 +57,7 @@ namespace Atomic.Character
             {
                 IsInitialized = true;
                 Model = model;
-
-                _defaultSpeed = Model.NavmeshAgent.speed;
-                _defaultAcceleration = Model.NavmeshAgent.acceleration;
+                
             }
         }
 
@@ -71,57 +73,25 @@ namespace Atomic.Character
 
 
         //  Other Methods ---------------------------------
-        public void RegisterWeapon()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void AimTarget()
         {
         }
-
+        
+        public void BeginAttack()
+        {
+            CancelInvoke(nameof(ResetCombo));
+            Vector3 targetPosition = SetDestinationForAttackMove();
+        }
+        
         public void BeginAttackMove()
         {
-            if (_meleeWeapon)
-            {
-                _meleeWeapon.BeginAttackMove();
-                Vector3 targetPosition = SetDestinationForAttackMove();
-                Model.NavmeshAgent.SetDestination(targetPosition);
-                Model.NavmeshAgent.speed *= _meleeWeapon.attackMoveSpeedWeight;
-                Model.NavmeshAgent.acceleration *= _meleeWeapon.attackMoveAccelerationWeight;
-            }
+            _meleeWeapon.BeginAttackMove();
             
-        }
-
-        public void AttackMoving()
-        {
         }
 
         public void EndAttackMove()
         {
-            if (_meleeWeapon)
-            {
-                _meleeWeapon.EndAttackMove();
-                Model.NavmeshAgent.speed /= _meleeWeapon.attackMoveSpeedWeight;
-                Model.NavmeshAgent.acceleration /= _meleeWeapon.attackMoveAccelerationWeight;
-            }
-        }
-
-        public void InterruptAttackMove()
-        {
-            Model.NavmeshAgent.speed = _defaultSpeed;
-            Model.NavmeshAgent.acceleration = _defaultAcceleration;
-            Model.NavmeshAgent.SetDestination(Model.transform.position);
-        }
-
-        public void BeginAttack()
-        {
-            if (_meleeWeapon)
-            {
-                if (currentCombo < _meleeWeapon.combo) currentCombo++;
-                else currentCombo = 1;
-                CancelInvoke(nameof(ResetCombo));
-            }
+            _meleeWeapon.EndAttackMove();
         }
 
         public void Attacking()
@@ -130,43 +100,40 @@ namespace Atomic.Character
 
         public void EndAttack()
         {
-            if (_meleeWeapon)
+            _meleeWeapon.EndAttack();
+            Invoke(nameof(ResetCombo), _meleeWeapon.AttackDatas[_currentCombo].DelayResetCombo);
+            if (_currentCombo < _meleeWeapon.AttackDatas.Count - 1)
             {
-                _meleeWeapon.EndAttack();
-                Invoke(nameof(ResetCombo), _meleeWeapon.delayResetCombo);
+                _currentCombo++;
+                NextAnimationName = _meleeWeapon.AttackDatas[_currentCombo].AnimationName;
             }
+            else ResetCombo();
         }
-
-        public void CustomAction()
+        
+        public void InterruptAttackMove()
         {
-        }
-
-        public void InterruptAction()
-        {
+            
         }
 
         public void ResetCombo()
         {
-            currentCombo = 1;
+            _currentCombo = 0;
+            NextAnimationName = _meleeWeapon.AttackDatas[_currentCombo].AnimationName;
         }
-
-        public LayerMask colliderObstacleLayer;
-
-
+        
         private Vector3 SetDestinationForAttackMove()
         {
-            Vector3 attackMoveDirection = Model.transform.forward;
-            Vector3 targetPosition = Model.transform.position + attackMoveDirection * _meleeWeapon.attackMoveDistance;
+            Vector3 attackMoveDirection = Model.modelTransform.forward;
+            Vector3 targetPosition = Model.modelTransform.position + attackMoveDirection * _meleeWeapon.AttackDatas[_currentCombo].AttackMoveDistance;
 
-            if (Physics.Raycast(Model.transform.position, attackMoveDirection, out _rayCastHit,
-                    _meleeWeapon.attackMoveDistance, colliderObstacleLayer))
+            if (Physics.Raycast(Model.modelTransform.position, attackMoveDirection, out _rayCastHit,
+                    _meleeWeapon.AttackDatas[_currentCombo].AttackMoveDistance, ColliderObstacleLayer))
             {
                 if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 10, NavMesh.AllAreas))
                 {
                     return _navMeshHit.position;
                 }
             }
-
             return targetPosition;
         }
 

@@ -118,6 +118,7 @@ namespace Atomic.Character
         private AiHealth _healthController;
         private AiMemoryController _memoryController;
 
+        public Transform modelTransform;
         
         #endregion
         
@@ -136,6 +137,7 @@ namespace Atomic.Character
                 CurrentActionState = DefaultActionState;
                 Command |= Command.Move;
 
+                modelTransform = transform;
                 BodyParts =  GetComponentsInChildren<AiBodyPart>();
                 
                 AssignControllers();

@@ -21,18 +21,11 @@ namespace Atomic.Equipment
        
 
         //  Fields ----------------------------------------
-        public float attackMoveDistance;
-        public float attackMoveSpeedWeight;
-        public float attackMoveAccelerationWeight;
-        
-        public float delayResetCombo;
-        public int combo;
-
+        public List<MeleeAttackData> AttackDatas;
         private MeleeWeaponObject _meleeWeaponObject;
         
         private List<BaseAgent> _hitAgent = new(8);
 
-        public List<MeleeAttackData> AttackDatas;
         //  Initialization  -------------------------------
 
         
