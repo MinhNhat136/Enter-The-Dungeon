@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e3ca9025d1fc9409dacd7db27b7b62, type: 3}
   m_Name: Attack Combo 2
   m_EditorClassIdentifier: 
-  <AnimationName>k__BackingField: meleeAttack_2
+  <AnimationName>k__BackingField: 
+  energy: 0
+  attackMoveDistance: 0
+  attackMoveSpeedWeight: 0
+  attackMoveAccelerationWeight: 0
+  delayResetCombo: 0

@@ -25,11 +25,11 @@ namespace Atomic.Character
 
     public enum AgentCondition
     {
-        Normal, 
-        Hit,
-        Stun,
-        Break,
-        Knockdown, 
+        Normal  = 1 << 0, 
+        Hit = 1 << 1,
+        Stun = 1 << 2,
+        Break = 1 << 3,
+        Knockdown = 1 << 4, 
     }
     
     /// <summary>
@@ -256,7 +256,12 @@ namespace Atomic.Character
 
         public void CustomActionAttack() => MotorController.CombatController.CustomAction();
 
-
+        public void RemoveAllImpact()
+        {
+            AgentCondition = AgentCondition.Normal;
+            ForceHit = Vector3.zero;
+        }
+        
         // Swap weapon
         public void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
 

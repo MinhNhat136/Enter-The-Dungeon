@@ -33,9 +33,6 @@ namespace Atomic.Equipment
         [Header("DAMAGE HIT EFFECT", order = 3)]
         public List<DamagePassiveEffectSo> effectBuilders = new(8);
         
-        [Header("DAMAGE HIT FORCE", order = 4)]
-        public DamageForce damageForce;
-        
         [Header("METABOLISM WEIGHT", order = 5)]
         public MinMaxFloat damageWeight;
         public MinMaxFloat chanceCriticalWeight;

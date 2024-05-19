@@ -39,6 +39,10 @@ namespace Atomic.Character
         //  Unity Methods   -------------------------------
 
         //  Other Methods ---------------------------------
+        public void ApplyLocomotionAnimation()
+        {
+            
+        }
 
         public void ApplyMovementAnimation()
         {
@@ -77,6 +81,11 @@ namespace Atomic.Character
             Animator.Play(targetAnimationHash);
             return true;
         }
+
+        public void ApplyRiseAnimation()
+        {
+            
+        }
         
         
         private void ResetCurrentMeleeCombo()
@@ -89,7 +98,18 @@ namespace Atomic.Character
             
         }
 
+        public void ApplyHitAnimation()
+        {
+            
+        }
+        
+
         public void ApplyBreakAnimation()
+        {
+            
+        }
+
+        public void ApplyStunAnimation()
         {
             
         }

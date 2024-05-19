@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e3ca9025d1fc9409dacd7db27b7b62, type: 3}
   m_Name: Attack Combo 3
   m_EditorClassIdentifier: 
-  <AnimationName>k__BackingField: meleeAttack_3
+  <AnimationName>k__BackingField: 
   energy: 0
   attackMoveDistance: 0
   attackMoveSpeedWeight: 0
