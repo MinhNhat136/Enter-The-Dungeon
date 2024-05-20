@@ -1,4 +1,5 @@
 using Atomic.Core.Interface;
+using Doozy.Runtime.Reactor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,14 +23,16 @@ namespace Atomic.Character
         public AiMotorController Model => _model;
 
         //  Fields ----------------------------------------
-        public float Distance { get; set; }
+        public float Speed { get; set; }
         public LayerMask ColliderLayer { get; set; }
 
         private bool _isInitialized;
 
         private AiMotorController _model;
         private NavMeshAgent _navMeshAgent;
-
+        
+        private Vector3 _rollDirection;
+        
         private RaycastHit _rayCastHit;
         private NavMeshHit _navMeshHit;
         //  Initialization  -------------------------------
@@ -53,30 +56,38 @@ namespace Atomic.Character
 
 
         //  Other Methods ---------------------------------
-        private Vector3 SetDestinationForRoll()
+        public void BeginRoll()
         {
-            Vector3 rollDirection = _model.transform.forward;
+            _model.Model.NavmeshAgent.enabled = false;
+            _rollDirection = _model.Model.modelTransform.forward;
+        }
 
-            if (Physics.Raycast(_model.transform.position, rollDirection, out _rayCastHit, rollDirection
-                    .magnitude * Distance, ColliderLayer))
+        public void Rolling()
+        {
+            if (Physics.Raycast(_model.transform.position, _rollDirection, out _rayCastHit, Speed * Time.deltaTime, ColliderLayer))
             {
-                if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 10, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 0.1f, NavMesh.AllAreas))
                 {
-                    return _navMeshHit.position;
+                    _model.Model.modelTransform.position = _navMeshHit.position;
+                    return;
                 }
             }
-            return _model.transform.position + rollDirection * Distance;
-        }
-        
-        public void Roll()
-        {
-            Vector3 targetPosition = SetDestinationForRoll();
-            _navMeshAgent.SetDestination(targetPosition);
+
+            if (NavMesh.SamplePosition(_model.Model.modelTransform.position + Speed * Time.deltaTime * _rollDirection, out _navMeshHit,
+                    0.1f, NavMesh.AllAreas))
+            {
+                _model.Model.modelTransform.position += Speed * Time.deltaTime * _rollDirection;
+            }
         }
 
-        //  Event Handlers --------------------------------
-        private void OnStopRoll()
+        public void EndRoll()
         {
+            _model.Model.NavmeshAgent.Warp(_model.Model.modelTransform.position);
+            _model.Model.NavmeshAgent.enabled = true; 
         }
+        
+        
+
+        //  Event Handlers --------------------------------
     }
 }

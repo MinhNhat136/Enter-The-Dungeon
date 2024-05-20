@@ -33,6 +33,7 @@ MonoBehaviour:
     runSpeed: 0.5
     rotateSpeed: 10
     acceleration: 30
+    autoRotateWithNavmesh: 0
     type: 0
   rollConfig:
     distance: 0

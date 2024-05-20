@@ -21,8 +21,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  isAttach: 0
-  isActivated: 0
   combatMode: 0
   weaponType: 4
   Name: Bow
@@ -56,6 +54,8 @@ MonoBehaviour:
   forceWeight:
     min: 0
     max: 5
+  isAttach: 0
+  isActivated: 0
   indicatorPrefab: {fileID: 1056145699921089, guid: 80dd8c8a607654d4696eac7543a892e4, type: 3}
   delayActivateTime: 0.5
   bulletPrefab: {fileID: 6155444322339666320, guid: 34031283e21a0a5468467d38ea201c07, type: 3}

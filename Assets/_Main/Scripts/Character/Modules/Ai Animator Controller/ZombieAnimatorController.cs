@@ -66,8 +66,8 @@ namespace Atomic.Character
         
         public void ApplyHitAnimation()
         {
-            float xHit = Vector3.Dot(Model.ForceHit, transform.right);
-            float zHit = Vector3.Dot(Model.ForceHit, transform.forward);
+            float xHit = Vector3.Dot(Model.ImpactHit, transform.right);
+            float zHit = Vector3.Dot(Model.ImpactHit, transform.forward);
 
             Animator.SetFloat(AnimatorParameters.HitHorizontal, xHit);
             Animator.SetFloat(AnimatorParameters.HitVertical, zHit);

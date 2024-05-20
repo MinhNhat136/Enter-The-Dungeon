@@ -5,6 +5,7 @@ namespace Atomic.Character
 {
     public interface ILocomotionController : IInitializableWithBaseModel<AiMotorController>
     {
+        public bool IsNavMeshRotate { get; set; }
         public float Acceleration { get; set; }
         public float MoveSpeed { get; set; }
         public float RotationSpeed { get; set; }

@@ -21,16 +21,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  isAttach: 0
-  isActivated: 0
-  combatMode: 0
-  weaponType: 0
-  Name: 
-  weaponPrefab: {fileID: 0}
+  combatMode: 1
+  weaponType: 9
+  Name: Hand
+  weaponPrefab: {fileID: 6280698604109931564, guid: 6c90aec630511d842bcfa77a173db416, type: 3}
   weaponSpawnPoint: {x: 0, y: 0, z: 0}
   weaponSpawnRotation: {x: 0, y: 0, z: 0}
-  range: 0
-  effectBuilders: []
+  range: 2.5
+  effectBuilders:
+  - {fileID: 11400000, guid: c72719180a6506e4ea4ed8c772c9bed4, type: 2}
   damageWeight:
     min: 0
     max: 0
@@ -53,6 +52,9 @@ MonoBehaviour:
     min: 0
     max: 0
   forceWeight:
-    min: 0
-    max: 0
-  AttackDatas: []
+    min: 1
+    max: 1
+  isAttach: 0
+  isActivated: 0
+  attackData:
+  - {fileID: 11400000, guid: e40c864bb9ffff542a582d5af0a98472, type: 2}

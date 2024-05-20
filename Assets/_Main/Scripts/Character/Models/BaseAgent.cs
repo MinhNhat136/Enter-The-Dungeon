@@ -64,7 +64,7 @@ namespace Atomic.Character
         protected virtual CharacterActionType DefaultActionState { get; set; }
         private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
         public AiBodyPart[] BodyParts { get; set; } 
-        public Vector3 ForceHit { get; set; }
+        public Vector3 ImpactHit { get; set; }
 
         [field: SerializeField]
         public CharacterActionType CurrentActionState { get; set; }
@@ -216,16 +216,11 @@ namespace Atomic.Character
         public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
         
         // Roll Behaviour 
-        public void ApplyRoll() => MotorController.RollController.Roll();
-        
-        /// <summary>
-        /// TODO: Fix this
-        /// </summary>
-        /// <param name="value"></param>
-        public void SetWeaponVisible(bool value) {
-            
-            // MotorController.CombatController.CurrentWeapon.WeaponRoot.SetActive(value);
-        }
+        public void BeginRoll() => MotorController.RollController.BeginRoll();
+        public void Rolling() => MotorController.RollController.Rolling();
+        public void EndRoll() => MotorController.RollController.EndRoll();
+        public void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.Model.SetActive(value);
+        public void SetActiveSensor(bool value) => _impactSensorController.SetActiveSensor(value);
 
         public void ChangeVisionDistance() => VisionController.VisionDistance = MotorController.CombatController.CurrentWeapon.range;
         
@@ -234,34 +229,34 @@ namespace Atomic.Character
         public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
         public void PreparingAttack() => MotorController.CombatController.PreparingAttack();
         public void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
-        public void InterruptPrepareAttack() => MotorController.CombatController.InterruptPrepareAttack();
 
         public void BeginAttack() => MotorController.CombatController.BeginAttack();
         public void Attacking() => MotorController.CombatController.Attacking();
         public void EndAttack() => MotorController.CombatController.EndAttack();
-        public void InterruptAttack()
-        {
-            CurrentActionState &= ~CharacterActionType.BeginAttack; 
-            CurrentActionState |= CharacterActionType.EndAttack;
-            MotorController.CombatController.InterruptAttack();
-        }
 
         public void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
         public void AttackMoving() => MotorController.CombatController.Attacking();
         public void EndAttackMove() => MotorController.CombatController.EndAttackMove();
-        public void InterruptAttackMove()
-        {
-            CurrentActionState &= ~CharacterActionType.BeginAttackMove; 
-            CurrentActionState |= CharacterActionType.EndAttackMove;
-            MotorController.CombatController.InterruptAttackMove();
-        }
 
+        public void ResetAttackState()
+        {
+            CurrentActionState &= ~CharacterActionType.BeginPrepareAttack;
+            CurrentActionState &= ~CharacterActionType.BeginAttackMove;
+            CurrentActionState &= ~CharacterActionType.BeginAttack;
+
+            CurrentActionState |= CharacterActionType.EndPrepareAttack;
+            CurrentActionState |= CharacterActionType.EndAttackMove;
+            CurrentActionState |= CharacterActionType.EndAttack;
+            CurrentActionState |= CharacterActionType.MoveNextSkill;
+
+        }
+        
         public void CustomActionAttack() => MotorController.CombatController.CustomAction();
 
-        public void RemoveAllImpact()
+        public void RemoveAllReaction()
         {
             AgentCondition = AgentCondition.Normal;
-            ForceHit = Vector3.zero;
+            ImpactHit = Vector3.zero;
         }
         
         // Swap weapon

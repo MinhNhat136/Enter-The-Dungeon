@@ -29,11 +29,6 @@ namespace Atomic.Character
         {
             
         }
-
-        public void InterruptPrepareAttack()
-        {
-            
-        }
         
         public void BeginAttackMove()
         {
@@ -46,11 +41,6 @@ namespace Atomic.Character
         }
 
         public void EndAttackMove()
-        {
-            
-        }
-
-        public void InterruptAttackMove()
         {
             
         }
@@ -70,17 +60,7 @@ namespace Atomic.Character
             
         }
 
-        public void InterruptAttack()
-        {
-            
-        }
-
         public void CustomAction()
-        {
-            
-        }
-
-        public void InterruptAction()
         {
             
         }

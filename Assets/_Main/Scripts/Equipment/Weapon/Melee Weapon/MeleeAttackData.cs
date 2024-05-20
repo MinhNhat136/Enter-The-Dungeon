@@ -12,13 +12,10 @@ namespace Atomic.Character
         public float EnergyValue { get; private set; }
         
         [field: SerializeField]
-        public float AttackMoveDistance { get; private set; }
+        public float AttackDistance { get; private set; }
 
         [field: SerializeField]
-        public float AttackMoveSpeedWeight{ get; private set; }
-        
-        [field: SerializeField]
-        public float AttackMoveAccelerationWeight{ get; private set; }
+        public float AttackMoveSpeed{ get; private set; }
         
         [field: SerializeField]
         public float DelayResetCombo{ get; private set; }

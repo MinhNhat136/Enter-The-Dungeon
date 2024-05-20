@@ -19,7 +19,7 @@ namespace Atomic.Character
 
         //  Properties ------------------------------------
         public Vector3 ImpactDirection { get; set; }
-        public float ImpactForce { get; set; }
+        public float ImpactValue { get; set; }
         public BodyPartType ImpactPart { get; set; }
         
         public bool IsInitialized { get; private set; }
@@ -29,6 +29,8 @@ namespace Atomic.Character
         private AiBodyPart[] _bodyParts;
         [SerializeField]
         private ImpactConfig _config;
+
+        private Collider _collider;
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -38,7 +40,7 @@ namespace Atomic.Character
                 IsInitialized = true;
                 Model = model;
                 _bodyParts = Model.BodyParts;
-                
+                _collider = GetComponent<Collider>();
                 foreach (var aiBodyPart in _bodyParts)
                 {
                     aiBodyPart.SetLayer(_config.damageLayerIndex);
@@ -65,26 +67,30 @@ namespace Atomic.Character
             return 0;
         }
 
-        public void TurnOnAllHitBox()
+        public void SetActiveSensor(bool value)
         {
             foreach (var bodyPart in _bodyParts)
             {
-                bodyPart.enabled = true;
+                if (value)
+                {
+                    bodyPart.TurnOnHitBox();
+                }
+                else
+                {
+                    bodyPart.TurnOffHitBox();
+                }
             }
         }
 
-        public void TurnOffAllHitBox()
+        public void SetBodyCollide(bool value)
         {
-            foreach (var bodyPart in _bodyParts)
-            {
-                bodyPart.enabled = false;
-            }
+            _collider.isTrigger = !value; 
         }
 
         //  Event Handlers --------------------------------
         public void Impact()
         {
-            OnImpact?.Invoke(ImpactDirection * ImpactForce);
+            OnImpact?.Invoke(ImpactDirection * ImpactValue);
         }
         
         

@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using Atomic.Character;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.AI;
 
 namespace Atomic.Equipment
 {
@@ -19,66 +20,69 @@ namespace Atomic.Equipment
 
 
         //  Properties ------------------------------------
+        public int CurrentCombo { get; set; }
        
 
         //  Fields ----------------------------------------
         public List<MeleeAttackData> attackData;
-        private MeleeWeaponObject _meleeWeaponObject;
         
+        private MeleeWeaponObject _meleeWeaponObject;
         private readonly List<BaseAgent> _hitAgent = new(8);
+        private NavMeshHit _navMeshHit;
+        private RaycastHit _rayCastHit;
 
         //  Initialization  -------------------------------
-
-        
-        //  Unity Methods   -------------------------------
         public override void Attach(Transform parent, BaseAgent owner)
         {
             base.Attach(parent, owner);
+            
             Model.transform.SetParent(parent);
 
             _meleeWeaponObject = Model.GetComponent<MeleeWeaponObject>();
             _meleeWeaponObject.OnHitObject += OnWeaponTrigger;
         }
 
+        public override void Detach()
+        {
+            base.Detach();
+            _hitAgent.Clear();
+            _meleeWeaponObject = null;
+            CurrentCombo = 0; 
+        }
+        
+        //  Unity Methods   -------------------------------
+
+        
         //  Other Methods ---------------------------------
         public void BeginAttackMove()
         {
             _meleeWeaponObject.Collider.enabled = true;
         }
-
+        
         public void EndAttackMove()
-        {
-        }
-
-        public void BeginHitDamage()
-        {
-            
-        }
-
-        public void EndHitDamage()
-        {
-            
-        }
-
-        public void BeginAttack()
-        {
-        }
-
-        public void EndAttack()
         {
             foreach (var agent in _hitAgent)
             {
-                foreach (var effectBuilder in effectBuilders)
+                foreach (var effect in effectBuilders.Select(effectBuilder => effectBuilder.CreatePassiveEffect()))
                 {
-                    var effect = effectBuilder.CreatePassiveEffect();
                     effect.Target = agent;
                     effect.Source = Owner;
                     
                     effect.Apply();
                 }
+
+                agent.ImpactSensorController.ImpactValue =
+                    forceWeight.GetValueFromRatio(attackData[CurrentCombo].EnergyValue);
+                agent.ImpactSensorController.ImpactDirection = (agent.transform.position - Owner.transform.position).normalized;
+                agent.ImpactSensorController.Impact();
             }
             _meleeWeaponObject.Collider.enabled = false;
             _hitAgent.Clear();
+        }
+        
+        public void EndAttack()
+        {
+           
         }
 
         private void OnWeaponTrigger(Collider collider)

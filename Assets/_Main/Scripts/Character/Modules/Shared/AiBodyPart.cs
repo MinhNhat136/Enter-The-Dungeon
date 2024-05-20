@@ -18,7 +18,7 @@ public class AiBodyPart : MonoBehaviour
 
     public void SetLayer(int hitBoxLayer)
     {
-        
+       
             gameObject.layer = hitBoxLayer;
     }
 

@@ -1,6 +1,5 @@
-
-using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Atomic.Character
 {
@@ -18,10 +17,9 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public bool CanPerformAttackAgain => TargetAgent &&
-                                             AgentCondition.HasFlag(AgentCondition.Normal) &&
-                                             CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
-                                             CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
+        public bool CanPerformAttack => AgentCondition.HasFlag(AgentCondition.Normal) &&
+                                        CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
+                                        CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
 
         //  Fields ----------------------------------------
 
@@ -37,6 +35,8 @@ namespace Atomic.Character
                 IsPlayer = false;
                 MotorController.CombatController = GetComponent<ICombatController>();
                 
+                WeaponVisualsController.AttachDefaultWeapons();
+                SwitchCombatMode();
                 Assign();
             }
         }
@@ -121,6 +121,24 @@ namespace Atomic.Character
             var directionToPlayer = (_playerTransform.position - transform.position);
             var moveInput = new Vector2(directionToPlayer.x, directionToPlayer.z);
             MotorController.MoveInput = moveInput;
+        }
+
+        public void GoAroundTarget()
+        {
+            var rotationAngle = 60; 
+            var rotationAxis = Vector3.up; 
+
+            var rotationQuaternion = Quaternion.AngleAxis(rotationAngle, rotationAxis);
+            var newForwardVector = rotationQuaternion * transform.forward;
+
+            var newDestination = modelTransform.position + newForwardVector * 5f;
+            Debug.Log(newDestination);
+            NavmeshAgent.SetDestination(newDestination);
+        }
+
+        public bool IsReachingDestination()
+        {
+            return Vector3.Distance(NavmeshAgent.destination, transform.position) <= 0.1f;
         }
     }
 }

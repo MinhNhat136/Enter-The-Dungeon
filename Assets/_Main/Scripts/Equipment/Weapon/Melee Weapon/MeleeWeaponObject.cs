@@ -14,11 +14,11 @@ namespace Atomic.Equipment
     {
         //  Events ----------------------------------------
         public event Action<Collider> OnHitObject;
-
-
+        public GameObject pivot; 
+        
         //  Properties ------------------------------------
         public Collider Collider { get; private set; }
-
+        
 
         //  Fields ----------------------------------------
 

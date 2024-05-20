@@ -58,11 +58,7 @@ namespace Atomic.Character
 
                 _animator.applyRootMotion = false;
                 _navMeshAgent.updatePosition = true;
-                if (IsNavMeshRotate)
-                {
-                    _navMeshAgent.updateRotation = true;
-                }
-                _navMeshAgent.updateRotation = false;
+                _navMeshAgent.updateRotation = IsNavMeshRotate;
 
                 _navMeshAgent.speed = MoveSpeed;
                 _navMeshAgent.angularSpeed = RotationSpeed;

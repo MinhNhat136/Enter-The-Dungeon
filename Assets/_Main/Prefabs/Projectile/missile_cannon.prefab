@@ -261,4 +261,4 @@ MonoBehaviour:
   areaOfEffectDistance: 5
   impactLayers:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 1088

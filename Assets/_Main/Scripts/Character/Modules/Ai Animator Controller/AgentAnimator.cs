@@ -44,10 +44,10 @@ namespace Atomic.Character
     {
         protected Animator Animator { get; set; }
         
-        public bool IsCurrentAnimationComplete( int layerIndex = 0)
+        public bool IsCurrentAnimationComplete( int layerIndex = 0, float percentage =1)
         {
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(layerIndex);
-            if (stateInfo.normalizedTime >= 1.0f)
+            if (stateInfo.normalizedTime >= percentage)
             {
                 return true;
             }

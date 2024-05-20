@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Player Melee Attack 1
   m_EditorClassIdentifier: 
   <AnimationName>k__BackingField: meleeAttack_1
-  <EnergyValue>k__BackingField: 0
-  <AttackMoveDistance>k__BackingField: 0
-  <AttackMoveSpeedWeight>k__BackingField: 0
-  <AttackMoveAccelerationWeight>k__BackingField: 0
+  <EnergyValue>k__BackingField: 0.9
+  <AttackDistance>k__BackingField: 2
+  <AttackMoveSpeed>k__BackingField: 5
   <DelayResetCombo>k__BackingField: 1

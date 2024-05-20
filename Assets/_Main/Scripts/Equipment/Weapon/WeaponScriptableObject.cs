@@ -55,7 +55,7 @@ namespace Atomic.Equipment
         public MinMaxFloat forceWeight;
         
         protected BaseAgent Owner;
-        protected GameObject Model;
+        public GameObject Model;
         private ObjectPool<EffectPopupAnimation> _effectPopupPool; 
         
         [HideInInspector] public bool isAttach;

@@ -86077,30 +86077,9 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.25
-    functionName: TriggerActionEffect
-    data: BeginAttackTrail
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.25
-    functionName: TriggerActionEffect
-    data: StopAttackTrail
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
   - time: 0.48333332
     functionName: TriggerCharacterAction
     data: StopAttackMove
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.48333332
-    functionName: TriggerActionEffect
-    data: StopAttackTrail
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

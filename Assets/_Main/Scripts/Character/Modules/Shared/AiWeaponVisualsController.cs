@@ -30,6 +30,7 @@ namespace Atomic.Character
         public List<WeaponScriptableObject> WeaponSlots;
         private List<WeaponScriptableObject> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.isAttach).ToList();
         public AttachParent[] AttachParents;
+        public WeaponType defaultWeapon;
        
         //  Collections -----------------------------------
         
@@ -73,8 +74,12 @@ namespace Atomic.Character
         //  Other Methods ---------------------------------
         public void AttachDefaultWeapons()
         {
-            AttachWeapon(WeaponType.Bow);
-            AttachWeapon(WeaponType.Spear);
+            if (Model.IsPlayer)
+            {
+                AttachWeapon(WeaponType.Bow);
+                AttachWeapon(WeaponType.Spear);
+            }
+            else AttachWeapon(WeaponType.Hand);
             
             ActivateOtherWeapon();
         }
@@ -104,6 +109,7 @@ namespace Atomic.Character
         {
             if (CurrentAttachedSlot.Count <= 1)
             {
+                CurrentAttachedSlot[0]?.Activate();
                 return;
             }
             var activatedSlot = WeaponSlots.FirstOrDefault(slot => slot.isActivated);

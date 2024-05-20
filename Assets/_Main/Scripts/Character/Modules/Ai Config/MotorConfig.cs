@@ -35,6 +35,7 @@ namespace Atomic.Character
             motorController.LocomotionController.RotationSpeed = rotateSpeed;
             motorController.LocomotionController.MoveSpeed = walkSpeed;
             motorController.LocomotionController.Acceleration = acceleration;
+            motorController.LocomotionController.IsNavMeshRotate = autoRotateWithNavmesh;
 
             motorController.LocomotionController.Initialize(motorController);
         }
@@ -43,14 +44,14 @@ namespace Atomic.Character
     [System.Serializable]
     public class RollConfig
     {
-        public float distance;
+        public float speed; 
         public LayerMask colliderLayer;
 
         public void Assign(AiMotorController motorController)
         {
             motorController.RollController = new()
             {
-                Distance = distance,
+                Speed = speed,
                 ColliderLayer = colliderLayer
             };
 

@@ -1,6 +1,7 @@
 using System;
 using Atomic.Core.Interface;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Atomic.Character
 {
@@ -37,6 +38,9 @@ namespace Atomic.Character
         private float _timeImpact;
         private float _lastTimeImpact;
         private AiImpactSensorController _impactSensor;
+
+        private NavMeshHit _navMeshHit;
+        private RaycastHit _rayCastHit;
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -60,30 +64,31 @@ namespace Atomic.Character
 
 
         //  Other Methods ---------------------------------
-        private void ApplyImpact(Vector3 impactForce)
+        private void ApplyImpact(Vector3 impactHit)
         {
             _timeImpact = Time.time;
-            Model.ForceHit = impactForce;
-            if (impactForce.magnitude > hitThreshold && impactForce.magnitude <= breakThreshold)
+            Model.ImpactHit = impactHit;
+            
+            if (impactHit.magnitude > hitThreshold && impactHit.magnitude <= breakThreshold)
             {
                 Reaction(AgentCondition.Hit, hitReactionTime);
                 return;
             }
 
-            if (impactForce.magnitude > breakThreshold && impactForce.magnitude <= stunThreshold)
+            if (impactHit.magnitude > breakThreshold && impactHit.magnitude <= stunThreshold)
             {
                 Reaction(AgentCondition.Break, breakReactionTime);
 
                 return;
             }
 
-            if (impactForce.magnitude > stunThreshold && impactForce.magnitude <= knockdownThreshold)
+            if (impactHit.magnitude > stunThreshold && impactHit.magnitude <= knockdownThreshold)
             {
                 Reaction(AgentCondition.Stun, stunReactionTime);
                 return;
             }
 
-            if (impactForce.magnitude > knockdownThreshold)
+            if (impactHit.magnitude > knockdownThreshold)
             {
                 Reaction(AgentCondition.Knockdown, knockdownReactionTime);
             }
