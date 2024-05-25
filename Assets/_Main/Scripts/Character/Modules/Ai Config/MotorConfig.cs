@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
@@ -44,14 +45,14 @@ namespace Atomic.Character
     [System.Serializable]
     public class RollConfig
     {
-        public float speed; 
+        [FormerlySerializedAs("speed")] public float boostSpeedValue; 
         public LayerMask colliderLayer;
 
         public void Assign(AiMotorController motorController)
         {
             motorController.RollController = new()
             {
-                Speed = speed,
+                BoostSpeedValue = boostSpeedValue,
                 ColliderLayer = colliderLayer
             };
 

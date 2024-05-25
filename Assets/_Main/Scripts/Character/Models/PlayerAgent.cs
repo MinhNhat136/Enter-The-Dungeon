@@ -18,6 +18,8 @@ namespace Atomic.Character
         private PlayerControls InputControls { get; set; }
         private PlayerAnimatorController PlayerAnimatorController { get; set; }
         
+        
+        
         #region PreConditions
         
         public bool CanMoveAgain => CurrentActionState.HasFlag(CharacterActionType.MoveNextSkill);
@@ -50,7 +52,6 @@ namespace Atomic.Character
                 Assign();
                 PlayerAnimatorController = GetComponent<PlayerAnimatorController>();
 
-                WeaponVisualsController.AttachDefaultWeapons();
                 SwitchCombatMode();
                 SwitchAnimatorMatchWithWeapon();
             }

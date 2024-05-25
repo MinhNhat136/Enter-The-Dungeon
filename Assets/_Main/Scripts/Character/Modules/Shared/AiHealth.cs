@@ -9,23 +9,20 @@ namespace Atomic.Character
     public class AiHealth : MonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
         //  Events ----------------------------------------
-        public event Action onDied;
-        public event Action onDamaged;
-        public event Action onHealed;
-        
+
         //  Properties ------------------------------------
         public float CurrentHealth { get; set; }
         public bool IsInitialized { get; private set; }
         public bool IsInvincible { get; set; }
         public bool IsDead { get; set; }
-        
+
         public BaseAgent Model { get; private set; }
-       
+
 
         //  Fields ----------------------------------------
         public float maxHealth;
 
-        
+
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
@@ -43,7 +40,7 @@ namespace Atomic.Character
             throw new System.NotImplementedException();
         }
 
-        
+
         //  Unity Methods   -------------------------------
 
 
@@ -55,8 +52,8 @@ namespace Atomic.Character
                 CurrentHealth = maxHealth;
                 return;
             }
+
             CurrentHealth += healAmount;
-            onHealed?.Invoke();
         }
 
         public void Decrease(float damage)
@@ -65,11 +62,15 @@ namespace Atomic.Character
             {
                 return;
             }
+
             CurrentHealth -= damage;
-            onDamaged?.Invoke();
         }
 
-        [Button]
+        public void Revive()
+        {
+            CurrentHealth = maxHealth;
+        }
+
         public void Kill()
         {
             CurrentHealth = 0f;
@@ -84,14 +85,10 @@ namespace Atomic.Character
             if (CurrentHealth <= 0f)
             {
                 IsDead = true;
-                onDied?.Invoke();
             }
         }
 
-        
 
         //  Event Handlers --------------------------------
-        
-        
     }
 }

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <AnimationName>k__BackingField: attack_1
   <EnergyValue>k__BackingField: 1
-  <AttackDistance>k__BackingField: 0.1
-  <AttackMoveSpeed>k__BackingField: 10
+  <AttackDistance>k__BackingField: 3.5
+  <AttackMoveSpeed>k__BackingField: 5
   <DelayResetCombo>k__BackingField: 0

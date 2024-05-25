@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Zombie Targeting Config
   m_EditorClassIdentifier: 
   TargetLayer: Player
-  MemorySpan: 3
   DistanceWeight: 0.1
   AngleWeight: 1
   AgeWeight: 1

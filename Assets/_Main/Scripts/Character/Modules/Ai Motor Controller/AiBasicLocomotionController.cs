@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using NodeCanvas.Framework;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace Atomic.Character
@@ -40,10 +42,8 @@ namespace Atomic.Character
         private AiMotorController _model;
         private Animator _animator;
 
-
         private bool _isInitialized;
         private bool _isStopped;
-        
         
         //  Initialization  -------------------------------
         public void Initialize(AiMotorController model)
@@ -63,6 +63,11 @@ namespace Atomic.Character
                 _navMeshAgent.speed = MoveSpeed;
                 _navMeshAgent.angularSpeed = RotationSpeed;
                 _navMeshAgent.acceleration = Acceleration;
+                
+                _model.Model.OnMovementSpeedChange += () =>
+                {
+                    _navMeshAgent.speed = MoveSpeed * _model.Model.MovementSpeed;;
+                };
 
             }
         }
@@ -96,7 +101,7 @@ namespace Atomic.Character
 
             _model.transform.rotation = Quaternion.Slerp(_model.transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);
         }
-
+        
         public void ApplyMovement()
         {
             if (_isStopped) _isStopped = false;

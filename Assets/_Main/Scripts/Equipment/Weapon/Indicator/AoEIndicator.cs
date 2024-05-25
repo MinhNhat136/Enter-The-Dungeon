@@ -112,8 +112,8 @@ namespace Atomic.Equipment
             aoeIndicator.transform.localScale = new Vector3(_aoEWeight.GetValueFromRatio(EnergyValue),
                 _aoEWeight.GetValueFromRatio(EnergyValue), _aoEWeight.GetValueFromRatio(EnergyValue));
         }
-        
-        void Visualize()
+
+        private void Visualize()
         {
             for (int index = 0; index < lineSegment; index++)
             {

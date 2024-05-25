@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e3ca9025d1fc9409dacd7db27b7b62, type: 3}
   m_Name: Player Melee Attack 1
   m_EditorClassIdentifier: 
-  <AnimationName>k__BackingField: meleeAttack_1
+  <AnimationName>k__BackingField: attack_1
   <EnergyValue>k__BackingField: 0.9
-  <AttackDistance>k__BackingField: 2
+  <AttackDistance>k__BackingField: 3
   <AttackMoveSpeed>k__BackingField: 5
   <DelayResetCombo>k__BackingField: 1

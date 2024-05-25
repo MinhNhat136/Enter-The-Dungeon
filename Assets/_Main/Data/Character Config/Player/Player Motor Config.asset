@@ -36,7 +36,7 @@ MonoBehaviour:
     autoRotateWithNavmesh: 0
     type: 0
   rollConfig:
-    speed: 5
+    boostSpeedValue: 1
     colliderLayer:
       serializedVersion: 2
       m_Bits: 4096

@@ -1,5 +1,4 @@
 using Atomic.Character;
-using Atomic.Core;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -39,12 +38,12 @@ namespace Atomic.Equipment
         }
 
         //  Other Methods ---------------------------------
-        
         public override void Shoot()
         {
             _speed = SpeedWeight.GetValueFromRatio(EnergyValue);
             _distance = DistanceWeight.GetValueFromRatio(EnergyValue);
             actionOnHit?.Initialize();
+            actionOnShoot?.Initialize();
 
             Invoke(nameof(ReleaseAfterDelay), _distance / _speed);
         }

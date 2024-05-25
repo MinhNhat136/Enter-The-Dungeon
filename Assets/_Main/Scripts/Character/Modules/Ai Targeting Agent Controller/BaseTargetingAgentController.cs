@@ -20,7 +20,6 @@ namespace Atomic.Character
 
         //  Properties ------------------------------------
         public string TargetLayer { get; set; }
-        public float MemorySpan { get; set; }
         public float DistanceWeight { get; set; }
         public float AngleWeight { get; set; }
         public float AgeWeight { get; set; }
@@ -129,8 +128,7 @@ namespace Atomic.Character
         {
             float distanceScore = memory.distance.Normalize(visionSensor.VisionDistance) * DistanceWeight;
             float angleScore = memory.angle.Normalize(visionSensor.VisionAngle) * AngleWeight;
-            float ageScore = memory.Age.Normalize(MemorySpan) * AgeWeight;
-            return distanceScore + angleScore + ageScore;
+            return distanceScore + angleScore;
         }
 
         //  Event Handlers --------------------------------

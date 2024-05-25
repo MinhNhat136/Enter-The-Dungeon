@@ -27,33 +27,34 @@ namespace Atomic.Character
         //  Properties ------------------------------------
         public bool IsInitialized { get; private set; }
         public BaseAgent Model { get; private set; }
-        public List<WeaponScriptableObject> WeaponSlots;
-        private List<WeaponScriptableObject> CurrentAttachedSlot => WeaponSlots.Where(attachSlot => attachSlot.isAttach).ToList();
-        public AttachParent[] AttachParents;
-        public WeaponType defaultWeapon;
+        public List<WeaponBuilder> weaponSlots;
        
         //  Collections -----------------------------------
         
         
         //  Fields ----------------------------------------
+        private int _currentWeaponIndex;
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
-            if (!IsInitialized)
-            {
-                IsInitialized = true;
-                Model = model;
+            if (IsInitialized) return;
+            IsInitialized = true;
+            Model = model;
 
-                foreach (var weaponSlot in WeaponSlots)
+            _currentWeaponIndex = 0;
+
+            foreach (var weaponSlot in weaponSlots)
+            {
+                weaponSlot.Attach(weaponSlot.transform, Model);
+                weaponSlot.OnActivated += (combatMode) =>
                 {
-                    weaponSlot.OnActivated += (combatMode) =>
-                    {
-                        Model.CurrentWeapon = WeaponSlots.First(slot => slot.isActivated);
-                        Model.CurrentCombatMode = combatMode;
-                    };
-                }    
+                    Model.CurrentWeapon = weaponSlots[_currentWeaponIndex];
+                    Model.CurrentCombatMode = combatMode;
+                };
             }
+
+            ActivateOtherWeapon();
         }
 
         public void RequireIsInitialized()
@@ -72,62 +73,21 @@ namespace Atomic.Character
         }
 
         //  Other Methods ---------------------------------
-        public void AttachDefaultWeapons()
+        private void DetachAllWeapons()
         {
-            if (Model.IsPlayer)
-            {
-                AttachWeapon(WeaponType.Bow);
-                AttachWeapon(WeaponType.Spear);
-            }
-            else AttachWeapon(WeaponType.Hand);
-            
-            ActivateOtherWeapon();
-        }
-
-        public void DetachAllWeapons()
-        {
-            foreach (var weapon in WeaponSlots)
+            foreach (var weapon in weaponSlots)
             {
                 weapon.Detach();
             }
         }
         
-        public WeaponScriptableObject GetAttachSlot(WeaponType weaponType)
-        {
-            return WeaponSlots.Find(attachSlots => attachSlots.weaponType == weaponType);
-        }
-
-        public void AttachWeapon(WeaponType weaponType)
-        {
-            var weapon = GetAttachSlot(weaponType);
-            if (!weapon) return; 
-            weapon.Attach(AttachParents.First(attachPoint => attachPoint.WeaponType == weapon.weaponType).ParentTransform,
-                Model);
-        }
-
         public void ActivateOtherWeapon()
         {
-            if (CurrentAttachedSlot.Count <= 1)
-            {
-                CurrentAttachedSlot[0]?.Activate();
-                return;
-            }
-            var activatedSlot = WeaponSlots.FirstOrDefault(slot => slot.isActivated);
-    
-            if (activatedSlot != null)
-            {
-                int indexUsedSlot = CurrentAttachedSlot.IndexOf(activatedSlot);
-                activatedSlot.DeActivate();
-                indexUsedSlot++;
-                if (indexUsedSlot == CurrentAttachedSlot.Count) indexUsedSlot = 0;
-                CurrentAttachedSlot[indexUsedSlot]?.Activate();
-            }
-            else
-            {
-                CurrentAttachedSlot[0]?.Activate();
-            }
+            weaponSlots[_currentWeaponIndex].DeActivate();
+            if (_currentWeaponIndex == weaponSlots.Count - 1) _currentWeaponIndex = 0;
+            else _currentWeaponIndex++;
+            weaponSlots[_currentWeaponIndex]?.Activate();
         }
-        
         //  Event Handlers --------------------------------
     }
 

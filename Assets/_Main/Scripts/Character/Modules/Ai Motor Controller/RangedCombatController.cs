@@ -18,12 +18,12 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public WeaponScriptableObject CurrentWeapon
+        public WeaponBuilder CurrentWeapon
         {
             get => _rangedWeapon;
             set
             {
-                if (value is RangedWeaponScriptableObject rangedWeapon)
+                if (value is RangedWeaponBuilder rangedWeapon)
                     _rangedWeapon = rangedWeapon;
                 else
                 {
@@ -39,7 +39,7 @@ namespace Atomic.Character
         
 
         //  Fields ----------------------------------------
-        private RangedWeaponScriptableObject _rangedWeapon;
+        private RangedWeaponBuilder _rangedWeapon;
 
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)

@@ -31,6 +31,13 @@ namespace Atomic.Character
         Break = 1 << 3,
         Knockdown = 1 << 4, 
     }
+
+    public enum SurvivalState
+    {
+        Revive,
+        Alive,
+        Dead,
+    }
     
     /// <summary>
     /// Base class for defining characters with modular control systems.
@@ -46,39 +53,52 @@ namespace Atomic.Character
     public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Events ----------------------------------------
-
+        public event Action OnMovementSpeedChange; 
 
         //  Properties ------------------------------------
-        #region Config Runtime
-        public bool IsInitialized => _isInitialized;
-        public Transform BodyWeakPoint => bodyWeakPoint;
-        public BaseAgent TargetAgent { get; set; }
-        
         [field: SerializeField]
         public bool IsPlayer { get; protected set; }
-        
-        public WeaponScriptableObject CurrentWeapon { get; set; }
-        public CombatMode CurrentCombatMode { get; set; }
-        public bool IsMovement => !Mathf.Approximately(MotorController.MoveInput.sqrMagnitude, 0f);
-        
-        protected virtual CharacterActionType DefaultActionState { get; set; }
-        private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
-        public AiBodyPart[] BodyParts { get; set; } 
-        public Vector3 ImpactHit { get; set; }
+        [field: SerializeField]
+        public float AgentMemorySpan { get; private set; }
+        [field: SerializeField]
+        public Transform LockPivot { get; private set; }
 
-        [field: SerializeField]
-        public CharacterActionType CurrentActionState { get; set; }
-        [field: SerializeField]
+        public bool IsInitialized { get; private set; }
+        public BaseAgent TargetAgent { get; set; }
+        
+        protected CharacterActionType DefaultActionState { get; set; }
+        public WeaponBuilder CurrentWeapon { get; set; }
         public Command Command { get; set; }
-
+        public CharacterActionType CurrentActionState { get; set; }
+        public CombatMode CurrentCombatMode { get; set; }
+        public SurvivalState SurvivalState { get; set; } = SurvivalState.Revive;
         public AgentCondition AgentCondition { get; set; } = AgentCondition.Normal;
+        
+        private Collider AgentCollider { get; set; }
+        public Vector3 ImpactHit { get; set; }
+        public AiBodyPart[] BodyParts { get; set; } 
+        public float Height { get; protected set; }
+        public float Width { get; protected set; }
 
-        #endregion
+        public float MovementSpeed
+        {
+            get => _movementSpeed;
+            set
+            {
+                _movementSpeed = value;
+                OnMovementSpeedChange?.Invoke();
+            }
+        }
 
-        #region Module Controllers
-
+        private float _movementSpeed = 1;
+        public bool IsMovement => !Mathf.Approximately(MotorController.MoveInput.sqrMagnitude, 0f);
+        public float LastAttackTime { get; set; }
+        
+        private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
+        
+        
         public NavMeshAgent NavmeshAgent { get; private set; }
-        protected AgentAnimator AgentAnimatorController => _agentAnimatorController;
+        public AgentAnimator AgentAnimatorController => _agentAnimatorController;
         public AiMotorController MotorController => _motorController;
         public AiMemoryController MemoryController => _memoryController;
         public AiVisionSensorController VisionController => _visionController;
@@ -91,8 +111,6 @@ namespace Atomic.Character
         protected AiWeaponVisualsController WeaponVisualsController => _weaponVisualsController;
         public AiPassiveStateController PassiveStateController => _passiveStateController;
         public AiHealth HealthController => _healthController;
-
-        #endregion
         
         //  Collections -----------------------------------
 
@@ -101,11 +119,9 @@ namespace Atomic.Character
         [SerializeField] 
         public AiConfig config; 
         
-        [SerializeField] 
-        private Transform bodyWeakPoint;
-        private bool _isInitialized;
+        [HideInInspector] 
+        public Transform modelTransform;
 
-        #region Controller
         private AgentAnimator _agentAnimatorController;
         private AiVisionSensorController _visionController;
         private AiImpactSensorController _impactSensorController;
@@ -114,40 +130,35 @@ namespace Atomic.Character
         private AiWeaponVisualsController _weaponVisualsController;
         private AiPassiveStateController _passiveStateController;
         private AiImpactReactionController _impactReactionController;
-        
         private AiHealth _healthController;
         private AiMemoryController _memoryController;
-
-        public Transform modelTransform;
-        
-        #endregion
         
         //  Initialization  -------------------------------
         public virtual void Initialize()
         {
-            if (!_isInitialized)
-            {
-                _isInitialized = true;
-                NavmeshAgent = GetComponent<NavMeshAgent>();
+            if (IsInitialized) return;
+            IsInitialized = true;
 
-                DefaultActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
-                                      CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
-                                      CharacterActionType.MoveNextSkill;
+            DefaultActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
+                                  CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
+                                  CharacterActionType.MoveNextSkill;
+            CurrentActionState = DefaultActionState;
+            Command |= Command.Move;
 
-                CurrentActionState = DefaultActionState;
-                Command |= Command.Move;
-
-                modelTransform = transform;
-                BodyParts =  GetComponentsInChildren<AiBodyPart>();
+            NavmeshAgent = GetComponent<NavMeshAgent>();
+            AgentCollider = GetComponent<Collider>();
+            BodyParts =  GetComponentsInChildren<AiBodyPart>();
+            
+            modelTransform = transform;
+            Height = NavmeshAgent.height;
+            Width = NavmeshAgent.radius;
                 
-                AssignControllers();
-            }
+            AssignControllers();
         }
-
-
+        
         public void RequireIsInitialized()
         {
-            if (!_isInitialized)
+            if (!IsInitialized)
             {
                 throw new System.Exception("Base Agent not initialized");
             }
@@ -155,27 +166,29 @@ namespace Atomic.Character
 
         public virtual void DoEnable()
         {
-
+            SurvivalState = SurvivalState.Revive;
         }
 
         public virtual void DoDisable()
         {
-
+            Command = 0;
+            SurvivalState = SurvivalState.Dead;
+            CurrentActionState = DefaultActionState;
+            AgentCondition = AgentCondition.Normal;
+            NavmeshAgent.enabled = false;
         }
 
         //  Unity Methods   -------------------------------
-        void OnDestroy()
-        {
-        }
 
+        
         //  Other Methods ---------------------------------
         public abstract void Assign();
 
         private void AssignControllers()
         {
-            _memoryController = new()
+            _memoryController = new AiMemoryController
             {
-                MemorySpan = 1
+                MemorySpan = AgentMemorySpan
             };
             this.AttachControllerToModel(out _healthController);
             this.AttachControllerToModel(out _agentAnimatorController);
@@ -188,57 +201,42 @@ namespace Atomic.Character
             this.AttachControllerToModel(out _impactReactionController);
         }
         
-        //  Event Handlers --------------------------------
-        protected void RegisterActionTrigger(CharacterActionType actionType, Action action)
-        {
-            if (!ActionTriggers.TryAdd(actionType, action))
-            {
-                ActionTriggers[actionType] += action;
-            }
-        }
-
-        public void OnCharacterActionTrigger(CharacterActionType actionType)
-        {
-            if (ActionTriggers.TryGetValue(actionType, out var trigger))
-            {
-                trigger.Invoke();
-            }
-        }
-
         #region Behaviour
         // Shared
-        public void SetForwardDirection() => MotorController.SetForwardDirection();
-        public void ApplyDirection() => MotorController.ApplyDirection();
+        public virtual void SetForwardDirection() => MotorController.SetForwardDirection();
+        public virtual void ApplyDirection() => MotorController.ApplyDirection();
+        public virtual void SetEnableNavMeshAgent(bool value) => NavmeshAgent.enabled = value;
+        public virtual void SetEnableAgentCollider(bool value) => AgentCollider.enabled = value;
         
         // Movement Behaviour
-        public void ApplyStop() => MotorController.LocomotionController.ApplyStop();
-        public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
-        public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
+        public virtual void ApplyStop() => MotorController.LocomotionController.ApplyStop();
+        public virtual void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
+        public virtual void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
+        public virtual void Warp() => NavmeshAgent.Warp(transform.position);
+
+        // Roll  Behaviour 
+        public virtual void BeginRoll() => MotorController.RollController.BeginRoll();
+        public virtual void Rolling() => MotorController.RollController.Rolling();
+        public virtual void EndRoll() => MotorController.RollController.EndRoll();
+        public virtual void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.Model.SetActive(value);
+        public virtual void SetActiveImpactSensor(bool value) => _impactSensorController.SetActiveSensor(value);
+
+        public virtual void ChangeVisionDistance() => VisionController.VisionDistance = MotorController.CombatController.CurrentWeapon.range;
         
-        // Roll Behaviour 
-        public void BeginRoll() => MotorController.RollController.BeginRoll();
-        public void Rolling() => MotorController.RollController.Rolling();
-        public void EndRoll() => MotorController.RollController.EndRoll();
-        public void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.Model.SetActive(value);
-        public void SetActiveSensor(bool value) => _impactSensorController.SetActiveSensor(value);
+        //  Attack Behaviour
+        public virtual void AimTarget() => MotorController.CombatController.AimTarget();
+        public virtual void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
+        public virtual void PreparingAttack() => MotorController.CombatController.PreparingAttack();
+        public virtual void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
+        public virtual void BeginAttack() => MotorController.CombatController.BeginAttack();
+        public virtual void Attacking() => MotorController.CombatController.Attacking();
+        public virtual void EndAttack() => MotorController.CombatController.EndAttack();
 
-        public void ChangeVisionDistance() => VisionController.VisionDistance = MotorController.CombatController.CurrentWeapon.range;
-        
-        // Attack Behaviour
-        public void AimTarget() => MotorController.CombatController.AimTarget();
-        public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
-        public void PreparingAttack() => MotorController.CombatController.PreparingAttack();
-        public void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
+        public virtual void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
+        public virtual void AttackMoving() => MotorController.CombatController.AttackMoving();
+        public virtual void EndAttackMove() => MotorController.CombatController.EndAttackMove();
 
-        public void BeginAttack() => MotorController.CombatController.BeginAttack();
-        public void Attacking() => MotorController.CombatController.Attacking();
-        public void EndAttack() => MotorController.CombatController.EndAttack();
-
-        public void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
-        public void AttackMoving() => MotorController.CombatController.Attacking();
-        public void EndAttackMove() => MotorController.CombatController.EndAttackMove();
-
-        public void ResetAttackState()
+        public virtual void ResetAttackState()
         {
             CurrentActionState &= ~CharacterActionType.BeginPrepareAttack;
             CurrentActionState &= ~CharacterActionType.BeginAttackMove;
@@ -251,28 +249,39 @@ namespace Atomic.Character
 
         }
         
-        public void CustomActionAttack() => MotorController.CombatController.CustomAction();
-
-        public void RemoveAllReaction()
+        public virtual void CustomActionAttack() => MotorController.CombatController.CustomAction();
+        public virtual void RemoveAllReaction()
         {
             AgentCondition = AgentCondition.Normal;
             ImpactHit = Vector3.zero;
         }
         
         // Swap weapon
-        public void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
-
-        public void SwitchCombatMode()
+        public virtual void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
+        public virtual void SwitchCombatMode()
         {
             MotorController.SwitchCombatMode(CurrentCombatMode);
             MotorController.CombatController.CurrentWeapon = CurrentWeapon;
         }
 
-
-        // Hit Reaction Behaviour
-        
-
         #endregion
+        
+        //  Event Handlers --------------------------------
+        protected virtual void RegisterActionTrigger(CharacterActionType actionType, Action action)
+        {
+            if (!ActionTriggers.TryAdd(actionType, action))
+            {
+                ActionTriggers[actionType] += action;
+            }
+        }
+
+        public virtual void OnCharacterActionTrigger(CharacterActionType actionType)
+        {
+            if (ActionTriggers.TryGetValue(actionType, out var trigger))
+            {
+                trigger.Invoke();
+            }
+        }
     }
 }
 

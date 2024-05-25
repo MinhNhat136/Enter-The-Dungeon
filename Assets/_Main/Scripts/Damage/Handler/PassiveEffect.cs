@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using Atomic.Character;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace  Atomic.Damage
@@ -18,6 +20,13 @@ namespace  Atomic.Damage
         public abstract void Apply();
         public abstract void Handle();
         public abstract void Remove();
+        
+        public virtual IEnumerator DelayRemoveCoroutine()
+        {
+            yield return new WaitForSeconds(Tick);
+            Remove();
+        }
+        
         public abstract PassiveEffect Clone();
     }
 }

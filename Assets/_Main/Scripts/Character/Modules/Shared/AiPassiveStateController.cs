@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Atomic.Core.Interface;
@@ -44,6 +45,12 @@ namespace Atomic.Character
             throw new System.NotImplementedException();
         }
 
+        //  Unity Methods -------------------------------
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+
         //  Other Methods -------------------------------
         public void Update()
         {
@@ -58,6 +65,7 @@ namespace Atomic.Character
                 handler.Handle();
             }
         }
+        
         //  Event Handlers --------------------------------
     }
 }

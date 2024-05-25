@@ -7,8 +7,6 @@ namespace Atomic.Character
     {
         public string TargetLayer;
 
-        public float MemorySpan = 3.0f;
-
         public float DistanceWeight = 1.0f;
 
         public float AngleWeight = 1.0f;
@@ -22,7 +20,6 @@ namespace Atomic.Character
         public void Assign(ITargetingController targetingController)
         {
             targetingController.TargetLayer = TargetLayer;
-            targetingController.MemorySpan = MemorySpan;
             targetingController.DistanceWeight = DistanceWeight;
             targetingController.AngleWeight = AngleWeight;
             targetingController.AgeWeight = AgeWeight;

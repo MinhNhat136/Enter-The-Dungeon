@@ -1,5 +1,6 @@
 using Atomic.Core.Interface;
 using Atomic.Equipment;
+using UnityEngine;
 
 namespace Atomic.Character
 {
@@ -11,7 +12,7 @@ namespace Atomic.Character
     
     public interface ICombatController : IInitializableWithBaseModel<BaseAgent>
     {
-        public WeaponScriptableObject CurrentWeapon { get; set; }
+        public WeaponBuilder CurrentWeapon { get; set; }
 
         public void AimTarget();
         
@@ -55,9 +56,8 @@ namespace Atomic.Character
             
         }
         
-        public void EndAttack()
+        public  void EndAttack()
         {
-            
         }
 
         public void CustomAction()

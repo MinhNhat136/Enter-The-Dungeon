@@ -1,4 +1,3 @@
-using System.Collections;
 using Atomic.Equipment;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,12 +17,12 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public WeaponScriptableObject CurrentWeapon
+        public WeaponBuilder CurrentWeapon
         {
             get => _meleeWeapon;
             set
             {
-                if (value is MeleeWeaponScriptableObject meleeWeapon)
+                if (value is MeleeWeaponBuilder meleeWeapon)
                 {
                     _meleeWeapon = meleeWeapon;
                     NextAnimationName = _meleeWeapon.attackData[0].AnimationName;
@@ -45,10 +44,8 @@ namespace Atomic.Character
 
         //  Fields ----------------------------------------
         private int _currentCombo = 0;
-        private RaycastHit _rayCastHit;
-        private NavMeshHit _navMeshHit;
-        private MeleeWeaponScriptableObject _meleeWeapon;
-
+        private MeleeWeaponBuilder _meleeWeapon;
+        
         private Vector3 _attackMoveDestination;
 
         //  Initialization  -------------------------------
@@ -80,19 +77,36 @@ namespace Atomic.Character
         public void BeginAttack()
         {
             CancelInvoke(nameof(ResetCombo));
+            _meleeWeapon.BeginAttack();
         }
+
+        private bool _stopMove; 
 
         public void BeginAttackMove()
         {
+            _stopMove = false; 
             Model.NavmeshAgent.enabled = false;
-            _attackMoveDestination = FindDestination();
             _meleeWeapon.BeginAttackMove();
         }
 
         public void AttackMoving()
         {
-            Model.modelTransform.position = Vector3.Lerp(Model.modelTransform.position, _attackMoveDestination,
-                _meleeWeapon.attackData[_currentCombo].AttackMoveSpeed * Time.deltaTime);
+            if (_stopMove)
+                return;
+            var distanceMove = _meleeWeapon.attackData[_currentCombo].AttackMoveSpeed * Time.deltaTime;
+            if (Physics.Raycast(Model.modelTransform.position + new Vector3(0, 1, 0), Model.modelTransform.forward, out _, 
+                    Model.Width + distanceMove, ColliderObstacleLayer))
+            {
+                    _stopMove = true;
+                    return;
+            }
+
+            if (NavMesh.SamplePosition(Model.modelTransform.position + distanceMove * Model.modelTransform.forward
+                    , out _,
+                    1, NavMesh.AllAreas))
+            {
+                Model.modelTransform.position += distanceMove * Model.modelTransform.forward;
+            }
         }
 
         public void EndAttackMove()
@@ -104,9 +118,10 @@ namespace Atomic.Character
         
         public void EndAttack()
         {
+            Model.LastAttackTime = Time.time;
             _meleeWeapon.CurrentCombo = _currentCombo;
             _meleeWeapon.EndAttack();
-            Invoke(nameof(ResetCombo), _meleeWeapon.attackData[_currentCombo].DelayResetCombo);
+            Invoke(nameof(ResetCombo), _meleeWeapon.attackData[_currentCombo].DelayResetCombo * Model.MovementSpeed);
             if (_currentCombo < _meleeWeapon.attackData.Count - 1)
             {
                 _currentCombo++;
@@ -114,39 +129,14 @@ namespace Atomic.Character
             }
             else ResetCombo();
         }
-
-        public void InterruptAttackMove()
-        {
-        }
-
+        
         public void ResetCombo()
         {
             _currentCombo = 0;
             NextAnimationName = _meleeWeapon.attackData[_currentCombo].AnimationName;
         }
 
-        private Vector3 FindDestination()
-        {
-            Vector3 attackMoveDirection = Model.modelTransform.forward;
-            var destination = Model.modelTransform.position +
-                              _meleeWeapon.attackData[_currentCombo].AttackDistance * attackMoveDirection;
-            if (Physics.Raycast(Model.modelTransform.position, attackMoveDirection, out _rayCastHit,
-                    _meleeWeapon.attackData[_currentCombo].AttackDistance, ColliderObstacleLayer))
-            {
-                if (NavMesh.SamplePosition(_rayCastHit.point, 
-                        out _navMeshHit, 5f, NavMesh.AllAreas))
-                {
-                    return _navMeshHit.position;
-                }
-            }
-            if (NavMesh.SamplePosition(destination, out _navMeshHit, 2f, NavMesh.AllAreas))
-            {
-                return destination;
-            }
-            return Model.modelTransform.position;
-        }
-
-
+        
         //  Event Handlers --------------------------------
     }
 }

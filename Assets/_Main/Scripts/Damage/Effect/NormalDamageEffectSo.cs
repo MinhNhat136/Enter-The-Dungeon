@@ -13,6 +13,7 @@ namespace Atomic.Damage
                 Source = Damager,
                 effectPool = popupPool,
                 EffectType = StatusEffectType.Normal,
+                Tick = tick,
                 Damage = damage,
             };
         }
