@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
+using Atomic.AbilitySystem;
 using Atomic.Character;
-using Atomic.Collection;
 using Atomic.Core;
-using Atomic.Damage;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -14,46 +11,41 @@ namespace Atomic.Equipment
     //  Class Attributes ----------------------------------
 
     /// <summary>
-    /// TODO: Replace with comments...
+    /// The ProjectileBase class serves as an abstract base class for all projectiles in the game.
+    /// It handles the initialization, launching, and visual effects of projectiles, as well as their 
+    /// interactions with the environment and other game entities. This class implements the 
+    /// IEnergyConsumer interfaces, indicating it can consume energy and be 
+    /// managed within an object pool. 
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public abstract class ProjectileBase : MonoBehaviour, IEnergyConsumer<ProjectileBase>, IObjectPoolable
+    public abstract class ProjectileBase : MonoBehaviour, IEnergyConsumer<ProjectileBase>
     {
         //  Events ----------------------------------------
-        public delegate void ReleaseProjectile(ProjectileBase projectile);
-        public ReleaseProjectile Release;
 
         
         //  Properties ------------------------------------
+        public BaseAgent Owner { get; private set; }
+        public Vector3 ShootPosition { get; private set; }
+        protected Vector3 ShootTarget { get; private set;}
+        public ObjectPool<ProjectileBase> ProjectilePool { get; set; }
+        
         public float EnergyValue { get; set; }
-
-        public BaseAgent Owner { get; set; }
-        public Vector3 ShootPosition { get; protected set; }
-        protected Vector3 ShootTarget { get; set;}
-        public List<PassiveEffect> PassiveEffect { get; set; } = new(8);
-        [HideInInspector] public ObjectPool<ParticleSystem> HitVfx;
-        [SerializeField] protected ParticleSystem hitVfxPrefab;
-        [SerializeField] protected ParticleSystem trail;
-
-        //  Fields ----------------------------------------
-        protected MinMaxFloat DistanceWeight { get; private set; }
         protected MinMaxFloat SpeedWeight { get; private set; }
+        protected MinMaxFloat DistanceWeight { get; set; }
         public MinMaxFloat ForceWeight { get; private set; }
         
-        protected ActionOnHit actionOnHit;
-        protected ActionOnShoot actionOnShoot;
+        //  Fields ----------------------------------------
+        [SerializeField] protected ParticleSystem trail;
+        [SerializeField] protected AbstractRangeCastAbilityScriptableObject abilityOnHit;
         
-        public Transform MyTransform;
+        [HideInInspector]
+        public Transform myTransform;
         
         //  Initialization  -------------------------------
         public virtual ProjectileBase Spawn(BaseAgent owner)
         {
-            MyTransform = transform;
+            myTransform = transform;
             Owner = owner;
-            actionOnHit = GetComponent<ActionOnHit>();
-            actionOnShoot = GetComponent<ActionOnShoot>();
-            if (actionOnHit != null) actionOnHit.projectile = this;
-            if (actionOnShoot != null) actionOnShoot.projectile = this;
             return this;
         }
 
@@ -89,10 +81,11 @@ namespace Atomic.Equipment
             {
                 trail.Stop();
             }
+            ProjectilePool.Release(this);
         }
 
         //  Other Methods ---------------------------------
-        public virtual void Load(Vector3 shootPosition, Vector3 shootDirection, Vector3 shootTarget, float energyValue)
+        public virtual void Load( Vector3 shootPosition, Vector3 shootDirection, Vector3 shootTarget, float energyValue)
         {
             ShootPosition = shootPosition;
             ShootTarget = shootTarget;
@@ -106,45 +99,11 @@ namespace Atomic.Equipment
                 trail.Play();
             }
         }
-        
-        protected ParticleSystem CreateVFX()
-        {
-            ParticleSystem vfxInstance = Instantiate(hitVfxPrefab);
-            vfxInstance.gameObject.SetActive(false);
-            return vfxInstance;
-        }
-
-        protected void OnGetVFX(ParticleSystem vfx)
-        {
-            vfx.gameObject.SetActive(true);
-            vfx.Play();
-
-            var autoRelease = vfx.GetComponent<AutoReleaseParticleSystem>();
-            autoRelease.myPool = HitVfx;
-            autoRelease.AutoRelease();
-        }
-        
-        protected void OnReleaseVFX(ParticleSystem vfx)
-        {
-            vfx.gameObject.SetActive(false);
-            vfx.Stop();
-        }
-        
-        protected void OnDestroyVFX(ParticleSystem vfx)
-        {
-            Destroy(vfx.gameObject);
-        }
 
         public abstract void Shoot();
         protected abstract void ReleaseAfterDelay();
 
         //  Event Handlers --------------------------------
-
-        public BasePoolSO<IObjectPoolable> PoolParent { get; set; }
-        public void ReturnToPool()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
 

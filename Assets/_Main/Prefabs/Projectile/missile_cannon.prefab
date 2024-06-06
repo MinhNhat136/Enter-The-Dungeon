@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 135277769658092970}
   - component: {fileID: 54358028639854080}
   - component: {fileID: 7164851932993948953}
-  - component: {fileID: 6926649376661264927}
   m_Layer: 7
   m_Name: missile_cannon
   m_TagString: Untagged
@@ -243,22 +242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7e394ab1bc713468699b8f303f903d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVfxPrefab: {fileID: 198805344971955384, guid: cd5def2bb4f6b4e4ab15ba0b6f35b29d, type: 3}
-  MyTransform: {fileID: 0}
---- !u!114 &6926649376661264927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1868290962029695}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef709da69ccd45579308d1b27107020e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  areaOfEffectDistance: 5
-  impactLayers:
-    serializedVersion: 2
-    m_Bits: 1088
+  trail: {fileID: 0}
+  abilityOnHit: {fileID: 11400000, guid: 58e4103e94f591d419d13b7069beef1e, type: 2}
+  myTransform: {fileID: 0}

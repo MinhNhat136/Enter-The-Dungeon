@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75af417c5f2126b4487af9f170525195, type: 3}
+  m_Name: Projectile Standard Sphere Hit Ability Scriptable Object
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityTags:
+    AssetTag: {fileID: 0}
+    CancelAbilitiesWithTags: []
+    BlockAbilitiesWithTags: []
+    ActivationOwnedTags: []
+    OwnerTags:
+      requireTags: []
+      ignoreTags: []
+    SourceTags:
+      requireTags: []
+      ignoreTags: []
+    TargetTags:
+      requireTags: []
+      ignoreTags: []
+  cost: {fileID: 11400000, guid: 873d666a7b47e9f49acdc43ebb78abb7, type: 2}
+  cooldown: {fileID: 11400000, guid: 55f3fc92b59bd1549beb1b8a21975895, type: 2}
+  eventOnActivate: {fileID: 11400000, guid: 013ba88c68e4d724db1664d3bea43e3d, type: 2}
+  <TargetLayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 1024
+  <HitVFX>k__BackingField: {fileID: 198409772387570034, guid: 6f8068e2c99ffb04b932ec74e5773db5, type: 3}
+  gameplayEffects:
+  - {fileID: 11400000, guid: 68b66f296dc058f42b5ac02cab8051a4, type: 2}
+  explosionRadius: 0.5

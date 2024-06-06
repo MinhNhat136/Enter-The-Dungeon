@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Atomic.Equipment;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -24,7 +23,7 @@ namespace Atomic.Character
         //  Fields ----------------------------------------
 
         [field: SerializeField]
-        private Dictionary<WeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
+        private readonly Dictionary<WeaponType, RuntimeAnimatorController> _animatorMatchWithWeapons = new(16);
 
         private MeleeCombatController _meleeCombatController;
 

@@ -1,4 +1,3 @@
-using System.Numerics;
 using Atomic.Character;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -29,7 +28,6 @@ namespace Atomic.Equipment
         public override ProjectileBase Spawn(BaseAgent owner)
         {
             base.Spawn(owner);
-            HitVfx = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
             return this;
         }
 
@@ -37,26 +35,16 @@ namespace Atomic.Equipment
         public void Update()
         {
             FollowTarget();
-            Vector3 newPosition = MyTransform.position;
+            Vector3 newPosition = myTransform.position;
             newPosition.y += 0.5f * _gravity * Time.deltaTime * Time.deltaTime;
-            MyTransform.position = newPosition;
+            myTransform.position = newPosition;
         }
 
         //  Other Methods ---------------------------------
-
         public override void Shoot()
         {
             _speed = SpeedWeight.GetValueFromRatio(EnergyValue);
-            if (actionOnHit)
-            {
-                actionOnHit.Initialize();
-            }
-
-            if (actionOnShoot)
-            {
-                actionOnShoot.Initialize();
-            }
-
+            
             if (Owner.TargetAgent)
             {
                 _targetTransform = Owner.TargetAgent.LockPivot;
@@ -69,18 +57,18 @@ namespace Atomic.Equipment
         {
             if (_targetTransform != null)
             {
-                Vector3 directionToTarget = (_targetTransform.position - MyTransform.position).normalized;
+                Vector3 directionToTarget = (_targetTransform.position - myTransform.position).normalized;
 
                 Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
-                MyTransform.rotation = Quaternion.RotateTowards(
-                    MyTransform.rotation,
+                myTransform.rotation = Quaternion.RotateTowards(
+                    myTransform.rotation,
                     targetRotation,
                     _rotationSpeed * Time.deltaTime
                 );
             }
 
-            MyTransform.position += _speed * Time.deltaTime * MyTransform.forward;
+            myTransform.position += _speed * Time.deltaTime * myTransform.forward;
         }
 
         protected override void ReleaseAfterDelay()
@@ -95,12 +83,6 @@ namespace Atomic.Equipment
                 CancelInvoke(nameof(ReleaseAfterDelay));
             }
 
-            if (!actionOnHit)
-            {
-                Release?.Invoke(this);
-            }
-
-            actionOnHit.OnHit(MyTransform.position, MyTransform.forward, other);
         }
     }
 }

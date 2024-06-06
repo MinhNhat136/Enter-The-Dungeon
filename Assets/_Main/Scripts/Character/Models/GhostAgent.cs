@@ -38,13 +38,13 @@ namespace Atomic.Character
             {
                 return;
             }
-            if (Physics.Raycast(modelTransform.position + Vector3.up, modelTransform.forward, out var hit,  MotorController.LocomotionController.MoveSpeed * Time.deltaTime,
+            if (Physics.Raycast(modelTransform.position + Vector3.up, modelTransform.forward, out var hit,  MotorController.MoveSpeed * Time.deltaTime,
                     LayerMask.NameToLayer("Obstacle")))
             {
                 if (NavMesh.SamplePosition(hit.point, out var navHit, 1, NavMesh.AllAreas))
                 {
                     var direction = (navHit.position - modelTransform.position).normalized;
-                    modelTransform.position += direction * MotorController.LocomotionController.MoveSpeed * Time.deltaTime;
+                    modelTransform.position += direction * MotorController.MoveSpeed * Time.deltaTime;
                 }
                 else
                 {
@@ -52,10 +52,10 @@ namespace Atomic.Character
                     return;
                 }
             }
-            if (NavMesh.SamplePosition(transform.position + transform.forward * MotorController.LocomotionController.MoveSpeed * Time.deltaTime, 
+            if (NavMesh.SamplePosition(transform.position + transform.forward * MotorController.MoveSpeed * Time.deltaTime, 
                     out var newNavHit, 1, NavMesh.AllAreas))
             {
-                modelTransform.position += modelTransform.forward * MotorController.LocomotionController.MoveSpeed * Time.deltaTime;
+                modelTransform.position += modelTransform.forward * MotorController.MoveSpeed * Time.deltaTime;
             }
             else
             {

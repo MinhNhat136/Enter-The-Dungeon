@@ -20,22 +20,10 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public float MoveSpeed
-        {
-            get; set;
-        }
-        public float RotationSpeed
-        {
-            get; set;
-        }
         public bool IsInitialized => _isInitialized;
 
         public AiMotorController Model => _model;
 
-        public float Acceleration
-        {
-            get; set;
-        }
         public bool IsNavMeshRotate { get; set; }
         //  Fields ----------------------------------------
         private NavMeshAgent _navMeshAgent;
@@ -59,16 +47,6 @@ namespace Atomic.Character
                 _animator.applyRootMotion = false;
                 _navMeshAgent.updatePosition = true;
                 _navMeshAgent.updateRotation = IsNavMeshRotate;
-
-                _navMeshAgent.speed = MoveSpeed;
-                _navMeshAgent.angularSpeed = RotationSpeed;
-                _navMeshAgent.acceleration = Acceleration;
-                
-                _model.Model.OnMovementSpeedChange += () =>
-                {
-                    _navMeshAgent.speed = MoveSpeed * _model.Model.MovementSpeed;;
-                };
-
             }
         }
 
@@ -99,7 +77,7 @@ namespace Atomic.Character
             desiredRotation.x = 0;
             desiredRotation.z = 0;
 
-            _model.transform.rotation = Quaternion.Slerp(_model.transform.rotation, desiredRotation, RotationSpeed * Time.deltaTime);
+            _model.transform.rotation = Quaternion.Slerp(_model.transform.rotation, desiredRotation, Model.RotationSpeed * Time.deltaTime);
         }
         
         public void ApplyMovement()

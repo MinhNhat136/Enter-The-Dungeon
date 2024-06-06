@@ -34,6 +34,7 @@ namespace Atomic.Character
         }
 
 
+
         public bool IsInitialized { get; set; }
         public BaseAgent Model { get; set; }
         

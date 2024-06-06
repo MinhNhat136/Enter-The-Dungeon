@@ -33,10 +33,17 @@ MonoBehaviour:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - Cinemachine
+    - CW.Common
     - Doozy.Runtime
+    - LeanCommon
+    - LeanPool
     - NodeCanvas
     - ParadoxNotion
+    - PlayFab
+    - PlayFabEditorExtensions
+    - PlayFabSDKEditor
     - PPv2URPConverters
+    - Purchasing.Common
     - RMC.Core.Mini.Editor
     - RMC.Core.Mini.Editor.Tests
     - RMC.Core.Mini.Runtime

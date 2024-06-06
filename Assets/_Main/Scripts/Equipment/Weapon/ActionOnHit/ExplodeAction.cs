@@ -49,20 +49,12 @@ namespace Atomic.Equipment
             for (int index = 0; index < _affectedAgents.Length; index++)
             {
                 if(!_affectedAgents[index]) continue;
-                foreach (var effect in projectile.PassiveEffect)
-                {
-                    
-                    var effectApply = effect.Clone();
-                    effectApply.Target = _affectedAgents[index];
-                    effectApply.Source = projectile.Owner;
-                    
-                    effectApply.Apply();
-                }
-            }
-            var vfx = projectile.HitVfx.Get();
                 
-            var vfxObject = vfx.gameObject;
-            vfxObject.transform.position = _centerPoint;
+            }
+            // var vfx = projectile.HitVfx.Get();
+            //     
+            // var vfxObject = vfx.gameObject;
+            // vfxObject.transform.position = _centerPoint;
         }
 
         private void AfterExplode()

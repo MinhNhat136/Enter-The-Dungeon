@@ -42,7 +42,6 @@ namespace Atomic.Character
             {
                 _isInitialized = true;
                 _model = model;
-
                 
                 _navMeshAgent = _model.BaseNavMeshAgent;
             }
@@ -65,7 +64,7 @@ namespace Atomic.Character
 
         public void Rolling()
         {
-            if (Physics.Raycast(_model.transform.position, _rollDirection, out _rayCastHit, _model.Model.MovementSpeed * _model.LocomotionController.MoveSpeed * BoostSpeedValue * Time.deltaTime, ColliderLayer))
+            if (Physics.Raycast(_model.transform.position, _rollDirection, out _rayCastHit, _model.MoveSpeed * BoostSpeedValue * Time.deltaTime, ColliderLayer))
             {
                 if (NavMesh.SamplePosition(_rayCastHit.point, out _navMeshHit, 0.1f, NavMesh.AllAreas))
                 {
@@ -74,10 +73,10 @@ namespace Atomic.Character
                 }
             }
 
-            if (NavMesh.SamplePosition(_model.Model.modelTransform.position + _model.Model.MovementSpeed * _model.LocomotionController.MoveSpeed * BoostSpeedValue * Time.deltaTime * _rollDirection, out _navMeshHit,
+            if (NavMesh.SamplePosition(_model.Model.modelTransform.position + _model.MoveSpeed * BoostSpeedValue * Time.deltaTime * _rollDirection, out _navMeshHit,
                     0.1f, NavMesh.AllAreas))
             {
-                _model.Model.modelTransform.position += _model.Model.MovementSpeed * _model.LocomotionController.MoveSpeed * BoostSpeedValue * Time.deltaTime * _rollDirection;
+                _model.Model.modelTransform.position += _model.MoveSpeed * BoostSpeedValue * Time.deltaTime * _rollDirection;
             }
         }
 

@@ -29,6 +29,7 @@ namespace Atomic.Character
         private AiBodyPart[] _bodyParts;
         [SerializeField]
         private ImpactConfig _config;
+        
 
         private Collider _collider;
         

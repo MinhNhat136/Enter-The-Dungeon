@@ -15,14 +15,13 @@ namespace Atomic.Equipment
             if(onChargeFullFXPrefab) onChargeFullFXPrefab.Play();
         }
 
-        public override void Shoot(ProjectileBase projectile)
+        public override void Shoot()
         {
             if (chargeObject)
             {
                 chargeObject.SetActive(false);
             }
             shootSystem.Play();
-            projectile.Shoot();
         }
     }
 }

@@ -1,35 +1,41 @@
+using Atomic.AbilitySystem;
 using Atomic.Character;
 using Atomic.Core;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 namespace Atomic.Equipment
 {
     public abstract class RangedWeaponBuilder : WeaponBuilder
     {
-        [Header("INDICATOR", order = 0)] public GameObject indicatorPrefab;
+        [Header("COMPONENT TRANSFORM")] 
+        public Transform barrelTransform;
+        
+        [Header("INDICATOR", order = 0)] 
+        public GameObject indicatorPrefab;
         public float delayActivateTime;
 
-        [Header("BULLET", order = 1)] public ProjectileBase bulletPrefab;
+        [Header("BULLET", order = 1)] 
+        public ProjectileBase bulletPrefab;
         public MinMaxFloat projectileContains;
 
-        [Header("BARREL", order = 2)] public BarrelController barrelPrefab;
+        [Header("BARREL", order = 2)] 
+        public BarrelController barrelPrefab;
 
-        [Header("ENERGY", order = 5)] public float speedCharge;
+        [Header("ENERGY", order = 3)] 
+        public float speedCharge;
+
+        [FormerlySerializedAs("projectileAbilityScriptableObject")] public ProjectileSpawnAbilityScriptableObject projectileSpawnAbilityScriptableObject;
 
         protected float EnergyValue { get; set; }
         protected ObjectPool<ProjectileBase> ProjectilePool { get; set; }
-        protected GameObject Indicator { get; set; }
-        protected ITrajectoryIndicator TrajectoryIndicator { get; set; }
+        protected ITrajectoryIndicator TrajectoryIndicator { get; private set; }
         protected BarrelController BarrelController { get; set; }
-
-        private RangedWeaponObject _weaponObject;
-
-        public override void Attach(Transform parent, BaseAgent owner)
+        
+        public override void Attach(BaseAgent owner)
         {
-            base.Attach(parent, owner);
-            _weaponObject = Model.GetComponent<RangedWeaponObject>();
-            Model.transform.SetParent(parent);
+            base.Attach(owner);
 
             CreatePool();
             CreateBarrel();
@@ -40,8 +46,8 @@ namespace Atomic.Equipment
         {
             if (indicatorPrefab)
             {
-                Indicator = Instantiate(indicatorPrefab, Owner.transform, false);
-                TrajectoryIndicator = Indicator.GetComponent<ITrajectoryIndicator>();
+                var indicator = Instantiate(indicatorPrefab, Owner.transform, false);
+                TrajectoryIndicator = indicator.GetComponent<ITrajectoryIndicator>();
                 TrajectoryIndicator.DelayActivateTime = delayActivateTime;
                 TrajectoryIndicator
                     .SetPosition(Owner.transform.position)
@@ -60,8 +66,7 @@ namespace Atomic.Equipment
         {
             if (!barrelPrefab)
                 return;
-            BarrelController = Instantiate(barrelPrefab,
-                _weaponObject.GetAttachTransform(WeaponComponentEnum.Barrel), false);
+            BarrelController = Instantiate(barrelPrefab, barrelTransform, false);
         }
 
         private void CreatePool()
@@ -80,19 +85,18 @@ namespace Atomic.Equipment
         private ProjectileBase CreateProjectile()
         {
             ProjectileBase projectileInstance = Instantiate(bulletPrefab);
-            projectileInstance.gameObject.SetActive(false);
             projectileInstance
                 .Spawn(owner: Owner)
                 .SetDistanceWeight(distanceWeight)
                 .SetSpeedWeight(speedWeight)
                 .SetForceWeight(forceWeight);
+            projectileInstance.ProjectilePool = ProjectilePool;
             return projectileInstance;
         }
 
         public override void Detach()
         {
             base.Detach();
-            Indicator = null;
             TrajectoryIndicator = null;
             ProjectilePool?.Clear();
         }
@@ -135,9 +139,7 @@ namespace Atomic.Equipment
             TrajectoryIndicator.EnergyValue = EnergyValue;
             TrajectoryIndicator.Indicate();
         }
-
-        protected abstract void ReleaseProjectile(ProjectileBase projectile);
-
+        
         protected abstract void OnGetProjectile(ProjectileBase projectile);
 
         protected abstract void OnReleaseProjectile(ProjectileBase projectile);

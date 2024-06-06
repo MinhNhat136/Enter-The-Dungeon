@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Atomic.AbilitySystem;
 using Atomic.Character;
 using Atomic.Core;
 using UnityEngine;
@@ -12,7 +13,6 @@ namespace Atomic.Equipment
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    [CreateAssetMenu(fileName = "Melee Weapon", menuName = "Weapons/Melee/Config/Default", order = 0)]
     public class MeleeWeaponBuilder : WeaponBuilder
     {
         //  Events ----------------------------------------
@@ -22,25 +22,18 @@ namespace Atomic.Equipment
         public int CurrentCombo { get; set; }
         
         //  Fields ----------------------------------------
-        public List<MeleeAttackData> attackData;
-        private MeleeWeaponObject _meleeWeaponObject;
+        public GameObject peak;
+        public List<MeleeAttackAbilityScriptableObject> attackData;
 
         //  Initialization  -------------------------------
-        public override void Attach(Transform parent, BaseAgent owner)
+        public override void Attach(BaseAgent owner)
         {
-            base.Attach(parent, owner);
-            
-            Model.transform.SetParent(parent);
-
-            _meleeWeaponObject = Model.GetComponent<MeleeWeaponObject>();
-            _meleeWeaponObject.Owner = Owner;
-            _meleeWeaponObject.SetForceWeight(forceWeight);
+            base.Attach( owner);
         }
 
         public override void Detach()
         {
             base.Detach();
-            _meleeWeaponObject = null;
             CurrentCombo = 0; 
         }
         
@@ -50,26 +43,26 @@ namespace Atomic.Equipment
         //  Other Methods ---------------------------------
         public void BeginAttack()
         {
-            _meleeWeaponObject.EnergyValue = attackData[CurrentCombo].EnergyValue;
-            foreach (var effect in effectBuilders)
-            {
-                _meleeWeaponObject.PassiveEffect.Add(effect.CreatePassiveEffect());
-            }
+           
+            
         }
+
+        private MeleeAttackAbilityScriptableObject.MeleeAttackSpec effectSpec;
         
         public void BeginAttackMove()
         {
-            _meleeWeaponObject.BeginHit();
+            effectSpec = attackData[CurrentCombo].CreateMeleeAttackSpecValue(Owner.AiAbilityController.abilitySystemController, peak.transform);
+            effectSpec.isAttack = true;
+            StartCoroutine(effectSpec.TryActivateAbility());   
         }
         
         public void EndAttackMove()
         {
-            _meleeWeaponObject.EndHit();
+            effectSpec.isAttack = false;
         }
         
         public void EndAttack()
         {
-            _meleeWeaponObject.PassiveEffect.Clear();
         }
         
         

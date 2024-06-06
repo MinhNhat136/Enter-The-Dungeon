@@ -1,6 +1,7 @@
+using Atomic.AbilitySystem;
 using Atomic.Character;
+using Atomic.Core;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Atomic.Equipment
 {
@@ -27,14 +28,13 @@ namespace Atomic.Equipment
         public override ProjectileBase Spawn(BaseAgent owner)
         {
             base.Spawn(owner);
-            HitVfx = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
             return this;
         }
 
         //  Unity Methods   -------------------------------
         public void Update()
         {
-            MyTransform.position += _speed * Time.deltaTime * MyTransform.forward;
+            myTransform.position += _speed * Time.deltaTime * myTransform.forward;
         }
 
         //  Other Methods ---------------------------------
@@ -42,21 +42,27 @@ namespace Atomic.Equipment
         {
             _speed = SpeedWeight.GetValueFromRatio(EnergyValue);
             _distance = DistanceWeight.GetValueFromRatio(EnergyValue);
-            actionOnHit?.Initialize();
-            actionOnShoot?.Initialize();
 
             Invoke(nameof(ReleaseAfterDelay), _distance / _speed);
         }
-        
-        protected override void ReleaseAfterDelay() => Release?.Invoke(this);
+
+        protected override void ReleaseAfterDelay()
+        {
+            gameObject.SetActive(false);
+        }
 
         public void OnTriggerEnter(Collider other)
         {
-            if (!actionOnHit)
+            var otherAbilityComponent = other.GetComponentInParent<AbilitySystemController>();
+            if (otherAbilityComponent)
             {
-                Release?.Invoke(this);
+                var effectSpec = abilityOnHit.CreateSpec(
+                    Owner.AiAbilityController.abilitySystemController, 
+                    other.gameObject.transform.position, 
+                    myTransform.forward);
+                Coroutines.StartCoroutine(effectSpec.TryActivateAbility());     
             }
-            actionOnHit.OnHit(MyTransform.position, MyTransform.forward, other);
+            gameObject.SetActive(false);
         }
 
         //  Event Handlers --------------------------------

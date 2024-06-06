@@ -22,15 +22,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   canWalk: 1
-  canDash: 0
-  canFly: 0
   canRoll: 1
-  canJump: 1
-  canMeleeCombat: 1
-  canRangedCombat: 1
   locomotionConfig:
-    walkSpeed: 5
-    runSpeed: 8
+    speed: 5
     rotateSpeed: 10
     acceleration: 20
     autoRotateWithNavmesh: 0
@@ -40,11 +34,6 @@ MonoBehaviour:
     colliderLayer:
       serializedVersion: 2
       m_Bits: 4096
-  dashConfig:
-    distance: 1
-    colliderLayer:
-      serializedVersion: 2
-      m_Bits: 256
   avoidancePriorityNormal: 0
   avoidancePriorityAttack: 0
   enemyCloseRange: 0

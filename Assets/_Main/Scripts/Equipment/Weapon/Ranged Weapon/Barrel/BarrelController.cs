@@ -10,7 +10,7 @@ namespace Atomic.Equipment
         
         public abstract void Charge();
         public abstract void OnChargeFull();
-        public abstract void Shoot(ProjectileBase projectile);
+        public abstract void Shoot();
     }
 }
 

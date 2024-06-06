@@ -28,44 +28,35 @@ namespace Atomic.Equipment
             var agent = collide.GetComponentInParent<BaseAgent>();
             if (!agent)
             {
-                var vfx = projectile.HitVfx.Get();
-
-                var vfxObject = vfx.gameObject;
-                vfxObject.transform.position = projectile.MyTransform.position;
-                vfxObject.transform.forward = -projectile.MyTransform.forward;
+                // var vfx = projectile.HitVfx.Get();
+                //
+                // var vfxObject = vfx.gameObject;
+                // vfxObject.transform.position = projectile.myTransform.position;
+                // vfxObject.transform.forward = -projectile.myTransform.forward;
                 
-                projectile.Release?.Invoke(projectile);
-                projectile.PassiveEffect.Clear();
+                // projectile.Release?.Invoke(projectile);
                 return;
             }
             
             if (!_hitAgents.Contains(agent))
             {
                 _hitAgents.Add(agent);
-                for (var index = 0; index < projectile.PassiveEffect.Count; index++)
-                {
-                    var effect = projectile.PassiveEffect[index];
-                    var effectApply = effect.Clone();
-                    effectApply.Target = agent;
-                    effectApply.Source = projectile.Owner;
-
-                    effectApply.Apply();
-                }
-
+                
                 agent.ImpactSensorController.ImpactValue = projectile.ForceWeight.GetValueFromRatio(projectile.EnergyValue);
                 agent.ImpactSensorController.ImpactDirection =
                     (agent.transform.position - projectile.ShootPosition).normalized;
                 agent.ImpactSensorController.Impact();
-                var vfx = projectile.HitVfx.Get();
-
-                var vfxObject = vfx.gameObject;
-                vfxObject.transform.position = projectile.MyTransform.position;
-                vfxObject.transform.forward = -projectile.MyTransform.forward;
+                // var vfx = projectile.HitVfx.Get();
+                //
+                // // agent.AiAbilityController.abilitySystemController.ApplyGameplayEffectSpecToSelf(projectile.GameplayEffectSpec);
+                //
+                // var vfxObject = vfx.gameObject;
+                // vfxObject.transform.position = projectile.myTransform.position;
+                // vfxObject.transform.forward = -projectile.myTransform.forward;
             }
 
             if (_canPenetrate) return;
-            projectile.Release?.Invoke(projectile);
-            projectile.PassiveEffect.Clear();
+            // projectile.Release?.Invoke(projectile);
         }
     }
 }

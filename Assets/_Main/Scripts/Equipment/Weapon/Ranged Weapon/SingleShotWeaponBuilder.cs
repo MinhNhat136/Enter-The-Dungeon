@@ -1,5 +1,3 @@
-using Atomic.Character;
-using Atomic.Core;
 using UnityEngine;
 
 namespace  Atomic.Equipment
@@ -11,7 +9,6 @@ namespace  Atomic.Equipment
     /// <summary>
     /// TODO: Replace with comments...
     /// </summary>
-    [CreateAssetMenu(fileName = "Ranged Weapon", menuName = "Weapons/Ranged/Config/Single Shot", order = 1)]
     public class SingleShotWeaponBuilder : RangedWeaponBuilder
     {
         //  Events ----------------------------------------
@@ -24,12 +21,7 @@ namespace  Atomic.Equipment
         public Vector3 TargetPosition { get; private set; }
 
         //  Initialization  -------------------------------
-        public override void Attach(Transform parent, BaseAgent owner)
-        {
-            base.Attach(parent, owner);
-            
-        }
-        
+
         //  Unity Methods   -------------------------------
 
 
@@ -58,14 +50,16 @@ namespace  Atomic.Equipment
             shootDirection.Normalize();
             
             var projectile = ProjectilePool.Get();
+            
             projectile.Load(BarrelController.shootSystem.transform.position, 
                 BarrelController.transform.forward,
                 TargetPosition, EnergyValue);
-            foreach (var effect in effectBuilders)
-            {
-                projectile.PassiveEffect.Add(effect.CreatePassiveEffect());
-            }
-            BarrelController.Shoot(projectile);
+
+            projectileSpawnAbilityScriptableObject.projectile = projectile;
+            var effectSpec = projectileSpawnAbilityScriptableObject.CreateSpec(Owner.AiAbilityController.abilitySystemController);
+            StartCoroutine(effectSpec.TryActivateAbility());     
+            
+            BarrelController.Shoot();
         }
 
         public override void EndShoot()
@@ -77,21 +71,13 @@ namespace  Atomic.Equipment
         }
         
         //  Event Handlers --------------------------------
-        protected override void ReleaseProjectile(ProjectileBase projectile)
-        {
-            projectile.PassiveEffect.Clear();
-            ProjectilePool.Release(projectile);
-        }
-
         protected override void OnGetProjectile(ProjectileBase projectile)
         {
-            projectile.Release += ReleaseProjectile;
             projectile.gameObject.SetActive(true);
         }
 
         protected override void OnReleaseProjectile(ProjectileBase projectile)
         {
-            projectile.Release -= ReleaseProjectile;
             projectile.gameObject.SetActive(false);
         }
 

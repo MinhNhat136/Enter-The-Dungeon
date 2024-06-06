@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Atomic.AbilitySystem;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -17,8 +21,6 @@ namespace Atomic.Character
         //  Properties ------------------------------------
         private PlayerControls InputControls { get; set; }
         private PlayerAnimatorController PlayerAnimatorController { get; set; }
-        
-        
         
         #region PreConditions
         
@@ -40,7 +42,9 @@ namespace Atomic.Character
         #endregion
         
         //  Fields ----------------------------------------
-
+        
+        private Dictionary<AttributeScriptableObject, Action> ActionOnAttributeChanged = new(16);
+        
         //  Initialization  -------------------------------
         public override void Initialize()
         {
@@ -51,14 +55,23 @@ namespace Atomic.Character
                 InputControls = new PlayerControls();
                 Assign();
                 PlayerAnimatorController = GetComponent<PlayerAnimatorController>();
-
+                
                 SwitchCombatMode();
                 SwitchAnimatorMatchWithWeapon();
+                
+                ActionOnAttributeChanged.Add(speedAttribute, OnSpeedChanged);
+                ActionOnAttributeChanged.Add(healthAttribute, OnHealthChanged);
+
+                AttributeSystemComponent.onAttributeChanged += (attribute) =>
+                {
+                    if (ActionOnAttributeChanged.TryGetValue(attribute, out var action))
+                    {
+                        action?.Invoke();
+                    }
+                };
             }
         }
-
-
-
+        
         public override void DoEnable()
         {
             base.DoEnable();
@@ -80,15 +93,16 @@ namespace Atomic.Character
         public void OnEnable()
         {
             DoEnable();
+
         }
 
         public void OnDisable()
         {
             DoDisable();
+            
         }
 
         //  Other Methods ---------------------------------
-
         #region Assign
 
         public override void Assign()
@@ -189,7 +203,7 @@ namespace Atomic.Character
                 });
             #endregion
         }
-
+        
         #endregion
         
         private void SwitchAnimatorMatchWithWeapon() =>
@@ -221,8 +235,18 @@ namespace Atomic.Character
         public void ResetState() => CurrentActionState = DefaultActionState;
         #endregion
         
-        
-
         //  Event Handlers --------------------------------
+        private void OnSpeedChanged()
+        {
+            AttributeSystemComponent.GetAttributeValue(speedAttribute, out var speedRatio);
+            SpeedRatio = speedRatio.currentValue;
+            AgentAnimatorController.Animator.speed = speedRatio.currentValue;
+        }
+
+        private void OnHealthChanged()
+        {
+            
+        }
+        
     }
 }

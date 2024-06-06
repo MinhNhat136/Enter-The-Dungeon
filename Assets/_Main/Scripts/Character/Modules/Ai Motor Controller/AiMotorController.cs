@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Atomic.AbilitySystem;
 using Atomic.Core.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,7 +23,6 @@ namespace Atomic.Character
 
         
         //  Properties ------------------------------------
-        [field: SerializeField]
         public ICombatController CombatController { get; set; }
         public ILocomotionController LocomotionController { get; set;}
         public AiRollController RollController { get; set; }
@@ -33,16 +33,36 @@ namespace Atomic.Character
         public Animator BaseAnimator { get; private set; }
         public Vector2 MoveInput { get; set; }
         public Vector3 MoveDirection { get; set; }
+        
+        public float MoveSpeed 
+        {
+            get => BaseNavMeshAgent.speed * Model.SpeedRatio;
+            set => BaseNavMeshAgent.speed = value ; 
+        }
+        
+        public float Acceleration 
+        {  
+            get => BaseNavMeshAgent.acceleration;
+            set => BaseNavMeshAgent.acceleration = value; 
+        }
+        
+        public float RotationSpeed 
+        { 
+            get => BaseNavMeshAgent.angularSpeed; 
+            set => BaseNavMeshAgent.angularSpeed = value ; 
+        }
 
         public bool IsInitialized { get; private set; }
         
         //  Collections -----------------------------------
         [SerializeField]
         private Dictionary<CombatMode, ICombatController> combatModes;
-        
+
         
         //  Fields ----------------------------------------
-        [FormerlySerializedAs("_config")] [SerializeField]
+        
+        [Header("CONFIG")]
+        [SerializeField]
         private MotorConfig config;
         
         //  Initialization  -------------------------------

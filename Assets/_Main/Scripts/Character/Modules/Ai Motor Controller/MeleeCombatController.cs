@@ -15,7 +15,6 @@ namespace Atomic.Character
     {
         //  Events ----------------------------------------
 
-
         //  Properties ------------------------------------
         public WeaponBuilder CurrentWeapon
         {
@@ -47,7 +46,7 @@ namespace Atomic.Character
         private MeleeWeaponBuilder _meleeWeapon;
         
         private Vector3 _attackMoveDestination;
-
+        
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
@@ -93,14 +92,14 @@ namespace Atomic.Character
         {
             if (_stopMove)
                 return;
-            var distanceMove = _meleeWeapon.attackData[_currentCombo].AttackMoveSpeed * Time.deltaTime;
+            var distanceMove = _meleeWeapon.attackData[_currentCombo].AttackMoveSpeed * Model.SpeedRatio * Time.deltaTime;
             if (Physics.Raycast(Model.modelTransform.position + new Vector3(0, 1, 0), Model.modelTransform.forward, out _, 
                     Model.Width + distanceMove, ColliderObstacleLayer))
             {
                     _stopMove = true;
                     return;
             }
-
+            
             if (NavMesh.SamplePosition(Model.modelTransform.position + distanceMove * Model.modelTransform.forward
                     , out _,
                     1, NavMesh.AllAreas))
@@ -121,7 +120,7 @@ namespace Atomic.Character
             Model.LastAttackTime = Time.time;
             _meleeWeapon.CurrentCombo = _currentCombo;
             _meleeWeapon.EndAttack();
-            Invoke(nameof(ResetCombo), _meleeWeapon.attackData[_currentCombo].DelayResetCombo * Model.MovementSpeed);
+            Invoke(nameof(ResetCombo), _meleeWeapon.attackData[_currentCombo].DelayResetCombo * Model.SpeedRatio);
             if (_currentCombo < _meleeWeapon.attackData.Count - 1)
             {
                 _currentCombo++;

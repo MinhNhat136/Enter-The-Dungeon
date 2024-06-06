@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Atomic.AbilitySystem;
 using Atomic.Core;
 using Atomic.Core.Interface;
 using Atomic.Equipment;
@@ -43,9 +44,8 @@ namespace Atomic.Character
     /// Base class for defining characters with modular control systems.
     /// </summary>
     [RequireComponent(
-        typeof(NavMeshAgent), 
-        typeof(AiHealth), 
-        typeof(AiPassiveStateController))]
+        typeof(NavMeshAgent),
+        typeof(AiAbilityController))]
     [RequireComponent(
         typeof(AiImpactSensorController),
         typeof(AiVisionSensorController),
@@ -53,7 +53,6 @@ namespace Atomic.Character
     public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Events ----------------------------------------
-        public event Action OnMovementSpeedChange; 
 
         //  Properties ------------------------------------
         [field: SerializeField]
@@ -77,26 +76,18 @@ namespace Atomic.Character
         private Collider AgentCollider { get; set; }
         public Vector3 ImpactHit { get; set; }
         public AiBodyPart[] BodyParts { get; set; } 
-        public float Height { get; protected set; }
-        public float Width { get; protected set; }
+        public float Height { get; private set; }
+        public float Width { get; private set; }
+        public float SpeedRatio { get; protected set; }
+        public float StabilityRatio { get; protected set; }
 
-        public float MovementSpeed
-        {
-            get => _movementSpeed;
-            set
-            {
-                _movementSpeed = value;
-                OnMovementSpeedChange?.Invoke();
-            }
-        }
-
-        private float _movementSpeed = 1;
         public bool IsMovement => !Mathf.Approximately(MotorController.MoveInput.sqrMagnitude, 0f);
         public float LastAttackTime { get; set; }
         
         private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
-        
-        
+
+        public AttributeSystemComponent AttributeSystemComponent => _attributeSystemComponent;
+        public AiAbilityController AiAbilityController => _aiAbilityController;
         public NavMeshAgent NavmeshAgent { get; private set; }
         public AgentAnimator AgentAnimatorController => _agentAnimatorController;
         public AiMotorController MotorController => _motorController;
@@ -109,12 +100,9 @@ namespace Atomic.Character
             protected set => _targetingController = value;
         }
         protected AiWeaponVisualsController WeaponVisualsController => _weaponVisualsController;
-        public AiPassiveStateController PassiveStateController => _passiveStateController;
-        public AiHealth HealthController => _healthController;
         
         //  Collections -----------------------------------
-
-
+        
         //  Fields ----------------------------------------
         [SerializeField] 
         public AiConfig config; 
@@ -122,15 +110,20 @@ namespace Atomic.Character
         [HideInInspector] 
         public Transform modelTransform;
 
+        [Header("SPEC")]
+        public AttributeScriptableObject stabilityRatio;
+        public AttributeScriptableObject speedAttribute;
+        public AttributeScriptableObject healthAttribute; 
+        
+        private AttributeSystemComponent _attributeSystemComponent;
+        private AiAbilityController _aiAbilityController;
         private AgentAnimator _agentAnimatorController;
         private AiVisionSensorController _visionController;
         private AiImpactSensorController _impactSensorController;
         private ITargetingController _targetingController;
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
-        private AiPassiveStateController _passiveStateController;
         private AiImpactReactionController _impactReactionController;
-        private AiHealth _healthController;
         private AiMemoryController _memoryController;
         
         //  Initialization  -------------------------------
@@ -154,6 +147,7 @@ namespace Atomic.Character
             Width = NavmeshAgent.radius;
                 
             AssignControllers();
+            
         }
         
         public void RequireIsInitialized()
@@ -167,6 +161,7 @@ namespace Atomic.Character
         public virtual void DoEnable()
         {
             SurvivalState = SurvivalState.Revive;
+            
         }
 
         public virtual void DoDisable()
@@ -190,14 +185,15 @@ namespace Atomic.Character
             {
                 MemorySpan = AgentMemorySpan
             };
-            this.AttachControllerToModel(out _healthController);
+            _attributeSystemComponent = GetComponent<AttributeSystemComponent>();
+            
+            this.AttachControllerToModel(out _aiAbilityController);
             this.AttachControllerToModel(out _agentAnimatorController);
             this.AttachControllerToModel(out _visionController);
             this.AttachControllerToModel(out _impactSensorController);
             this.AttachControllerToModel(out _motorController);
             this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _weaponVisualsController);
-            this.AttachControllerToModel(out _passiveStateController);
             this.AttachControllerToModel(out _impactReactionController);
         }
         
@@ -218,7 +214,7 @@ namespace Atomic.Character
         public virtual void BeginRoll() => MotorController.RollController.BeginRoll();
         public virtual void Rolling() => MotorController.RollController.Rolling();
         public virtual void EndRoll() => MotorController.RollController.EndRoll();
-        public virtual void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.Model.SetActive(value);
+        public virtual void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.gameObject.SetActive(value);
         public virtual void SetActiveImpactSensor(bool value) => _impactSensorController.SetActiveSensor(value);
 
         public virtual void ChangeVisionDistance() => VisionController.VisionDistance = MotorController.CombatController.CurrentWeapon.range;

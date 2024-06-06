@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Gameplay Ability System/Linear Derived Attribute")]
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Attribute/Linear")]
     public class LinearDerivedAttributeScriptableObject : AttributeScriptableObject
     {
         public AttributeScriptableObject attribute;

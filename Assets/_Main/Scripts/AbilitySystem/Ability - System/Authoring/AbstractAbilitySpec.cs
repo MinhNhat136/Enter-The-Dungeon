@@ -10,42 +10,20 @@ namespace Atomic.AbilitySystem
 
     public abstract class AbstractAbilitySpec
     {
-        /// <summary>
-        /// The ability this AbilitySpec is linked to
-        /// </summary>
-        public AbstractAbilityScriptableObject Ability;
+        public delegate void ApplyGameplayEffectEvent(GameplayEffectSpec effectSpec);
+        public ApplyGameplayEffectEvent OnApplyGameplayEffect; 
 
-        /// <summary>
-        /// The owner of the AbilitySpec - usually the source
-        /// </summary>
-        protected AbilitySystemCharacter Owner;
-
-        /// <summary>
-        /// Ability level
-        /// </summary>
+        public readonly AbstractAbilityScriptableObject Ability;
+        protected readonly AbilitySystemController Owner;
         public float Level;
-
-        /// <summary>
-        /// Is this AbilitySpec currently active?
-        /// </summary>
         public bool isActive;
-
-        /// <summary>
-        /// Default constructor.  Initialises the AbilitySpec from the AbstractAbilityScriptableObject
-        /// </summary>
-        /// <param name="ability">Ability</param>
-        /// <param name="owner">Owner - usually the character activating the ability</param>
-        public AbstractAbilitySpec(AbstractAbilityScriptableObject ability, AbilitySystemCharacter owner)
+        
+        public AbstractAbilitySpec(AbstractAbilityScriptableObject ability, AbilitySystemController owner)
         {
-            this.Ability = ability;
-            this.Owner = owner;
+            Ability = ability;
+            Owner = owner;
         }
-
-        /// <summary>
-        /// Try activating the ability.  Remember to use StartCoroutine() since this 
-        /// is a couroutine, to allow abilities to span more than one frame.
-        /// </summary>
-        /// <returns></returns>
+        
         public virtual IEnumerator TryActivateAbility()
         {
             if (!CanActivateAbility()) yield break;
@@ -57,11 +35,7 @@ namespace Atomic.AbilitySystem
 
         }
 
-        /// <summary>
-        /// Checks if this ability can be activated
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool CanActivateAbility()
+        protected virtual bool CanActivateAbility()
         {
             return !isActive
                     && CheckGameplayTags()
@@ -69,35 +43,22 @@ namespace Atomic.AbilitySystem
                     && CheckCooldown().TimeRemaining <= 0;
         }
 
-        /// <summary>
-        /// Cancels the ability, if it is active
-        /// </summary>
         public abstract void CancelAbility();
 
-        /// <summary>
-        /// Checks if Gameplay Tag requirements allow activating this ability
-        /// </summary>
-        /// <returns></returns>
-        public abstract bool CheckGameplayTags();
+        protected abstract bool CheckGameplayTags();
 
-        /// <summary>
-        /// Check if this ability is on cooldown
-        /// </summary>
-        /// <param name="maxDuration">The maximum duration associated with the Gameplay Effect 
-        /// causing ths ability to be on cooldown</param>
-        /// <returns></returns>
-        public virtual AbilityCooldownTime CheckCooldown()
+        protected virtual AbilityCooldownTime CheckCooldown()
         {
             float maxDuration = 0;
-            if (this.Ability.Cooldown == null) return new AbilityCooldownTime();
-            var cooldownTags = this.Ability.Cooldown.gameplayEffectTags.grantedTags;
+            if (Ability.cooldown == null) return new AbilityCooldownTime();
+            var cooldownTags = Ability.cooldown.gameplayEffectTags.grantedTags;
 
             float longestCooldown = 0f;
 
             // Check if the cooldown tag is granted to the player, and if so, capture the remaining duration for that tag
-            for (var i = 0; i < this.Owner.AppliedGameplayEffects.Count; i++)
+            for (var i = 0; i < this.Owner.appliedGameplayEffects.Count; i++)
             {
-                var grantedTags = this.Owner.AppliedGameplayEffects[i].spec.GameplayEffect.gameplayEffectTags.grantedTags;
+                var grantedTags = this.Owner.appliedGameplayEffects[i].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
                 for (var iTag = 0; iTag < grantedTags.Length; iTag++)
                 {
                     for (var iCooldownTag = 0; iCooldownTag < cooldownTags.Length; iCooldownTag++)
@@ -105,18 +66,18 @@ namespace Atomic.AbilitySystem
                         if (grantedTags[iTag] == cooldownTags[iCooldownTag])
                         {
                             // If this is an infinite GE, then return null to signify this is on CD
-                            if (this.Owner.AppliedGameplayEffects[i].spec.GameplayEffect.gameplayEffect.durationPolicy == EDurationPolicy.Infinite) return new AbilityCooldownTime()
+                            if (this.Owner.appliedGameplayEffects[i].spec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy == EDurationPolicy.Infinite) return new AbilityCooldownTime()
                             {
                                 TimeRemaining = float.MaxValue,
                                 TotalDuration = 0
                             };
 
-                            var durationRemaining = this.Owner.AppliedGameplayEffects[i].spec.DurationRemaining;
+                            var durationRemaining = this.Owner.appliedGameplayEffects[i].spec.DurationRemaining;
 
                             if (durationRemaining > longestCooldown)
                             {
                                 longestCooldown = durationRemaining;
-                                maxDuration = this.Owner.AppliedGameplayEffects[i].spec.TotalDuration;
+                                maxDuration = this.Owner.appliedGameplayEffects[i].spec.TotalDuration;
                             }
                         }
 
@@ -137,7 +98,7 @@ namespace Atomic.AbilitySystem
         protected abstract IEnumerator PreActivate();
 
         /// <summary>
-        /// The logic that dictates what the ability does.  Targetting logic should be placed here.
+        /// The logic that dictates what the ability does.  Targeting logic should be placed here.
         /// Gameplay Effects are applied in this method.
         /// </summary>
         /// <returns></returns>
@@ -146,31 +107,31 @@ namespace Atomic.AbilitySystem
         /// <summary>
         /// Method to run once the ability ends
         /// </summary>
-        public virtual void EndAbility()
+        protected virtual void EndAbility()
         {
-            this.isActive = false;
+            isActive = false;
         }
 
         /// <summary>
         /// Checks whether the activating character has enough resources to activate this ability
         /// </summary>
         /// <returns></returns>
-        public virtual bool CheckCost()
+        protected virtual bool CheckCost()
         {
-            if (this.Ability.Cost == null) return true;
-            var geSpec = this.Owner.MakeOutgoingSpec(this.Ability.Cost, this.Level);
+            if (this.Ability.cost == null) return true;
+            var geSpec = this.Owner.MakeOutgoingSpec(this.Ability.cost, this.Level);
             // If this isn't an instant cost, then assume it passes cooldown check
-            if (geSpec.GameplayEffect.gameplayEffect.durationPolicy != EDurationPolicy.Instant) return true;
+            if (geSpec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy != EDurationPolicy.Instant) return true;
 
-            for (var i = 0; i < geSpec.GameplayEffect.gameplayEffect.modifiers.Length; i++)
+            for (var i = 0; i < geSpec.GameplayEffectScriptableObject.gameplayEffect.modifiers.Length; i++)
             {
-                var modifier = geSpec.GameplayEffect.gameplayEffect.modifiers[i];
+                var modifier = geSpec.GameplayEffectScriptableObject.gameplayEffect.modifiers[i];
 
                 // Only worry about additive.  Anything else passes.
                 if (modifier.modifierOperator != EAttributeModifier.Add) continue;
                 var costValue = (modifier.modifierMagnitude.CalculateMagnitude(geSpec) * modifier.multiplier).GetValueOrDefault();
 
-                this.Owner.AttributeSystem.GetAttributeValue(modifier.attribute, out var attributeValue);
+                this.Owner.AttributeSystemComponent.GetAttributeValue(modifier.attribute, out var attributeValue);
 
                 // The total attribute after accounting for cost should be >= 0 for the cost check to succeed
                 if (attributeValue.currentValue + costValue < 0) return false;
@@ -185,7 +146,7 @@ namespace Atomic.AbilitySystem
         /// <param name="asc">Ability System Character</param>
         /// <param name="tags">List of tags to check</param>
         /// <returns>True, if the Ability System Character has all tags</returns>
-        protected virtual bool AscHasAllTags(AbilitySystemCharacter asc, GameplayTagScriptableObject[] tags)
+        protected virtual bool AscHasAllTags(AbilitySystemController asc, GameplayTagScriptableObject[] tags)
         {
             // If the input ASC is not valid, assume check passed
             if (!asc) return true;
@@ -195,9 +156,9 @@ namespace Atomic.AbilitySystem
                 var abilityTag = tags[iAbilityTag];
 
                 bool requirementPassed = false;
-                for (var iAsc = 0; iAsc < asc.AppliedGameplayEffects.Count; iAsc++)
+                for (var iAsc = 0; iAsc < asc.appliedGameplayEffects.Count; iAsc++)
                 {
-                    GameplayTagScriptableObject[] ascGrantedTags = asc.AppliedGameplayEffects[iAsc].spec.GameplayEffect.gameplayEffectTags.grantedTags;
+                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
                     for (var iAscTag = 0; iAscTag < ascGrantedTags.Length; iAscTag++)
                     {
                         if (ascGrantedTags[iAscTag] == abilityTag)
@@ -218,7 +179,7 @@ namespace Atomic.AbilitySystem
         /// <param name="asc">Ability System Character</param>
         /// <param name="tags">List of tags to check</param>
         /// <returns>True, if the Ability System Character has none of the tags</returns>
-        protected virtual bool AscHasNoneTags(AbilitySystemCharacter asc, GameplayTagScriptableObject[] tags)
+        protected virtual bool AscHasNoneTags(AbilitySystemController asc, GameplayTagScriptableObject[] tags)
         {
             // If the input ASC is not valid, assume check passed
             if (!asc) return true;
@@ -228,9 +189,9 @@ namespace Atomic.AbilitySystem
                 var abilityTag = tags[iAbilityTag];
 
                 bool requirementPassed = true;
-                for (var iAsc = 0; iAsc < asc.AppliedGameplayEffects.Count; iAsc++)
+                for (var iAsc = 0; iAsc < asc.appliedGameplayEffects.Count; iAsc++)
                 {
-                    GameplayTagScriptableObject[] ascGrantedTags = asc.AppliedGameplayEffects[iAsc].spec.GameplayEffect.gameplayEffectTags.grantedTags;
+                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
                     for (var iAscTag = 0; iAscTag < ascGrantedTags.Length; iAscTag++)
                     {
                         if (ascGrantedTags[iAscTag] == abilityTag)

@@ -1,3 +1,5 @@
+using System;
+using Atomic.AbilitySystem;
 using Atomic.Core.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,9 +16,8 @@ namespace Atomic.Character
 
         public static readonly int DodgeHorizontal = Animator.StringToHash("Dodge_Horizontal");
         public static readonly int DodgeVertical = Animator.StringToHash("Dodge_Vertical");
-
     }
-    
+
 
     public static partial class AnimatorStates
     {
@@ -40,22 +41,23 @@ namespace Atomic.Character
 
     public abstract class AgentAnimator : SerializedMonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
-        protected Animator Animator { get; set; }
-        
-        public bool IsCurrentAnimationComplete( int layerIndex = 0, float percentage =1)
+        public Animator Animator { get; protected set; }
+
+        public bool IsCurrentAnimationComplete(int layerIndex = 0, float percentage = 1)
         {
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(layerIndex);
             if (stateInfo.normalizedTime >= percentage)
             {
                 return true;
             }
+
             return false;
         }
-        
+
         public bool IsNextAnimationComplete(int layerIndex = 0, float percentage = 1f)
         {
             AnimatorStateInfo nextStateInfo = Animator.GetNextAnimatorStateInfo(layerIndex);
-            
+
             if (Animator.IsInTransition(layerIndex))
             {
                 if (nextStateInfo.normalizedTime >= percentage)
@@ -81,9 +83,10 @@ namespace Atomic.Character
 
             return false;
         }
-        
+
         public bool IsInitialized { get; private set; }
         public BaseAgent Model { get; private set; }
+
         public void Initialize(BaseAgent model)
         {
             if (!IsInitialized)
@@ -92,7 +95,7 @@ namespace Atomic.Character
                 Model = model;
 
                 Animator = GetComponentInChildren<Animator>();
-                Model.OnMovementSpeedChange += () => Animator.speed = Model.MovementSpeed;
+                
             }
         }
 
@@ -100,11 +103,13 @@ namespace Atomic.Character
         {
             throw new System.NotImplementedException();
         }
-        
+
         public virtual void ApplyMovementAnimation()
         {
-            Animator.SetFloat(AnimatorParameters.InputHorizontal, Model.MotorController.LocomotionController.MoveSpeed, .1f, Time.deltaTime);
-            Animator.SetFloat(AnimatorParameters.InputVertical, Model.MotorController.LocomotionController.MoveSpeed, .1f, Time.deltaTime);
+            Animator.SetFloat(AnimatorParameters.InputHorizontal, Model.MotorController.MoveSpeed,
+                .1f, Time.deltaTime);
+            Animator.SetFloat(AnimatorParameters.InputVertical, Model.MotorController.MoveSpeed,
+                .1f, Time.deltaTime);
         }
 
         public virtual void StopMovementAnimation()
@@ -112,22 +117,22 @@ namespace Atomic.Character
             Animator.SetFloat(AnimatorParameters.InputHorizontal, 0, .1f, Time.deltaTime);
             Animator.SetFloat(AnimatorParameters.InputVertical, 0, .1f, Time.deltaTime);
         }
-        
+
         public virtual void ApplyAppear()
         {
             Animator.Play(AnimatorStates.Appear);
         }
-        
+
         public virtual void ApplyRise()
         {
             Animator.CrossFade(AnimatorStates.Rise, 0.25f);
         }
-        
+
         public virtual void ApplyLocomotionAnimation()
         {
             Animator.CrossFade("locomotion", 0.25f);
         }
-        
+
         public virtual void ApplyHitAnimation()
         {
             float xHit = Vector3.Dot(Model.ImpactHit, transform.right);
@@ -141,25 +146,26 @@ namespace Atomic.Character
             {
                 if (currentState.normalizedTime < 1.0f)
                 {
-                    Animator.Play(AnimatorStates.HitReact, 0, 0.1f); 
+                    Animator.Play(AnimatorStates.HitReact, 0, 0.1f);
                 }
             }
+
             if (currentState.IsName("hit_loop"))
             {
                 if (currentState.normalizedTime < 1.0f)
                 {
-                    Animator.Play("hit_loop", 0, 1.0f); 
+                    Animator.Play("hit_loop", 0, 1.0f);
                 }
             }
 
             Animator.CrossFade(AnimatorStates.HitReact, 0.2f);
         }
-        
+
         public virtual void ApplyStunAnimation()
         {
             Animator.CrossFade("stun", 0.2f);
         }
-        
+
         public virtual void ApplyBreakAnimation()
         {
             Animator.CrossFade("break", 0.2f);

@@ -15,8 +15,7 @@ namespace Atomic.Character
     [System.Serializable]
     public class LocomotionConfig
     {
-        public float walkSpeed;
-        public float runSpeed;
+        public float speed;
         public float rotateSpeed;
         public float acceleration;
         public bool autoRotateWithNavmesh;
@@ -33,12 +32,12 @@ namespace Atomic.Character
                     break;
             }
 
-            motorController.LocomotionController.RotationSpeed = rotateSpeed;
-            motorController.LocomotionController.MoveSpeed = walkSpeed;
-            motorController.LocomotionController.Acceleration = acceleration;
-            motorController.LocomotionController.IsNavMeshRotate = autoRotateWithNavmesh;
-
             motorController.LocomotionController.Initialize(motorController);
+
+            motorController.RotationSpeed = rotateSpeed;
+            motorController.MoveSpeed = speed;
+            motorController.Acceleration = acceleration;
+            motorController.LocomotionController.IsNavMeshRotate = autoRotateWithNavmesh;
         }
     }
 
@@ -57,24 +56,6 @@ namespace Atomic.Character
             };
 
             motorController.RollController.Initialize(motorController);
-        }
-    }
-    
-    [System.Serializable]
-    public class DashConfig
-    {
-        public float distance;
-        public LayerMask colliderLayer;
-
-        public void Assign(AiMotorController motorController)
-        {
-            motorController.DashController = new()
-            {
-                Distance = distance,
-                ColliderLayer = colliderLayer
-            };
-
-            motorController.DashController.Initialize(motorController);
         }
     }
 
@@ -98,16 +79,10 @@ namespace Atomic.Character
     {
         [Header("ABILITIES")] 
         public bool canWalk;
-        public bool canDash;
-        public bool canFly;
         public bool canRoll;
-        public bool canJump;
-        public bool canMeleeCombat;
-        public bool canRangedCombat;
 
         [ShowIf("canWalk")] public LocomotionConfig locomotionConfig = new();
         [ShowIf("canRoll")] public RollConfig rollConfig = new();
-        [ShowIf("canDash")] public DashConfig dashConfig = new();
 
         [Header("NAVMESH")] 
         public int avoidancePriorityNormal;
@@ -119,7 +94,6 @@ namespace Atomic.Character
         {
             if (canWalk) locomotionConfig.Assign(motorController);
             if (canRoll) rollConfig.Assign(motorController);
-            if (canDash) dashConfig.Assign(motorController);
         }
     }
 }

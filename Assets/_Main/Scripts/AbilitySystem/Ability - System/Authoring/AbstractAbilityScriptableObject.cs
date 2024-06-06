@@ -1,40 +1,44 @@
-using System;
+using Atomic.Core;
 using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
 
-    public abstract class AbstractAbilityScriptableObject : ScriptableObject
+    public abstract class AbstractAbilityScriptableObject : BaseSo
     {
         /// <summary>
         /// Name of this ability
         /// </summary>
-        [SerializeField] private string AbilityName;
+        [SerializeField] private string abilityName;
 
         /// <summary>
         /// Tags for this ability
         /// </summary>
-        [SerializeField] public AbilityTags AbilityTags;
-
+        [SerializeField] public AbilityTags abilityTags;
+        
         /// <summary>
         /// The GameplayEffect that defines the cost associated with activating the ability
         /// </summary>
-        /// <param name="owner">Usually the character activating this ability</param>
         /// <returns></returns>
-        [SerializeField] public GameplayEffectScriptableObject Cost;
+        [SerializeField] public GameplayEffectScriptableObject cost;
 
         /// <summary>
         /// The GameplayEffect that defines the cooldown associated with this ability
         /// </summary>
-        /// <param name="owner">Usually the character activating this ability</param>
         /// <returns></returns>
-        [SerializeField] public GameplayEffectScriptableObject Cooldown;
+        [SerializeField] public GameplayEffectScriptableObject cooldown;
+        
+        /// <summary>
+        /// The Event that execute when this ability activate
+        /// </summary>
+        /// <returns></returns>
+        [SerializeField] public AbstractApplyGameplayEffectEventHandler eventOnActivate; 
 
         /// <summary>
         /// Creates the Ability Spec (the instantiation of the ability)
         /// </summary>
-        /// <param name="owner">Usually the character casting thsi ability</param>
+        /// <param name="owner">Usually the character casting this ability</param>
         /// <returns>Ability Spec</returns>
-        public abstract AbstractAbilitySpec CreateSpec(AbilitySystemCharacter owner);
+        public abstract AbstractAbilitySpec CreateSpec(AbilitySystemController owner);
     }
 }

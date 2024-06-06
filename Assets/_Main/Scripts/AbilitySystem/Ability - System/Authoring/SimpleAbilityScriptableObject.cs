@@ -19,10 +19,12 @@ namespace Atomic.AbilitySystem
         /// </summary>
         /// <param name="owner"></param>
         /// <returns></returns>
-        public override AbstractAbilitySpec CreateSpec(AbilitySystemCharacter owner)
+        public override AbstractAbilitySpec CreateSpec(AbilitySystemController owner)
         {
-            var spec = new SimpleAbilitySpec(this, owner);
-            spec.Level = owner.Level;
+            var spec = new SimpleAbilitySpec(this, owner)
+            {
+                Level = owner.Level
+            };
             return spec;
         }
 
@@ -32,7 +34,7 @@ namespace Atomic.AbilitySystem
         /// </summary>
         public class SimpleAbilitySpec : AbstractAbilitySpec
         {
-            public SimpleAbilitySpec(AbstractAbilityScriptableObject abilitySO, AbilitySystemCharacter owner) : base(abilitySO, owner)
+            public SimpleAbilitySpec(AbstractAbilityScriptableObject abilitySO, AbilitySystemController owner) : base(abilitySO, owner)
             {
             }
 
@@ -51,15 +53,15 @@ namespace Atomic.AbilitySystem
             protected override IEnumerator ActivateAbility()
             {
                 // Apply cost and cooldown
-                var cdSpec = this.Owner.MakeOutgoingSpec(this.Ability.Cooldown);
-                var costSpec = this.Owner.MakeOutgoingSpec(this.Ability.Cost);
-                this.Owner.ApplyGameplayEffectSpecToSelf(cdSpec);
-                this.Owner.ApplyGameplayEffectSpecToSelf(costSpec);
+                var cdSpec = Owner.MakeOutgoingSpec(Ability.cooldown);
+                var costSpec = Owner.MakeOutgoingSpec(Ability.cost);
+                Owner.ApplyGameplayEffectSpecToSelf(cdSpec);
+                Owner.ApplyGameplayEffectSpecToSelf(costSpec);
 
 
                 // Apply primary effect
-                var effectSpec = this.Owner.MakeOutgoingSpec((this.Ability as SimpleAbilityScriptableObject).GameplayEffect);
-                this.Owner.ApplyGameplayEffectSpecToSelf(effectSpec);
+                var effectSpec = Owner.MakeOutgoingSpec(((SimpleAbilityScriptableObject)Ability).GameplayEffect);
+                Owner.ApplyGameplayEffectSpecToSelf(effectSpec);
 
                 yield return null;
             }
@@ -71,14 +73,14 @@ namespace Atomic.AbilitySystem
             /// we can just use Owner for all of them.
             /// </summary>
             /// <returns></returns>
-            public override bool CheckGameplayTags()
+            protected override bool CheckGameplayTags()
             {
-                return AscHasAllTags(Owner, this.Ability.AbilityTags.OwnerTags.requireTags)
-                        && AscHasNoneTags(Owner, this.Ability.AbilityTags.OwnerTags.ignoreTags)
-                        && AscHasAllTags(Owner, this.Ability.AbilityTags.SourceTags.requireTags)
-                        && AscHasNoneTags(Owner, this.Ability.AbilityTags.SourceTags.ignoreTags)
-                        && AscHasAllTags(Owner, this.Ability.AbilityTags.TargetTags.requireTags)
-                        && AscHasNoneTags(Owner, this.Ability.AbilityTags.TargetTags.ignoreTags);
+                return AscHasAllTags(Owner, Ability.abilityTags.OwnerTags.requireTags)
+                        && AscHasNoneTags(Owner, Ability.abilityTags.OwnerTags.ignoreTags)
+                        && AscHasAllTags(Owner, Ability.abilityTags.SourceTags.requireTags)
+                        && AscHasNoneTags(Owner, Ability.abilityTags.SourceTags.ignoreTags)
+                        && AscHasAllTags(Owner, Ability.abilityTags.TargetTags.requireTags)
+                        && AscHasNoneTags(Owner, Ability.abilityTags.TargetTags.ignoreTags);
             }
 
             /// <summary>

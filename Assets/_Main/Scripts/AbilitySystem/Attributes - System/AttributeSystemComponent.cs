@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,86 +9,83 @@ namespace Atomic.AbilitySystem
     /// </summary>
     public class AttributeSystemComponent : MonoBehaviour
     {
+        //  Events ----------------------------------------
+        public delegate void NotifyAttributeChanged(AttributeScriptableObject attributeScriptableObject);
+        public NotifyAttributeChanged onAttributeChanged;
+
+        //  Properties ------------------------------------
+       
+
+        //  Fields ----------------------------------------
         [SerializeField] private AbstractAttributeEventHandler[] attributeSystemEvents;
-
-        /// <summary>
-        /// Attribute sets assigned to the game character
-        /// </summary>
         [SerializeField] private List<AttributeScriptableObject> attributeScriptableObjects;
-
         [SerializeField] private List<AttributeValue> attributeValues;
-
+        
         private bool _isAttributeDictStale;
+        public Dictionary<AttributeScriptableObject, int> MAttributeIndexCache { get; private set; } = new ();
+        private readonly List<AttributeValue> _prevAttributeValues = new();
+        //  Initialization  -------------------------------
 
-        public Dictionary<AttributeScriptableObject, int> MAttributeIndexCache { get; private set; } =
-            new Dictionary<AttributeScriptableObject, int>();
+        
+        //  Unity Methods   -------------------------------
+        private void Awake()
+        {
+            InitialiseAttributeValues();
+            MarkAttributesDirty();
+            GetAttributeCache();
+        }
 
-        /// <summary>
-        /// Marks attribute cache dirty, so it can be recreated next time it is required
-        /// </summary>
+        private void LateUpdate()
+        {
+            UpdateAttributeCurrentValues();
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var attributeSystemEvent in attributeSystemEvents)
+            {
+                attributeSystemEvent.Reset();
+            }
+        }
+        
+        //  Other Methods ---------------------------------
         public void MarkAttributesDirty()
         {
             _isAttributeDictStale = true;
         }
-
-        /// <summary>
-        /// Gets the value of an attribute.  Note that the returned value is a copy of the struct, so modifying it
-        /// does not modify the original attribute
-        /// </summary>
-        /// <param name="attribute">Attribute to get value for</param>
-        /// <param name="value">Returned attribute</param>
-        /// <returns>True if attribute was found, false otherwise.</returns>
+        
         public bool GetAttributeValue(AttributeScriptableObject attribute, out AttributeValue value)
         {
-            // If dictionary is stale, rebuild it
             var attributeCache = GetAttributeCache();
 
-            // We use a cache to store the index of the attribute in the list, so we don't
-            // have to iterate through it every time
             if (attributeCache.TryGetValue(attribute, out var index))
             {
                 value = attributeValues[index];
                 return true;
             }
             
-            // No matching attribute found
             value = new AttributeValue();
             return false;
         }
-
+        
         public void SetAttributeBaseValue(AttributeScriptableObject attribute, float value)
         {
-            // If dictionary is stale, rebuild it
             var attributeCache = GetAttributeCache();
             if (!attributeCache.TryGetValue(attribute, out var index)) return;
             var attributeValue = attributeValues[index];
             attributeValue.baseValue = value;
             attributeValues[index] = attributeValue;
         }
-
-        /// <summary>
-        /// Sets value of an attribute.  Note that the out value is a copy of the struct, so modifying it
-        /// does not modify the original attribute
-        /// </summary>
-        /// <param name="attribute">Attribute to set</param>
-        /// <param name="modifier">How to modify the attribute</param>
-        /// <param name="value">Copy of newly modified attribute</param>
-        /// <returns>True, if attribute was found.</returns>
-        public bool UpdateAttributeModifiers(AttributeScriptableObject attribute, AttributeModifier modifier,
-            out AttributeValue value)
+        
+        public bool UpdateAttributeModifiers(AttributeScriptableObject attribute, AttributeModifier modifier, out AttributeValue value)
         {
-            // If dictionary is stale, rebuild it
             var attributeCache = GetAttributeCache();
 
-            // We use a cache to store the index of the attribute in the list, so we don't
-            // have to iterate through it every time
             if (attributeCache.TryGetValue(attribute, out var index))
             {
-                // Get a copy of the attribute value struct
                 value = attributeValues[index];
                 value.modifier = value.modifier.Combine(modifier);
 
-                // Structs are copied by value, so the modified attribute needs to be reassigned to the array
                 attributeValues[index] = value;
                 return true;
             }
@@ -97,13 +95,8 @@ namespace Atomic.AbilitySystem
             return false;
         }
 
-        /// <summary>
-        /// Add attributes to this attribute system.  Duplicates are ignored.
-        /// </summary>
-        /// <param name="attributes">Attributes to add</param>
         public void AddAttributes(params AttributeScriptableObject[] attributes)
         {
-            // If this attribute already exists, we don't need to add it.  For that, we need to make sure the cache is up to date.
             var attributeCache = GetAttributeCache();
 
             foreach (var attribute in attributes)
@@ -118,10 +111,6 @@ namespace Atomic.AbilitySystem
             }
         }
 
-        /// <summary>
-        /// Remove attributes from this attribute system.
-        /// </summary>
-        /// <param name="attributes">Attributes to remove</param>
         public void RemoveAttributes(params AttributeScriptableObject[] attributes)
         {
             foreach (var attribute in attributes)
@@ -154,7 +143,7 @@ namespace Atomic.AbilitySystem
                 attributeValues[i] = attributeValue;
             }
         }
-
+        
         private void InitialiseAttributeValues()
         {
             attributeValues = new List<AttributeValue>();
@@ -173,9 +162,7 @@ namespace Atomic.AbilitySystem
                 );
             }
         }
-
-        private readonly List<AttributeValue> _prevAttributeValues = new();
-
+        
         public void UpdateAttributeCurrentValues()
         {
             _prevAttributeValues.Clear();
@@ -208,17 +195,9 @@ namespace Atomic.AbilitySystem
 
             return MAttributeIndexCache;
         }
+        
+        //  Event Handlers --------------------------------
 
-        private void Awake()
-        {
-            InitialiseAttributeValues();
-            MarkAttributesDirty();
-            GetAttributeCache();
-        }
-
-        private void LateUpdate()
-        {
-            UpdateAttributeCurrentValues();
-        }
     }
+    
 }

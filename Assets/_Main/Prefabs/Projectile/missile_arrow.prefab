@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 4407445366980474149}
   - component: {fileID: 3272837342136504145}
   - component: {fileID: 6155444322339666320}
-  - component: {fileID: 6407814892643004740}
   m_Layer: 7
   m_Name: missile_arrow
   m_TagString: Untagged
@@ -243,19 +242,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7e56c909daa1c4e9bc056209e898fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVfxPrefab: {fileID: 198409772387570034, guid: 6f8068e2c99ffb04b932ec74e5773db5, type: 3}
-  MyTransform: {fileID: 0}
---- !u!114 &6407814892643004740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8987939846278491663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159d60d2287c21a4599460464636b085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  chancePenetratePercentage: 50
+  trail: {fileID: 198409772387570034, guid: 6f8068e2c99ffb04b932ec74e5773db5, type: 3}
+  abilityOnHit: {fileID: 11400000, guid: c5e1ffca6d0038a4881b4aab10b1db52, type: 2}
+  myTransform: {fileID: 0}

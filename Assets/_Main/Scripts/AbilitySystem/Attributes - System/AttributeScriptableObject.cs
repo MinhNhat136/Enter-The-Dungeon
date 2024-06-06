@@ -1,34 +1,20 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    public class PreAttributeChangeEventArgs : EventArgs
-    {
-        AttributeSystemComponent AttributeSystem { get; set; }
-        float Value { get; set; }
-    }
-
     /// <summary>
     /// This asset defines a single player attribute
     /// </summary>
-    [CreateAssetMenu(menuName = "Gameplay Ability System/Attribute")]
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Attribute/Default")]
     public class AttributeScriptableObject : ScriptableObject
     {
         /// <summary>
         /// Friendly name of this attribute.  Used for display purposes only.
         /// </summary>
         public string attributeName;
-
-        public event EventHandler PreAttributeChange;
-
-        public void OnPreAttributeChange(object sender, PreAttributeChangeEventArgs e)
-        {
-            EventHandler handler = PreAttributeChange;
-            PreAttributeChange?.Invoke(sender, e);
-        }
-
+        public Color color;
+        
         public AttributeValue CalculateInitialValue(AttributeValue attributeValue, List<AttributeValue> otherAttributeValues)
         {
             return attributeValue;

@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Atomic.AbilitySystem
 {
@@ -9,7 +8,7 @@ namespace Atomic.AbilitySystem
     {
         public GameplayEffectScriptableObject[] initialisationGameplayEffect;
 
-        public override AbstractAbilitySpec CreateSpec(AbilitySystemCharacter owner)
+        public override AbstractAbilitySpec CreateSpec(AbilitySystemController owner)
         {
             var spec = new InitialiseStatsAbility(this, owner)
             {
@@ -20,7 +19,7 @@ namespace Atomic.AbilitySystem
 
         public class InitialiseStatsAbility : AbstractAbilitySpec
         {
-            public InitialiseStatsAbility(AbstractAbilityScriptableObject abilitySO, AbilitySystemCharacter owner) : base(abilitySO, owner)
+            public InitialiseStatsAbility(AbstractAbilityScriptableObject abilitySO, AbilitySystemController owner) : base(abilitySO, owner)
             {
             }
 
@@ -28,35 +27,35 @@ namespace Atomic.AbilitySystem
             {
             }
 
-            public override bool CheckGameplayTags()
+            protected override bool CheckGameplayTags()
             {
-                return AscHasAllTags(Owner, Ability.AbilityTags.OwnerTags.requireTags)
-                        && AscHasNoneTags(Owner, Ability.AbilityTags.OwnerTags.ignoreTags);
+                return AscHasAllTags(Owner, Ability.abilityTags.OwnerTags.requireTags)
+                        && AscHasNoneTags(Owner, Ability.abilityTags.OwnerTags.ignoreTags);
             }
 
             protected override IEnumerator ActivateAbility()
             {
                 // Apply cost and cooldown (if any)
-                if (Ability.Cooldown)
+                if (Ability.cooldown)
                 {
-                    var cdSpec = Owner.MakeOutgoingSpec(Ability.Cooldown);
+                    var cdSpec = Owner.MakeOutgoingSpec(Ability.cooldown);
                     Owner.ApplyGameplayEffectSpecToSelf(cdSpec);
                 }
 
-                if (Ability.Cost)
+                if (Ability.cost)
                 {
-                    var costSpec = Owner.MakeOutgoingSpec(Ability.Cost);
+                    var costSpec = Owner.MakeOutgoingSpec(Ability.cost);
                     Owner.ApplyGameplayEffectSpecToSelf(costSpec);
                 }
 
                 InitialiseStatsAbilityScriptableObject abilitySO = Ability as InitialiseStatsAbilityScriptableObject;
-                Owner.AttributeSystem.UpdateAttributeCurrentValues();
+                Owner.AttributeSystemComponent.UpdateAttributeCurrentValues();
 
                 for (var i = 0; i < abilitySO.initialisationGameplayEffect.Length; i++)
                 {
                     var effectSpec = Owner.MakeOutgoingSpec(abilitySO.initialisationGameplayEffect[i]);
                     Owner.ApplyGameplayEffectSpecToSelf(effectSpec);
-                    Owner.AttributeSystem.UpdateAttributeCurrentValues();
+                    Owner.AttributeSystemComponent.UpdateAttributeCurrentValues();
                 }
 
                 yield break;
