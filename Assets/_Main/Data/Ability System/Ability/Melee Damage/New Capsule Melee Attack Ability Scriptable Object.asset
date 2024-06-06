@@ -37,5 +37,5 @@ MonoBehaviour:
   <TargetLayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 1024
-  <CapsuleCastRadius>k__BackingField: 1
-  <CapsuleCastHeight>k__BackingField: 20
+  <CapsuleCastRadius>k__BackingField: 3
+  <CapsuleCastHeight>k__BackingField: 5
