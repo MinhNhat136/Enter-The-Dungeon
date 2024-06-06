@@ -3,21 +3,22 @@ using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    public abstract class SphereMeleeAttackAbilityScriptableObject : MeleeAttackAbilityScriptableObject
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Melee/Sphere")]
+    public class SphereMeleeAttackAbilityScriptableObject : AbstractMeleeAttackAbilityScriptableObject
     {
-        [field: SerializeField] public float SphereCastRadius { get; private set; }
+        [field: SerializeField] 
+        public float SphereCastRadius { get; private set; }
         
         public override AbstractAbilitySpec CreateSpec(AbilitySystemController owner)
         {
             var spec = new SphereMeleeAttackSpec(this, owner)
             {
-                Level = owner.Level,
                 SphereCastRadius = SphereCastRadius,
             };
             return spec;
         }
 
-        private class SphereMeleeAttackSpec : MeleeAttackSpec
+        private class SphereMeleeAttackSpec : AbstractMeleeAttackSpec
         {
             public float SphereCastRadius;
             
@@ -26,23 +27,26 @@ namespace Atomic.AbilitySystem
             {
             }
             
+            protected override bool CheckGameplayTags()
+            {
+                return true;
+            }
+            
             protected override void CastHits()
             {
-                Collider[] hitColliders = Physics.OverlapSphere(sourcePoint.transform.position, SphereCastRadius, MeleeAttackAbility.TargetLayerMask);
+                var hitColliders = Physics.OverlapSphere(sourcePoint.transform.position, SphereCastRadius, targetLayerMask);
                 foreach (var coll in hitColliders)
                 {
                     var factor = coll.GetComponentInParent<AbilitySystemController>();
+                    if (!factor || AffectedControllers.Contains(factor)) continue;
                     if (factor == Owner) continue;
-                    if (factor && !AffectedControllers.Contains(factor))
-                    {
-                        AffectedControllers.Add(factor);
-                        var effectSpec = hitAbilitySo.CreateHitSpecValue(
-                            Owner,
-                            factor,
-                            coll.gameObject.transform.position,
-                            sourcePoint.forward);
-                        Coroutines.StartCoroutine(effectSpec.TryActivateAbility());
-                    }
+                    AffectedControllers.Add(factor);
+                    var effectSpec = hitAbilitySo.CreateSpec(
+                        Owner,
+                        factor,
+                        coll.gameObject.transform.position,
+                        sourcePoint.forward);
+                    Coroutines.StartCoroutine(effectSpec.TryActivateAbility());
                 }
             }
         }

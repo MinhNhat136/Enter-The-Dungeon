@@ -22,7 +22,7 @@ namespace Atomic.AbilitySystem
         
         public AbstractAbilitySpec CreateSpec(AbilitySystemController source, Vector3 hitPoint, Vector3 hitDirection)
         {
-            AbstractRangeCastAbilitySpec hitAbilitySpec = (AbstractRangeCastAbilitySpec)CreateSpec(source);
+            var hitAbilitySpec = (AbstractRangeCastAbilitySpec)CreateSpec(source);
             hitAbilitySpec.Level = source.Level;
             hitAbilitySpec.hitPoint = hitPoint;
             hitAbilitySpec.hitDirection = hitDirection;

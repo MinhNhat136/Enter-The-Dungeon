@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Sphere")]
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Range/Sphere")]
     public class SphereCastAbilityScriptableObject : AbstractRangeCastAbilityScriptableObject
     {
         public float explosionRadius;

@@ -23,7 +23,7 @@ namespace Atomic.Equipment
         
         //  Fields ----------------------------------------
         public GameObject peak;
-        public List<MeleeAttackAbilityScriptableObject> attackData;
+        public List<AbstractMeleeAttackAbilityScriptableObject> attackData;
 
         //  Initialization  -------------------------------
         public override void Attach(BaseAgent owner)
@@ -47,18 +47,17 @@ namespace Atomic.Equipment
             
         }
 
-        private MeleeAttackAbilityScriptableObject.MeleeAttackSpec effectSpec;
+        private AbstractMeleeAttackAbilityScriptableObject.AbstractMeleeAttackSpec effectSpec;
         
         public void BeginAttackMove()
         {
-            effectSpec = attackData[CurrentCombo].CreateMeleeAttackSpecValue(Owner.AiAbilityController.abilitySystemController, peak.transform);
-            effectSpec.isAttack = true;
+            effectSpec = attackData[CurrentCombo].CreateSpec(Owner.AiAbilityController.abilitySystemController, peak.transform);
             StartCoroutine(effectSpec.TryActivateAbility());   
         }
         
         public void EndAttackMove()
         {
-            effectSpec.isAttack = false;
+            effectSpec.CancelAbility();
         }
         
         public void EndAttack()

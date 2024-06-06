@@ -11,12 +11,12 @@ namespace Atomic.AbilitySystem
         public ParticleSystem hitVFX;
         public GameplayEffectScriptableObject[] hitGameplayEffects;
 
-        protected ObjectPool<ParticleSystem> HitVfxPool;
+        private ObjectPool<ParticleSystem> _hitVfxPool;
         private WaitForSeconds _vfxLifeTimeWaiter;
 
-        public AbstractAbilitySpec CreateHitSpecValue(AbilitySystemController source, AbilitySystemController target, Vector3 hitPoint, Vector3 hitDirection)
+        public AbstractAbilitySpec CreateSpec(AbilitySystemController source, AbilitySystemController target, Vector3 hitPoint, Vector3 hitDirection)
         {
-            HitAbilitySpec hitAbilitySpec = (HitAbilitySpec)CreateSpec(source);
+            var hitAbilitySpec = (HitAbilitySpec)CreateSpec(source);
             hitAbilitySpec.hitTarget = target;
             hitAbilitySpec.hitPoint = hitPoint;
             hitAbilitySpec.hitDirection = hitDirection;
@@ -29,7 +29,7 @@ namespace Atomic.AbilitySystem
             var spec = new HitAbilitySpec(this, owner)
             {
                 Level = owner.Level,
-                HitVFXPool = HitVfxPool,
+                HitVFXPool = _hitVfxPool,
             };
             return spec;
         }
@@ -37,7 +37,7 @@ namespace Atomic.AbilitySystem
         public override void Initialize()
         {
             base.Initialize();
-            HitVfxPool = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
+            _hitVfxPool = new ObjectPool<ParticleSystem>(CreateVFX, OnGetVFX, OnReleaseVFX, OnDestroyVFX, true, 1, 7);
             _vfxLifeTimeWaiter = new WaitForSeconds(hitVFX.main.duration);
         }
 
@@ -45,12 +45,12 @@ namespace Atomic.AbilitySystem
         {
             base.Reset();
             _vfxLifeTimeWaiter = null;
-            HitVfxPool.Clear();
+            _hitVfxPool.Clear();
         }
 
         private ParticleSystem CreateVFX()
         {
-            ParticleSystem vfxInstance = Instantiate(hitVFX);
+            var vfxInstance = Instantiate(hitVFX);
             vfxInstance.gameObject.SetActive(false);
             return vfxInstance;
         }
@@ -70,16 +70,16 @@ namespace Atomic.AbilitySystem
 
         private void OnDestroyVFX(ParticleSystem vfx)
         {
-            Destroy(vfx.gameObject);
+            Destroy(vfx);
         }
 
         private IEnumerator DelayReleaseVFX(ParticleSystem vfx)
         {
             yield return _vfxLifeTimeWaiter;
-            HitVfxPool.Release(vfx);
+            _hitVfxPool.Release(vfx);
         }
-        
-        public class HitAbilitySpec : AbstractAbilitySpec
+
+        private class HitAbilitySpec : AbstractAbilitySpec
         {
             public ObjectPool<ParticleSystem> HitVFXPool;
             public Vector3 hitPoint;
@@ -107,7 +107,7 @@ namespace Atomic.AbilitySystem
 
             protected override IEnumerator ActivateAbility()
             {
-                HitAbilityScriptableObject abilitySo = Ability as HitAbilityScriptableObject;
+                var abilitySo = Ability as HitAbilityScriptableObject;
                 for (int index = 0; index < abilitySo!.hitGameplayEffects.Length; index++)
                 {
                     var effectSpec = Owner.MakeOutgoingSpec(abilitySo!.hitGameplayEffects[index])

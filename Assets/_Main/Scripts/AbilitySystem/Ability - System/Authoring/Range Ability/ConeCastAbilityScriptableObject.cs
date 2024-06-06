@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Cone")]
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Range/Cone")]
     public class ConeCastAbilityScriptableObject : AbstractRangeCastAbilityScriptableObject
     {
         public float coneAngle;

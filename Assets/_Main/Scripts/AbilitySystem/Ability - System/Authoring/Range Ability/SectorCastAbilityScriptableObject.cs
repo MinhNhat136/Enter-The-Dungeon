@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Sector")]
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Range/Sector")]
     public class SectorCastAbilityScriptableObject : AbstractRangeCastAbilityScriptableObject
     {
         public float sectorAngle;

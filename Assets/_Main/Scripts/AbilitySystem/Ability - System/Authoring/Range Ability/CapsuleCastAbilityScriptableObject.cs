@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
-    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Capsule")]
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Abilities/Range/Capsule")]
     public class CapsuleCastAbilityScriptableObject : AbstractRangeCastAbilityScriptableObject
     {
         public float capsuleRadius;
