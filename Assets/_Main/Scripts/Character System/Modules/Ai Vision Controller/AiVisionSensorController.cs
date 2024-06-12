@@ -71,6 +71,11 @@ namespace Atomic.Character
         }
 
         //  Unity Methods   -------------------------------
+        private void Update()
+        {
+            VisionScan();
+        }
+
         public void VisionScan()
         {
             _scanTimer -= Time.deltaTime;

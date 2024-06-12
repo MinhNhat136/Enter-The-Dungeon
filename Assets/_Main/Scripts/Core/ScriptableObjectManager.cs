@@ -5,6 +5,8 @@ namespace Atomic.Core
 {
     public class ScriptableObjectManager : MonoBehaviour
     {
+        public string name;
+        
         [SerializeField]
         private List<BaseSo> scriptableObjects = new(16);
 

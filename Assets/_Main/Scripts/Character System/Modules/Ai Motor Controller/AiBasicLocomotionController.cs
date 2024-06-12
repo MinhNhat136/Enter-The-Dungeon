@@ -67,6 +67,12 @@ namespace Atomic.Character
         {
             if (IsNavMeshRotate)
             {
+                // Rotate using NavMeshAgent
+                if (_navMeshAgent.desiredVelocity != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(_navMeshAgent.desiredVelocity);
+                    _model.transform.rotation = Quaternion.Slerp(_model.transform.rotation, targetRotation, Model.RotationSpeed * Time.deltaTime);
+                }
                 return;
             }
             if (_model.MoveDirection == Vector3.zero)

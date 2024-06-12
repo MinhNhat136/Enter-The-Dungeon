@@ -34,15 +34,15 @@ namespace Atomic.Character
             }
         }
 
-        public bool IsInitialized { get; set; }
-        public BaseAgent Model { get; set; }
+        public bool IsInitialized { get; private set; }
+        public BaseAgent Model { get; private set; }
+        public string NextAnimationName { get; set; }
+
 
         [field: SerializeField] public LayerMask ColliderObstacleLayer { get; private set; }
 
-        [field: SerializeField] public string NextAnimationName { get; private set; }
 
         //  Fields ----------------------------------------
-        private int _currentCombo = 0;
         private MeleeWeaponBuilder _meleeWeapon;
         
         private Vector3 _attackMoveDestination;
@@ -75,7 +75,6 @@ namespace Atomic.Character
 
         public void BeginAttack()
         {
-            CancelInvoke(nameof(ResetCombo));
             _meleeWeapon.BeginAttack();
         }
 
@@ -92,7 +91,7 @@ namespace Atomic.Character
         {
             if (_stopMove)
                 return;
-            var distanceMove = _meleeWeapon.attackData[_currentCombo].AttackMoveSpeed * Model.SpeedRatio * Time.deltaTime;
+            var distanceMove = _meleeWeapon.attackData[_meleeWeapon.CurrentCombo].AttackMoveSpeed * Model.SpeedRatio * Time.deltaTime;
             if (Physics.Raycast(Model.modelTransform.position + new Vector3(0, 1, 0), Model.modelTransform.forward, out _, 
                     Model.Width + distanceMove, ColliderObstacleLayer))
             {
@@ -118,23 +117,9 @@ namespace Atomic.Character
         public void EndAttack()
         {
             Model.LastAttackTime = Time.time;
-            _meleeWeapon.CurrentCombo = _currentCombo;
             _meleeWeapon.EndAttack();
-            Invoke(nameof(ResetCombo), _meleeWeapon.attackData[_currentCombo].DelayResetCombo * Model.SpeedRatio);
-            if (_currentCombo < _meleeWeapon.attackData.Count - 1)
-            {
-                _currentCombo++;
-                NextAnimationName = _meleeWeapon.attackData[_currentCombo].AnimationName;
-            }
-            else ResetCombo();
+            NextAnimationName = _meleeWeapon.attackData[_meleeWeapon.CurrentCombo].AnimationName;
         }
-        
-        public void ResetCombo()
-        {
-            _currentCombo = 0;
-            NextAnimationName = _meleeWeapon.attackData[_currentCombo].AnimationName;
-        }
-
         
         //  Event Handlers --------------------------------
     }

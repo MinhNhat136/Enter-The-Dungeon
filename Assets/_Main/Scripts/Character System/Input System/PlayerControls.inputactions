@@ -167,7 +167,7 @@
                 {
                     "name": "",
                     "id": "612b5010-4e20-4d65-bfbe-669036dd5060",
-                    "path": "<Touchscreen>/touch0/tap",
+                    "path": "<Touchscreen>/touch0/indirectTouch",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -189,7 +189,7 @@
                 {
                     "name": "",
                     "id": "0afd259d-2ac5-4d19-875b-c96482ee01ae",
-                    "path": "<Touchscreen>/touch1/tap",
+                    "path": "<Touchscreen>/touch1/indirectTouch",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -211,7 +211,7 @@
                 {
                     "name": "",
                     "id": "b922495c-4419-45e4-9bd9-ac898e998f1a",
-                    "path": "<Touchscreen>/touch2/tap",
+                    "path": "<Touchscreen>/touch2/indirectTouch",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

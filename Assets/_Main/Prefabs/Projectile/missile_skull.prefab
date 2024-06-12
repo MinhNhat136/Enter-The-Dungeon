@@ -7112,7 +7112,6 @@ GameObject:
   - component: {fileID: 135108134564430013}
   - component: {fileID: 54917481681023763}
   - component: {fileID: 3190767163570435504}
-  - component: {fileID: 7554151605769379356}
   m_Layer: 8
   m_Name: missile_skull
   m_TagString: Untagged
@@ -7196,23 +7195,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a7e99e84414f6947b0e0155ce4206dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitVfxPrefab: {fileID: 198409772387570034, guid: 6f8068e2c99ffb04b932ec74e5773db5, type: 3}
   trail: {fileID: 198902221200323931}
-  MyTransform: {fileID: 4443364357828855}
+  abilityOnHit: {fileID: 11400000, guid: 132226c4fb9c7644eb2f56dfbb900da6, type: 2}
+  myTransform: {fileID: 0}
   _acceleration: 100
   _gravity: -9.81
   _rotationSpeed: 10
-  _delayReleaseTime: 20
---- !u!114 &7554151605769379356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1400125333379485}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e88cac1668a6554784cdc08c8409e02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
+  _delayReleaseTime: 30

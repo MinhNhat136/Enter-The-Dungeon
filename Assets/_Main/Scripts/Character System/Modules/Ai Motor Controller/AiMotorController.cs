@@ -26,18 +26,20 @@ namespace Atomic.Character
         public ICombatController CombatController { get; set; }
         public ILocomotionController LocomotionController { get; set;}
         public AiRollController RollController { get; set; }
-        public AiDashController DashController { get; set; }
         public BaseAgent Model { get; private set; }
         
         public NavMeshAgent BaseNavMeshAgent { get; private set; }
         public Animator BaseAnimator { get; private set; }
         public Vector2 MoveInput { get; set; }
         public Vector3 MoveDirection { get; set; }
+
+        public float MaxMoveSpeed { get; private set; }
+        public float MaxRotationSpeed { get; private set; }
         
         public float MoveSpeed 
         {
-            get => BaseNavMeshAgent.speed * Model.SpeedRatio;
-            set => BaseNavMeshAgent.speed = value ; 
+            get => BaseNavMeshAgent.speed;
+            set => BaseNavMeshAgent.speed = value; 
         }
         
         public float Acceleration 
@@ -77,6 +79,9 @@ namespace Atomic.Character
                 BaseAnimator = GetComponentInChildren<Animator>();
                 
                 config.Assign(this);
+                MaxMoveSpeed = MoveSpeed;
+                MaxRotationSpeed = RotationSpeed;
+                
                 foreach (var key in combatModes.Keys)
                 {
                     combatModes[key].Initialize(model);

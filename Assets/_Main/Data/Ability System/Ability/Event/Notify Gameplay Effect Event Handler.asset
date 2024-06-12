@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4fc6d1f67fcf54c8345c6946842ae8, type: 3}
+  m_Name: Notify Gameplay Effect Event Handler
+  m_EditorClassIdentifier: 
+  gameplayEffectLookup:
+  - {fileID: 11400000, guid: d5eed0298fedc5748b42ddbfd47f32aa, type: 2}
+  - {fileID: 11400000, guid: 48317656741087044b025311726e8bcd, type: 2}
+  - {fileID: 11400000, guid: 6ac16c707a25fdb43882de47804506f4, type: 2}
+  - {fileID: 11400000, guid: d984649b363e76746b9dfc733e05c298, type: 2}

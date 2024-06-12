@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
@@ -11,19 +12,20 @@ namespace Atomic.AbilitySystem
     public abstract class AbstractAbilitySpec
     {
         public delegate void ApplyGameplayEffectEvent(GameplayEffectSpec effectSpec);
-        public ApplyGameplayEffectEvent OnApplyGameplayEffect; 
+
+        public ApplyGameplayEffectEvent OnApplyGameplayEffect;
 
         public readonly AbstractAbilityScriptableObject Ability;
         protected readonly AbilitySystemController Owner;
         public float Level;
         public bool isActive;
-        
+
         public AbstractAbilitySpec(AbstractAbilityScriptableObject ability, AbilitySystemController owner)
         {
             Ability = ability;
             Owner = owner;
         }
-        
+
         public virtual IEnumerator TryActivateAbility()
         {
             if (!CanActivateAbility()) yield break;
@@ -32,15 +34,14 @@ namespace Atomic.AbilitySystem
             yield return PreActivate();
             yield return ActivateAbility();
             EndAbility();
-
         }
 
         protected virtual bool CanActivateAbility()
         {
             return !isActive
-                    && CheckGameplayTags()
-                    && CheckCost()
-                    && CheckCooldown().TimeRemaining <= 0;
+                   && CheckGameplayTags()
+                   && CheckCost()
+                   && CheckCooldown().TimeRemaining <= 0;
         }
 
         public abstract void CancelAbility();
@@ -56,31 +57,33 @@ namespace Atomic.AbilitySystem
             float longestCooldown = 0f;
 
             // Check if the cooldown tag is granted to the player, and if so, capture the remaining duration for that tag
-            for (var i = 0; i < this.Owner.appliedGameplayEffects.Count; i++)
+            foreach (var appliedGameplayEffect in Owner.appliedGameplayEffects)
             {
-                var grantedTags = this.Owner.appliedGameplayEffects[i].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
-                for (var iTag = 0; iTag < grantedTags.Length; iTag++)
+                var grantedTags = appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags
+                    .grantedTags;
+                foreach (var grantedTag in grantedTags)
                 {
-                    for (var iCooldownTag = 0; iCooldownTag < cooldownTags.Length; iCooldownTag++)
+                    foreach (var coolDownTag in cooldownTags)
                     {
-                        if (grantedTags[iTag] == cooldownTags[iCooldownTag])
+                        if (grantedTag == coolDownTag)
                         {
                             // If this is an infinite GE, then return null to signify this is on CD
-                            if (this.Owner.appliedGameplayEffects[i].spec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy == EDurationPolicy.Infinite) return new AbilityCooldownTime()
-                            {
-                                TimeRemaining = float.MaxValue,
-                                TotalDuration = 0
-                            };
+                            if (appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffect
+                                    .durationPolicy == EDurationPolicy.Infinite)
+                                return new AbilityCooldownTime()
+                                {
+                                    TimeRemaining = float.MaxValue,
+                                    TotalDuration = 0
+                                };
 
-                            var durationRemaining = this.Owner.appliedGameplayEffects[i].spec.DurationRemaining;
+                            var durationRemaining = appliedGameplayEffect.spec.DurationRemaining;
 
                             if (durationRemaining > longestCooldown)
                             {
                                 longestCooldown = durationRemaining;
-                                maxDuration = this.Owner.appliedGameplayEffects[i].spec.TotalDuration;
+                                maxDuration = appliedGameplayEffect.spec.TotalDuration;
                             }
                         }
-
                     }
                 }
             }
@@ -121,7 +124,8 @@ namespace Atomic.AbilitySystem
             if (this.Ability.cost == null) return true;
             var geSpec = this.Owner.MakeOutgoingSpec(this.Ability.cost, this.Level);
             // If this isn't an instant cost, then assume it passes cooldown check
-            if (geSpec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy != EDurationPolicy.Instant) return true;
+            if (geSpec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy !=
+                EDurationPolicy.Instant) return true;
 
             for (var i = 0; i < geSpec.GameplayEffectScriptableObject.gameplayEffect.modifiers.Length; i++)
             {
@@ -129,14 +133,15 @@ namespace Atomic.AbilitySystem
 
                 // Only worry about additive.  Anything else passes.
                 if (modifier.modifierOperator != EAttributeModifier.Add) continue;
-                var costValue = (modifier.modifierMagnitude.CalculateMagnitude(geSpec) * modifier.multiplier).GetValueOrDefault();
+                var costValue = (modifier.modifierMagnitude.CalculateMagnitude(geSpec) * modifier.multiplier)
+                    .GetValueOrDefault();
 
                 this.Owner.AttributeSystemComponent.GetAttributeValue(modifier.attribute, out var attributeValue);
 
                 // The total attribute after accounting for cost should be >= 0 for the cost check to succeed
                 if (attributeValue.currentValue + costValue < 0) return false;
-
             }
+
             return true;
         }
 
@@ -150,7 +155,7 @@ namespace Atomic.AbilitySystem
         {
             // If the input ASC is not valid, assume check passed
             if (!asc) return true;
-
+            
             for (var iAbilityTag = 0; iAbilityTag < tags.Length; iAbilityTag++)
             {
                 var abilityTag = tags[iAbilityTag];
@@ -158,7 +163,8 @@ namespace Atomic.AbilitySystem
                 bool requirementPassed = false;
                 for (var iAsc = 0; iAsc < asc.appliedGameplayEffects.Count; iAsc++)
                 {
-                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
+                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec
+                        .GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
                     for (var iAscTag = 0; iAscTag < ascGrantedTags.Length; iAscTag++)
                     {
                         if (ascGrantedTags[iAscTag] == abilityTag)
@@ -167,9 +173,11 @@ namespace Atomic.AbilitySystem
                         }
                     }
                 }
+
                 // If any ability tag wasn't found, requirements failed
                 if (!requirementPassed) return false;
             }
+
             return true;
         }
 
@@ -191,7 +199,8 @@ namespace Atomic.AbilitySystem
                 bool requirementPassed = true;
                 for (var iAsc = 0; iAsc < asc.appliedGameplayEffects.Count; iAsc++)
                 {
-                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
+                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec
+                        .GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
                     for (var iAscTag = 0; iAscTag < ascGrantedTags.Length; iAscTag++)
                     {
                         if (ascGrantedTags[iAscTag] == abilityTag)
@@ -200,11 +209,12 @@ namespace Atomic.AbilitySystem
                         }
                     }
                 }
+
                 // If any ability tag wasn't found, requirements failed
                 if (!requirementPassed) return false;
             }
+
             return true;
         }
     }
-
 }

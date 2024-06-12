@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Atomic.AbilitySystem;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -43,7 +39,6 @@ namespace Atomic.Character
         
         //  Fields ----------------------------------------
         
-        private Dictionary<AttributeScriptableObject, Action> ActionOnAttributeChanged = new(16);
         
         //  Initialization  -------------------------------
         public override void Initialize()
@@ -59,16 +54,7 @@ namespace Atomic.Character
                 SwitchCombatMode();
                 SwitchAnimatorMatchWithWeapon();
                 
-                ActionOnAttributeChanged.Add(speedAttribute, OnSpeedChanged);
-                ActionOnAttributeChanged.Add(healthAttribute, OnHealthChanged);
-
-                AttributeSystemComponent.onAttributeChanged += (attribute) =>
-                {
-                    if (ActionOnAttributeChanged.TryGetValue(attribute, out var action))
-                    {
-                        action?.Invoke();
-                    }
-                };
+                
             }
         }
         
@@ -236,17 +222,7 @@ namespace Atomic.Character
         #endregion
         
         //  Event Handlers --------------------------------
-        private void OnSpeedChanged()
-        {
-            AttributeSystemComponent.GetAttributeValue(speedAttribute, out var speedRatio);
-            SpeedRatio = speedRatio.currentValue;
-            AgentAnimatorController.Animator.speed = speedRatio.currentValue;
-        }
-
-        private void OnHealthChanged()
-        {
-            
-        }
+        
         
     }
 }

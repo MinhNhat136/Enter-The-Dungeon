@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 807aefb8dd4774f48a23d9142cbebd57, type: 3}
+  m_Script: {fileID: 11500000, guid: 9eaed5bf30c059041af77b64de75cbe3, type: 3}
   m_Name: StabilityRatio
   m_EditorClassIdentifier: 
-  attributeName: Stability Ratio
+  attributeName: 
   color: {r: 0.54509807, g: 0.27058825, b: 0.07450981, a: 0.003921569}
+  attribute: {fileID: 11400000, guid: 9e06d86711ed4734cb9c7e3e437c52b8, type: 2}
+  gradient: -0.01
+  offset: 1

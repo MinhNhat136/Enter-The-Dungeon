@@ -1,7 +1,9 @@
 ﻿using CBS.Models;
 using CBS.Scriptable;
 using CBS.Utils;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CBS.UI
@@ -9,15 +11,15 @@ namespace CBS.UI
     public class ProfileIcon : MonoBehaviour
     {
         [SerializeField]
-        private Text NickNameLabel;
+        private TextMeshProUGUI nickNameLabel;
         [SerializeField]
-        private Text LevelLabel;
+        private TextMeshProUGUI levelLabel;
         [SerializeField]
-        private Text ExpLabel;
+        private TextMeshProUGUI expLabel;
         [SerializeField]
-        private Slider ExpSlider;
+        private Slider expSlider;
         [SerializeField]
-        private AvatarDrawer Avatar;
+        private AvatarDrawer avatar;
 
         private IProfile CBSProfile { get; set; }
         private ProfilePrefabs Prefabs { get; set; }
@@ -62,7 +64,7 @@ namespace CBS.UI
 
         private void DisplayName()
         {
-            NickNameLabel.text = CBSProfile.DisplayName;
+            nickNameLabel.text = CBSProfile.DisplayName;
         }
 
         private void DrawAvatar()
@@ -72,24 +74,24 @@ namespace CBS.UI
             var avatarID = CBSProfile.Avatar.AvatarID;
             var profileID = CBSProfile.ProfileID;
             if (DisplayOption == AvatarDisplayOptions.ONLY_DEFAULT)
-                Avatar.DisplayDefaultAvatar();
+                avatar.DisplayDefaultAvatar();
             else if (DisplayOption == AvatarDisplayOptions.LOAD_AVATAR_URL)
-                Avatar.LoadAvatarFromUrl(avatarUrl, profileID);
+                avatar.LoadAvatarFromUrl(avatarUrl, profileID);
             else if (DisplayOption == AvatarDisplayOptions.LOAD_AVATAR_SPRITE)
-                Avatar.DisplaySpriteAvatar(avatarID);
+                avatar.DisplaySpriteAvatar(avatarID);
         }
 
         private void DisplayLevelData()
         {
             var levelData = CBSProfile.CachedLevelInfo;
-            LevelLabel.text = levelData.CurrentLevel.ToString();
+            levelLabel.text = levelData.CurrentLevel.ToString();
 
             int curExp = levelData.CurrentExp;
             int nextExp = levelData.NextLevelExp;
             int prevExp = levelData.PrevLevelExp;
             float expVal = (float)(curExp - prevExp) / (float)(nextExp - prevExp);
-            ExpLabel.text = curExp.ToString() + "/" + nextExp.ToString();
-            ExpSlider.value = expVal;
+            expLabel.text = curExp.ToString() + "/" + nextExp.ToString();
+            expSlider.value = expVal;
         }
 
         // button click

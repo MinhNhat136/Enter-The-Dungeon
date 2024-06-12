@@ -1,6 +1,8 @@
+using System;
 using System.Linq;
 using Atomic.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
@@ -24,15 +26,6 @@ namespace Atomic.Character
         public float AngleWeight { get; set; }
         public float AgeWeight { get; set; }
         public int MaxNumberTarget { get; set; }
-        public ISensorController VisionSensor => visionSensor;
-
-        public GameObject Target => _bestMemory.gameObject;
-
-        public Vector3 TargetPosition => _bestMemory.position;
-
-        public bool TargetInSight => _bestMemory.Age < 0.5f;
-
-        public float TargetDistance => _bestMemory.distance;
 
         public bool IsInitialized => _isInitialized;
 
@@ -42,7 +35,7 @@ namespace Atomic.Character
         private GameObject[] _targets;
 
         //  Fields ----------------------------------------
-        [SerializeField] private TargetingConfig _targetingConfig;
+        [FormerlySerializedAs("_targetingConfig")] [SerializeField] private TargetingConfig targetingConfig;
 
         private AiMemoryController _memoryController;
         protected AiVisionSensorController visionSensor;
@@ -62,7 +55,7 @@ namespace Atomic.Character
                 visionSensor = _model.VisionController;
                 _memoryController = _model.MemoryController;
 
-                _targetingConfig.Assign(this);
+                targetingConfig.Assign(this);
                 _targets = new GameObject[MaxNumberTarget];
             }
         }
@@ -73,7 +66,10 @@ namespace Atomic.Character
         }
 
         //  Unity Methods   -------------------------------
-
+        public void Update()
+        {
+            FindTarget();
+        }
 
         //  Other Methods ---------------------------------
 

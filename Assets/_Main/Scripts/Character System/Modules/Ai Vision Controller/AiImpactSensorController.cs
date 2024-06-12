@@ -15,11 +15,8 @@ namespace Atomic.Character
     {
         
         //  Events ----------------------------------------
-        public event Action<Vector3> OnImpact; 
 
         //  Properties ------------------------------------
-        public Vector3 ImpactDirection { get; set; }
-        public float ImpactValue { get; set; }
         public BodyPartType ImpactPart { get; set; }
         
         public bool IsInitialized { get; private set; }
@@ -89,11 +86,6 @@ namespace Atomic.Character
         }
 
         //  Event Handlers --------------------------------
-        public void Impact()
-        {
-            OnImpact?.Invoke(ImpactDirection * ImpactValue);
-        }
-        
         
     }
     

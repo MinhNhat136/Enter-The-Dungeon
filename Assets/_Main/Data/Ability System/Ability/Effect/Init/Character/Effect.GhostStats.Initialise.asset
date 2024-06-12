@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d63ebc204d09f4198e64f1d9b03de0, type: 3}
+  m_Name: Effect.GhostStats.Initialise
+  m_EditorClassIdentifier: 
+  gameplayEffect:
+    durationPolicy: 0
+    durationModifier: {fileID: 0}
+    durationMultiplier: 0
+    modifiers:
+    - attribute: {fileID: 11400000, guid: 7e6a4862fb42541409ed16d4363a952f, type: 2}
+      modifierOperator: 0
+      modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
+      multiplier: 500
+    - attribute: {fileID: 11400000, guid: b5b2b20c092900245a071a0c7208cfab, type: 2}
+      modifierOperator: 0
+      modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
+      multiplier: 100
+    - attribute: {fileID: 11400000, guid: bd215916c9ab34446b6b155232b035d9, type: 2}
+      modifierOperator: 0
+      modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
+      multiplier: 1
+    conditionalGameplayEffects: []
+  gameplayEffectTags:
+    assetTag: {fileID: 11400000, guid: 27cb83bd59be35e48a28192737f42d48, type: 2}
+    grantedTags: []
+    removeGameplayEffectsWithTag: []
+    applicationTagRequirements:
+      requireTags: []
+      ignoreTags: []
+    ongoingTagRequirements:
+      requireTags: []
+      ignoreTags: []
+  gameplayEffectPeriod:
+    period: 0
+    executeOnApplication: 0

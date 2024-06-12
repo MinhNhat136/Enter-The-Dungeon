@@ -10,13 +10,12 @@ namespace Atomic.AbilitySystem
         public string AnimationName { get; private set; }
         
         [field: SerializeField]
+        public AnimationClip AnimationClip { get; private set; }
+        
+        [field: SerializeField]
         public float AttackMoveSpeed { get; private set; }
-        
-        [field: SerializeField]
-        public float DelayResetCombo { get; private set; }
-        
-        [field: SerializeField]
-        public HitAbilityScriptableObject HitAbility { get; private set; }
+
+        public GameplayEffectScriptableObject[] gameplayEffects;
 
         [field: SerializeField]
         public LayerMask TargetLayerMask { get; private set; }
@@ -26,27 +25,45 @@ namespace Atomic.AbilitySystem
             var abstractMeleeAttackSpec = (AbstractMeleeAttackSpec)CreateSpec(source);
             abstractMeleeAttackSpec.sourcePoint = sourcePoint;
             abstractMeleeAttackSpec.Level = source.Level;
-            abstractMeleeAttackSpec.hitAbilitySo = HitAbility;
+            abstractMeleeAttackSpec.abilitySo = this;
             abstractMeleeAttackSpec.targetLayerMask = TargetLayerMask;
+            foreach (var eventOnActivate in eventOnActivates)
+            {
+                abstractMeleeAttackSpec.OnApplyGameplayEffect += eventOnActivate.PreApplyEffectSpec;
+            }
             return abstractMeleeAttackSpec;
         }
         
         public abstract class AbstractMeleeAttackSpec : AbstractAbilitySpec
         {
-            public HitAbilityScriptableObject hitAbilitySo;
+            public AbstractMeleeAttackAbilityScriptableObject abilitySo;
             public Transform sourcePoint;
             public LayerMask targetLayerMask;
-
+            
             private bool _canTick;
-            protected readonly List<AbilitySystemController> AffectedControllers = new(16);
-
+            protected int numCollide;
+            private readonly List<AbilitySystemController> _affectedControllers = new(16);
+            protected readonly Collider[] Colliders;
+            
             protected AbstractMeleeAttackSpec(AbstractAbilityScriptableObject ability, AbilitySystemController owner) : base(ability, owner)
             {
+                Colliders = new Collider[32];
             }
             
             protected override IEnumerator PreActivate()
             {
                 _canTick = true;
+                if (Ability.cooldown)
+                {
+                    var cdSpec = Owner.MakeOutgoingSpec(Ability.cooldown);
+                    Owner.ApplyGameplayEffectSpecToSelf(cdSpec);
+                }
+
+                if (Ability.cost)
+                {
+                    var costSpec = Owner.MakeOutgoingSpec(Ability.cost);
+                    Owner.ApplyGameplayEffectSpecToSelf(costSpec);
+                }
                 yield return null; 
             }
 
@@ -54,16 +71,36 @@ namespace Atomic.AbilitySystem
             {
                 while (_canTick)
                 {
-                    CastHits();
+                    CheckHits();
+                    ApplyEffects();
                     yield return null;
                 }
             }
 
             public override void CancelAbility() => _canTick = false;
 
-            protected override void EndAbility() => AffectedControllers.Clear();
+            protected override void EndAbility() => _affectedControllers.Clear();
 
-            protected abstract void CastHits();
+            protected abstract void CheckHits();
+
+            private void ApplyEffects()
+            {
+                for (int indexCollide = 0; indexCollide < numCollide; indexCollide++)
+                {
+                    var factor = Colliders[indexCollide].GetComponentInParent<AbilitySystemController>();
+                    if (!factor || _affectedControllers.Contains(factor)) continue;
+                    if (factor == Owner) continue;
+                    _affectedControllers.Add(factor);
+                    for (int index = 0; index < abilitySo!.gameplayEffects.Length; index++)
+                    {
+                        var effectSpec = Owner.MakeOutgoingSpec(abilitySo!.gameplayEffects[index])
+                            .SetTarget(factor).SetIndex(index);
+                        OnApplyGameplayEffect?.Invoke(effectSpec);
+                        factor.ApplyGameplayEffectSpecToSelf(effectSpec);
+                    }
+                }
+                
+            }
         }
     }
 }

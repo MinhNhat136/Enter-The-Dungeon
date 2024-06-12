@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a23fb7e5e7b3e4f95ebb4334c9c4f7, type: 3}
   m_Name: LinkedScriptableData
   m_EditorClassIdentifier: 
-  AssetList: []
+  AssetList:
+  - ID: BW
+    Asset: {fileID: 11400000, guid: 43005c196f260914f8f905b9b00db926, type: 2}
+  - ID: CN
+    Asset: {fileID: 11400000, guid: 43005c196f260914f8f905b9b00db926, type: 2}

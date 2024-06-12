@@ -13,17 +13,21 @@ MonoBehaviour:
   m_Name: ItemsIcons
   m_EditorClassIdentifier: 
   AllSprites:
+  - ID: NC
+    Sprite: {fileID: 21300000, guid: 30bdd32f12b9a4aa2a30001178f0679c, type: 3}
+  - ID: Random01
+    Sprite: {fileID: 21300000, guid: 30bdd32f12b9a4aa2a30001178f0679c, type: 3}
   - ID: BW
     Sprite: {fileID: 21300000, guid: 3a9a0c0ad40c80644b007446c8236f7f, type: 2}
   - ID: SP
     Sprite: {fileID: 21300000, guid: ac084a985c5e2b44ebffe3180b6dceac, type: 2}
   - ID: CN
     Sprite: {fileID: 21300000, guid: d3374e650ececd04db08be3d1c3fefc0, type: 2}
-  - ID: NC
-    Sprite: {fileID: 21300000, guid: e65c06a19a0947041b6020bfb7584c6a, type: 2}
-  - ID: SW
-    Sprite: {fileID: 21300000, guid: 26a69621b2a36e14c9b4793d1d34316b, type: 2}
-  - ID: HM
-    Sprite: {fileID: 21300000, guid: cdff0f46f159d0746989aa69f8bc29b2, type: 2}
-  - ID: SG
-    Sprite: {fileID: 21300000, guid: f2ae4048374f415469ee9c48269c2667, type: 2}
+  - ID: 'RandomWeapon-01 '
+    Sprite: {fileID: 21300000, guid: 30bdd32f12b9a4aa2a30001178f0679c, type: 3}
+  - ID: random01
+    Sprite: {fileID: 21300000, guid: 30bdd32f12b9a4aa2a30001178f0679c, type: 3}
+  - ID: chest01
+    Sprite: {fileID: 21300000, guid: 30bdd32f12b9a4aa2a30001178f0679c, type: 3}
+  - ID: chest02
+    Sprite: {fileID: 21300000, guid: eac11acede93246e2b55838994ee8c35, type: 3}

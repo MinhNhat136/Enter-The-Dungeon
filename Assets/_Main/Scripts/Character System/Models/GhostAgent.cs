@@ -5,15 +5,9 @@ namespace Atomic.Character
 {
     public class GhostAgent : EnemyAgent
     {
-        public new bool CanPerformAttack => Time.time - timeLastAttack > 6 &&
-                                            base.CanPerformAttack;
-
-        public bool CanPerformDive => Time.time - TimeLastDiving > 8 && 
-                                      base.CanPerformAttack;
-
         public bool IsDiving;
-        public float TimeLastDiving;
-        
+        public float LastDivingTime { get; private set; }
+        public float SinceLastDivingTime => Time.time - LastDivingTime;
         
         public void ApplyFloat()
         {
@@ -22,7 +16,7 @@ namespace Atomic.Character
 
         public void ApplyRise()
         {
-            TimeLastDiving = Time.time;
+            LastDivingTime = Time.time;
         }
 
         public void ApplyDive()

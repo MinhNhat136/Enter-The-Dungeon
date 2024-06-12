@@ -22,14 +22,17 @@ namespace Atomic.AbilitySystem
         
         public AbstractAbilitySpec CreateSpec(AbilitySystemController source, Vector3 hitPoint, Vector3 hitDirection)
         {
-            var hitAbilitySpec = (AbstractRangeCastAbilitySpec)CreateSpec(source);
-            hitAbilitySpec.Level = source.Level;
-            hitAbilitySpec.hitPoint = hitPoint;
-            hitAbilitySpec.hitDirection = hitDirection;
-            hitAbilitySpec.targetLayerMask = TargetLayerMask;
-            hitAbilitySpec.hitVFXPool = HitVFXPool;
-            if (eventOnActivate) hitAbilitySpec.OnApplyGameplayEffect += eventOnActivate.PreApplyEffectSpec;
-            return hitAbilitySpec;
+            var abilitySpec = (AbstractRangeCastAbilitySpec)CreateSpec(source);
+            abilitySpec.Level = source.Level;
+            abilitySpec.hitPoint = hitPoint;
+            abilitySpec.hitDirection = hitDirection;
+            abilitySpec.targetLayerMask = TargetLayerMask;
+            abilitySpec.hitVFXPool = HitVFXPool;
+            foreach (var eventOnActivate in eventOnActivates)
+            {
+                abilitySpec.OnApplyGameplayEffect += eventOnActivate.PreApplyEffectSpec;
+            }
+            return abilitySpec;
         }
 
         public override void Initialize()
@@ -68,7 +71,7 @@ namespace Atomic.AbilitySystem
 
         private void OnDestroyVFX(ParticleSystem vfx)
         {
-            Destroy(vfx.gameObject);
+            Destroy(vfx);
         }
 
         private IEnumerator DelayReleaseVFX(ParticleSystem vfx)

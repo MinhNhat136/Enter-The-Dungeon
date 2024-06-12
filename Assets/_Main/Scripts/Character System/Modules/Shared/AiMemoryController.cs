@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ namespace Atomic.Character
 
         //  Properties ------------------------------------
         public List<AiMemoryObject> Memories => memories;
+
         public float MemorySpan
         {
             get; set; 
@@ -71,7 +73,7 @@ namespace Atomic.Character
 
         public void ForgetMemory()
         {
-            memories.RemoveAll(memory => memory.Age > _memorySpan);
+            memories.RemoveAll(memory => memory.Age > _memorySpan) ;
         }
 
         //  Event Handlers --------------------------------

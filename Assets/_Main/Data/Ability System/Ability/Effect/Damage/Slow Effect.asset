@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d63ebc204d09f4198e64f1d9b03de0, type: 3}
+  m_Name: Slow Effect
+  m_EditorClassIdentifier: 
+  gameplayEffect:
+    durationPolicy: 2
+    durationModifier: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
+    durationMultiplier: 5
+    modifiers:
+    - attribute: {fileID: 11400000, guid: bd215916c9ab34446b6b155232b035d9, type: 2}
+      modifierOperator: 0
+      modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
+      multiplier: -0.4
+    conditionalGameplayEffects: []
+  gameplayEffectTags:
+    assetTag: {fileID: 11400000, guid: 4a1d7c7343d68fe4f8ea2fd9381407e4, type: 2}
+    grantedTags:
+    - {fileID: 11400000, guid: 4a1d7c7343d68fe4f8ea2fd9381407e4, type: 2}
+    removeGameplayEffectsWithTag:
+    - {fileID: 11400000, guid: 4a1d7c7343d68fe4f8ea2fd9381407e4, type: 2}
+    applicationTagRequirements:
+      requireTags: []
+      ignoreTags: []
+    ongoingTagRequirements:
+      requireTags: []
+      ignoreTags: []
+  gameplayEffectPeriod:
+    period: 0
+    executeOnApplication: 0

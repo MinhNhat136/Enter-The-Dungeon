@@ -4,8 +4,10 @@ using Atomic.AbilitySystem;
 using Atomic.Core;
 using Atomic.Core.Interface;
 using Atomic.Equipment;
+using NodeCanvas.BehaviourTrees;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
@@ -24,15 +26,6 @@ namespace Atomic.Character
         SwapWeapon = 1 << 7,
     }
 
-    public enum AgentCondition
-    {
-        Normal  = 1 << 0, 
-        Hit = 1 << 1,
-        Stun = 1 << 2,
-        Break = 1 << 3,
-        Knockdown = 1 << 4, 
-    }
-
     public enum SurvivalState
     {
         Revive,
@@ -48,8 +41,7 @@ namespace Atomic.Character
         typeof(AiAbilityController))]
     [RequireComponent(
         typeof(AiImpactSensorController),
-        typeof(AiVisionSensorController),
-        typeof(AiImpactReactionController))]
+        typeof(AiVisionSensorController))]
     public abstract class BaseAgent : MonoBehaviour, IInitializable, ICharacterActionTrigger
     {
         //  Events ----------------------------------------
@@ -71,18 +63,22 @@ namespace Atomic.Character
         public CharacterActionType CurrentActionState { get; set; }
         public CombatMode CurrentCombatMode { get; set; }
         public SurvivalState SurvivalState { get; set; } = SurvivalState.Revive;
-        public AgentCondition AgentCondition { get; set; } = AgentCondition.Normal;
         
         private Collider AgentCollider { get; set; }
-        public Vector3 ImpactHit { get; set; }
         public AiBodyPart[] BodyParts { get; set; } 
         public float Height { get; private set; }
         public float Width { get; private set; }
         public float SpeedRatio { get; protected set; }
         public float StabilityRatio { get; protected set; }
+        public float Health { get; private set; }
+        public Vector3 ImpactDirection { get; private set; }
 
         public bool IsMovement => !Mathf.Approximately(MotorController.MoveInput.sqrMagnitude, 0f);
+        
         public float LastAttackTime { get; set; }
+        public float LastImpactTime { get; set; }
+        public float SinceLastImpactTime => Time.time - LastImpactTime;
+        public float SinceLastAttackTime => Time.time - LastAttackTime;
         
         private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
 
@@ -100,18 +96,16 @@ namespace Atomic.Character
             protected set => _targetingController = value;
         }
         protected AiWeaponVisualsController WeaponVisualsController => _weaponVisualsController;
+        private Dictionary<AttributeScriptableObject, Action> ActionOnAttributeChanged = new(16);
         
         //  Collections -----------------------------------
         
         //  Fields ----------------------------------------
-        [SerializeField] 
-        public AiConfig config; 
-        
         [HideInInspector] 
         public Transform modelTransform;
 
-        [Header("SPEC")]
-        public AttributeScriptableObject stabilityRatio;
+        [FormerlySerializedAs("stabilityRatio")] [Header("SPEC")]
+        public AttributeScriptableObject stabilityAttribute;
         public AttributeScriptableObject speedAttribute;
         public AttributeScriptableObject healthAttribute; 
         
@@ -123,8 +117,8 @@ namespace Atomic.Character
         private ITargetingController _targetingController;
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
-        private AiImpactReactionController _impactReactionController;
         private AiMemoryController _memoryController;
+        private BehaviourTreeOwner _behaviourTreeOwner;
         
         //  Initialization  -------------------------------
         public virtual void Initialize()
@@ -148,6 +142,20 @@ namespace Atomic.Character
                 
             AssignControllers();
             
+            AiAbilityController.abilitySystemController.onApplyGameplayEffect += OnGameplayEffectApply;
+            
+            ActionOnAttributeChanged.Add(speedAttribute, OnSpeedChanged);
+            ActionOnAttributeChanged.Add(healthAttribute, OnHealthChanged);
+            ActionOnAttributeChanged.Add(stabilityAttribute, OnStabilityChanged);
+                
+            AttributeSystemComponent.onAttributeChanged += (attribute) =>
+            {
+                if (ActionOnAttributeChanged.TryGetValue(attribute, out var action))
+                {
+                    action?.Invoke();
+                }
+            };
+
         }
         
         public void RequireIsInitialized()
@@ -169,7 +177,6 @@ namespace Atomic.Character
             Command = 0;
             SurvivalState = SurvivalState.Dead;
             CurrentActionState = DefaultActionState;
-            AgentCondition = AgentCondition.Normal;
             NavmeshAgent.enabled = false;
         }
 
@@ -188,13 +195,12 @@ namespace Atomic.Character
             _attributeSystemComponent = GetComponent<AttributeSystemComponent>();
             
             this.AttachControllerToModel(out _aiAbilityController);
-            this.AttachControllerToModel(out _agentAnimatorController);
             this.AttachControllerToModel(out _visionController);
             this.AttachControllerToModel(out _impactSensorController);
             this.AttachControllerToModel(out _motorController);
             this.AttachControllerToModel(out _targetingController);
             this.AttachControllerToModel(out _weaponVisualsController);
-            this.AttachControllerToModel(out _impactReactionController);
+            this.AttachControllerToModel(out _agentAnimatorController);
         }
         
         #region Behaviour
@@ -203,6 +209,12 @@ namespace Atomic.Character
         public virtual void ApplyDirection() => MotorController.ApplyDirection();
         public virtual void SetEnableNavMeshAgent(bool value) => NavmeshAgent.enabled = value;
         public virtual void SetEnableAgentCollider(bool value) => AgentCollider.enabled = value;
+        public void CalculateDirectionToTarget(BaseAgent targetAgent)
+        {
+            var directionToTarget = (targetAgent.transform.position - transform.position);
+            var moveInput = new Vector2(directionToTarget.x, directionToTarget.z);
+            MotorController.MoveInput = moveInput;
+        }
         
         // Movement Behaviour
         public virtual void ApplyStop() => MotorController.LocomotionController.ApplyStop();
@@ -246,11 +258,7 @@ namespace Atomic.Character
         }
         
         public virtual void CustomActionAttack() => MotorController.CombatController.CustomAction();
-        public virtual void RemoveAllReaction()
-        {
-            AgentCondition = AgentCondition.Normal;
-            ImpactHit = Vector3.zero;
-        }
+        
         
         // Swap weapon
         public virtual void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
@@ -277,6 +285,43 @@ namespace Atomic.Character
             {
                 trigger.Invoke();
             }
+        }
+
+        private void OnGameplayEffectApply(GameplayEffectSpec effectSpec)
+        {
+            if (!effectSpec.Source)
+            {
+                ImpactDirection = Vector3.zero;
+                return;
+            }
+
+            ImpactDirection = transform.position - effectSpec.Source.transform.position ;
+        } 
+
+        private void OnSpeedChanged()
+        {
+            AttributeSystemComponent.GetAttributeValue(speedAttribute, out var speedRatio);
+            SpeedRatio = speedRatio.currentValue;
+            AgentAnimatorController.Animator.speed = speedRatio.currentValue;
+
+            _motorController.MoveSpeed = Mathf.Lerp(0, _motorController.MaxMoveSpeed, speedRatio.currentValue);
+            _motorController.RotationSpeed = Mathf.Lerp(0, _motorController.MaxRotationSpeed, speedRatio.currentValue);
+        }
+
+        private void OnStabilityChanged()
+        {
+            LastImpactTime = Time.time;
+            AttributeSystemComponent.GetAttributeValue(stabilityAttribute, out var stabilityRatio);
+            StabilityRatio = stabilityRatio.currentValue;
+        }
+
+        private void OnHealthChanged()
+        {
+            AttributeSystemComponent.GetAttributeValue(healthAttribute, out var health);
+            Health = health.currentValue;
+            if (health.currentValue <= 0) 
+                Health = 0;
+            
         }
     }
 }

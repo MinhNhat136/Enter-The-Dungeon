@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039b60b94b314173ba3a075c893f264d, type: 3}
+  m_Name: Spear Attack Ability 2
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityTags:
+    AssetTag: {fileID: 0}
+    CancelAbilitiesWithTags: []
+    BlockAbilitiesWithTags: []
+    ActivationOwnedTags: []
+    OwnerTags:
+      requireTags: []
+      ignoreTags: []
+    SourceTags:
+      requireTags: []
+      ignoreTags: []
+    TargetTags:
+      requireTags: []
+      ignoreTags: []
+  cost: {fileID: 0}
+  cooldown: {fileID: 0}
+  eventOnActivates:
+  - {fileID: 11400000, guid: 375412453059da2408d60afecba7e5a1, type: 2}
+  - {fileID: 11400000, guid: 013ba88c68e4d724db1664d3bea43e3d, type: 2}
+  <AnimationName>k__BackingField: attack_2
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: 97cff549972122c4e8fec25af67d05ac, type: 2}
+  <AttackMoveSpeed>k__BackingField: 3
+  gameplayEffects:
+  - {fileID: 11400000, guid: 68b66f296dc058f42b5ac02cab8051a4, type: 2}
+  - {fileID: 11400000, guid: d5eed0298fedc5748b42ddbfd47f32aa, type: 2}
+  <TargetLayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 1024
+  <CapsuleCastRadius>k__BackingField: 0.4
+  <CapsuleCastHeight>k__BackingField: 2.5

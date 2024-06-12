@@ -1,4 +1,3 @@
-using Atomic.Core;
 using UnityEngine;
 
 namespace Atomic.AbilitySystem
@@ -32,23 +31,7 @@ namespace Atomic.AbilitySystem
                 return true;
             }
             
-            protected override void CastHits()
-            {
-                var hitColliders = Physics.OverlapSphere(sourcePoint.transform.position, SphereCastRadius, targetLayerMask);
-                foreach (var coll in hitColliders)
-                {
-                    var factor = coll.GetComponentInParent<AbilitySystemController>();
-                    if (!factor || AffectedControllers.Contains(factor)) continue;
-                    if (factor == Owner) continue;
-                    AffectedControllers.Add(factor);
-                    var effectSpec = hitAbilitySo.CreateSpec(
-                        Owner,
-                        factor,
-                        coll.gameObject.transform.position,
-                        sourcePoint.forward);
-                    Coroutines.StartCoroutine(effectSpec.TryActivateAbility());
-                }
-            }
+            protected override void CheckHits() => numCollide = Physics.OverlapSphereNonAlloc(sourcePoint.transform.position, SphereCastRadius, Colliders, targetLayerMask);
         }
     }
 }

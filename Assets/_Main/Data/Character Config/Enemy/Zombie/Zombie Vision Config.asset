@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Zombie Vision Config
   m_EditorClassIdentifier: 
   Distance: 2.5
-  Angle: 180
+  Angle: 20
   Height: 3
   ScanFrequency: 60
   MaxObjectRemember: 4

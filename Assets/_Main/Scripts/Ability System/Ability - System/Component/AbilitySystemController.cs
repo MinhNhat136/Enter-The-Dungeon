@@ -1,54 +1,80 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Atomic.AbilitySystem
 {
     public class AbilitySystemController : MonoBehaviour
     {
-        [SerializeField]
-        protected AttributeSystemComponent attributeSystemComponent;
-        public AttributeSystemComponent AttributeSystemComponent 
-        { 
+        public delegate void NotifyGameplayEffectApply(GameplayEffectSpec gameplayEffectSpec);
+
+        public NotifyGameplayEffectApply onApplyGameplayEffect;
+
+        [SerializeField] protected AttributeSystemComponent attributeSystemComponent;
+
+        public AttributeSystemComponent AttributeSystemComponent
+        {
             get => attributeSystemComponent;
             set => attributeSystemComponent = value;
         }
-        public readonly List<GameplayEffectContainer> appliedGameplayEffects = new();
-        public readonly List<AbstractAbilitySpec> grantedAbilities = new();
+
+        public readonly List<GameplayEffectContainer> appliedGameplayEffects = new(16);
+        private readonly List<AbstractAbilitySpec> _grantedAbilities = new(16);
+        public AbstractApplyGameplayEffectEventHandler[] gameplayEffectEventHandlers;
         public float Level;
 
         public void GrantAbility(AbstractAbilitySpec spec)
         {
-            grantedAbilities.Add(spec);
+            _grantedAbilities.Add(spec);
         }
 
         public void RemoveAbilitiesWithTag(GameplayTagScriptableObject tag)
         {
-            for (var i = grantedAbilities.Count - 1; i >= 0; i--)
+            for (var i = _grantedAbilities.Count - 1; i >= 0; i--)
             {
-                if (grantedAbilities[i].Ability.abilityTags.AssetTag == tag)
+                if (_grantedAbilities[i].Ability.abilityTags.AssetTag == tag)
                 {
-                    grantedAbilities.RemoveAt(i);
+                    _grantedAbilities.RemoveAt(i);
+                }
+            }
+        }
+
+        private void RemoveGameplayEffectsWithTag(GameplayTagScriptableObject[] tagsToRemove)
+        {
+            for (int i = appliedGameplayEffects.Count - 1; i >= 0; i--)
+            {
+                var appliedEffect = appliedGameplayEffects[i];
+                var assetTag = appliedEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags.assetTag;
+                
+                if (tagsToRemove.Contains(assetTag))
+                {
+                    appliedGameplayEffects.RemoveAt(i);
                 }
             }
         }
         
-        /// <summary>
-        /// Applies the gameplay effect spec to self
-        /// </summary>
-        /// <param name="gameplayEffectSpec">GameplayEffectSpec to apply</param>
         public bool ApplyGameplayEffectSpecToSelf(GameplayEffectSpec gameplayEffectSpec)
         {
             if (gameplayEffectSpec == null) return true;
-            bool tagRequirementsOK = CheckTagRequirementsMet(gameplayEffectSpec);
+            
+            bool canApplyEffect = CheckTag(gameplayEffectSpec.GameplayEffectScriptableObject.gameplayEffectTags.applicationTagRequirements);
+            
+            if (canApplyEffect == false) return false;
 
-            if (tagRequirementsOK == false) return false;
+            var tagsToRemove = gameplayEffectSpec.GameplayEffectScriptableObject.gameplayEffectTags.removeGameplayEffectsWithTag;
+
+            if (tagsToRemove is { Length: > 0 })
+            {
+                RemoveGameplayEffectsWithTag(tagsToRemove);
+            }
             
             switch (gameplayEffectSpec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy)
             {
                 case EDurationPolicy.HasDuration:
                 case EDurationPolicy.Infinite:
-                    ApplyDurationalGameplayEffect(gameplayEffectSpec);
+                    ApplyInfiniteGameplayEffect(gameplayEffectSpec);
                     break;
                 case EDurationPolicy.Instant:
                     ApplyInstantGameplayEffect(gameplayEffectSpec);
@@ -57,40 +83,35 @@ namespace Atomic.AbilitySystem
 
             return true;
         }
-        
-        public GameplayEffectSpec MakeOutgoingSpec(GameplayEffectScriptableObject GameplayEffect, float? level = 1f)
+
+        public GameplayEffectSpec MakeOutgoingSpec(GameplayEffectScriptableObject gameplayEffect, float? level = 1f)
         {
-            level = level ?? this.Level;
+            level = level ?? Level;
             return GameplayEffectSpec.CreateNew(
-                gameplayEffect: GameplayEffect,
+                gameplayEffect: gameplayEffect,
                 source: this,
                 level: level.GetValueOrDefault(1));
         }
 
-        bool CheckTagRequirementsMet(GameplayEffectSpec geSpec)
+        bool CheckTag(GameplayTagRequireIgnoreContainer tags)
         {
-            // Build temporary list of all game tags currently applied
             var appliedTags = new List<GameplayTagScriptableObject>();
-            for (var i = 0; i < appliedGameplayEffects.Count; i++)
+            foreach (var appliedGameplayEffect in appliedGameplayEffects)
             {
-                appliedTags.AddRange(appliedGameplayEffects[i].spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags);
+                appliedTags.AddRange(appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags);
             }
 
-            // Every tag in the ApplicationTagRequirements.RequireTags needs to be in the character tags list
-            // In other words, if any tag in ApplicationTagRequirements.RequireTags is not present, requirement is not met
-            for (var i = 0; i < geSpec.GameplayEffectScriptableObject.gameplayEffectTags.applicationTagRequirements.requireTags.Length; i++)
+            foreach (var requireTag in tags.requireTags)
             {
-                if (!appliedTags.Contains(geSpec.GameplayEffectScriptableObject.gameplayEffectTags.applicationTagRequirements.requireTags[i]))
+                if (!appliedTags.Contains(requireTag))
                 {
                     return false;
                 }
             }
 
-            // No tag in the ApplicationTagRequirements.IgnoreTags must in the character tags list
-            // In other words, if any tag in ApplicationTagRequirements.IgnoreTags is present, requirement is not met
-            for (var i = 0; i < geSpec.GameplayEffectScriptableObject.gameplayEffectTags.applicationTagRequirements.ignoreTags.Length; i++)
+            foreach (var ignoreTag in tags.ignoreTags)
             {
-                if (appliedTags.Contains(geSpec.GameplayEffectScriptableObject.gameplayEffectTags.applicationTagRequirements.ignoreTags[i]))
+                if (appliedTags.Contains(ignoreTag))
                 {
                     return false;
                 }
@@ -101,10 +122,10 @@ namespace Atomic.AbilitySystem
 
         private void ApplyInstantGameplayEffect(GameplayEffectSpec spec)
         {
-            for (var i = 0; i < spec.GameplayEffectScriptableObject.gameplayEffect.modifiers.Length; i++)
+            foreach (var modifier in spec.GameplayEffectScriptableObject.gameplayEffect.modifiers)
             {
-                var modifier = spec.GameplayEffectScriptableObject.gameplayEffect.modifiers[i];
-                var magnitude = (modifier.modifierMagnitude.CalculateMagnitude(spec) * modifier.multiplier).GetValueOrDefault();
+                var magnitude = (modifier.modifierMagnitude.CalculateMagnitude(spec) * modifier.multiplier)
+                    .GetValueOrDefault();
                 var attribute = modifier.attribute;
                 AttributeSystemComponent.GetAttributeValue(attribute, out var attributeValue);
 
@@ -122,19 +143,22 @@ namespace Atomic.AbilitySystem
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-                this.AttributeSystemComponent.SetAttributeBaseValue(attribute, attributeValue.baseValue);
+
+                AttributeSystemComponent.SetAttributeBaseValue(attribute, attributeValue.baseValue);
             }
         }
-
-        private void ApplyDurationalGameplayEffect(GameplayEffectSpec spec)
+        
+        private void ApplyInfiniteGameplayEffect(GameplayEffectSpec spec)
         {
             var modifiersToApply = new List<GameplayEffectContainer.ModifierContainer>();
-            for (var i = 0; i < spec.GameplayEffectScriptableObject.gameplayEffect.modifiers.Length; i++) 
+
+            foreach (var modifier in spec.GameplayEffectScriptableObject.gameplayEffect.modifiers)
             {
-                var modifier = spec.GameplayEffectScriptableObject.gameplayEffect.modifiers[i];
-                var magnitude = (modifier.modifierMagnitude.CalculateMagnitude(spec) * modifier.multiplier).GetValueOrDefault();
+                var magnitude = (modifier.modifierMagnitude.CalculateMagnitude(spec) * modifier.multiplier)
+                    .GetValueOrDefault();
                 var attributeModifier = new AttributeModifier();
-                switch (modifier.modifierOperator) {
+                switch (modifier.modifierOperator)
+                {
                     case EAttributeModifier.Add:
                         attributeModifier.addValue = magnitude;
                         break;
@@ -145,20 +169,24 @@ namespace Atomic.AbilitySystem
                         attributeModifier.overrideValue = magnitude;
                         break;
                 }
-                modifiersToApply.Add(new GameplayEffectContainer.ModifierContainer() { Attribute = modifier.attribute, Modifier = attributeModifier });
+
+                modifiersToApply.Add(new GameplayEffectContainer.ModifierContainer()
+                    { Attribute = modifier.attribute, Modifier = attributeModifier });
+                appliedGameplayEffects.Add(new GameplayEffectContainer()
+                {
+                    spec = spec, modifiers = modifiersToApply.ToArray()
+                });
             }
-            appliedGameplayEffects.Add(new GameplayEffectContainer() { spec = spec, modifiers = modifiersToApply.ToArray() });
         }
 
         private void UpdateAttributeSystem()
         {
             // Set Current Value to Base Value (default position if there are no GE affecting that attribute)
-            for (var i = 0; i < appliedGameplayEffects.Count; i++)
+            foreach (var appliedGameplayEffect in appliedGameplayEffects)
             {
-                var modifiers = appliedGameplayEffects[i].modifiers;
-                for (var m = 0; m < modifiers.Length; m++)
+                var modifiers = appliedGameplayEffect.modifiers;
+                foreach (var modifier in modifiers)
                 {
-                    var modifier = modifiers[m];
                     AttributeSystemComponent.UpdateAttributeModifiers(modifier.Attribute, modifier.Modifier, out _);
                 }
             }
@@ -166,12 +194,13 @@ namespace Atomic.AbilitySystem
 
         private void TickGameplayEffects()
         {
-            for (var i = 0; i < appliedGameplayEffects.Count; i++)
+            foreach (var appliedGameplayEffect in appliedGameplayEffects)
             {
-                var gameplayEffect = appliedGameplayEffects[i].spec;
+                var gameplayEffect = appliedGameplayEffect.spec;
 
                 // Can't tick instant GE
-                if (gameplayEffect.GameplayEffectScriptableObject.gameplayEffect.durationPolicy == EDurationPolicy.Instant) continue;
+                if (gameplayEffect.GameplayEffectScriptableObject.gameplayEffect.durationPolicy ==
+                    EDurationPolicy.Instant) continue;
 
                 // Update time remaining.  Strictly, it's only really valid for durational GE, but calculating for infinite GE isn't harmful
                 gameplayEffect.UpdateRemainingDuration(Time.deltaTime);
@@ -187,7 +216,19 @@ namespace Atomic.AbilitySystem
 
         private void CleanGameplayEffects()
         {
-            appliedGameplayEffects.RemoveAll(x => x.spec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy == EDurationPolicy.HasDuration && x.spec.DurationRemaining <= 0);
+            appliedGameplayEffects.RemoveAll(x =>
+                x.spec.GameplayEffectScriptableObject.gameplayEffect.durationPolicy == EDurationPolicy.HasDuration &&
+                x.spec.DurationRemaining <= 0);
+        }
+
+        [Button]
+        private void ShowTag()
+        {
+            foreach (var appliedGameplayEffect in appliedGameplayEffects)
+            {
+                Debug.Log(appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags
+                    .assetTag);
+            }
         }
 
         private void Update()

@@ -1,6 +1,8 @@
 ﻿using CBS.Models;
 using CBS.Scriptable;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace CBS.UI
@@ -8,9 +10,9 @@ namespace CBS.UI
     public class CurrencySlot : MonoBehaviour
     {
         [SerializeField]
-        private Text ValueTitle;
+        private TextMeshProUGUI valueTitle;
         [SerializeField]
-        private Image IconImage;
+        private Image iconImage;
 
         private CBSCurrency Currency { get; set; }
         private CurrencyPrefabs Prefabs { get; set; }
@@ -24,8 +26,8 @@ namespace CBS.UI
         {
             Currency = currency;
             // draw ui
-            ValueTitle.text = Currency.ToString();
-            IconImage.sprite = Currency.GetSprite();
+            valueTitle.text = Currency.ToString();
+            iconImage.sprite = Currency.GetSprite();
         }
 
         public void UpdateCurrency(CBSCurrency currency)
@@ -33,7 +35,7 @@ namespace CBS.UI
             if (currency.Code == Currency.Code)
             {
                 Currency = currency;
-                ValueTitle.text = Currency.ToString();
+                valueTitle.text = Currency.ToString();
             }
         }
     }

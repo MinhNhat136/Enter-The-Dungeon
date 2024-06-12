@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 552a5cda30e64b2082661ef44bb3efd6, type: 3}
+  m_Name: Show Description Popup Gameplay Effect Event Handler
+  m_EditorClassIdentifier: 
+  gameplayEffectLookup:
+  - {fileID: 11400000, guid: 1712f608e6a218d4196df554d3f98b73, type: 2}
+  attributeLookup:
+  - {fileID: 11400000, guid: bd215916c9ab34446b6b155232b035d9, type: 2}
+  popupAnimation: {fileID: 2791749287943916791, guid: c82d1068b70e1ba48b1613159531defb, type: 3}
+  isShowValue: 0
+  isShowDescription: 1
+  offsetTime: 0.5
+  popupDelay: 0.4
+  gradientDelay: 0.1

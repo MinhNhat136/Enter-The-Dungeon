@@ -32,7 +32,7 @@ namespace Atomic.AbilitySystem
         /// The Event that execute when this ability activate
         /// </summary>
         /// <returns></returns>
-        [SerializeField] public AbstractApplyGameplayEffectEventHandler eventOnActivate; 
+        [SerializeField] public AbstractApplyGameplayEffectEventHandler[] eventOnActivates; 
 
         /// <summary>
         /// Creates the Ability Spec (the instantiation of the ability)

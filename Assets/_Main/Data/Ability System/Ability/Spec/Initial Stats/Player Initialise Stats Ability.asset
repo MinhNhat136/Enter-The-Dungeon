@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303be1990384f1648878fc4bc43c4fe1, type: 3}
+  m_Name: Player Initialise Stats Ability
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityTags:
+    AssetTag: {fileID: 0}
+    CancelAbilitiesWithTags: []
+    BlockAbilitiesWithTags: []
+    ActivationOwnedTags: []
+    OwnerTags:
+      requireTags: []
+      ignoreTags: []
+    SourceTags:
+      requireTags: []
+      ignoreTags: []
+    TargetTags:
+      requireTags: []
+      ignoreTags: []
+  cost: {fileID: 0}
+  cooldown: {fileID: 0}
+  eventOnActivates: []
+  initialisationGameplayEffect:
+  - {fileID: 11400000, guid: 5c532731b0c4f7e429607207ce68c590, type: 2}
+  - {fileID: 11400000, guid: e7db3c8c1ad677e419d3b7fe0cf1d5a1, type: 2}
+  - {fileID: 11400000, guid: 457330f14a842a445a055201160bee07, type: 2}
+  - {fileID: 11400000, guid: bc00dd9c39cd8ae4ea94b10edc4b0cda, type: 2}
+  - {fileID: 11400000, guid: 92bf34b97496ec343939a300b665f593, type: 2}
+  - {fileID: 11400000, guid: 9f8c1a655ce232540b2800ae16c120db, type: 2}
+  - {fileID: 11400000, guid: f6442afae8235b849a76c80b2418a122, type: 2}
+  - {fileID: 11400000, guid: 43005c196f260914f8f905b9b00db926, type: 2}

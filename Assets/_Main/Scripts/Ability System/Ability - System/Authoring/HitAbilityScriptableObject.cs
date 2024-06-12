@@ -20,7 +20,6 @@ namespace Atomic.AbilitySystem
             hitAbilitySpec.hitTarget = target;
             hitAbilitySpec.hitPoint = hitPoint;
             hitAbilitySpec.hitDirection = hitDirection;
-            if (eventOnActivate) hitAbilitySpec.OnApplyGameplayEffect += eventOnActivate.PreApplyEffectSpec;
             return hitAbilitySpec;
         }
 
@@ -31,6 +30,10 @@ namespace Atomic.AbilitySystem
                 Level = owner.Level,
                 HitVFXPool = _hitVfxPool,
             };
+            foreach (var eventOnActivate in eventOnActivates)
+            {
+                spec.OnApplyGameplayEffect += eventOnActivate.PreApplyEffectSpec;
+            }
             return spec;
         }
 

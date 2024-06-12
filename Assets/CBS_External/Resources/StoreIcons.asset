@@ -17,3 +17,9 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 3a9a0c0ad40c80644b007446c8236f7f, type: 2}
   - ID: SP
     Sprite: {fileID: 21300000, guid: ac084a985c5e2b44ebffe3180b6dceac, type: 2}
+  - ID: chest01
+    Sprite: {fileID: 0}
+  - ID: chest02
+    Sprite: {fileID: 0}
+  - ID: CN
+    Sprite: {fileID: 0}

@@ -1,8 +1,7 @@
-using System;
-using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 namespace  Atomic.Damage
 {
@@ -51,7 +50,8 @@ namespace  Atomic.Damage
 
         public EffectPopupAnimation SetShowValue(float value)
         {
-            _value = value;
+            if (value != 0) 
+                _value = value;
             return this;
         }
 
@@ -74,6 +74,10 @@ namespace  Atomic.Damage
         private AnimationCurve verticalCurve;
         [SerializeField] 
         private AnimationCurve horizontalCurve;
+        [SerializeField] 
+        private float verticalOffset;
+        [SerializeField] 
+        private float horizontalOffset;
         
         private TextMeshProUGUI _textRenderer;
         private float _time;
@@ -90,6 +94,9 @@ namespace  Atomic.Damage
         private Transform _transform;
         private Camera _camera;
         public ObjectPool<EffectPopupAnimation> MyPools { get; set; }
+
+        private float _verticalRandomValue;
+        private float _horizontalRandomValue;
 
         //  Initialization  -------------------------------
 
@@ -118,9 +125,14 @@ namespace  Atomic.Damage
             _time = 0; 
             _originPosition = _transform.position ;
             _originScale = _transform.localScale;
+
+            string textValue = _value != 0 ? $"{_value}" : ""; 
             
-            _textRenderer.text = $"{_value} {_description}";
+            _textRenderer.text = $"{textValue} {_description}";
             _transform.forward = _camera.transform.forward;
+
+            _verticalRandomValue = Random.Range(-horizontalOffset, horizontalOffset);
+            _horizontalRandomValue = Random.Range(-verticalOffset, verticalOffset);
             gameObject.SetActive(true);
             Invoke(nameof(EndAnimation), lifeTime);
         }
@@ -129,7 +141,10 @@ namespace  Atomic.Damage
         {
             _textRenderer.color = _originColor + new Color(0, 0, 0, opacityCurve.Evaluate(_time));
             _transform.localScale = Vector3.one * scaleCurve.Evaluate(_time);
-            _transform.position = _originPosition + new Vector3(horizontalCurve.Evaluate(_time) * horizontalDirection, 0, verticalDirection * verticalCurve.Evaluate(_time));
+            _transform.position = _originPosition + new Vector3(
+                horizontalCurve.Evaluate(_time) * horizontalDirection + _horizontalRandomValue, 
+                0, 
+                verticalDirection * verticalCurve.Evaluate(_time)+  _verticalRandomValue);
             _time += speedChange * Time.deltaTime;
         }
         

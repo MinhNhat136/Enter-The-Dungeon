@@ -40,6 +40,7 @@ namespace Atomic.Character
                 Model = model; 
                 
                 abilitySystemController = GetComponent<AbilitySystemController>();
+                ActivateInitialisationAbilities();
                 GrantCastableAbilities();
             }
         }
@@ -50,10 +51,7 @@ namespace Atomic.Character
         }
         
         //  Unity Methods   -------------------------------
-        public void OnEnable()
-        {
-            ActivateInitialisationAbilities();
-        }
+
 
         //  Other Methods ---------------------------------
         void ActivateInitialisationAbilities()

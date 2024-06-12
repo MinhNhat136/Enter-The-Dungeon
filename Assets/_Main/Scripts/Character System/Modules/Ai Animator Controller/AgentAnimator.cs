@@ -42,7 +42,7 @@ namespace Atomic.Character
     public abstract class AgentAnimator : SerializedMonoBehaviour, IInitializableWithBaseModel<BaseAgent>
     {
         public Animator Animator { get; protected set; }
-
+        
         public bool IsCurrentAnimationComplete(int layerIndex = 0, float percentage = 1)
         {
             AnimatorStateInfo stateInfo = Animator.GetCurrentAnimatorStateInfo(layerIndex);
@@ -104,6 +104,28 @@ namespace Atomic.Character
             throw new System.NotImplementedException();
         }
 
+        public virtual bool ApplyAnimationName(string animationName)
+        {
+            int targetAnimationHash = Animator.StringToHash(animationName);
+
+            AnimatorStateInfo currentState = Animator.GetCurrentAnimatorStateInfo(0);
+            bool isInTransition = Animator.IsInTransition(0);
+
+            if (currentState.shortNameHash == targetAnimationHash || isInTransition)
+            {
+                return false;
+            }
+
+            Animator.CrossFade(targetAnimationHash, 0.25f);
+            return true;
+        }
+        
+        public void ApplyRangedAttack_Charge_Release_Animation() =>
+            Animator.CrossFade(AnimatorStates.RangedAttackChargeRelease, 0.5f);
+        
+        public void ApplyRangedAttack_Charge_Start_Animation() =>
+            Animator.CrossFade(AnimatorStates.RangedAttackChargeStart, 0.05f);
+        
         public virtual void ApplyMovementAnimation()
         {
             Animator.SetFloat(AnimatorParameters.InputHorizontal, Model.MotorController.MoveSpeed,
@@ -118,12 +140,12 @@ namespace Atomic.Character
             Animator.SetFloat(AnimatorParameters.InputVertical, 0, .1f, Time.deltaTime);
         }
 
-        public virtual void ApplyAppear()
+        public virtual void ApplyAppearAnimation()
         {
             Animator.Play(AnimatorStates.Appear);
         }
 
-        public virtual void ApplyRise()
+        public virtual void ApplyRiseAnimation()
         {
             Animator.CrossFade(AnimatorStates.Rise, 0.25f);
         }
@@ -135,8 +157,8 @@ namespace Atomic.Character
 
         public virtual void ApplyHitAnimation()
         {
-            float xHit = Vector3.Dot(Model.ImpactHit, transform.right);
-            float zHit = Vector3.Dot(Model.ImpactHit, transform.forward);
+            float xHit = Vector3.Dot(Model.ImpactDirection, transform.right);
+            float zHit = Vector3.Dot(Model.ImpactDirection, transform.forward);
 
             Animator.SetFloat(AnimatorParameters.HitHorizontal, xHit);
             Animator.SetFloat(AnimatorParameters.HitVertical, zHit);
@@ -174,6 +196,14 @@ namespace Atomic.Character
         public virtual void ApplyKnockDownAnimation()
         {
             Animator.CrossFade("knock_down", 0.2f);
+        }
+
+        public virtual void ApplyDieAnimation()
+        {
+            if (Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != AnimatorStates.Die)
+            {
+                Animator.Play(AnimatorStates.Die);
+            }
         }
     }
 }

@@ -17,13 +17,9 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: a6c61e99a71b7b34193b0b4c81a865a9, type: 2}
   - ID: MR
     Sprite: {fileID: 21300000, guid: 3ebffe77a7606754fa0778810eb7a235, type: 2}
-  - ID: NT
-    Sprite: {fileID: 21300000, guid: bf547f403e4d45b47a0f5870d8e5af2d, type: 2}
   - ID: EG
     Sprite: {fileID: 21300000, guid: 02febeb527c26bc4ab80364686e191ea, type: 2}
   - ID: CP
-    Sprite: {fileID: 21300000, guid: a6c61e99a71b7b34193b0b4c81a865a9, type: 2}
-  - ID: CP20
     Sprite: {fileID: 21300000, guid: a6c61e99a71b7b34193b0b4c81a865a9, type: 2}
   - ID: CP125
     Sprite: {fileID: 21300000, guid: a6c61e99a71b7b34193b0b4c81a865a9, type: 2}
@@ -35,3 +31,49 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 539d82d28bd654e4997c469dd7144391, type: 2}
   - ID: CP4000
     Sprite: {fileID: 21300000, guid: 7564b97109570b54db8945ca936fd767, type: 2}
+  - ID: MT280
+    Sprite: {fileID: 21300000, guid: 3ebffe77a7606754fa0778810eb7a235, type: 2}
+  - ID: MT220
+    Sprite: {fileID: 21300000, guid: 3ebffe77a7606754fa0778810eb7a235, type: 2}
+  - ID: MT500
+    Sprite: {fileID: 21300000, guid: 3ebffe77a7606754fa0778810eb7a235, type: 2}
+  - ID: MT3000
+    Sprite: {fileID: 21300000, guid: 2f1587a476102834593c9129ad40401d, type: 2}
+  - ID: MT7000
+    Sprite: {fileID: 21300000, guid: 2230fc5b71db4924e88a91cd3f60aa41, type: 2}
+  - ID: MT15000
+    Sprite: {fileID: 21300000, guid: e33b65846094df240ad1900db6b3af27, type: 2}
+  - ID: MT1200
+    Sprite: {fileID: 21300000, guid: 7cbb8132e847da74cb44503e97d11601, type: 2}
+  - ID: CH5
+    Sprite: {fileID: 21300000, guid: f35461daafe70ab408b425198762cb7a, type: 3}
+  - ID: CH125
+    Sprite: {fileID: 21300000, guid: f35461daafe70ab408b425198762cb7a, type: 3}
+  - ID: CH300
+    Sprite: {fileID: 21300000, guid: 990ac93b8ce890a44b5669820c79afd9, type: 2}
+  - ID: CH700
+    Sprite: {fileID: 21300000, guid: 8c5ac711b6b2766469679811b6eb46b3, type: 2}
+  - ID: CH1800
+    Sprite: {fileID: 21300000, guid: 539d82d28bd654e4997c469dd7144391, type: 2}
+  - ID: CH4000
+    Sprite: {fileID: 21300000, guid: 7564b97109570b54db8945ca936fd767, type: 2}
+  - ID: MR1200
+    Sprite: {fileID: 21300000, guid: 7cbb8132e847da74cb44503e97d11601, type: 2}
+  - ID: MR220
+    Sprite: {fileID: 21300000, guid: 22c9af11598bae14e97511082f41b166, type: 2}
+  - ID: MR280
+    Sprite: {fileID: 21300000, guid: 22c9af11598bae14e97511082f41b166, type: 2}
+  - ID: MR500
+    Sprite: {fileID: 21300000, guid: 22c9af11598bae14e97511082f41b166, type: 2}
+  - ID: MR3000
+    Sprite: {fileID: 21300000, guid: 2f1587a476102834593c9129ad40401d, type: 2}
+  - ID: MR7000
+    Sprite: {fileID: 21300000, guid: 2230fc5b71db4924e88a91cd3f60aa41, type: 2}
+  - ID: MR15000
+    Sprite: {fileID: 21300000, guid: e33b65846094df240ad1900db6b3af27, type: 2}
+  - ID: EG15
+    Sprite: {fileID: 21300000, guid: 7c245d5291ec18d49a8bed91f624ccd7, type: 2}
+  - ID: EG45
+    Sprite: {fileID: 21300000, guid: 0aa8c17ccc882ee47a6125188cc1eb68, type: 2}
+  - ID: EG10000
+    Sprite: {fileID: 21300000, guid: aa7cf106dfb7a69449b86467a2a10a7a, type: 2}

@@ -12,10 +12,8 @@ namespace Atomic.AbilitySystem
 
         public override AttributeValue CalculateCurrentAttributeValue(AttributeValue attributeValue, List<AttributeValue> otherAttributeValues)
         {
-            // Find desired attribute in list
             var baseAttributeValue = otherAttributeValues.Find(x => x.attributeScriptableObject == attribute);
 
-            // Calculate new value
             attributeValue.baseValue = (baseAttributeValue.currentValue * gradient) + offset;
 
             attributeValue.currentValue = (attributeValue.baseValue + attributeValue.modifier.addValue) * (attributeValue.modifier.multiplyValue + 1);

@@ -24,7 +24,7 @@ MonoBehaviour:
   canWalk: 1
   canRoll: 0
   locomotionConfig:
-    speed: 2
+    speed: 0.5
     rotateSpeed: 10
     acceleration: 30
     autoRotateWithNavmesh: 0

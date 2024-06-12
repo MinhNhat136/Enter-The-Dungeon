@@ -12,14 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c78d78a10777ee4db2c5d95b9e5b20e, type: 3}
   m_Name: LinkedPrefabData
   m_EditorClassIdentifier: 
-  AssetList:
-  - ID: SP
-    Asset: {fileID: 1317118864596191, guid: f6d40959d8450ca45b0e8537d5bcea72, type: 3}
-  - ID: CN
-    Asset: {fileID: 1999505514590121, guid: 71779f01bbc72154cb08249b1dbe3475, type: 3}
-  - ID: SW
-    Asset: {fileID: 1335820882457351, guid: 36bf8fc2e673a974cb963d24ccc9df62, type: 3}
-  - ID: HM
-    Asset: {fileID: 1721354732401965, guid: 46e36147e6e924645a99bd03ac7e33e3, type: 3}
-  - ID: SG
-    Asset: {fileID: 7672193872389757284, guid: e4b3f2462689fb84b92952e0ec96c717, type: 3}
+  AssetList: []

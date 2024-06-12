@@ -44,47 +44,11 @@ namespace Atomic.Character
         }
 
         public void ApplyRollAnimation() => Animator.CrossFade(AnimatorStates.Roll, 0.05f);
-
-        public void ApplyRangedAttack_Charge_Start_Animation() =>
-            Animator.CrossFade(AnimatorStates.RangedAttackChargeStart, 0.05f);
-
-        public void ApplyRangedAttack_Charge_Release_Animation() =>
-            Animator.CrossFade(AnimatorStates.RangedAttackChargeRelease, 0.5f);
-
-        public bool ApplyMeleeAttack(string animationName)
-        {
-            int targetAnimationHash = Animator.StringToHash(animationName);
-
-            AnimatorStateInfo currentState = Animator.GetCurrentAnimatorStateInfo(0);
-            bool isInTransition = Animator.IsInTransition(0);
-
-            if (currentState.shortNameHash == targetAnimationHash || isInTransition)
-            {
-                return false;
-            }
-
-            Animator.CrossFade(targetAnimationHash, 0.25f);
-            return true;
-        }
-
-        public void ApplyRiseAnimation()
-        {
-        }
         
-
         public void ApplySummonAnimation()
         {
         }
-
         
-        public void ApplyDieAnimation()
-        {
-            if (Animator.GetCurrentAnimatorStateInfo(0).shortNameHash != AnimatorStates.Die)
-            {
-                Animator.Play(AnimatorStates.Die);
-            }
-        }
-
         public void SwitchAnimator(WeaponType weaponType)
         {
             if (_animatorMatchWithWeapons.TryGetValue(weaponType,

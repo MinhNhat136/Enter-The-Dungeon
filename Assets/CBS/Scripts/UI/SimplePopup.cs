@@ -1,32 +1,31 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CBS.UI
 {
     public class SimplePopup : MonoBehaviour
     {
         [SerializeField]
-        private Text Title;
+        private TextMeshProUGUI title;
+        
         [SerializeField]
-        private Text Body;
+        private TextMeshProUGUI body;
 
         private Action CurrentAction { get; set; }
 
-        // setup popup information
         public void Setup(PopupRequest request)
         {
             Clear();
-            Title.text = request.Title;
-            Body.text = request.Body;
+            title.text = request.Title;
+            body.text = request.Body;
             CurrentAction = request.OnOkAction;
         }
 
-        // reset view
         private void Clear()
         {
-            Title.text = string.Empty;
-            Body.text = string.Empty;
+            title.text = string.Empty;
+            body.text = string.Empty;
             CurrentAction = null;
         }
 

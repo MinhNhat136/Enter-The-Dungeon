@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Atomic.Character
 {
@@ -7,15 +9,15 @@ namespace Atomic.Character
         //  Events ----------------------------------------
 
         //  Properties ------------------------------------
-        public bool CanPerformAttack => AgentCondition.HasFlag(AgentCondition.Normal) &&
+        public bool CanPerformAttack => Math.Abs(StabilityRatio - 1) < 0.01f &&
                                         CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
                                         CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack) &&
                                         CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
 
+
         //  Fields ----------------------------------------
-        protected Transform playerTransform;
-        protected GameObject playerObject;
-        public float timeLastAttack;
+        protected Transform playerTransform; 
+        protected GameObject playerObject; 
 
         //  Initialization  -------------------------------
         public override void Initialize()

@@ -99,6 +99,7 @@ namespace Atomic.Character
         public void EndAttack()
         {
             _rangedWeapon.EndShoot();
+            Model.LastAttackTime = Time.time;
         }
 
         public void CustomAction()

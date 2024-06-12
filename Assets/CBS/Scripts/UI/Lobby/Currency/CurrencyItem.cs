@@ -1,5 +1,6 @@
 ﻿using CBS.Models;
 using CBS.Scriptable;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ namespace CBS.UI
     public class CurrencyItem : MonoBehaviour
     {
         [SerializeField]
-        private Text ValueTitle;
+        private TextMeshProUGUI ValueTitle;
         [SerializeField]
         private Image IconImage;
         [SerializeField]
@@ -28,6 +29,7 @@ namespace CBS.UI
             // draw ui
             ValueTitle.text = Currency.ToString();
             IconImage.sprite = Currency.GetSprite();
+            IconImage.SetNativeSize();
             CheckTimer();
         }
 

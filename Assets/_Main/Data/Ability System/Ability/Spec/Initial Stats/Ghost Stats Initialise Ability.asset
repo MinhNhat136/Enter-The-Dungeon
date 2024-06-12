@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303be1990384f1648878fc4bc43c4fe1, type: 3}
+  m_Name: Ghost Stats Initialise Ability
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityTags:
+    AssetTag: {fileID: 0}
+    CancelAbilitiesWithTags: []
+    BlockAbilitiesWithTags: []
+    ActivationOwnedTags: []
+    OwnerTags:
+      requireTags: []
+      ignoreTags: []
+    SourceTags:
+      requireTags: []
+      ignoreTags: []
+    TargetTags:
+      requireTags: []
+      ignoreTags: []
+  cost: {fileID: 0}
+  cooldown: {fileID: 0}
+  eventOnActivates: []
+  initialisationGameplayEffect:
+  - {fileID: 11400000, guid: 353c4b4b6ea5a7e4a83c917c60acb6d8, type: 2}

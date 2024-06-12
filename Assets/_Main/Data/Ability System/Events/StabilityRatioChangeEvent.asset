@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f057f1d149a07414a950f5d906a8152e, type: 3}
   m_Name: StabilityRatioChangeEvent
   m_EditorClassIdentifier: 
-  attribute: {fileID: 11400000, guid: ec116c727ac2d4f4b958ec6c9e554d42, type: 2}
+  attribute: {fileID: 11400000, guid: 26f50baf316354c4eb2ae17d78fba176, type: 2}
   comparisionType: 2
