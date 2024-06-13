@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AssetList:
   - ID: BW
-    Asset: {fileID: 11400000, guid: 43005c196f260914f8f905b9b00db926, type: 2}
+    Asset: {fileID: 11400000, guid: b8196f7d2ffa6414ab2ab153e83445cd, type: 2}
   - ID: CN
-    Asset: {fileID: 11400000, guid: 43005c196f260914f8f905b9b00db926, type: 2}
+    Asset: {fileID: 11400000, guid: b8196f7d2ffa6414ab2ab153e83445cd, type: 2}
+  - ID: SP
+    Asset: {fileID: 11400000, guid: b8196f7d2ffa6414ab2ab153e83445cd, type: 2}

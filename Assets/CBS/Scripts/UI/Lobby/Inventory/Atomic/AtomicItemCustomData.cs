@@ -5,14 +5,7 @@ using UnityEngine;
 
 namespace CBS
 {
-    public enum ERarity
-    {
-        Common = 0, 
-        Great = 1,
-        Rare = 2,
-        Epic = 3, 
-        Legendary = 4,
-    }
+    
     
     public class AtomicItemCustomData : CBSItemCustomData
     {

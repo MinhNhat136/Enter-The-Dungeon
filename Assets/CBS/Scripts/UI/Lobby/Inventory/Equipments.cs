@@ -23,6 +23,7 @@ namespace CBS.UI
 
         private void OnEnable()
         {
+            Debug.Log(ItemsScroller);
             ItemsScroller.OnSpawn += OnItemSpawn;
             CBSInventory.OnItemEquiped += OnItemEquipmentChange;
             CBSInventory.OnItemUnEquiped += OnItemEquipmentChange;
