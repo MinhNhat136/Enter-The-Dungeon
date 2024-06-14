@@ -63,7 +63,6 @@ namespace Atomic.Equipment
 
         public void OnTriggerEnter(Collider other)
         {
-            Debug.Log("trigger");
             var effectSpec = abilityOnHit.CreateSpec(
                 Owner.AiAbilityController.abilitySystemController,
                 myTransform.position,

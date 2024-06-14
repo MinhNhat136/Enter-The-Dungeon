@@ -34,24 +34,22 @@ namespace Atomic.Character
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
         {
-            if (!IsInitialized)
-            {
-                IsInitialized = true;
-                Model = model; 
+            if (IsInitialized) return;
+            IsInitialized = true;
+            Model = model; 
                 
-                abilitySystemController = GetComponent<AbilitySystemController>();
-                ActivateInitialisationAbilities();
-                GrantCastableAbilities();
-            }
+            abilitySystemController = GetComponent<AbilitySystemController>();
+            ActivateInitialisationAbilities();
+            GrantCastableAbilities();
         }
-
+        
         public void RequireIsInitialized()
         {
             throw new System.NotImplementedException();
         }
         
         //  Unity Methods   -------------------------------
-
+       
 
         //  Other Methods ---------------------------------
         void ActivateInitialisationAbilities()

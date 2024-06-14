@@ -71,25 +71,7 @@ MonoBehaviour:
     SerializationNodes: []
   combatMode: 1
   weaponType: 2
-  range: 2.5
-  damageWeight:
-    min: 0
-    max: 0
-  speedWeight:
-    min: 0
-    max: 0
-  distanceWeight:
-    min: 0
-    max: 0
-  radiusWeight:
-    min: 0
-    max: 0
-  areaOfEffectDistance:
-    min: 0
-    max: 0
-  forceWeight:
-    min: 0
-    max: 0
+  range: 4
   peak: {fileID: 2247649198098348273}
   attackData:
   - {fileID: 11400000, guid: 18eb7018b1322b4439e23c5ff04ddc46, type: 2}

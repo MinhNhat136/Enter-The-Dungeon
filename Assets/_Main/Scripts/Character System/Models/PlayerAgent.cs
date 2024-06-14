@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Atomic.Character
@@ -79,13 +80,11 @@ namespace Atomic.Character
         public void OnEnable()
         {
             DoEnable();
-
         }
 
         public void OnDisable()
         {
             DoDisable();
-            
         }
 
         //  Other Methods ---------------------------------

@@ -31,7 +31,7 @@ MonoBehaviour:
       multiplier: 1
     conditionalGameplayEffects: []
   gameplayEffectTags:
-    assetTag: {fileID: 11400000, guid: 27cb83bd59be35e48a28192737f42d48, type: 2}
+    assetTag: {fileID: 0}
     grantedTags: []
     removeGameplayEffectsWithTag: []
     applicationTagRequirements:

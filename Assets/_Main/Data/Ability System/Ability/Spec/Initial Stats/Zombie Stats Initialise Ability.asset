@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 303be1990384f1648878fc4bc43c4fe1, type: 3}
   m_Name: Zombie Stats Initialise Ability
   m_EditorClassIdentifier: 
-  AbilityName: 
-  AbilityTags:
+  abilityName: 
+  abilityTags:
     AssetTag: {fileID: 0}
     CancelAbilitiesWithTags: []
     BlockAbilitiesWithTags: []
@@ -27,7 +27,8 @@ MonoBehaviour:
     TargetTags:
       requireTags: []
       ignoreTags: []
-  Cost: {fileID: 0}
-  Cooldown: {fileID: 0}
+  cost: {fileID: 0}
+  cooldown: {fileID: 0}
+  eventOnActivates: []
   initialisationGameplayEffect:
   - {fileID: 11400000, guid: 0cbe3e31c53076641953a29ed30a5dfe, type: 2}

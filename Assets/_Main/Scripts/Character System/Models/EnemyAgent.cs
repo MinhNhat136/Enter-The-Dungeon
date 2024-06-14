@@ -35,15 +35,13 @@ namespace Atomic.Character
         }
 
         //  Unity Methods   -------------------------------
-        public void Awake()
-        {
-            Initialize();
-        }
+        
 
         private void Start()
         {
             playerObject = GameObject.FindGameObjectWithTag("Player");
             playerTransform = playerObject.transform;
+            Initialize();
         }
         
         //  Other Methods ---------------------------------

@@ -135,6 +135,7 @@ namespace Atomic.Character
             NavmeshAgent = GetComponent<NavMeshAgent>();
             AgentCollider = GetComponent<Collider>();
             BodyParts =  GetComponentsInChildren<AiBodyPart>();
+            _behaviourTreeOwner = GetComponent<BehaviourTreeOwner>();
             
             modelTransform = transform;
             Height = NavmeshAgent.height;
@@ -156,6 +157,7 @@ namespace Atomic.Character
                 }
             };
 
+            _behaviourTreeOwner.enabled = true;
         }
         
         public void RequireIsInitialized()
