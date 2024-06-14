@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Atomic.AbilitySystem;
 using Atomic.Core.Interface;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {

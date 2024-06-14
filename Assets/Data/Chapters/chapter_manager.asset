@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7aeced37b9b515b87a71d2b2128556, type: 3}
+  m_Name: chapter_manager
+  m_EditorClassIdentifier:
+  id: chapter_manager
+  pools: {fileID: 11400000, guid: bd8241aabf11747459f55e55f040a1de, type: 2}
+  ticker: {fileID: 11400000, guid: 1e5faf43b28b51f4eaaf264cfc626e5c, type: 2}
+  earlyTick: 0
+  tick: 0
+  lateTick: 0
+  fixedTick: 0
+  chapterConfigs:
+  - {fileID: 11400000, guid: 91f60465d9f155c41a134b7e4fbbd66c, type: 2}
+  - {fileID: 11400000, guid: 4c0d8704dd0b43f46aff3017be93127a, type: 2}
+  - {fileID: 11400000, guid: 85ac9d3df3fb15a4a88868f8ac89ef09, type: 2}
