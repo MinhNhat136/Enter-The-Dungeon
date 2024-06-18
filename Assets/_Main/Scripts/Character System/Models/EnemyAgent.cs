@@ -16,8 +16,8 @@ namespace Atomic.Character
 
 
         //  Fields ----------------------------------------
-        protected Transform playerTransform; 
-        protected GameObject playerObject; 
+        private Transform _playerTransform;
+        private GameObject _playerObject; 
 
         //  Initialization  -------------------------------
         public override void Initialize()
@@ -29,7 +29,6 @@ namespace Atomic.Character
                 MotorController.CombatController = GetComponent<ICombatController>();
                 
                 SwitchCombatMode();
-                ChangeVisionDistance();
                 Assign();
             }
         }
@@ -39,8 +38,8 @@ namespace Atomic.Character
 
         private void Start()
         {
-            playerObject = GameObject.FindGameObjectWithTag("Player");
-            playerTransform = playerObject.transform;
+            _playerObject = GameObject.FindGameObjectWithTag("Player");
+            _playerTransform = _playerObject.transform;
             Initialize();
         }
         
@@ -113,7 +112,7 @@ namespace Atomic.Character
             var isNegative = Random.value > 0.5f; 
             angle = isNegative ? -angle : angle;
             var rotation = Quaternion.AngleAxis(angle, Vector3.up);
-            var directionToPlayer = (playerTransform.position - transform.position);
+            var directionToPlayer = (_playerTransform.position - transform.position);
             var rotatedVector = rotation * directionToPlayer;
             startMoveTimeAfterAttack = Time.time;
             MotorController.MoveInput = new Vector2(rotatedVector.x, rotatedVector.z);
@@ -121,7 +120,7 @@ namespace Atomic.Character
         
         public void CalculateDirectionToPlayer()
         {
-            var directionToPlayer = (playerTransform.position - transform.position);
+            var directionToPlayer = (_playerTransform.position - transform.position);
             var moveInput = new Vector2(directionToPlayer.x, directionToPlayer.z);
             MotorController.MoveInput = moveInput;
         }

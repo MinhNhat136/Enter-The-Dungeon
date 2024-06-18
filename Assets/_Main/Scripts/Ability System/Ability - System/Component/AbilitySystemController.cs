@@ -181,7 +181,6 @@ namespace Atomic.AbilitySystem
 
         private void UpdateAttributeSystem()
         {
-            // Set Current Value to Base Value (default position if there are no GE affecting that attribute)
             foreach (var appliedGameplayEffect in appliedGameplayEffects)
             {
                 var modifiers = appliedGameplayEffect.modifiers;
@@ -198,11 +197,9 @@ namespace Atomic.AbilitySystem
             {
                 var gameplayEffect = appliedGameplayEffect.spec;
 
-                // Can't tick instant GE
                 if (gameplayEffect.GameplayEffectScriptableObject.gameplayEffect.durationPolicy ==
                     EDurationPolicy.Instant) continue;
 
-                // Update time remaining.  Strictly, it's only really valid for durational GE, but calculating for infinite GE isn't harmful
                 gameplayEffect.UpdateRemainingDuration(Time.deltaTime);
 
                 // Tick the periodic component

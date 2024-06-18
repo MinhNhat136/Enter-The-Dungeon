@@ -12,15 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f017707387054649a3f933c7b86e0d9, type: 3}
   m_Name: Ghost - Vision Config
   m_EditorClassIdentifier: 
-  Distance: 10
-  Angle: 180
-  Height: 3
-  ScanFrequency: 60
-  MaxObjectRemember: 4
-  VisionLayer:
+  distance: 10
+  angle: 30
+  height: 1
+  scanFrequency: 30
+  maxObjectRemember: 10
+  visionLayer:
     serializedVersion: 2
     m_Bits: 262144
-  OcclusionLayer:
+  occlusionLayer:
     serializedVersion: 2
     m_Bits: 4096
-  MeshVisionColor: {r: 1, g: 0, b: 0, a: 1}

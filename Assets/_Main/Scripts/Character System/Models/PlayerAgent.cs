@@ -42,6 +42,11 @@ namespace Atomic.Character
         
         
         //  Initialization  -------------------------------
+        public void Awake()
+        {
+            Initialize();
+        }
+
         public override void Initialize()
         {
             if (!IsInitialized)
@@ -54,7 +59,6 @@ namespace Atomic.Character
                 
                 SwitchCombatMode();
                 SwitchAnimatorMatchWithWeapon();
-                
                 
             }
         }
@@ -72,20 +76,7 @@ namespace Atomic.Character
         }
 
         //  Unity Methods   -------------------------------
-        public void Awake()
-        {
-            Initialize();
-        }
-
-        public void OnEnable()
-        {
-            DoEnable();
-        }
-
-        public void OnDisable()
-        {
-            DoDisable();
-        }
+     
 
         //  Other Methods ---------------------------------
         #region Assign

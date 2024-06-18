@@ -60,7 +60,10 @@ namespace Atomic.Character
         protected CharacterActionType DefaultActionState { get; set; }
         public WeaponBuilder CurrentWeapon { get; set; }
         public Command Command { get; set; }
+        
+        [field: SerializeField]
         public CharacterActionType CurrentActionState { get; set; }
+        
         public CombatMode CurrentCombatMode { get; set; }
         public SurvivalState SurvivalState { get; set; } = SurvivalState.Revive;
         
@@ -118,24 +121,21 @@ namespace Atomic.Character
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
         private AiMemoryController _memoryController;
-        private BehaviourTreeOwner _behaviourTreeOwner;
         
         //  Initialization  -------------------------------
         public virtual void Initialize()
         {
             if (IsInitialized) return;
             IsInitialized = true;
-
+            
             DefaultActionState |= CharacterActionType.EndAttack | CharacterActionType.EndAttackMove |
                                   CharacterActionType.EndPrepareAttack | CharacterActionType.EndRoll |
                                   CharacterActionType.MoveNextSkill;
-            CurrentActionState = DefaultActionState;
-            Command |= Command.Move;
-
+            SurvivalState = SurvivalState.Revive;
+            
             NavmeshAgent = GetComponent<NavMeshAgent>();
             AgentCollider = GetComponent<Collider>();
             BodyParts =  GetComponentsInChildren<AiBodyPart>();
-            _behaviourTreeOwner = GetComponent<BehaviourTreeOwner>();
             
             modelTransform = transform;
             Height = NavmeshAgent.height;
@@ -157,7 +157,8 @@ namespace Atomic.Character
                 }
             };
 
-            _behaviourTreeOwner.enabled = true;
+            GetComponent<BehaviourTreeOwner>().enabled = true;
+
         }
         
         public void RequireIsInitialized()
@@ -170,16 +171,14 @@ namespace Atomic.Character
 
         public virtual void DoEnable()
         {
-            SurvivalState = SurvivalState.Revive;
-            
+            CurrentActionState = DefaultActionState;
+            Command |= Command.Move;
         }
 
         public virtual void DoDisable()
         {
             Command = 0;
             SurvivalState = SurvivalState.Dead;
-            CurrentActionState = DefaultActionState;
-            NavmeshAgent.enabled = false;
         }
 
         //  Unity Methods   -------------------------------
@@ -207,10 +206,10 @@ namespace Atomic.Character
         
         #region Behaviour
         // Shared
-        public virtual void SetForwardDirection() => MotorController.SetForwardDirection();
-        public virtual void ApplyDirection() => MotorController.ApplyDirection();
-        public virtual void SetEnableNavMeshAgent(bool value) => NavmeshAgent.enabled = value;
-        public virtual void SetEnableAgentCollider(bool value) => AgentCollider.enabled = value;
+        public void SetForwardDirection() => MotorController.SetForwardDirection();
+        public void ApplyDirection() => MotorController.ApplyDirection();
+        public void SetEnableNavMeshAgent(bool value) => NavmeshAgent.enabled = value;
+        public void SetEnableAgentCollider(bool value) => AgentCollider.enabled = value;
         public void CalculateDirectionToTarget(BaseAgent targetAgent)
         {
             var directionToTarget = (targetAgent.transform.position - transform.position);
@@ -219,52 +218,44 @@ namespace Atomic.Character
         }
         
         // Movement Behaviour
-        public virtual void ApplyStop() => MotorController.LocomotionController.ApplyStop();
-        public virtual void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
-        public virtual void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
-        public virtual void Warp() => NavmeshAgent.Warp(transform.position);
+        public void ApplyStop() => MotorController.LocomotionController.ApplyStop();
+        public void ApplyMovement() => MotorController.LocomotionController.ApplyMovement();
+        public void ApplyRotation() => MotorController.LocomotionController.ApplyRotation();
+        public void Warp() => NavmeshAgent.Warp(transform.position);
 
         // Roll  Behaviour 
-        public virtual void BeginRoll() => MotorController.RollController.BeginRoll();
-        public virtual void Rolling() => MotorController.RollController.Rolling();
-        public virtual void EndRoll() => MotorController.RollController.EndRoll();
-        public virtual void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.gameObject.SetActive(value);
-        public virtual void SetActiveImpactSensor(bool value) => _impactSensorController.SetActiveSensor(value);
-
-        public virtual void ChangeVisionDistance() => VisionController.VisionDistance = MotorController.CombatController.CurrentWeapon.range;
+        public void BeginRoll() => MotorController.RollController.BeginRoll();
+        public void Rolling() => MotorController.RollController.Rolling();
+        public void EndRoll() => MotorController.RollController.EndRoll();
+        public void SetWeaponVisible(bool value) => MotorController.CombatController.CurrentWeapon.gameObject.SetActive(value);
+        public void SetActiveImpactSensor(bool value) => _impactSensorController.SetActiveSensor(value);
         
         //  Attack Behaviour
-        public virtual void AimTarget() => MotorController.CombatController.AimTarget();
-        public virtual void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
-        public virtual void PreparingAttack() => MotorController.CombatController.PreparingAttack();
-        public virtual void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
-        public virtual void BeginAttack() => MotorController.CombatController.BeginAttack();
-        public virtual void Attacking() => MotorController.CombatController.Attacking();
-        public virtual void EndAttack() => MotorController.CombatController.EndAttack();
+        public void AimTarget() => MotorController.CombatController.AimTarget();
+        public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
+        public void PreparingAttack() => MotorController.CombatController.PreparingAttack();
+        public void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
+        public void BeginAttack() => MotorController.CombatController.BeginAttack();
+        public void Attacking() => MotorController.CombatController.Attacking();
+        public void EndAttack() => MotorController.CombatController.EndAttack();
 
-        public virtual void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
-        public virtual void AttackMoving() => MotorController.CombatController.AttackMoving();
-        public virtual void EndAttackMove() => MotorController.CombatController.EndAttackMove();
+        public void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
+        public void AttackMoving() => MotorController.CombatController.AttackMoving();
+        public void EndAttackMove() => MotorController.CombatController.EndAttackMove();
 
-        public virtual void ResetAttackState()
+        public void ResetAttackState()
         {
-            CurrentActionState &= ~CharacterActionType.BeginPrepareAttack;
-            CurrentActionState &= ~CharacterActionType.BeginAttackMove;
-            CurrentActionState &= ~CharacterActionType.BeginAttack;
+            CurrentActionState = 0;
 
-            CurrentActionState |= CharacterActionType.EndPrepareAttack;
-            CurrentActionState |= CharacterActionType.EndAttackMove;
-            CurrentActionState |= CharacterActionType.EndAttack;
-            CurrentActionState |= CharacterActionType.MoveNextSkill;
-
+            CurrentActionState = DefaultActionState;
         }
         
-        public virtual void CustomActionAttack() => MotorController.CombatController.CustomAction();
+        public void CustomActionAttack() => MotorController.CombatController.CustomAction();
         
         
         // Swap weapon
-        public virtual void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
-        public virtual void SwitchCombatMode()
+        public void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
+        public void SwitchCombatMode()
         {
             MotorController.SwitchCombatMode(CurrentCombatMode);
             MotorController.CombatController.CurrentWeapon = CurrentWeapon;
@@ -273,7 +264,7 @@ namespace Atomic.Character
         #endregion
         
         //  Event Handlers --------------------------------
-        protected virtual void RegisterActionTrigger(CharacterActionType actionType, Action action)
+        protected void RegisterActionTrigger(CharacterActionType actionType, Action action)
         {
             if (!ActionTriggers.TryAdd(actionType, action))
             {

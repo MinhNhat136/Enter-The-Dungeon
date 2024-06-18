@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Atomic.Core;
 using UnityEngine;
@@ -21,13 +20,10 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public string TargetLayer { get; set; }
-        public float DistanceWeight { get; set; }
-        public float AngleWeight { get; set; }
-        public float AgeWeight { get; set; }
-        public int MaxNumberTarget { get; set; }
+        
 
         public bool IsInitialized => _isInitialized;
+
 
         public BaseAgent Model => _model;
 
@@ -35,13 +31,12 @@ namespace Atomic.Character
         private GameObject[] _targets;
 
         //  Fields ----------------------------------------
-        [FormerlySerializedAs("_targetingConfig")] [SerializeField] private TargetingConfig targetingConfig;
-
         private AiMemoryController _memoryController;
         protected AiVisionSensorController visionSensor;
         private BaseAgent _model;
         private bool _isInitialized;
-
+        public TargetingConfig config;
+        
         private AiMemoryObject _bestMemory;
 
         //  Initialization  -------------------------------
@@ -55,8 +50,7 @@ namespace Atomic.Character
                 visionSensor = _model.VisionController;
                 _memoryController = _model.MemoryController;
 
-                targetingConfig.Assign(this);
-                _targets = new GameObject[MaxNumberTarget];
+                _targets = new GameObject[config.maxNumberTarget];
             }
         }
 
@@ -66,16 +60,19 @@ namespace Atomic.Character
         }
 
         //  Unity Methods   -------------------------------
-        public void Update()
+  
+        
+        //  Other Methods ---------------------------------
+        private void Update()
         {
             FindTarget();
         }
 
-        //  Other Methods ---------------------------------
+        
 
         public virtual void FindTarget()
         {
-            _memoryController.UpdateSenses(visionSensor, gameObject,TargetLayer, _targets);
+            _memoryController.UpdateSenses(visionSensor, gameObject, config.targetLayer, _targets);
             _memoryController.ForgetMemory();
 
             EvaluateTargetScores();
@@ -122,8 +119,8 @@ namespace Atomic.Character
 
         protected virtual float CalculateScore(AiMemoryObject memory)
         {
-            float distanceScore = memory.distance.Normalize(visionSensor.VisionDistance) * DistanceWeight;
-            float angleScore = memory.angle.Normalize(visionSensor.VisionAngle) * AngleWeight;
+            float distanceScore = memory.distance.Normalize(visionSensor.config.distance) * config.distanceWeight;
+            float angleScore = memory.angle.Normalize(visionSensor.config.angle) * config.angleWeight;
             return distanceScore + angleScore;
         }
 

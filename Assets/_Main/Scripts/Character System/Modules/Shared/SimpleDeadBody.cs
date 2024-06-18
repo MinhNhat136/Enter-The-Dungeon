@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace Atomic.Character
 {
-    public class SimpleDeadBody : BaseSimpleDeadBody
+    public class SimpleDeadBody 
     {
         [SerializeField]
         private Rigidbody[] rigids;
@@ -19,7 +19,7 @@ namespace Atomic.Character
         private readonly Dictionary<int, Quaternion> _localRotations = new Dictionary<int, Quaternion>();
         private float _force; 
         
-        public override void Initialize(float force, float expansionRatio)
+        public void Initialize(float force, float expansionRatio)
         {
             for (int i = 0; i < rigids.Length; i++)
             {
@@ -30,7 +30,7 @@ namespace Atomic.Character
             _force = force;
         }
 
-        public override void Setup(Vector3 pos, bool ragdollLayer)
+        public void Setup(Vector3 pos, bool ragdollLayer)
         {
             for (int i = 0; i < rigids.Length; i++)
             {
@@ -38,7 +38,6 @@ namespace Atomic.Character
                 rigids[i].transform.localRotation = _localRotations[i];
             }
 
-            transform.position = pos;
             
             if (ragdollLayer)
             {
@@ -49,7 +48,7 @@ namespace Atomic.Character
             }
         }
         
-        public override void Explode()
+        public  void Explode()
         {
             foreach (var rigid in rigids)
             {
@@ -57,7 +56,7 @@ namespace Atomic.Character
                 rigid.AddForce(explosionForce, ForceMode.Impulse);
             }
 
-            StartCoroutine(FadeOut());
+            // StartCoroutine(FadeOut());
         }
 
         private System.Collections.IEnumerator FadeOut()
@@ -83,7 +82,7 @@ namespace Atomic.Character
                 yield return null;
             }
 
-            gameObject.SetActive(false);
+            // gameObject.SetActive(false);
         }
     }
 }

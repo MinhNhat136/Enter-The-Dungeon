@@ -22,7 +22,7 @@ namespace Atomic.Character
             aimDirection.y = 0;
             targetDirection.y = 0;
             
-            return memory.distance.Normalize(visionSensor.VisionDistance) + Vector3.Dot(aimDirection,targetDirection) * AngleWeight ;
+            return memory.distance.Normalize(visionSensor.config.distance) + Vector3.Dot(aimDirection,targetDirection) * config.angleWeight ;
         }
     }
 }

@@ -1,45 +1,24 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
     [CreateAssetMenu(menuName = "Ai Module Config/Vision/Default")]
     public class VisionConfig : ScriptableObject
     {
-        [SerializeField]
-        public float Distance = 10f;
+        public float distance = 10f;
 
-        [SerializeField]
-        public float Angle = 30f;
+        public float angle = 30f;
 
-        [SerializeField]
-        public float Height = 1.0f;
+        public float height = 1.0f;
 
-        [SerializeField]
-        public int ScanFrequency = 30;
+        public int scanFrequency = 30;
 
-        [SerializeField]
-        public int MaxObjectRemember = 10;
+        public int maxObjectRemember = 10;
 
-        [SerializeField]
-        public LayerMask VisionLayer;
+        public LayerMask visionLayer;
 
-
-        [SerializeField]
-        public LayerMask OcclusionLayer;
-
-        [SerializeField]
-        public Color MeshVisionColor = Color.red;
-
-        public void Assign(AiVisionSensorController visionController)
-        {
-            visionController.VisionDistance = Distance;
-            visionController.VisionHeight = Height;
-            visionController.VisionAngle = Angle;
-            visionController.ScanFrequency = ScanFrequency;
-            visionController.OcclusionLayer = OcclusionLayer;
-            visionController.VisionLayer = VisionLayer;
-            visionController.MaxObjectRemember = MaxObjectRemember;
-        }
+        public LayerMask occlusionLayer;
     }
 }
 

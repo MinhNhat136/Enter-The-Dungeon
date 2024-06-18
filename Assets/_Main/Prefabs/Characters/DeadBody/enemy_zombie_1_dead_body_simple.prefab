@@ -679,7 +679,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3543970818175223231}
-  - component: {fileID: 3670347474091017197}
   m_Layer: 0
   m_Name: enemy_zombie_1_dead_body_simple
   m_TagString: Untagged
@@ -709,42 +708,6 @@ Transform:
   - {fileID: 738832601094669369}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
---- !u!114 &3670347474091017197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5528780842131728492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab0d738487ba94043a3feae08f598b42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigids:
-  - {fileID: 9129510781984446809}
-  - {fileID: 4823988684619348366}
-  - {fileID: 2369174855135764940}
-  - {fileID: 5426432464300472327}
-  - {fileID: 7015968438978567677}
-  - {fileID: 6389775053035154634}
-  - {fileID: 2271243061235132457}
-  colliders:
-  - {fileID: 5190510787771860100}
-  - {fileID: 100242016291943436}
-  - {fileID: 8145642880645489311}
-  - {fileID: 3364517774907948288}
-  - {fileID: 4840416405682575801}
-  - {fileID: 1736981609144451661}
-  - {fileID: 7303094208544720409}
-  renderers:
-  - {fileID: 2258917528877973971}
-  - {fileID: 8611927138804679183}
-  - {fileID: 8592483262568418673}
-  - {fileID: 3787061059008586016}
-  - {fileID: 6387068474294570139}
-  - {fileID: 229581779372054483}
-  - {fileID: 8491811778477323100}
 --- !u!1 &8173076358460855296
 GameObject:
   m_ObjectHideFlags: 0

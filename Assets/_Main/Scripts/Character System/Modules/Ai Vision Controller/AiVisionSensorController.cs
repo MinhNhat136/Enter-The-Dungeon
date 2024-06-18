@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
@@ -20,13 +21,7 @@ namespace Atomic.Character
 
 
         //  Properties ------------------------------------
-        public float VisionDistance { get; set; }
-        public float VisionAngle { get; set; }
-        public float VisionHeight { get; set; }
-        public float ScanFrequency { get; set; }
-        public int MaxObjectRemember { get; set; }
-        public LayerMask VisionLayer { get; set; }
-        public LayerMask OcclusionLayer { get; set; }
+        
 
 
         public List<GameObject> Objects => _objects;
@@ -36,7 +31,7 @@ namespace Atomic.Character
         public BaseAgent Model => _model;
 
         //  Fields ----------------------------------------
-        [SerializeField] private VisionConfig _visionConfig;
+        public VisionConfig config;
 
         private List<GameObject> _objects = new(32);
 
@@ -56,9 +51,8 @@ namespace Atomic.Character
                 _isInitialized = true;
                 _model = model;
                 
-                _visionConfig.Assign(this);
-                _scanInterval = 1.0f / ScanFrequency;
-                _colliders = new Collider[MaxObjectRemember];
+                _scanInterval = 1.0f / config.scanFrequency;
+                _colliders = new Collider[config.maxObjectRemember];
             }
         }
 
@@ -90,7 +84,7 @@ namespace Atomic.Character
 
         public void Scan()
         {
-            _count = Physics.OverlapSphereNonAlloc(transform.position, VisionDistance, _colliders, VisionLayer);
+            _count = Physics.OverlapSphereNonAlloc(transform.position, config.distance, _colliders, config.visionLayer);
             Objects.Clear();
             for (int i = 0; i < _count; i++)
             {
@@ -110,14 +104,14 @@ namespace Atomic.Character
 
             direction.y = 0;
             float deltaAngle = Vector3.Angle(direction, transform.forward);
-            if (deltaAngle > VisionAngle)
+            if (deltaAngle > config.angle)
             {
                 return false;
             }
 
-            origin.y += VisionHeight / 2;
+            origin.y += config.height / 2;
             dest.y = origin.y;
-            if (Physics.Linecast(origin, dest, OcclusionLayer))
+            if (Physics.Linecast(origin, dest, config.occlusionLayer))
             {
                 return false;
             }

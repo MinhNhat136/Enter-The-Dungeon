@@ -1,30 +1,21 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Atomic.Character
 {
     [CreateAssetMenu(menuName = "Ai Module Config /Targeting")]
     public class TargetingConfig : ScriptableObject
     {
-        public string TargetLayer;
+        [FormerlySerializedAs("TargetLayer")] public string targetLayer;
 
-        public float DistanceWeight = 1.0f;
+        [FormerlySerializedAs("DistanceWeight")] public float distanceWeight = 1.0f;
 
-        public float AngleWeight = 1.0f;
+        [FormerlySerializedAs("AngleWeight")] public float angleWeight = 1.0f;
 
-        public float AgeWeight = 1.0f;
+        [FormerlySerializedAs("AgeWeight")] public float ageWeight = 1.0f;
 
-        public int MaxNumberTarget = 16;
+        [FormerlySerializedAs("MaxNumberTarget")] public int maxNumberTarget = 16;
         
-        
-
-        public void Assign(ITargetingController targetingController)
-        {
-            targetingController.TargetLayer = TargetLayer;
-            targetingController.DistanceWeight = DistanceWeight;
-            targetingController.AngleWeight = AngleWeight;
-            targetingController.AgeWeight = AgeWeight;
-            targetingController.MaxNumberTarget = MaxNumberTarget;
-        }
     }
 
 }
