@@ -1,4 +1,4 @@
-namespace Atomic.Core.Interface
+namespace Atomic.Core
 {
     public interface IInitializableWithBaseModel<TModel>
     {

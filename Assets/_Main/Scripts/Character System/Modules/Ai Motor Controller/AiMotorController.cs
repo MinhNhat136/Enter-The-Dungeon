@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Atomic.Core.Interface;
+using Atomic.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;

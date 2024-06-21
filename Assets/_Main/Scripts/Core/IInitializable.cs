@@ -1,4 +1,4 @@
-namespace Atomic.Core.Interface
+namespace Atomic.Core
 {
     /// <summary>
     /// Enforces API for types which Initialize.

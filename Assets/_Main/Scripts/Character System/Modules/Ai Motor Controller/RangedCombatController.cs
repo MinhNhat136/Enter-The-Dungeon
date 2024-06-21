@@ -24,7 +24,10 @@ namespace Atomic.Character
             set
             {
                 if (value is RangedWeaponBuilder rangedWeapon)
+                {
                     _rangedWeapon = rangedWeapon;
+                }
+                    
                 else
                 {
                     Debug.Log(_rangedWeapon);
@@ -32,9 +35,7 @@ namespace Atomic.Character
                 }
             }
         }
-
-
-
+        
         public bool IsInitialized { get; set; }
         public BaseAgent Model { get; set; }
         

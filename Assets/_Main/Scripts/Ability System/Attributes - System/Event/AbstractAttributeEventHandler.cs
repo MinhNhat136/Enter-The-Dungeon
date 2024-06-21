@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Atomic.Core.Interface;
+using Atomic.Core;
 using UnityEngine;
 
 namespace Atomic.AbilitySystem

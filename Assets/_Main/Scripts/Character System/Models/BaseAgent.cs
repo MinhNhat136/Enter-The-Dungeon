@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Atomic.AbilitySystem;
 using Atomic.Core;
-using Atomic.Core.Interface;
 using Atomic.Equipment;
 using NodeCanvas.BehaviourTrees;
 using UnityEngine;
@@ -80,8 +79,10 @@ namespace Atomic.Character
         
         public float LastAttackTime { get; set; }
         public float LastImpactTime { get; set; }
+        public float LastSwapWeaponTime { get; set; }
         public float SinceLastImpactTime => Time.time - LastImpactTime;
         public float SinceLastAttackTime => Time.time - LastAttackTime;
+        public float SinceLastSwapWeaponTime => Time.time - LastSwapWeaponTime;
         
         private Dictionary<CharacterActionType, Action> ActionTriggers { get; } = new();
 
@@ -232,13 +233,18 @@ namespace Atomic.Character
         
         //  Attack Behaviour
         public void AimTarget() => MotorController.CombatController.AimTarget();
+        
         public void BeginPrepareAttack() => MotorController.CombatController.BeginPrepareAttack();
         public void PreparingAttack() => MotorController.CombatController.PreparingAttack();
         public void EndPrepareAttack() => MotorController.CombatController.EndPrepareAttack();
+
         public void BeginAttack() => MotorController.CombatController.BeginAttack();
         public void Attacking() => MotorController.CombatController.Attacking();
         public void EndAttack() => MotorController.CombatController.EndAttack();
 
+        protected void BeginHit() => MotorController.CombatController.BeginHit();
+        protected void EndHit() => MotorController.CombatController.EndHit();
+        
         public void BeginAttackMove() => MotorController.CombatController.BeginAttackMove();
         public void AttackMoving() => MotorController.CombatController.AttackMoving();
         public void EndAttackMove() => MotorController.CombatController.EndAttackMove();
@@ -248,13 +254,30 @@ namespace Atomic.Character
             CurrentActionState = 0;
 
             CurrentActionState = DefaultActionState;
+            EndHit();
         }
         
         public void CustomActionAttack() => MotorController.CombatController.CustomAction();
         
         
         // Swap weapon
-        public void ActivateOtherWeapon() => WeaponVisualsController.ActivateOtherWeapon();
+        public void ActivateOtherWeapon()
+        {
+            WeaponVisualsController.ActivateOtherWeapon();
+            LastSwapWeaponTime = Time.time;
+        }
+
+        public void IsCurrentWeaponType(WeaponType weaponType)
+        {
+            WeaponVisualsController.IsCurrentWeaponType(weaponType);
+        }
+
+        public void ActivateOtherWeapon(WeaponType weaponType)
+        {
+            LastSwapWeaponTime = Time.time;
+            WeaponVisualsController.ActivateOtherWeapon(weaponType);
+        }
+        
         public void SwitchCombatMode()
         {
             MotorController.SwitchCombatMode(CurrentCombatMode);
@@ -264,6 +287,12 @@ namespace Atomic.Character
         #endregion
         
         //  Event Handlers --------------------------------
+        protected void AssignCharacterActionEvents()
+        {
+            RegisterActionTrigger(CharacterActionType.BeginHit, BeginHit);
+            RegisterActionTrigger(CharacterActionType.EndHit, EndHit);
+        }
+        
         protected void RegisterActionTrigger(CharacterActionType actionType, Action action)
         {
             if (!ActionTriggers.TryAdd(actionType, action))

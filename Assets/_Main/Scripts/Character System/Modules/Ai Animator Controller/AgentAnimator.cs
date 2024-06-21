@@ -1,6 +1,4 @@
-using System;
-using Atomic.AbilitySystem;
-using Atomic.Core.Interface;
+using Atomic.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -128,9 +126,9 @@ namespace Atomic.Character
         
         public virtual void ApplyMovementAnimation()
         {
-            Animator.SetFloat(AnimatorParameters.InputHorizontal, Model.MotorController.MoveSpeed,
+            Animator.SetFloat(AnimatorParameters.InputHorizontal, Model.NavmeshAgent.speed,
                 .1f, Time.deltaTime);
-            Animator.SetFloat(AnimatorParameters.InputVertical, Model.MotorController.MoveSpeed,
+            Animator.SetFloat(AnimatorParameters.InputVertical, Model.NavmeshAgent.speed,
                 .1f, Time.deltaTime);
         }
 

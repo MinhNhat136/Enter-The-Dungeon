@@ -49,14 +49,14 @@ namespace Atomic.Equipment
 
         private AbstractMeleeAttackAbilityScriptableObject.AbstractMeleeAttackSpec _effectSpec;
 
-        public void BeginAttackMove()
+        public void BeginHit()
         {
             _effectSpec = attackData[CurrentCombo]
                 .CreateSpec(Owner.AiAbilityController.abilitySystemController, peak.transform);
-             StartCoroutine(_effectSpec.TryActivateAbility());
+            StartCoroutine(_effectSpec.TryActivateAbility());
         }
 
-        public void EndAttackMove()
+        public void EndHit()
         {
             if (_effectSpec == null) return;
             _effectSpec.CancelAbility();

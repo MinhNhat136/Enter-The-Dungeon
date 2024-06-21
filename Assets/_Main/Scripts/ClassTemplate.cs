@@ -1,7 +1,6 @@
-using RMC.Core.Architectures.Mini.Context;
 
 
-namespace Atomic.Template
+namespace Atomic.Core
 {
     //  Namespace Properties ------------------------------
 
@@ -34,54 +33,3 @@ namespace Atomic.Template
     }
 }
 
-namespace Atomic.Controllers
-{
-    public class InitializeWithContextTemplate
-    {
-        //  Events ----------------------------------------
-
-
-        //  Properties ------------------------------------
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
-        public IContext Context
-        {
-            get { return _context; }
-        }
-
-        //  Fields ----------------------------------------
-        private bool _isInitialized;
-        private IContext _context;
-
-        //  Initialization  -------------------------------
-        public void Initialize(IContext context)
-        {
-            if (!IsInitialized)
-            {
-                _isInitialized = true;
-                _context = context;
-            }
-        }
-
-        public void RequireIsInitialized()
-        {
-            if (!IsInitialized)
-            {
-
-            }
-        }
-
-
-        //  Unity Methods   -------------------------------
-
-
-        //  Other Methods ---------------------------------
-
-
-        //  Event Handlers --------------------------------
-
-
-    }
-}

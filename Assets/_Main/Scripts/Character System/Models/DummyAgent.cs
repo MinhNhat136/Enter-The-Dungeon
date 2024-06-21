@@ -19,7 +19,6 @@ namespace Atomic.Character
 
         //  Fields ----------------------------------------
 
-        [SerializeField] 
 
         //  Initialization  -------------------------------
         
@@ -32,8 +31,5 @@ namespace Atomic.Character
 
         //  Event Handlers --------------------------------
         
-        public void DeadHandle()
-        {
-        }
     }
 }

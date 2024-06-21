@@ -1,4 +1,3 @@
-using Atomic.Core.Interface;
 using UnityEngine;
 
 namespace Atomic.Core

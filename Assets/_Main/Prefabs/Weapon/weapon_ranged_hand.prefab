@@ -40,7 +40,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7680391807093026294}
-  - component: {fileID: 4372825021930708272}
   m_Layer: 0
   m_Name: weapon_ranged_hand
   m_TagString: Untagged
@@ -65,25 +64,6 @@ Transform:
   - {fileID: 8724588823906984827}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4372825021930708272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7473100554879677334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3fba2405a18c654ab3fdc000c34febd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  components:
-  - componentEnum: 1
-    componentPosition: {fileID: 3353024414527741082}
-  - componentEnum: 0
-    componentPosition: {fileID: 8724588823906984827}
-  - componentEnum: 2
-    componentPosition: {fileID: 7680391807093026294}
 --- !u!1 &8070409021352104570
 GameObject:
   m_ObjectHideFlags: 0

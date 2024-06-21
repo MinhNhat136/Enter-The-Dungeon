@@ -22,6 +22,8 @@ namespace Atomic.Character
         BeginAttack = 1 << 8,
         EndAttack = 1 << 9,
         
+        BeginHit = 1 << 10, 
+        EndHit = 1 << 11, 
         
         CustomAction = 1 << 12,
     }

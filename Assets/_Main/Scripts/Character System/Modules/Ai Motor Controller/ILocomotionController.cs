@@ -1,5 +1,4 @@
-using Atomic.Core.Interface;
-using UnityEngine;
+using Atomic.Core;
 
 namespace Atomic.Character
 {

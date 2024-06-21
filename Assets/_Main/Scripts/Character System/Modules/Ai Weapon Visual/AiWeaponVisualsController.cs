@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Atomic.Core.Interface;
+using Atomic.Core;
 using Atomic.Equipment;
 using UnityEngine;
 
@@ -34,6 +33,7 @@ namespace Atomic.Character
         
         //  Fields ----------------------------------------
         private int _currentWeaponIndex;
+        
         
         //  Initialization  -------------------------------
         public void Initialize(BaseAgent model)
@@ -80,6 +80,11 @@ namespace Atomic.Character
                 weapon.Detach();
             }
         }
+
+        public bool IsCurrentWeaponType(WeaponType weaponType)
+        {
+            return weaponType == weaponSlots[_currentWeaponIndex].weaponType;
+        }
         
         public void ActivateOtherWeapon()
         {
@@ -88,6 +93,33 @@ namespace Atomic.Character
             else _currentWeaponIndex++;
             weaponSlots[_currentWeaponIndex]?.Activate();
         }
+
+        public void ActivateOtherWeapon(WeaponType type)
+        {
+            weaponSlots[_currentWeaponIndex].DeActivate();
+
+            for (int i = 0; i < weaponSlots.Count; i++)
+            {
+                if (weaponSlots[i].weaponType == type)
+                {
+                    _currentWeaponIndex = i;
+                    weaponSlots[_currentWeaponIndex].Activate();
+                    return;
+                }
+            }
+
+            if (_currentWeaponIndex == weaponSlots.Count - 1) 
+            {
+                _currentWeaponIndex = 0;
+            }
+            else 
+            {
+                _currentWeaponIndex++;
+            }
+
+            weaponSlots[_currentWeaponIndex].Activate();
+        }
+
         //  Event Handlers --------------------------------
     }
 

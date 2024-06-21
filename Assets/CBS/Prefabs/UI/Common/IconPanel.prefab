@@ -6424,7 +6424,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc09ada6973ac244696fede03da323b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameScene: Level 1
 --- !u!1 &5796046585435711394
 GameObject:
   m_ObjectHideFlags: 0
@@ -7745,7 +7744,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1640087996224959167}
         m_TargetAssemblyTypeName: CBS.UI.IconsPanel, Assembly-CSharp
-        m_MethodName: LoadGame
+        m_MethodName: ShowStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

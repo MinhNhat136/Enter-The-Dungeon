@@ -1,13 +1,17 @@
 ﻿using CBS.Scriptable;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace CBS.UI
 {
     public class IconsPanel : MonoBehaviour
     {
-        [SerializeField]
-        private string GameScene;
+        
+        public void ShowStage()
+        {
+            var prefabs = CBSScriptable.Get<StagePrefabs>();
+            var stagePrefabs = prefabs.StageWindow;
+            UIView.ShowWindow(stagePrefabs);
+        }
 
         public void ShowStore()
         {
@@ -117,11 +121,6 @@ namespace CBS.UI
             var prefabs = CBSScriptable.Get<EventsPrefabs>();
             var eventsWindow = prefabs.EventWindow;
             UIView.ShowWindow(eventsWindow);
-        }
-
-        public void LoadGame()
-        {
-            SceneManager.LoadScene(GameScene);
         }
     }
 }

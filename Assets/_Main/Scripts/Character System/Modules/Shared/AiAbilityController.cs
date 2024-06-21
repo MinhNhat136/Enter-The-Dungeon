@@ -1,6 +1,5 @@
-using System;
 using Atomic.AbilitySystem;
-using Atomic.Core.Interface;
+using Atomic.Core;
 using UnityEngine;
 using UnityEngine.Serialization;
 

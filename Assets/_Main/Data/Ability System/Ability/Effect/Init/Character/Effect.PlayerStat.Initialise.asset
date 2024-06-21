@@ -20,7 +20,7 @@ MonoBehaviour:
     - attribute: {fileID: 11400000, guid: 7e6a4862fb42541409ed16d4363a952f, type: 2}
       modifierOperator: 0
       modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
-      multiplier: 200
+      multiplier: 1000
     - attribute: {fileID: 11400000, guid: bd215916c9ab34446b6b155232b035d9, type: 2}
       modifierOperator: 0
       modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}

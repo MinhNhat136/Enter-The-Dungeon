@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Atomic.Damage;
+using Atomic.UI;
 using UnityEngine;
 using UnityEngine.Pool;
 

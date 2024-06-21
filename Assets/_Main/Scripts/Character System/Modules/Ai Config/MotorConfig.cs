@@ -58,18 +58,7 @@ namespace Atomic.Character
             motorController.RollController.Initialize(motorController);
         }
     }
-
-    [System.Serializable]
-    public class JumpConfig
-    {
-        
-    }
-
-    [System.Serializable]
-    public class FlyConfig
-    {
-        
-    }
+  
     
     /// <summary>
     /// Configuration asset defining the motor abilities and behaviors for AI agents.

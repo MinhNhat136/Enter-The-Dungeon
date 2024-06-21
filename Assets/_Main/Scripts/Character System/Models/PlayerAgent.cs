@@ -106,8 +106,10 @@ namespace Atomic.Character
             InputControls.Character.SwapWeapon.started += _ => ApplySwapWeaponCommand();
         }
 
-        private void AssignCharacterActionEvents()
+        protected new void AssignCharacterActionEvents()
         {
+            base.AssignCharacterActionEvents();
+            
             #region Roll Events
             RegisterActionTrigger(CharacterActionType.BeginRoll, () =>
             {
@@ -169,6 +171,7 @@ namespace Atomic.Character
                 CurrentActionState &= ~CharacterActionType.BeginAttack;
                 CurrentActionState |= CharacterActionType.EndAttack;
             });
+            
             #endregion
 
             #region  Move next skill

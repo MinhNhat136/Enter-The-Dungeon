@@ -1,4 +1,4 @@
-using Atomic.Core.Interface;
+using Atomic.Core;
 using UnityEngine;
 using UnityEngine.AI;
 

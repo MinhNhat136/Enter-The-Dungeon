@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4082211979985070}
   - component: {fileID: 1257782521107239431}
-  - component: {fileID: 2842203505926366816}
   - component: {fileID: 2479695303663167729}
   m_Layer: 7
   m_Name: weapon_spear
@@ -59,19 +58,6 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &2842203505926366816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317118864596191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7525cc0842b3a45ab02531a07354ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot: {fileID: 2911576160027758103}
 --- !u!54 &2479695303663167729
 Rigidbody:
   m_ObjectHideFlags: 0

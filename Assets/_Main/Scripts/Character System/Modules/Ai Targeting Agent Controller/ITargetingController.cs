@@ -1,4 +1,5 @@
-using Atomic.Core.Interface;
+
+using Atomic.Core;
 
 namespace Atomic.Character
 {

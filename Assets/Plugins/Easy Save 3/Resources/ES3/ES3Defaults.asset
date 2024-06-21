@@ -40,9 +40,6 @@ MonoBehaviour:
     - PlayFabSDKEditor
     - PPv2URPConverters
     - Purchasing.Common
-    - RMC.Core.Mini.Editor
-    - RMC.Core.Mini.Editor.Tests
-    - RMC.Core.Mini.Runtime
     - Sirenix.OdinInspector.Modules.UnityMathematics
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0

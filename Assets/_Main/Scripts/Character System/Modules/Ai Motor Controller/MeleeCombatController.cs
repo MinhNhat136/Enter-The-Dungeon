@@ -33,7 +33,7 @@ namespace Atomic.Character
                 }
             }
         }
-
+        
         public bool IsInitialized { get; private set; }
         public BaseAgent Model { get; private set; }
         public string NextAnimationName { get; set; }
@@ -84,7 +84,6 @@ namespace Atomic.Character
         {
             _stopMove = false; 
             Model.NavmeshAgent.enabled = false;
-            _meleeWeapon.BeginAttackMove();
         }
 
         public void AttackMoving()
@@ -111,7 +110,16 @@ namespace Atomic.Character
         {
             Model.NavmeshAgent.Warp(Model.modelTransform.position);
             Model.NavmeshAgent.enabled = true;
-            _meleeWeapon.EndAttackMove();
+        }
+
+        public void BeginHit()
+        {
+            _meleeWeapon.BeginHit();
+        }
+
+        public void EndHit()
+        {
+            _meleeWeapon.EndHit();
         }
         
         public void EndAttack()

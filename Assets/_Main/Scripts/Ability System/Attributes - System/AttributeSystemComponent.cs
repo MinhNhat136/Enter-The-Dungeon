@@ -17,12 +17,12 @@ namespace Atomic.AbilitySystem
 
         //  Fields ----------------------------------------
         [SerializeField] private AbstractAttributeEventHandler[] attributeSystemEvents;
-        [SerializeField] private List<AttributeScriptableObject> attributeScriptableObjects;
-        [SerializeField] private List<AttributeValue> attributeValues;
+        [SerializeField] private List<AttributeScriptableObject> attributeScriptableObjects = new(16);
+        [SerializeField] private List<AttributeValue> attributeValues = new(16);
         
         private bool _isAttributeDictStale;
-        public Dictionary<AttributeScriptableObject, int> MAttributeIndexCache { get; private set; } = new ();
-        private readonly List<AttributeValue> _prevAttributeValues = new();
+        public Dictionary<AttributeScriptableObject, int> MAttributeIndexCache { get; private set; } = new (16);
+        private readonly List<AttributeValue> _prevAttributeValues = new(16);
         //  Initialization  -------------------------------
 
         

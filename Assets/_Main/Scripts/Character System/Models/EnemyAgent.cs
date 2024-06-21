@@ -10,6 +10,8 @@ namespace Atomic.Character
 
         //  Properties ------------------------------------
         public bool CanPerformAttack => Math.Abs(StabilityRatio - 1) < 0.01f &&
+                                        TargetAgent != null &&
+                                        Vector3.Distance(transform.position, TargetAgent.transform.position) <= MotorController.CombatController.CombatRange &&
                                         CurrentActionState.HasFlag(CharacterActionType.EndAttack) &&
                                         CurrentActionState.HasFlag(CharacterActionType.EndPrepareAttack) &&
                                         CurrentActionState.HasFlag(CharacterActionType.EndAttackMove);
@@ -53,8 +55,9 @@ namespace Atomic.Character
             AssignCharacterActionEvents();
         }
 
-        private void AssignCharacterActionEvents()
+        private new void AssignCharacterActionEvents()
         {
+            base.AssignCharacterActionEvents();
             #region Attack Move
             RegisterActionTrigger(CharacterActionType.BeginPrepareAttack, () =>
             {

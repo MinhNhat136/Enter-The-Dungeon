@@ -12,10 +12,7 @@ namespace Atomic.Character
     [System.Serializable]
     public class AiMemoryObject
     {
-        public float Age
-        {
-            get { return Time.time - lastTime; }
-        }
+        public float Age => Time.time - lastTime;
         public GameObject gameObject;
         public Vector3 position;
         public Vector3 direction;
