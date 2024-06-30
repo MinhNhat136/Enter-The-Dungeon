@@ -25,8 +25,7 @@ namespace Atomic.Character
 
         //  Properties ------------------------------------
         public bool IsInitialized { get; private set; }
-        public BaseAgent Model { get; private set; }
-        public List<WeaponBuilder> weaponSlots;
+        public BaseAgent Model { get; private set; }public List<WeaponBuilder> weaponSlots;
        
         //  Collections -----------------------------------
         

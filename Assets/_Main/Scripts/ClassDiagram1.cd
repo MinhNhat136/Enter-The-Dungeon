@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Atomic.AbilitySystem.AttributeScriptableObject" Collapsed="true">
+    <Position X="4.5" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAICAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\AttributeScriptableObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.AbilitySystem.LinearDerivedAttributeScriptableObject" Collapsed="true">
+    <Position X="4" Y="5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\LinearDerivedAttributeScriptableObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.AbilitySystem.AttributeSystemComponent" Collapsed="true">
+    <Position X="2.5" Y="6.75" Width="3.5" />
+    <NestedTypes>
+      <Delegate Name="Atomic.AbilitySystem.AttributeSystemComponent.NotifyAttributeChanged" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\_Main\Scripts\Ability System\Attributes - System\AttributeSystemComponent.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAgRAAhAAAAAAEAAAAiAIAAAgQIAEQAAAAECAAAAAGE=</HashCode>
+      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\AttributeSystemComponent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="attributeSystemEvents" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Atomic.AbilitySystem.AbstractAttributeEventHandler" Collapsed="true">
+    <Position X="8.25" Y="6.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABQAAAAAAAAAAAAgAAAAAAAAABAAACAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\Event\AbstractAttributeEventHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

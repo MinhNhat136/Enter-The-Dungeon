@@ -75,6 +75,7 @@ namespace Atomic.AbilitySystem
                     ApplyEffects();
                     yield return null;
                 }
+                EndAbility();
             }
 
             public override void CancelAbility() => _canTick = false;

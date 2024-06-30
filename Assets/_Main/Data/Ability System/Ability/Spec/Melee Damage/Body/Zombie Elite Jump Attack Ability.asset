@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed81edbe43144466a40528a0593b0559, type: 3}
+  m_Name: Zombie Elite Jump Attack Ability
+  m_EditorClassIdentifier: 
+  abilityName: 
+  abilityTags:
+    AssetTag: {fileID: 0}
+    CancelAbilitiesWithTags: []
+    BlockAbilitiesWithTags: []
+    ActivationOwnedTags: []
+    OwnerTags:
+      requireTags: []
+      ignoreTags: []
+    SourceTags:
+      requireTags: []
+      ignoreTags: []
+    TargetTags:
+      requireTags: []
+      ignoreTags: []
+  cost: {fileID: 0}
+  cooldown: {fileID: 0}
+  eventOnActivates:
+  - {fileID: 11400000, guid: 375412453059da2408d60afecba7e5a1, type: 2}
+  - {fileID: 11400000, guid: 013ba88c68e4d724db1664d3bea43e3d, type: 2}
+  <AnimationName>k__BackingField: attack_2
+  <AnimationClip>k__BackingField: {fileID: 7400000, guid: 3e6807fb355ff924d91ae8465b136b51, type: 2}
+  <AttackMoveSpeed>k__BackingField: 5
+  gameplayEffects:
+  - {fileID: 11400000, guid: 68b66f296dc058f42b5ac02cab8051a4, type: 2}
+  - {fileID: 11400000, guid: 48317656741087044b025311726e8bcd, type: 2}
+  <TargetLayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 512
+  <SphereCastRadius>k__BackingField: 5

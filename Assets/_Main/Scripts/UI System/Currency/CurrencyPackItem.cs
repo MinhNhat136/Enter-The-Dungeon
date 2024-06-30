@@ -21,6 +21,7 @@ public class CurrencyPackItem : MonoBehaviour
     private ICurrency Currency { get; set; }
     private ICBSInAppPurchase CBSPurchase { get; set; }
 
+    
     public string Id { get; set; }
     
     private void Awake()

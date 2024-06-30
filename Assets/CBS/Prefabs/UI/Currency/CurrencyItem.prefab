@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 7199309411969898557}
   - component: {fileID: 7199309411969898555}
   - component: {fileID: 7199309411969898554}
-  - component: {fileID: 1742602685214244249}
+  - component: {fileID: 7783555955068634284}
   m_Layer: 5
   m_Name: CurrencyItem
   m_TagString: Untagged
@@ -672,7 +672,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1742602685214244249
+--- !u!114 &7783555955068634284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -829,8 +829,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1742602685214244249}
-        m_TargetAssemblyTypeName: CBS.UI.AtomicCurrencyItem, Assembly-CSharp
+      - m_Target: {fileID: 7783555955068634284}
+        m_TargetAssemblyTypeName: CBS.UI.CurrencyItem, Assembly-CSharp
         m_MethodName: ShowCurrenciesWindow
         m_Mode: 1
         m_Arguments:

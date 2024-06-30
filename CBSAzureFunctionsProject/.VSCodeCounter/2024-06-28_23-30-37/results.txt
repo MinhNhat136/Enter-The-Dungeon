@@ -1,0 +1,89 @@
+Date : 2024-06-28 23:30:37
+Directory : d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject
+Total : 58 files,  22502 codes, 300 comments, 2389 blanks, all 25191 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| C#       |         55 |     22,462 |        300 |      2,389 |     25,151 |
+| XML      |          1 |         36 |          0 |          0 |         36 |
+| JSON     |          2 |          4 |          0 |          0 |          4 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                  | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                     |         58 |     22,502 |        300 |      2,389 |     25,191 |
+| . (Files)                                                                                                             |          3 |         40 |          0 |          0 |         40 |
+| Scripts                                                                                                               |         55 |     22,462 |        300 |      2,389 |     25,151 |
+| Scripts (Files)                                                                                                       |         18 |      5,504 |         41 |        364 |      5,909 |
+| Scripts\Models                                                                                                        |          5 |        386 |          0 |         59 |        445 |
+| Scripts\Modules                                                                                                       |         32 |     16,572 |        259 |      1,966 |     18,797 |
++-----------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                              | language | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\CBS_Azure_Functions.csproj                         | XML      |         36 |          0 |          0 |         36 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\ArrayHelper.cs                             | C#       |         15 |          0 |          1 |         16 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\CBSUtils.cs                                | C#       |         93 |          2 |         18 |        113 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\CS2AFHelperClasses.cs                      | C#       |         85 |          8 |         15 |        108 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\CosmosTable.cs                             | C#       |        276 |          7 |         23 |        306 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\DurableTaskExecuter.cs                     | C#       |        153 |          6 |         22 |        181 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\ErrorHandler.cs                            | C#       |        318 |          1 |         72 |        391 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\JsonPlugin.cs                              | C#       |         51 |          0 |          9 |         60 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Models\AzureChatDataProvider.cs            | C#       |        334 |          0 |         43 |        377 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Models\EntityPageResult.cs                 | C#       |         10 |          0 |          1 |         11 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Models\FunctionCalendarDependencyResult.cs | C#       |         11 |          0 |          1 |         12 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Models\IChatDataProvider.cs                | C#       |         22 |          0 |         13 |         35 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Models\StoreTitleExecuteResult.cs          | C#       |          9 |          0 |          1 |         10 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\AchievementsModule.cs              | C#       |        179 |          0 |         25 |        204 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\AuthModule.cs                      | C#       |        203 |          6 |         19 |        228 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\BaseAzureModule.cs                 | C#       |        487 |          4 |         52 |        543 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\BattlePassModule.cs                | C#       |      1,290 |         33 |        139 |      1,462 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\CalendarModule.cs                  | C#       |        733 |         16 |         86 |        835 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ChatModule.cs                      | C#       |        993 |          9 |        157 |      1,159 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ClanEconomyModule.cs               | C#       |        511 |          5 |         64 |        580 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ClanExpModule.cs                   | C#       |        110 |          1 |         14 |        125 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ClanModule.cs                      | C#       |      2,229 |         34 |        291 |      2,554 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ClanStatisticModule.cs             | C#       |        313 |          1 |         36 |        350 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ClanTaskModule.cs                  | C#       |        411 |         20 |         40 |        471 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\CraftModule.cs                     | C#       |        547 |         10 |         59 |        616 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\CurrencyModule.cs                  | C#       |        271 |          1 |         41 |        313 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\EventModule.cs                     | C#       |      1,374 |          2 |        153 |      1,529 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ExpirienceModule.cs                | C#       |        240 |          3 |         29 |        272 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\FriendsModule.cs                   | C#       |        499 |          2 |         69 |        570 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\HealthModule.cs                    | C#       |         79 |          7 |         12 |         98 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\InAppPurchaseModule.cs             | C#       |        145 |          0 |         18 |        163 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\InventoryModule.cs                 | C#       |        779 |          0 |         70 |        849 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ItemsModule.cs                     | C#       |        362 |          0 |         46 |        408 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\MatchmakingModule.cs               | C#       |        159 |          0 |         33 |        192 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\NotificationModule.cs              | C#       |        454 |          6 |         50 |        510 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ProfileExpModule.cs                | C#       |        115 |          0 |          9 |        124 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ProfileModule.cs                   | C#       |        961 |          7 |        113 |      1,081 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\ProfileTaskModule.cs               | C#       |        434 |         16 |         50 |        500 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\RewardModule.cs                    | C#       |        149 |          6 |          8 |        163 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\RouletteModule.cs                  | C#       |        107 |          2 |         12 |        121 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\SpecialOfferModule.cs              | C#       |        582 |         16 |         58 |        656 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\StatisticModule.cs                 | C#       |        423 |          1 |         56 |        480 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\StoreModule.cs                     | C#       |        829 |         24 |         86 |        939 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\TaskModule.cs                      | C#       |        519 |         27 |         61 |        607 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\Modules\TitleDataModule.cs                 | C#       |         85 |          0 |         10 |         95 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\NicknameHelper.cs                          | C#       |         11 |          0 |          1 |         12 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\PlayfabHelper.cs                           | C#       |        122 |          0 |         19 |        141 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\ProfanityList.cs                           | C#       |      2,209 |          0 |          1 |      2,210 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\StorageTable.cs                            | C#       |        464 |          2 |         42 |        508 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TableBattlePassAssistant.cs                | C#       |        211 |          2 |         15 |        228 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TableClanAssistant.cs                      | C#       |        385 |          0 |         31 |        416 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TableEventsAssistant.cs                    | C#       |         70 |          0 |          5 |         75 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TableNotificationAssistant.cs              | C#       |        281 |          2 |         37 |        320 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TableProfileAssistant.cs                   | C#       |        344 |          1 |         24 |        369 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TaskUtils.cs                               | C#       |        153 |          7 |         12 |        172 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\Scripts\TimePeriodAssistant.cs                     | C#       |        263 |          3 |         17 |        283 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\host.json                                          | JSON     |          3 |          0 |          0 |          3 |
+| d:\Unity\Unity Projects\Enter_The_Dungeon\CBSAzureFunctionsProject\omnisharp.json                                     | JSON     |          1 |          0 |          0 |          1 |
+| Total                                                                                                                 |          |     22,502 |        300 |      2,389 |     25,191 |
++-----------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

@@ -19,6 +19,7 @@ namespace CBS.UI
         private void Awake()
         {
             Prefabs = CBSScriptable.Get<CurrencyPrefabs>();
+            
         }
 
         public void Display(CBSCurrency currency)

@@ -65,6 +65,7 @@ namespace CBS.UI
             var size = RootRect.sizeDelta;
             size.x = Title.preferredWidth;
             RootRect.sizeDelta = size;
+            
         }
 
         private void UpdateLabelColor()

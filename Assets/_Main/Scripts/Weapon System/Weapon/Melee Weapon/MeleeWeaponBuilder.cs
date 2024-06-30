@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Atomic.AbilitySystem;
 using Atomic.Character;
@@ -38,8 +39,12 @@ namespace Atomic.Equipment
         }
         
         //  Unity Methods   -------------------------------
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+            CancelInvoke(nameof(ResetCombo));
+        }
 
-        
         //  Other Methods ---------------------------------
         public void BeginAttack()
         {
