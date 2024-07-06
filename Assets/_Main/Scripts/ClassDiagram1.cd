@@ -1,43 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Atomic.AbilitySystem.AttributeScriptableObject" Collapsed="true">
-    <Position X="4.5" Y="3.25" Width="3" />
+  <Class Name="Atomic.Character.AiImpactSensorController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAICAAAAAAAAAAEA=</HashCode>
-      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\AttributeScriptableObject.cs</FileName>
+      <HashCode>AAQIAAAAAAAkAQAACAAAAAAAABgAAAABAAgABAAAAAI=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Vision Controller\AiImpactSensorController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Atomic.Character.AiVisionSensorController" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAASAQBAAQgAAgAAAgAAABgAAAEAAAiABAAQAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Vision Controller\AiVisionSensorController.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="AITargetingPickUpController" Collapsed="true">
+    <Position X="11.25" Y="7.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Targeting Agent Controller\AITargetingPickUpController.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Atomic.AbilitySystem.LinearDerivedAttributeScriptableObject" Collapsed="true">
-    <Position X="4" Y="5" Width="4" />
+  <Class Name="Atomic.Character.BaseTargetingAgentController" Collapsed="true">
+    <Position X="8.25" Y="7.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AACAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\LinearDerivedAttributeScriptableObject.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Atomic.AbilitySystem.AttributeSystemComponent" Collapsed="true">
-    <Position X="2.5" Y="6.75" Width="3.5" />
-    <NestedTypes>
-      <Delegate Name="Atomic.AbilitySystem.AttributeSystemComponent.NotifyAttributeChanged" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Assets\_Main\Scripts\Ability System\Attributes - System\AttributeSystemComponent.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Delegate>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAgRAAhAAAAAAEAAAAiAIAAAgQIAEQAAAAECAAAAAGE=</HashCode>
-      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\AttributeSystemComponent.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Field Name="attributeSystemEvents" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="Atomic.AbilitySystem.AbstractAttributeEventHandler" Collapsed="true">
-    <Position X="8.25" Y="6.75" Width="3" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABQAAAAAAAAAAAAgAAAAAAAAABAAACAA=</HashCode>
-      <FileName>Assets\_Main\Scripts\Ability System\Attributes - System\Event\AbstractAttributeEventHandler.cs</FileName>
+      <HashCode>ABQCAAASAQAAAQAAAgAAGAAAAAgCAAAAAAggBIAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Targeting Agent Controller\BaseTargetingAgentController.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
+  <Class Name="Atomic.Character.PlayerTargetingAgentController" Collapsed="true">
+    <Position X="8.25" Y="9" Width="3" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Targeting Agent Controller\PlayerTargetingAgentController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.Character.BaseAgent" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RGMQKBQiraEJYwAAoRAkJ1xbU9hAALEpkAYiBoBwIGQ=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Models\BaseAgent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Atomic.Character.AiMemoryController" Collapsed="true">
+    <Position X="10.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAIgAAAgABAUIAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Shared\AiMemoryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Atomic.Character.AiMemoryObject" Collapsed="true">
+    <Position X="10.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAEAIIgAQAEAAAAAAAgAAAABAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Shared\AiMemoryObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Atomic.Character.ISensorController" Collapsed="true">
+    <Position X="5.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Vision Controller\ISensorController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Atomic.Character.ITargetingController" Collapsed="true">
+    <Position X="10.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAGAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Main\Scripts\Character System\Modules\Ai Targeting Agent Controller\ITargetingController.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Font Name="Segoe UI" Size="10" />
 </ClassDiagram>

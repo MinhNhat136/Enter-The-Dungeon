@@ -26,7 +26,7 @@ namespace Atomic.AbilitySystem
             Owner = owner;
         }
 
-        public virtual IEnumerator TryActivateAbility()
+        public IEnumerator TryActivateAbility()
         {
             if (!CanActivateAbility()) yield break;
 
@@ -94,31 +94,16 @@ namespace Atomic.AbilitySystem
                 TotalDuration = maxDuration
             };
         }
-
-        /// <summary>
-        /// Method to activate before activating this ability.  This method is run after activation checks.
-        /// </summary>
+        
         protected abstract IEnumerator PreActivate();
-
-        /// <summary>
-        /// The logic that dictates what the ability does.  Targeting logic should be placed here.
-        /// Gameplay Effects are applied in this method.
-        /// </summary>
-        /// <returns></returns>
+        
         protected abstract IEnumerator ActivateAbility();
-
-        /// <summary>
-        /// Method to run once the ability ends
-        /// </summary>
+        
         protected virtual void EndAbility()
         {
             isActive = false;
         }
-
-        /// <summary>
-        /// Checks whether the activating character has enough resources to activate this ability
-        /// </summary>
-        /// <returns></returns>
+        
         protected virtual bool CheckCost()
         {
             if (this.Ability.cost == null) return true;
@@ -144,13 +129,7 @@ namespace Atomic.AbilitySystem
 
             return true;
         }
-
-        /// <summary>
-        /// Checks if an Ability System Character has all the listed tags
-        /// </summary>
-        /// <param name="asc">Ability System Character</param>
-        /// <param name="tags">List of tags to check</param>
-        /// <returns>True, if the Ability System Character has all tags</returns>
+        
         protected virtual bool AscHasAllTags(AbilitySystemController asc, GameplayTagScriptableObject[] tags)
         {
             // If the input ASC is not valid, assume check passed
@@ -180,13 +159,7 @@ namespace Atomic.AbilitySystem
 
             return true;
         }
-
-        /// <summary>
-        /// Checks if an Ability System Character has none of the listed tags
-        /// </summary>
-        /// <param name="asc">Ability System Character</param>
-        /// <param name="tags">List of tags to check</param>
-        /// <returns>True, if the Ability System Character has none of the tags</returns>
+        
         protected virtual bool AscHasNoneTags(AbilitySystemController asc, GameplayTagScriptableObject[] tags)
         {
             // If the input ASC is not valid, assume check passed

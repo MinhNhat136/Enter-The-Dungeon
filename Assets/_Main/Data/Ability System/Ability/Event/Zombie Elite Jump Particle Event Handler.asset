@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62c76c06d8414353a89e97709c819f1b, type: 3}
-  m_Name: Legendary Equipment Data
+  m_Script: {fileID: 11500000, guid: 72d85eaae5f3c6549aff2b591710eb69, type: 3}
+  m_Name: Zombie Elite Jump Particle Event Handler
   m_EditorClassIdentifier: 
-  rarity: 4
-  defaultModifiers: []
-  additionalModifiers: []
+  gameplayEffectLookup: []

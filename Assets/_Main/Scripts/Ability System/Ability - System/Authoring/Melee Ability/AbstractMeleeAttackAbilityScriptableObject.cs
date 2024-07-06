@@ -73,6 +73,7 @@ namespace Atomic.AbilitySystem
                 {
                     CheckHits();
                     ApplyEffects();
+                    Debug.Log("run");
                     yield return null;
                 }
                 EndAbility();

@@ -32,6 +32,7 @@ MonoBehaviour:
   eventOnActivates:
   - {fileID: 11400000, guid: 375412453059da2408d60afecba7e5a1, type: 2}
   - {fileID: 11400000, guid: 013ba88c68e4d724db1664d3bea43e3d, type: 2}
+  - {fileID: 11400000, guid: 654ff378f9fa66240804a0ca84fe0d8e, type: 2}
   <AnimationName>k__BackingField: attack_2
   <AnimationClip>k__BackingField: {fileID: 7400000, guid: 3e6807fb355ff924d91ae8465b136b51, type: 2}
   <AttackMoveSpeed>k__BackingField: 5

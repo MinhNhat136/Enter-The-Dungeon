@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayParticleGameplayEffectEventHandler : MonoBehaviour
+namespace Atomic.AbilitySystem
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(menuName = "Gameplay Ability System/Ability Event Handler/Play Particles")]
+    public class PlayParticleGameplayEffectEventHandler : AbstractApplyGameplayEffectEventHandler
     {
-        
-    }
+        public override void Initialize()
+        {
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void PreApplyEffectSpec(GameplayEffectSpec effectSpec)
+        {
+            Debug.Log("play Particle");
+        }
     }
 }
+
+

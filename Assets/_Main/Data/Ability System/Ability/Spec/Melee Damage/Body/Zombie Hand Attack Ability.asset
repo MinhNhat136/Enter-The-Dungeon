@@ -28,7 +28,7 @@ MonoBehaviour:
       requireTags: []
       ignoreTags: []
   cost: {fileID: 0}
-  cooldown: {fileID: 11400000, guid: caf08e3b9b628364396a8975adf332a6, type: 2}
+  cooldown: {fileID: 0}
   eventOnActivates:
   - {fileID: 11400000, guid: 375412453059da2408d60afecba7e5a1, type: 2}
   - {fileID: 11400000, guid: 013ba88c68e4d724db1664d3bea43e3d, type: 2}
