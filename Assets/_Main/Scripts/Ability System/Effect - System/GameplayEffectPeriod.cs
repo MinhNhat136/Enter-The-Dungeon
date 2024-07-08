@@ -8,14 +8,8 @@ namespace Atomic.AbilitySystem
     [Serializable]
     public struct GameplayEffectPeriod
     {
-        /// <summary>
-        /// Period at which to tick this GE
-        /// </summary>
         public float period;
-
-        /// <summary>
-        /// Whether to execute GE on first application (true) or wait until the first tick (false)
-        /// </summary>
+        
         public bool executeOnApplication;
     }
 

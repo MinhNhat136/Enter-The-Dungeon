@@ -9,22 +9,22 @@ namespace Atomic.AbilitySystem
         /// <summary>
         /// This tag describes the Gameplay Ability
         /// </summary>
-        [SerializeField] public GameplayTagScriptableObject AssetTag;
+        [SerializeField] public TagScriptableObject AssetTag;
 
         /// <summary>
         /// Active Gameplay Abilities (on the same character) that have these tags will be cancelled
         /// </summary>
-        [SerializeField] public GameplayTagScriptableObject[] CancelAbilitiesWithTags;
+        [SerializeField] public TagScriptableObject[] CancelAbilitiesWithTags;
 
         /// <summary>
         /// Gameplay Abilities that have these tags will be blocked from activating on the same character
         /// </summary>
-        [SerializeField] public GameplayTagScriptableObject[] BlockAbilitiesWithTags;
+        [SerializeField] public TagScriptableObject[] BlockAbilitiesWithTags;
 
         /// <summary>
         /// These tags are granted to the character while the ability is active
         /// </summary>
-        [SerializeField] public GameplayTagScriptableObject[] ActivationOwnedTags;
+        [SerializeField] public TagScriptableObject[] ActivationOwnedTags;
 
         /// <summary>
         /// This ability can only be activated if the owner character has all of the Required tags

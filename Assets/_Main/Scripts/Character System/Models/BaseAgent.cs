@@ -6,6 +6,7 @@ using Atomic.Equipment;
 using NodeCanvas.BehaviourTrees;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Atomic.Character
@@ -122,6 +123,8 @@ namespace Atomic.Character
         private AiMotorController _motorController;
         private AiWeaponVisualsController _weaponVisualsController;
         private AiMemoryController _memoryController;
+
+        protected UnityAction OnDeath; 
         
         //  Initialization  -------------------------------
         public virtual void Initialize()
@@ -337,12 +340,15 @@ namespace Atomic.Character
             StabilityRatio = stabilityRatio.currentValue;
         }
 
-        private void OnHealthChanged()
+        protected virtual void OnHealthChanged()
         {
             AttributeSystemComponent.GetAttributeValue(healthAttribute, out var health);
             Health = health.currentValue;
-            if (health.currentValue <= 0) 
+            if (health.currentValue <= 0)
+            {
                 Health = 0;
+                OnDeath?.Invoke();
+            }
             
         }
     }

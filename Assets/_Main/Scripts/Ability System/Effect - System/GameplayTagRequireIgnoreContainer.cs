@@ -8,12 +8,12 @@ namespace Atomic.AbilitySystem
         /// <summary>
         /// All of these tags must be present
         /// </summary>
-        public GameplayTagScriptableObject[] requireTags;
+        public TagScriptableObject[] requireTags;
 
         /// <summary>
         /// None of these tags can be present
         /// </summary>
-        public GameplayTagScriptableObject[] ignoreTags;
+        public TagScriptableObject[] ignoreTags;
     }
 
 }

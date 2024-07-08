@@ -37,7 +37,8 @@ namespace Atomic.AbilitySystem
             }
 
             TimeUntilPeriodTick = GameplayEffectScriptableObject.gameplayEffectPeriod.period;
-            // By setting the time to 0, we make sure it gets executed at first opportunity
+            
+            // By setting the time to 0, I make sure it gets executed at first opportunity
             if (GameplayEffectScriptableObject.gameplayEffectPeriod.executeOnApplication)
             {
                 TimeUntilPeriodTick = 0;

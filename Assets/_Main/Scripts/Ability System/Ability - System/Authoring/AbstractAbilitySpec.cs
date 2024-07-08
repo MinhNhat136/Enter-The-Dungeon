@@ -52,7 +52,7 @@ namespace Atomic.AbilitySystem
         {
             float maxDuration = 0;
             if (Ability.cooldown == null) return new AbilityCooldownTime();
-            var cooldownTags = Ability.cooldown.gameplayEffectTags.grantedTags;
+            var cooldownTags = Ability.cooldown.gameplayEffectTags.grantedTagsToAbilitySystem;
 
             float longestCooldown = 0f;
 
@@ -60,7 +60,7 @@ namespace Atomic.AbilitySystem
             foreach (var appliedGameplayEffect in Owner.appliedGameplayEffects)
             {
                 var grantedTags = appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags
-                    .grantedTags;
+                    .grantedTagsToAbilitySystem;
                 foreach (var grantedTag in grantedTags)
                 {
                     foreach (var coolDownTag in cooldownTags)
@@ -130,7 +130,7 @@ namespace Atomic.AbilitySystem
             return true;
         }
         
-        protected virtual bool AscHasAllTags(AbilitySystemController asc, GameplayTagScriptableObject[] tags)
+        protected virtual bool AscHasAllTags(AbilitySystemController asc, TagScriptableObject[] tags)
         {
             // If the input ASC is not valid, assume check passed
             if (!asc) return true;
@@ -142,8 +142,8 @@ namespace Atomic.AbilitySystem
                 bool requirementPassed = false;
                 for (var iAsc = 0; iAsc < asc.appliedGameplayEffects.Count; iAsc++)
                 {
-                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec
-                        .GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
+                    TagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec
+                        .GameplayEffectScriptableObject.gameplayEffectTags.grantedTagsToAbilitySystem;
                     for (var iAscTag = 0; iAscTag < ascGrantedTags.Length; iAscTag++)
                     {
                         if (ascGrantedTags[iAscTag] == abilityTag)
@@ -160,7 +160,7 @@ namespace Atomic.AbilitySystem
             return true;
         }
         
-        protected virtual bool AscHasNoneTags(AbilitySystemController asc, GameplayTagScriptableObject[] tags)
+        protected virtual bool AscHasNoneTags(AbilitySystemController asc, TagScriptableObject[] tags)
         {
             // If the input ASC is not valid, assume check passed
             if (!asc) return true;
@@ -172,8 +172,8 @@ namespace Atomic.AbilitySystem
                 bool requirementPassed = true;
                 for (var iAsc = 0; iAsc < asc.appliedGameplayEffects.Count; iAsc++)
                 {
-                    GameplayTagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec
-                        .GameplayEffectScriptableObject.gameplayEffectTags.grantedTags;
+                    TagScriptableObject[] ascGrantedTags = asc.appliedGameplayEffects[iAsc].spec
+                        .GameplayEffectScriptableObject.gameplayEffectTags.grantedTagsToAbilitySystem;
                     for (var iAscTag = 0; iAscTag < ascGrantedTags.Length; iAscTag++)
                     {
                         if (ascGrantedTags[iAscTag] == abilityTag)

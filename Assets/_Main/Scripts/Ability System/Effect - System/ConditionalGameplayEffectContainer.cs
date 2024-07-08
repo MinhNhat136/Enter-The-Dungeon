@@ -6,7 +6,7 @@ namespace Atomic.AbilitySystem
     public struct ConditionalGameplayEffectContainer
     {
         public GameplayEffectScriptableObject gameplayEffect;
-        public GameplayTagScriptableObject[] requiredSourceTags;
+        public TagScriptableObject[] requiredSourceTags;
     }
 
 }

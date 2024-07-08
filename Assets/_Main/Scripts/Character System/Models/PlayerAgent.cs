@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Atomic.Character
 {
@@ -59,7 +60,8 @@ namespace Atomic.Character
                 
                 SwitchCombatMode();
                 SwitchAnimatorMatchWithWeapon();
-                
+                OnDeath += () => SceneManager.LoadScene("Lobby");
+
             }
         }
         

@@ -30,7 +30,7 @@ namespace Atomic.AbilitySystem
             _grantedAbilities.Add(spec);
         }
 
-        public void RemoveAbilitiesWithTag(GameplayTagScriptableObject tag)
+        public void RemoveAbilitiesWithTag(TagScriptableObject tag)
         {
             for (var i = _grantedAbilities.Count - 1; i >= 0; i--)
             {
@@ -41,7 +41,7 @@ namespace Atomic.AbilitySystem
             }
         }
 
-        private void RemoveGameplayEffectsWithTag(GameplayTagScriptableObject[] tagsToRemove)
+        private void RemoveGameplayEffectsWithTag(TagScriptableObject[] tagsToRemove)
         {
             for (int i = appliedGameplayEffects.Count - 1; i >= 0; i--)
             {
@@ -95,10 +95,10 @@ namespace Atomic.AbilitySystem
 
         bool CheckTag(GameplayTagRequireIgnoreContainer tags)
         {
-            var appliedTags = new List<GameplayTagScriptableObject>();
+            var appliedTags = new List<TagScriptableObject>();
             foreach (var appliedGameplayEffect in appliedGameplayEffects)
             {
-                appliedTags.AddRange(appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTags);
+                appliedTags.AddRange(appliedGameplayEffect.spec.GameplayEffectScriptableObject.gameplayEffectTags.grantedTagsToAbilitySystem);
             }
 
             foreach (var requireTag in tags.requireTags)

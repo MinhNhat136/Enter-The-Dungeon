@@ -33,15 +33,15 @@ MonoBehaviour:
       modifierOperator: 0
       modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
       multiplier: 1
-    conditionalGameplayEffects: []
+    - attribute: {fileID: 11400000, guid: 4da2c4427a7ea5c4a9b609d6fcf658e6, type: 2}
+      modifierOperator: 0
+      modifierMagnitude: {fileID: 11400000, guid: cc575f2af01fbdb449dbf1ba93a583a5, type: 2}
+      multiplier: 1000
   gameplayEffectTags:
     assetTag: {fileID: 0}
-    grantedTags: []
+    grantedTagsToAbilitySystem: []
     removeGameplayEffectsWithTag: []
     applicationTagRequirements:
-      requireTags: []
-      ignoreTags: []
-    ongoingTagRequirements:
       requireTags: []
       ignoreTags: []
   gameplayEffectPeriod:

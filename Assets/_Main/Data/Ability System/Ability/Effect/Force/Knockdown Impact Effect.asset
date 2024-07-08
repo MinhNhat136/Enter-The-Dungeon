@@ -24,7 +24,7 @@ MonoBehaviour:
     conditionalGameplayEffects: []
   gameplayEffectTags:
     assetTag: {fileID: 11400000, guid: fe9b4b5233dc380429f3d2769d3002fb, type: 2}
-    grantedTags:
+    grantedTagsToAbilitySystem:
     - {fileID: 11400000, guid: fe9b4b5233dc380429f3d2769d3002fb, type: 2}
     removeGameplayEffectsWithTag:
     - {fileID: 11400000, guid: 7acffd652ac5627468835e468cda9a55, type: 2}
